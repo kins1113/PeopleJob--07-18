@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="config.mybatis.mapper.oracle.payment">
+	<insert id="insertPayService1" parameterType="paymentVo">
+	<selectKey keyProperty="paymentCode" order="BEFORE" resultType="int">
+		select payment_seq.nextval from dual
+	</selectKey>
+	insert into payment
+	values(#{paymentCode},#{paymentway},#{progress},0,sysdate,sysdate+100,1,#{memberCode})
+	</insert>
+	
+	<update id="cancelPay" parameterType="int">
+	update payment
+	set progress='결제취소요청'
+	where payment_code=#{paymentCode}
+	</update>
+	
+	<select id="selectPaymentById" parameterType="string" resultType="map">
+		select p.*, s.* 
+		from payment p join service s
+		on p.SERVICE_CODE = s.SERVICE_CODE
+		where member_code=(select member_code from member where memberid=#{memberid})
+	</select>
+	
+	<select id="selectPaymentByCode" parameterType="int" resultType="paymentVo">
+		select * from payment
+		where payment_code=#{paymentCode}
+	</select>
+	
+	<select id="selectMainAdvertiseByServiceCode" resultType="map" parameterType="int">
+	select v.*, c.*
+	from vvipmain v join companyJobOpen c
+	on c.COMPANY_CODE = v.COMPANY_CODE
+	where service_code=#{serviceCode}
+	</select>
+</mapper>
+

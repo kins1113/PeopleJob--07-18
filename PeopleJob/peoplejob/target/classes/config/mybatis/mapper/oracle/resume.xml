@@ -1,0 +1,336 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="config.mybatis.mapper.oracle.resume">
+	
+	<select id="selectBylanglicenceCode" parameterType="int" resultType="resumeVo">
+		select * from langcertification where langlicence_code=#{langlicenceCode}
+	</select>
+	<select id="selectBylicenceCode" parameterType="int" resultType="resumeVo">
+		select * from certificate where l_no=#{lNo}
+	</select>
+	<select id="selectBydvCode" parameterType="int" resultType="resumeVo">
+		select * from career where dv_code=#{dvCode}
+	</select>
+	<select id="selectByacademicCode" parameterType="int" resultType="resumeVo">
+		select * from education where academic_code=#{academicCode}
+	</select>
+	<select id="selectBydesiredWorkCode" parameterType="int" resultType="resumeVo">
+		select * from hope_working where hopework_code=#{hopeworkCode}
+	</select>
+	<select id="selectBymemberCode" parameterType="int" resultType="resumeVo">
+		select * from member where member_code=#{memberCode}
+	</select>
+	<select id="selectBybtype1" parameterType="int" resultType="resumeVo">
+		select * from btype1 where btype_code1=#{btypeCode1}
+	</select>
+	<select id="selectBybtype2" parameterType="int" resultType="resumeVo">
+		select * from btype2 where btype_code2=#{btypeCode2}
+	</select>
+	<select id="selectBybtype3" parameterType="int" resultType="resumeVo">
+		select * from btype3 where btype_code3=#{btypeCode3}
+	</select>
+	<select id="selectBylocation" parameterType="int" resultType="resumeVo">
+		select * from location where local_code=#{localCode}
+	</select>
+	<select id="selectBylocation2" parameterType="int" resultType="resumeVo">
+		select * from location2 where local_code2=#{localCode2}
+	</select>
+	<select id="selectByfirst" parameterType="int" resultType="resumeVo">
+		select * from first where first_code=#{firstCode}
+	</select>
+	<select id="selectBysecond" parameterType="int" resultType="resumeVo">
+		select * from second where second_code=#{secondCode}
+	</select>
+	<select id="selectBythird" parameterType="int" resultType="resumeVo">
+		select * from third where third_code=#{thirdCode}
+	</select>
+	<select id="selectAllBtype" resultType="resumeVo">
+		select b1.BTYPENAME1,b2.BTYPENAME2,b3.BTYPENAME3 from 
+		btype1 b1,btype2 b2,btype3 b3
+		where b1.btype_code1=b2.BTYPE_CODE1 and b2.BTYPE_CODE2 = b3.BTYPE_CODE2
+	</select>
+	
+	<insert id="insertResume" parameterType="resumeVo">
+		<selectKey order="BEFORE" keyProperty="resumeCode" resultType="int" >
+			select resume_seq.nextval from dual
+		</selectKey>
+		insert into resume
+		values(#{resumeCode},#{resumeTitle},sysdate,#{introduce},#{award},#{langlicenceCode},#{licenceCode},#{dvCode},#{academicCode},#{desiredWorkCode},#{opencheck},#{memberCode},#{picture})
+	</insert>
+	
+	<insert id="insertLangcertification" parameterType="resumeVo">
+		<selectKey order="BEFORE" keyProperty="langlicenceCode" resultType="int">
+		select langcertification_seq.nextval from dual
+		</selectKey>
+		insert into langcertification(langlicence_code,langlicencename,lang_getdate,institute,certificationtype,language,langpoint,lang_grade)
+		values(#{langlicenceCode},#{langlicencename},#{langGetdate},#{institute},#{certificationtype},#{language},#{langpoint},#{langGrade})
+	</insert>    
+	
+	<insert id="insertCertificate" parameterType="resumeVo">
+		<selectKey order="BEFORE" keyProperty="lNo" resultType="int">
+		select certificate_seq.nextval from dual
+		</selectKey>
+		insert into certificate(l_no,l_name,l_getdate,l_institution)
+		values(#{lNo},#{lName},#{lGetdate},#{lInstitution})
+	</insert>
+	
+	<insert id="insertCareer" parameterType="resumeVo">
+		<selectKey order="BEFORE" keyProperty="dvCode" resultType="int">
+		select career_seq.nextval from dual
+		</selectKey>
+		insert into career
+		values(#{dvCode},#{companyname},#{chargework},#{workcheck},#{jobgrade},#{workcondition},#{workterm},#{workterm2})
+	</insert>
+	
+	<insert id="insertEducation" parameterType="resumeVo">
+		
+		insert into education
+		select * from education
+		where academic_code=#{academicCode} and graduatetype=#{graduatetype}
+		
+	</insert>
+	
+	<insert id="insertHopeWorking" parameterType="resumeVo">
+		
+		insert into hope_working
+		select * from hope_working
+		where hopework_code=#{hopeworkCode} and hopeworkform=#{hopeworkform}
+		
+	</insert>
+	
+	
+	
+	
+	<insert id="insertBtype1" parameterType="resumeVo">
+		
+		insert into btype1
+		select * from btype1
+		where btypename1=#{btypename1} and btype_code1=#{btypeCode1}
+		
+	</insert>
+	
+	<insert id="insertBtype2" parameterType="resumeVo">
+		
+		insert into btype2
+		select * from btype2
+		where btypename2=#{btypename2} and btype_code2=#{btypeCode2}
+		
+	</insert>
+	
+	<insert id="insertBtype3" parameterType="resumeVo">
+		
+		insert into btype3
+		select * from btype3
+		where btypename3=#{btypename3} and btype_code3=#{btypeCode3}
+		
+	</insert>
+	
+	<insert id="insertLocation" parameterType="resumeVo">
+		
+		insert into location
+		select * from location
+		where sido=#{sido} and local_code=#{localCode}
+		
+	</insert>
+	<insert id="insertLocation2" parameterType="resumeVo">
+		
+		insert into location2
+		select * from location2
+		where gugun=#{gugun} and local_code2=#{localCode2}
+		
+	</insert>
+	
+	<insert id="insertThird" parameterType="resumeVo">
+
+		insert into third
+		select * from third
+		where thirdname=#{thirdname} and third_code=#{thirdCode}
+		
+	</insert> 
+	<insert id="insertSecond" parameterType="resumeVo">
+
+		insert into second
+		select * from second
+		where secondname=#{secondname} and second_code=#{secondCode}
+		
+	</insert> 
+	<insert id="insertFirst" parameterType="resumeVo">
+
+		insert into first
+		select * from first
+		where firstname=#{firstname} and first_code=#{firstCode}
+		
+	</insert> 
+	<select id="selectSearch" parameterType="searchVo" resultType="resumeVo">
+		select *
+		from
+		(
+		    select A.*, rownum as RNUM 
+		    from
+		    (
+		        select 
+		        resume_code,resumeTitle, resumeRegdate, opencheck 
+		        
+					
+				from resume		
+				<if test="searchKeyword != null and searchKeyword != ''">
+					where ${searchCondition} like '%' || #{searchKeyword} || '%'
+				</if>		
+				order by resume_code desc
+		    ) A
+		)
+		<![CDATA[ where RNUM>#{firstRecordIndex}  
+		and RNUM<=#{firstRecordIndex} + #{recordCountPerPage}]]>
+	</select>
+	
+	<select id="selectByMemverid" parameterType="string" resultType="resumeVo">
+		select * from member where memberid=#{memberid}
+	</select>
+	
+	
+	<select id="selectResumeByNo" resultType="resumeVo" parameterType="int">
+		select * from resume where resume_code=#{resumeCode}
+	</select>
+		<!-- <select id="selectResumeByNo" resultType="resumeVo" parameterType="int">
+		select resume_code, resumetitle, introduce, award, opencheck, langlicencename,lang_getdate,
+    	institute,companyname,workterm,chargework,l_name,l_getdate,l_institution,
+    	schoolname,major,degree,graduate,graduatecheck,jobtype,hopeworkdate,hopepay,
+    	hopeworkform,memberid,membername,zipcode,address,addressdetail,birth,
+    	membergender,email,picture,tel,sido,gugun,firstname,secondname,thirdname
+
+		from resume r,langcertification la,career ca,
+    	certificate ce,education ed,Hope_working ho,
+    	member m,location lo,first f,second s ,third t
+
+		where r.langlicence_code=la.langlicence_code and r.LICENCE_CODE=ce.L_NO and 
+    	r.DV_CODE = ca.DV_CODE and r.ACADEMIC_CODE=ed.ACADEMIC_CODE and 
+    	r.DESIREDWORK_CODE=ho.HOPEWORK_CODE and m.MEMBER_CODE = r.MEMBER_CODE and 
+    	ho.LOCAL_CODE=lo.LOCAL_CODE and ho.FIRSTJOB_CODE=f.FIRST_CODE and 
+    	f.SECOND_CODE = s.SECOND_CODE and s.THIRD_CODE = t.THIRD_CODE and resume_code=#{resumeCode}
+	</select> -->
+		
+		<delete id="deleteResumeByNo" parameterType="int">
+		delete from resume where resume_code=#{resumeCode}
+		</delete>
+		
+	<!-- 	<update id="updateResume" parameterType="resumeVo">
+		update (select resume_code, resumetitle, introduce, award, opencheck, langlicencename,lang_getdate,
+    	institute,companyname,workterm,chargework,l_name,l_getdate,l_institution,
+    	schoolname,major,degree,graduate,graduatecheck,jobtype,hopeworkdate,hopepay,
+    	hopeworkform,memberid,membername,zipcode,address,addressdetail,birth,
+    	membergender,email,picture,tel,sido,gugun,firstname,secondname,thirdname
+
+		from resume r,langcertification la,career ca,
+    	certificate ce,education ed,Hope_working ho,
+    	member m,location lo,first f,second s ,third t
+
+		where r.langlicence_code=la.langlicence_code and r.LICENCE_CODE=ce.L_NO and 
+    	r.DV_CODE = ca.DV_CODE and r.ACADEMIC_CODE=ed.ACADEMIC_CODE and 
+    	r.DESIREDWORK_CODE=ho.HOPEWORK_CODE and m.MEMBER_CODE = r.MEMBER_CODE and 
+    	ho.LOCAL_CODE=lo.LOCAL_CODE and ho.FIRSTJOB_CODE=f.FIRST_CODE and 
+    	f.SECOND_CODE = s.SECOND_CODE and s.THIRD_CODE = t.THIRD_CODE)
+    	
+		set resumeTitle=#{resumeTitle},introduce=#{introduce},award=#{award},opencheck=#{opencheck},langlicencename=#{langlicencename},
+		lang_getdate=#{langGetdate},institute=#{institute},companyname=#{companyname},workterm=#{workterm},chargework=#{chargework},l_name=#{lName},l_getdate=#{lGetdate},l_institution=#{lInstitution},
+    	schoolname=#{schoolname},major=#{major},degree=#{degree},graduate=#{graduate},graduatecheck=#{graduatecheck},jobtype=#{jobtype},hopeworkdate=#{hopeworkdate},hopepay=#{hopepay},
+    	hopeworkform=#{hopeworkform},zipcode=#{zipcode},address=#{address},addressdetail=#{addressdetail},
+    	email=#{email},picture=#{picture},tel=#{tel},sido=#{sido},gugun=#{gugun},firstname=#{firstname},secondname=#{secondname},thirdname=#{thirdname}
+			 
+		where resume_code=#{resumeCode}
+	</update> -->
+	
+	<!-- <insert id="insertResume" parameterType="resumeVo">
+		<selectKey order="BEFORE" keyProperty="resumeCode,langlicenceCode,dvCode,licenceCode,academicCode,desiredworkCode,memberCode" resultType="hashmap">
+			select resume_seq.nextval as resumeCode, langcertification_seq.nextval as langlicenceCode
+			,career_seq.nextval as dvCode,  certification_seq.nextval as licenceCode,
+			education_seq.nextval as academicCode,
+			hopeWorking_seq.nextval as desiredworkCode, member_seq.nextval as memberCode from dual
+		</selectKey>
+	
+		insert into resume
+
+		values(#{resumeCode},#{resumeTitle},sysdate,#{introduce},#{award},#{langlicenceCode},#{licenceCode},#{dvCode},#{academicCode},#{desiredworkCode},#{opencheck},#{memberCode})
+		</insert>  -->
+		
+	<!-- <insert id="insertResume" parameterType="resumeVo">
+		insert into resume
+		(select resume_code, resumetitle, introduce, award, opencheck, langlicencename,lang_getdate,
+    institute,companyname,workterm,chargework,l_name,l_getdate,l_institution,
+    schoolname,major,degree,graduate,graduatecheck,jobtype,hopeworkdate,hopepay,
+    hopeworkform,memberid,membername,zipcode,address,addressdetail,birth,
+    membergender,email,picture,tel,sido,gugun,firstname,secondname,thirdname
+
+	from resume r,langcertification la,career ca,
+    certificate ce,education ed,Hope_working ho,
+    member m,location lo,first f,second s ,third t
+
+	where r.langlicence_code=la.langlicence_code and r.LICENCE_CODE=ce.L_NO and 
+    r.DV_CODE = ca.DV_CODE and r.ACADEMIC_CODE=ed.ACADEMIC_CODE and 
+    r.DESIREDWORK_CODE=ho.HOPEWORK_CODE and m.MEMBER_CODE = r.MEMBER_CODE and 
+    ho.LOCAL_CODE=lo.LOCAL_CODE and ho.FIRSTJOB_CODE=f.FIRST_CODE and 
+    f.SECOND_CODE = s.SECOND_CODE and s.THIRD_CODE = t.THIRD_CODE)
+	values(RESUME_SEQ.nextval,'이력서','자기소개','경시대회은상','Y','컴퓨터활용',
+    	sysdate,'큐넷','율무',sysdate,'직무','아무',sysdate,'기관','서울대','국어국문학과','국문학사',
+   	 	sysdate,'학사졸업','정규직',sysdate,'5000만원','정규직','ghghtls','이길동','280-521','서울','서울 상세',
+    	sysdate,'남','ghghtls@naver.com','사진','010-8815-4567','서울','마포구','외식업','중식','중식업');
+    </insert> -->
+   <!--  <insert id="insertResume" parameterType="resumeVo">
+		<selectKey order="BEFORE" keyProperty="resumeCode,langlicenceCode,dvCode,lNo,hopeworkCode,memberCode,localCode,academicCode,firstCode,secondCode,thirdCode" resultType="hashmap">
+			select resume_seq.nextval as resumeCode, langcertification_seq.nextval as langlicenceCode
+			,career_seq.nextval as dvCode,certificate_seq.nextval as lNo,  
+			 Hope_working_seq.nextval as hopeworkCode,member_seq.nextval as memberCode, location_seq.nextval as localCode,education_seq.nextval as academicCode,
+			 first_seq.nextval as firstCode,second_seq.nextval as secondCode,third_seq.nextval as thirdCode from dual
+		</selectKey>
+	
+		
+		insert all INTO resume(resumeCode,resumeTitle,introduce,award,opencheck)
+
+		VALUES (#{resumeCode},#{resumeTitle},#{introduce},#{award},#{opencheck})
+
+		INTO langcertification (langlicenceCode,langlicencename,langGetdate,institute,certificationtype,language,langpoint,langGrade)
+
+		VALUES (#{langlicenceCode},#{langlicencename},#{langGetdate},#{institute},#{certificationtype},#{language},#{langpoint},#{langGrade})
+
+		INTO career (dvCode,companyname,workterm,chargework,workcheck,jobgrade,workcondition)
+
+		VALUES (#{dvCode},#{companyname},#{workterm},#{chargework},#{workcheck},#{jobgrade},#{workcondition})
+
+		INTO certificate (lNo,lName,lGetdate,lInstitution)
+
+		VALUES (#{lNo},#{lName},#{lGetdate},#{lInstitution})
+
+		INTO Hope_working (hopeworkCode,jobtype,hopeworkdate,hopepay,hopeworkform)
+		VALUES (#{hopeworkCode},#{jobtype},#{hopeworkdate},#{hopepay},#{hopeworkform})
+
+		into member(memberid,membername,zipcode,address,addressdetail,memberCode,pwd,birth,membergender,email,picture,tel)
+		values(#{memberid},#{membername},#{zipcode},#{address},#{addressdetail},#{memberCode},#{pwd},#{birth},#{membergender},#{eamil},#{picture},#{tel})
+
+		into location(localCode,sido,gugun)
+		values(#{localCode},#{sido},#{gugun})
+		
+		into education(academicCode,schoolname,major,degree,graduate,graduatecheck,schoollocal,graduatetype)
+		values(#{academicCode},#{schoolname},#{major},#{degree},#{graduate},#{graduatecheck},#{schoollocal},#{graduatetype})
+		
+		into first(firstCode,firstname)
+		values(#{firstCode},#{firstname})
+
+		into second(secondCode,secondname)
+		values(#{secondCode},#{secondname})
+
+		into third(thirdCode,thirdname)
+		values(#{thirdCode},#{thirdname})
+
+		select * from dual
+	</insert>   -->
+</mapper>
+
+
+
+
+
+
+
+
+

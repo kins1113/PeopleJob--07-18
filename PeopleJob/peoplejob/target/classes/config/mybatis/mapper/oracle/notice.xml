@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="config.mybatis.mapper.oracle.notice">
+<insert id="insertNotice" parameterType="noticeVo">
+		<selectKey resultType="int" keyProperty="notifyCode" order="BEFORE">
+			select notice_seq.nextval from dual
+		</selectKey>
+		insert into notice(notify_Code, notifytitle, notifycontent, admin_Code) 
+		values(#{notifyCode}, #{notifytitle}, #{notifycontent}, #{adminCode})
+	</insert>
+
+	
+	
+	<select id="selectSearch" parameterType="searchVo" resultType="map">
+		select *
+		from
+		(
+		    select A.*, rownum as RNUM 
+		    from
+		    (
+		        select m.ADMINID, n.*, (sysdate-notifydate)*24 as new_Img_Term 
+		        from manager m join notice n 
+		        on m.ADMIN_CODE = n.ADMIN_CODE	
+				<if test="searchKeyword != null and searchKeyword != ''">
+					where ${searchCondition} like '%' || #{searchKeyword} || '%'
+				</if>		
+				order by notify_Code desc
+		    ) A
+		)
+		<![CDATA[ where RNUM>#{firstRecordIndex}  
+		and RNUM<=#{firstRecordIndex} + #{recordCountPerPage}]]>
+	</select>
+	 
+	 <select id="selectTotalCount" parameterType="searchVo" resultType="int">
+	 select count(*) from notice
+	 <if test="searchKeyword != null and searchKeyword !=''">
+	 	where ${searchCondition} like '%' || #{searchKeyword} || '%'
+	 </if>
+	 </select>
+	
+	 
+<update id="updateReadCount" parameterType="int">
+		update notice
+		set readcount=readcount+1 
+		where notify_Code=#{notifyCode}
+	</update>
+	 
+	<select id="selectByNo" parameterType="int" resultType="noticeVo">
+		select * from notice where notify_Code=#{notifyCode}
+	</select>	 
+
+		<update id="updateNotice" parameterType="noticeVo">
+		update notice set notifytitle=#{notifytitle},
+			notifycontent=#{notifycontent}
+		where notify_Code=#{notifyCode}
+	</update>
+		
+		
+		<delete id="deleteNotice" parameterType="int">
+		delete from notice
+		where notify_Code=#{notifyCode}
+	</delete>
+	
+	<select id="">
+	
+	
+	</select>
+</mapper>
+
+
+
+
+
+
+
+
+

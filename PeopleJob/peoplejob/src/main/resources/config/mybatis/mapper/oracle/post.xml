@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="config.mybatis.mapper.oracle.post">
+
+	<select id="selectPostAll" parameterType="postVo" resultType="map">
+		select * from 
+		(
+			select A.*, rownum as RNUM from 
+			(
+			select * from post_all
+			<if test="searchKeyword!=null and searchKeyword!='' 
+						and searchCondition!=null and searchCondition!=''">
+				<if test='searchCondition=="boardTitle,boardcontent"'>
+					where boardtitle like '%' || #{searchKeyword} || '%'
+					or boardcontent like '%' || #{searchKeyword} || '%'
+				</if>
+				<if test='searchCondition == "memberid"'>
+					where memberid like '%' || #{searchKeyword} || '%'
+				</if>
+				<if test='searchCondition == "type"'>
+					${searchCondition} like '%' || #{searchKeyword} || '%'
+				</if>
+			</if>
+			<if test="filterCode != null and filterCode!=''">
+				order by ${filterCode} 
+				<if test='filterKey=="Y"'>
+					desc
+				</if>
+			</if>
+			<if test="filterCode==null or filterCode==''">
+				order by boardregdate2 desc
+			</if>
+			) A
+		)
+		<![CDATA[where RNUM>#{firstRecordIndex}  
+		and RNUM<=#{firstRecordIndex} + #{recordCountPerPage}]]> 
+	</select>
+	
+	
+	 <select id="gettotalRecord" parameterType="map" resultType="int">
+		select count(*) from post_all
+			<if test="searchKeyword!=null and searchKeyword!='' 
+						and searchCondition!=null and searchCondition!=''">
+				<if test='searchCondition=="boardTitle,boardcontent"'>
+					where boardtitle like '%' || '${searchKeyword}' || '%'
+					or boardcontent like '%' || '${searchKeyword}' || '%'
+				</if>
+				<if test='searchCondition == "memberid"'>
+					where memberid like '%' || '${searchKeyword}' || '%'
+				</if>
+				<if test='searchCondition == "type"'>
+					#{type} like '%' || ${searchKeyword} || '%'
+				</if>
+			</if>
+			order by boardregdate2 desc
+	</select>
+	
+	<update id="updateDelete" parameterType="map">
+		update post
+		set deletecheck='Y'
+		where board_code2 in
+		<foreach collection="boardCodeList" item="code" open="(" close=")" separator=",">
+				#{code}
+		</foreach>
+	</update>
+	
+	<update id="changeDelete" parameterType="map">
+		update post 		deletecheck
+		<if test='deleteChange=="Y"'>
+			<if test='deletecheck =="Y"'>
+				set deletecheck = 'N'
+			</if>
+			<if test='deletecheck =="N"'>
+				set deletecheck = 'Y'
+			</if>
+		</if>
+		where board_Code2 = #{code}	
+	</update>
+</mapper>
+
+
+
+
+
+
+

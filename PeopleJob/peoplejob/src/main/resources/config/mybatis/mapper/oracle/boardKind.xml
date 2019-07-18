@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="config.mybatis.mapper.oracle.boardKind">
+	
+	<insert id="insertBKind" parameterType="BoardKindVO" >
+		<selectKey  keyProperty="typeCode" resultType="int" order="BEFORE">
+			select board_kind_seq.nextval from dual
+		</selectKey>
+			insert into board_kind(type_code, type)
+			values(#{typeCode}, #{type})
+	</insert>
+	
+	<select id="selectBKind" resultType="boardKindVo">
+		select * from board_Kind order by type_code
+	</select>
+	
+	<delete id="deleteBKind" parameterType="int">
+		delete from board_kind where type_code=#{Code}
+	</delete>	
+	
+	<select id="boardKindChange" >
+		
+	</select>
+</mapper>
+
+
+
+
+
+
+
+
+

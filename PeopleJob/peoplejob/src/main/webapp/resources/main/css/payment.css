@@ -1,0 +1,86 @@
+@charset "UTF-8";
+body {
+     margin:50px auto;
+}
+ .p-table {
+     border:none;
+     box-shadow:0 7px 73px 0 rgba(0,0,0,.09);
+     margin-bottom:30px;
+     padding-bottom:15px;
+}
+ .p-table .card-header {
+     padding-top:40px;
+     background:none;
+    border-color:#f0f0f0;
+}
+ .p-table .btn {
+     border-radius:25px;
+     margin-top:10px;
+     font-size: 16px;
+     text-transform: uppercase;
+}
+ .p-table .p-name {
+     font-size:28px;
+}
+ .p-table .p-price {
+     color:#505e77;
+     font-size:42px;
+     font-weight:normal;
+}
+ .p-table .text-muted {
+     color:#7f91ab;
+     font-size:18px;
+}
+ .p-table .card-body li {
+     font-size:15px;
+     margin:6px auto;
+     color:#788598
+}
+ .p-table .p-green .btn {
+     background:#59b865;
+     border-color:#59b865;
+}
+ .p-red .btn {
+     background:#f76e6f;
+     border-color:#f76e6f;
+}
+ .p-red .btn:hover {
+     background:#fb787a;
+     border-color:#fb787a;
+}
+ .p-red .p-name {
+    color:#f76e6f;
+}
+ .p-green .btn {
+     background:#58b163;
+     border-color:#58b163;
+}
+ .p-green .btn:hover {
+     background:#66c774;
+     border-color:#66c774;
+}
+ .p-green .p-name {
+    color:#58b163;
+}
+ .p-blue .btn {
+     background:#46a2ce;
+     border-color:#46a2ce;
+}
+ .p-blue .btn:hover {
+     background:#54b0dc;
+     border-color:#54b0dc;
+}
+ .p-blue .p-name {
+    color:#46a2ce;
+}
+ .p-violet .btn {
+     background:#b85fb9;
+     border-color:#b85fb9;
+}
+ .p-violet .btn:hover {
+     background:#c978ca;
+     border-color:#c978ca;
+}
+ .p-violet .p-name {
+    color:#b85fb9;
+}

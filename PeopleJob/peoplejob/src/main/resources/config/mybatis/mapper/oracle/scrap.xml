@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="config.mybatis.mapper.oracle.scrap">
+	<insert id="insertScrap" parameterType="ScrapVo">
+	<selectKey keyProperty="scrapCode" resultType="int" order="BEFORE">
+		select scrap_seq.nextval  from dual
+	</selectKey>
+	insert into scrap(scrap_code,scrapdate,scrapmember_code,jobopening_code)
+	values(#{scrapCode},sysdate,#{scrapmemberCode},#{jobopeningCode})
+	</insert>
+	<select id="selectScrap" parameterType="membervo" resultType="scrapvo">
+		select * from scrap where scrapmember_code=#{scrapmemberCode}
+	</select>
+	<select id="selectScrapJobOpen" parameterType="map" resultType="jobOpeningVO">
+		
+		
+		select *
+		from
+		(
+		    select A.*, rownum as RNUM 
+		    from
+		    (
+		        select * from jobopening 
+				 <if test="jobopening!=''">
+		        where jobopening in
+				<foreach collection="jobopening" item="jobopening" 
+					index="index" open="(" close=")" separator=",">
+				#{jobopening} 
+				</foreach>
+				</if>
+				<if test="localcheck1 != null">
+				and localcheck IN 
+				<foreach collection="localcheck1" item="localcheck" 
+					index="index" open="(" close=")" separator=",">
+				#{localcheck}
+				</foreach>
+				</if>
+				<if test="workway1 != null">
+					and workway IN 
+					<foreach collection="workway1" item="workway" 
+						index="index" open="(" close=")" separator=",">
+					#{workway}
+					</foreach>
+				</if>
+				<if test="payway1 != null">
+					and payway IN 
+					<foreach collection="payway1" item="payway" 
+						index="index" open="(" close=")" separator=",">
+					#{payway}
+					</foreach>
+				</if>		
+				<if test="academicCondition1 != null">
+					and academic_Condition IN  
+					<foreach collection="academicCondition1" item="academicCondition" 
+						index="index" open="(" close=")" separator=",">
+					#{academicCondition}
+					</foreach>
+				</if>		
+				order by jobregdate desc
+		    ) A
+		)
+		<where>
+		<![CDATA[ RNUM>#{firstRecordIndex}  
+		and RNUM<=#{firstRecordIndex} + #{recordCountPerPage}]]>
+		</where>
+	</select>
+	<select id="selectTotalCount" parameterType="map" resultType="int">
+		        select count(*) from jobopening 
+		        <if test="jobopening!=null">
+		        where jobopening in
+				<foreach collection="jobopening" item="jobopening" 
+					index="index" open="(" close=")" separator=",">
+				#{jobopening} 
+				</foreach>
+				</if>
+				<if test="localcheck1 != null">
+				and localcheck IN 
+				<foreach collection="localcheck1" item="localcheck" 
+					index="index" open="(" close=")" separator=",">
+				#{localcheck}
+				</foreach>
+				</if>
+				<if test="workway1 != null">
+					and workway IN 
+					<foreach collection="workway1" item="workway" 
+						index="index" open="(" close=")" separator=",">
+					#{workway}
+					</foreach>
+				</if>
+				<if test="payway1 != null">
+					and payway IN 
+					<foreach collection="payway1" item="payway" 
+						index="index" open="(" close=")" separator=",">
+					#{payway}
+					</foreach>
+				</if>		
+				<if test="academicCondition1 != null">
+					and academic_Condition IN  
+					<foreach collection="academicCondition1" item="academicCondition" 
+						index="index" open="(" close=")" separator=",">
+					#{academicCondition}
+					</foreach>
+				</if>		
+				order by jobregdate desc
+	</select>
+	
+	<delete id="deleteScrap" parameterType="map">
+		delete from scrap 
+		where jobopening_code in 
+		<foreach collection="jobopening" item="jobopening1" 
+					index="index" open="(" close=")" separator=",">
+			#{jobopening1}
+		</foreach> 	
+	</delete>
+</mapper>
+
+
+
+
+
+
+
+
+

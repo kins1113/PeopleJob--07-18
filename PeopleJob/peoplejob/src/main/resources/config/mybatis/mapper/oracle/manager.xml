@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="config.mybatis.mapper.oracle.manager">
+	
+	<select id="loginCheck" parameterType="String" resultType="managerVo">
+		select adminpwd , admin_code from manager where adminid=#{adminid}
+	</select>
+
+	<select id="selectManagerAll" resultType="managerVO">
+		select * from 
+		(
+			select admin_code, adminid, adminpwd, authority, aut_regdate, aut_deldate from MANAGER
+			order by authority desc
+		)
+		order by aut_deldate desc
+	</select>
+	
+	<insert id="insertManager" parameterType="managerVo">
+		<selectKey resultType="int" keyProperty="adminCode" order="BEFORE">
+			select manager_seq.nextval from dual
+		</selectKey>
+			insert into manager (admin_code, adminid, adminpwd, authority)
+			values(#{adminCode},#{adminid}, #{adminpwd}, #{authority})
+	</insert>
+	
+	<update id="delectManager" parameterType="int">
+		update manager 
+		set aut_deldate = sysdate
+		where admin_code = #{adminCode}
+	</update>
+	
+	<select id="selectAuthorityById" parameterType="String" resultType="String">
+		select authority from manager where adminid = #{adminid}
+	</select>
+	
+	<select id="selectIdChk" parameterType="String" resultType="int">
+		select count(*) from manager where adminid = #{adminid}
+	</select> 
+	
+	<select id="selectByCode" parameterType="int" resultType="managerVo">
+		select admin_code, adminid, adminpwd, authority, aut_regdate, aut_deldate from MANAGER
+		where admin_code = #{adminCode}
+	</select>
+	
+	<update id="updateManager" parameterType="managerVo">
+		update manager 
+		set adminid=#{amdinid}, adminpwd=#{adminpwd}, authority=#{authority}, aut_regdate=sysdate
+		where admin_code=#{adminCode}
+	</update>
+	
+	<select id="selectCheckPwd" parameterType="map" resultType="int">
+		select count(*) from  manager
+		where adminid=#{id} and adminpwd=#{pwd}
+	</select>
+</mapper>
+
+
+
+
+
+
+
+
+

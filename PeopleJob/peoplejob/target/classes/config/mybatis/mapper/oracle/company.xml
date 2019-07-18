@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="config.mybatis.mapper.oracle.company">
+	<insert id="insertJobOpen" parameterType="jobopeningVO">
+		<selectKey resultType="int" keyProperty="jobopening" order="BEFORE">
+			select jobopening_seq.nextval from dual
+		</selectKey>
+		insert into jobopening
+		 values(
+		 #{jobopening},#{jobtitle},#{localcheck},#{subwayinfo},#{workway},
+		 #{workdate},#{dayofweek},#{worktime},#{payway},#{pay},#{workform},	
+					#{welfare}
+		 ,
+		 #{gender},#{agelimit},#{academicCondition},#{career},#{sweetener},#{recruit},
+		 #{recruitmentTarget},#{endDate},#{receiveway},#{submit},#{applicationhandbook},
+		 sysdate,0,'N',#{adminagree},#{category},#{companyimage},#{companyCode}
+		 )
+	</insert>
+		
+	<select id="selectJobOpen2" parameterType="map" resultType="jobOpeningVO">
+		
+		
+		select *
+		from
+		(
+		    select A.*, rownum as RNUM 
+		    from
+		    (
+		        select * from jobopening where adminagree='Y' 	
+				<if test="localcheck1 != null">
+				and localcheck IN 
+				<foreach collection="localcheck1" item="localcheck" 
+					index="index" open="(" close=")" separator=",">
+				#{localcheck}
+				</foreach>
+				</if>
+				<if test="workway1 != null">
+					and workway IN 
+					<foreach collection="workway1" item="workway" 
+						index="index" open="(" close=")" separator=",">
+					#{workway}
+					</foreach>
+				</if>
+				<if test="payway1 != null">
+					and payway IN 
+					<foreach collection="payway1" item="payway" 
+						index="index" open="(" close=")" separator=",">
+					#{payway}
+					</foreach>
+				</if>		
+				<if test="academicCondition1 != null">
+					and academic_Condition IN 
+					<foreach collection="academicCondition1" item="academicCondition" 
+						index="index" open="(" close=")" separator=",">
+					#{academicCondition}
+					</foreach>
+				</if>		
+				order by jobregdate desc
+		    ) A
+		)
+		<where>
+		<![CDATA[ RNUM>#{firstRecordIndex}  
+		and RNUM<=#{firstRecordIndex} + #{recordCountPerPage}]]>
+		</where>
+	</select>
+	
+	<select id="selectJobOpen" parameterType="map" resultType="JobopeningVO">
+		
+		
+		select *
+		from
+		(
+		    select A.*, rownum as RNUM 
+		    from
+		    (
+		        select * from jobopening where company_code =#{companycode1}
+				<if test="localcheck1 != null">
+				and localcheck IN 
+				<foreach collection="localcheck1" item="localcheck" 
+					index="index" open="(" close=")" separator=",">
+				#{localcheck}
+				</foreach>
+				</if>
+				<if test="workway1 != null">
+					and workway IN 
+					<foreach collection="workway1" item="workway" 
+						index="index" open="(" close=")" separator=",">
+					#{workway}
+					</foreach>
+				</if>
+				<if test="payway1 != null">
+					and payway IN 
+					<foreach collection="payway1" item="payway" 
+						index="index" open="(" close=")" separator=",">
+					#{payway}
+					</foreach>
+				</if>		
+				<if test="academicCondition1 != null">
+					and academic_Condition IN 
+					<foreach collection="academicCondition1" item="academicCondition" 
+						index="index" open="(" close=")" separator=",">
+					#{academicCondition}
+					</foreach>
+				</if>		
+				order by jobregdate desc
+		    ) A
+		)
+		<where>
+		<![CDATA[ RNUM>#{firstRecordIndex}  
+		and RNUM<=#{firstRecordIndex} + #{recordCountPerPage}]]>
+		</where>
+	</select>
+	
+	<select id="selectJobOpenByNo" resultType="jobOpeningVO" parameterType="int">
+		select * from jobopening where jobopening=#{jobopening}
+	</select>
+	<update id="updateJobOpen" parameterType="jobOpeningVO" >
+		update jobopening
+		set jobopening=#{jobopening},jobtitle=#{jobtitle},localcheck=#{localcheck},subwayinfo=#{subwayinfo},workway=#{workway},
+		 workdate=#{workdate},dayofweek=#{dayofweek},worktime=#{worktime},payway=#{payway},pay=#{pay},workform=#{workform},	welfare=#{welfare},
+		 gender=#{gender},agelimit=#{agelimit},academic_condition=#{academicCondition},career=#{career},sweetener=#{sweetener},recruit=#{recruit},
+		 recruitment_target=#{recruitmentTarget},end_date=#{endDate},receiveway=#{receiveway},submit=#{submit},applicationhandbook=#{applicationhandbook},
+		 jobregdate=sysdate,companyimage=#{companyimage}
+		where jobopening=#{jobopening}
+	</update>
+	<update id="updateHits" parameterType="int">
+		update jobopening
+		set	hits=hits+1
+		where jobopening=#{jobopening}
+	</update>
+	<delete id="deleteJobOpen" parameterType="int">
+		delete jobopening
+		where jobopening=#{jobopening}
+	</delete>
+	<update id="updateAdminagree" parameterType="jobopeningvo">
+		update jobopening
+		<if test="adminagree=='Y'.toString()">
+		set adminagree='N'
+		</if>
+		<if test="adminagree=='N'.toString()">
+		set adminagree='Y'
+		</if>
+		where jobopening=#{jobopening}
+	</update>
+	<select id="selectTotalCount" resultType="int" parameterType="map">
+	select count(*) from jobopening where adminagree='Y' 	
+				<if test="localcheck1 != null">
+				and localcheck IN 
+				<foreach collection="localcheck1" item="localcheck" 
+					index="index" open="(" close=")" separator=",">
+				#{localcheck}
+				</foreach>
+				</if>
+				<if test="workway1 != null">
+					and workway IN 
+					<foreach collection="workway1" item="workway" 
+						index="index" open="(" close=")" separator=",">
+					#{workway}
+					</foreach>
+				</if>
+				<if test="payway1 != null">
+					and payway IN 
+					<foreach collection="payway1" item="payway" 
+						index="index" open="(" close=")" separator=",">
+					#{payway}
+					</foreach>
+				</if>		
+				<if test="academicCondition1 != null">
+					and academic_Condition IN 
+					<foreach collection="academicCondition1" item="academicCondition" 
+						index="index" open="(" close=")" separator=",">
+					#{academicCondition}
+					</foreach>
+				</if>		
+				order by jobregdate desc
+	</select>
+	<select id="selectTotalCount2" resultType="int" parameterType="map">
+	select count(*) from jobopening where company_code=#{companycode1} 	
+				
+				<if test="localcheck1 != null">
+				and localcheck IN 
+				<foreach collection="localcheck1" item="localcheck" 
+					index="index" open="(" close=")" separator=",">
+				#{localcheck}
+				</foreach>
+				</if>
+				<if test="workway1 != null">
+					and workway IN 
+					<foreach collection="workway1" item="workway" 
+						index="index" open="(" close=")" separator=",">
+					#{workway}
+					</foreach>
+				</if>
+				<if test="payway1 != null">
+					and payway IN 
+					<foreach collection="payway1" item="payway" 
+						index="index" open="(" close=")" separator=",">
+					#{payway}
+					</foreach>
+				</if>		
+				<if test="academicCondition1 != null">
+					and academic_Condition IN 
+					<foreach collection="academicCondition1" item="academicCondition" 
+						index="index" open="(" close=")" separator=",">
+					#{academicCondition}
+					</foreach>
+				</if>		
+				order by jobregdate desc
+	</select>
+	<select id="selectcompany" parameterType="int" resultType="companyvo">
+	select* from company where company_code=#{companyCode}
+	</select>
+	<select id="selectPwdCheck" parameterType="map" resultType="int">
+		select count(*) from member
+		where company_code=#{companyCode} and pwd=#{pwd}
+	</select>
+	<select id="selectJobopeningBycomcode" parameterType="int" resultType="JobopeningVo">
+	select * from jobopening where company_code=#{companyCode}
+	</select>
+	
+	<select id="selectCountById" parameterType="string" resultType="int">
+	select count(*) from jobopening
+	where company_code=(select company_code from member where memberid=#{memberid})
+	and adminagree='Y'
+	</select>
+	
+	<select id="deadlineimminentBymonth" resultType="map">
+		select jobtitle,end_date from 
+	(
+	 select * from jobopening 
+	 order by end_date 
+	 )
+ <![CDATA[where rownum<=10
+ and (end_date-sysdate)<30 ]]>
+	</select>
+</mapper>
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,257 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="config.mybatis.mapper.oracle.member">
+
+	<insert id="insertMember" parameterType="memberVo">
+	 
+		<selectKey keyProperty="memberCode" order="BEFORE" resultType="int">
+			select member_seq.nextval from dual
+		</selectKey>
+	insert into member(member_code, memberid, membername, zipcode, address, addressDetail, 
+	pwd, birth, membergender, email, tel, authority_code, company_code)
+	values(#{memberCode}, #{memberid}, #{membername},#{zipcode},#{address},#{addressdetail}, #{pwd},
+	#{birth},#{membergender},#{email},#{tel},#{authorityCode}, #{companyCode} )
+	</insert>
+	
+	<insert id="insertIndividaulMember" parameterType="memberVo">
+	
+	insert into member(member_code, memberid, membername, zipcode, address, addressDetail, 
+	pwd, birth, membergender, email, tel, authority_code)
+	values(member_seq.nextval, #{memberid}, #{membername},#{zipcode},#{address},#{addressdetail}, #{pwd},
+	#{birth},#{membergender},#{email},#{tel},1)
+	</insert>
+	
+	<select id="dupUserid" resultType="int" parameterType="string">
+	select count(*) from member where memberid=#{memberid}
+	</select>
+	
+	<select id="selectPwdForLogin" parameterType="string" resultType="string">
+		select pwd from member where memberid=#{memberid} and WITHDRAWALDATE is null
+	</select>
+	
+	<select id="selectMember" parameterType="string" resultType="memberVo">
+		select * from member where memberid=#{memberid}
+	</select>
+	
+	<update id="updateMember" parameterType="memberVo">
+	update member
+	set zipcode=#{zipcode}, address=#{address}, addressdetail=#{addressdetail},
+	birth=#{birth},membergender=#{membergender},email=#{email},tel=#{tel}
+	where memberid=#{memberid}
+	</update>
+	
+	<insert id="insertCompany" parameterType="companyVo">
+	<selectKey keyProperty="companyCode" order="BEFORE" resultType="int">
+		select company_seq.nextval from dual
+	</selectKey> 
+	insert into company(company_code,companyname, business_number)
+	values(#{companyCode}, #{companyname},#{businessNumber})
+	</insert>
+	
+	<select id="selectCompanyById" resultType="companyVo" parameterType="string">
+		select * from company
+		where company_code=(select company_code from member where memberid=#{memberid})
+	</select>
+	
+	<update id="updateCompany" parameterType="companyVo">
+	update company
+	set image=#{image}, company_zipcode=#{companyZipcode}, company_address=#{companyAddress},company_addressdetail=#{companyAddressdetail},
+	womannum=#{womannum} , mannum=#{mannum}, establishyear=#{establishyear}, companytype=#{companytype}, site=#{site}, 
+	sales=#{sales}, capital=#{capital}, majorbusiness=#{majorbusiness} , introduction=#{introduction}  
+	where company_code=#{companyCode}
+	</update>
+	
+	 <update id="updatePwd" parameterType="memberVo">
+		update member
+		set pwd=#{pwd}
+		where memberid=#{memberid}
+	</update> 
+	
+	<update id="memberOut" parameterType="string">
+		update member
+		set WITHDRAWALDATE=sysdate
+		where memberid=#{memberid}
+	</update>
+	
+	<select id="selectAllManager" parameterType="map" resultType="memberVo">
+		select * from 
+		(
+			
+			select A.*, rownum as RNUM from 
+			( 
+			select * from member
+				<where>
+					<if test="memberVo.searchCondition!= null and memberVo.searchCondition!=''
+								and memberVo.searchKeyword!= null and memberVo.searchKeyword!=''">
+							
+							<if test='memberVo.searchCondition=="all"'>
+									memberid like  '%' || #{memberVo.searchKeyword} || '%'  or
+									membername like  '%' || #{memberVo.searchKeyword}  || '%' or
+									tel like  '%' || #{memberVo.searchKeyword} || '%' or
+									address like  '%' || #{memberVo.searchKeyword} || '%' or
+									addressdetail like  '%' || #{memberVo.searchKeyword} || '%' or
+								 	email like  '%' || #{memberVo.searchKeyword} || '%' 
+							</if>
+							<if test='memberVo.searchCondition=="memberid"'>
+									 memberid like  '%' || #{memberVo.searchKeyword} || '%'
+							</if>
+							<if test='memberVo.searchCondition=="membername"'>
+									 membername like  '%' || #{memberVo.searchKeyword}  || '%'
+							</if>
+							<if test='memberVo.searchCondition=="tel"'>
+									 tel like  '%' || #{memberVo.searchKeyword} || '%'
+							</if>
+							<if test='memberVo.searchCondition=="address,addressdetail"'>
+									 address like  '%' || #{memberVo.searchKeyword} || '%' or
+									 addressdetail like  '%' || #{memberVo.searchKeyword} || '%'
+							</if>
+							<if test='memberVo.searchCondition=="email"'>
+									 email like  '%' || #{memberVo.searchKeyword} || '%'
+							</if>
+							<if test="startDay!=null and startDay !='' and endDay!=null and endDay != ''">
+								 <![CDATA[ or regdate >= #{startDay} and regdate <to_date(#{endDay})+1]]>
+							</if>
+					</if>				
+					
+					<if test="memberVo.searchCondition== null or memberVo.searchCondition==''
+								or memberVo.searchKeyword== null or memberVo.searchKeyword==''">
+						<if test="startDay!=null and startDay !='' and endDay!=null and endDay != ''">
+							 <![CDATA[regdate >= #{startDay} and regdate <to_date(#{endDay})+1]]>
+						</if>
+					</if>
+					and authority_code =1
+				</where>
+				<if test="filterCode!=null and filterKey!=null">
+					<if test='filterKey=="Y"'>
+						 order by ${filterCode} desc
+					</if>
+					<if test='filterKey=="N"'>
+						 order by ${filterCode}
+					</if>
+				</if>
+				<if test="filterCode==null or filterKey==null">
+				 	order by member_code desc
+				 </if>
+	 		) A
+		) 
+		<![CDATA[where RNUM>#{memberVo.firstRecordIndex}  
+		and RNUM<=#{memberVo.firstRecordIndex} + #{memberVo.recordCountPerPage}]]> 
+	</select>
+	
+	<select id="getTotalRecord" parameterType="map" resultType="int">
+		select count(*) from member
+		<where>
+			<if test="memberVo.searchCondition!= null and memberVo.searchCondition!=''
+								and memberVo.searchKeyword!= null and memberVo.searchKeyword!=''">
+				<if test='memberVo.searchCondition=="all"'>
+						memberid like  '%' || #{memberVo.searchKeyword} || '%' or
+						membername like  '%' || #{memberVo.searchKeyword}  || '%' or
+						tel like  '%' || #{memberVo.searchKeyword} || '%' or
+						address like  '%' || #{memberVo.searchKeyword} || '%' or
+						addressdetail like  '%' || #{memberVo.searchKeyword} || '%' or
+					 	email like  '%' || #{memberVo.searchKeyword} || '%'
+				</if>
+				
+				
+				<if test='memberVo.searchCondition=="memberid"'>
+						 memberid like  '%' || #{memberVo.searchKeyword} || '%'
+				</if>
+				<if test='memberVo.searchCondition=="membername"'>
+						 membername like  '%' || #{memberVo.searchKeyword}  || '%'
+				</if>
+				<if test='memberVo.searchCondition=="tel"'>
+						 tel like  '%' || #{memberVo.searchKeyword} || '%'
+				</if>
+				<if test='memberVo.searchCondition=="address,addressdetail"'>
+						 address like  '%' || #{memberVo.searchKeyword} || '%' or
+						 addressdetail like  '%' || #{memberVo.searchKeyword} || '%'
+				</if>
+				<if test='memberVo.searchCondition=="email"'>
+						 email like  '%' || #{memberVo.searchKeyword} || '%'
+				</if>
+				<if test="startDay!=null and startDay !='' and endDay!=null and endDay != ''">
+							 <![CDATA[ or regdate >= #{startDay} and regdate <to_date(#{endDay})+1]]>
+						</if>
+				</if>				
+			<if test="memberVo.searchCondition== null or memberVo.searchCondition==''
+						or memberVo.searchKeyword== null or memberVo.searchKeyword==''">
+				<if test="startDay!=null and startDay !='' and endDay!=null and endDay != ''">
+					 <![CDATA[regdate >= #{startDay} and regdate <to_date(#{endDay})+1]]>
+				</if>
+				and authority_code =1
+			</if>
+		</where>
+		
+		 order by member_code desc
+		
+	</select>
+	
+	<select id="findId" parameterType="memberVo" resultType="string">
+		select memberid from member
+		where membername=#{membername} and email=#{email}
+	</select>
+	
+	<select id="selectPayInfo" parameterType="string" resultType="map">
+	
+	select c.company_zipcode, c.company_address, m.email, m.tel
+	from company c join member m 
+	on c.COMPANY_CODE = m.COMPANY_CODE
+	where m.membername=#{membername}
+	</select>
+	
+	<select id="findPwd" parameterType="memberVo" resultType="int">
+		select count(pwd) from member
+		where memberid=#{memberid} and membername=#{membername} and email=#{email}
+	</select>
+	
+	<select id="memberByAuthority" parameterType="map" resultType="memberVo">
+		select * from member 
+		where authority_code in
+		<foreach collection="i" item="item"  open="(" close=")" separator=",">
+			#{item}
+		</foreach>
+	</select>
+	
+	<select id="selectCompanyManager" parameterType="map" resultType="map"> 
+	select * from 
+		(
+			select A.*, rownum as RNUM from 
+			( 
+				select * from member m
+	            left join company c
+	            on m.COMPANY_CODE = c.BUSSINESS_NUMBER          
+	            where authority_code in (2,3)
+	 		) A
+		) 
+	<![CDATA[where RNUM>#{memberVo.firstRecordIndex}  
+	and RNUM<=#{memberVo.firstRecordIndex} + #{memberVo.recordCountPerPage}]]> 
+	</select>
+	
+	<update id="updateAuthorityManager" parameterType="map">
+		update member
+		set authority_code=
+		<if test="authorityCode==2">3</if>
+		<if test="authorityCode==3">2</if>
+		where member_code=#{memberCode}
+	</update>
+	<select id="selectBymemberCode" parameterType="int" resultType="memberVO">
+		select * from member where member_code=#{memberCode}
+	</select>
+	
+	<select id="getTotalRecordCompanyManager" parameterType="map" resultType="int"> 
+				select count(*) from member m
+	            left join company c
+	            on m.COMPANY_CODE = c.BUSSINESS_NUMBER          
+	            where authority_code in (2,3)
+	</select>
+	<select id="selectAllCompanyManager" parameterType="map" resultType="map"> 
+				select * from member m
+	            left join company c
+	            on m.COMPANY_CODE = c.BUSSINESS_NUMBER          
+	            where authority_code in (2,3)
+	            order by authority_code
+	</select>
+	
+</mapper>

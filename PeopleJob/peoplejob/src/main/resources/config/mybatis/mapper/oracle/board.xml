@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="config.mybatis.mapper.oracle.board">
+	
+	<insert id="insetBoard" parameterType="boardVo" >
+		<selectKey keyProperty="boardCode1" resultType="int" order="BEFORE">
+			select board_seq.nextval from dual
+		</selectKey>
+			insert into board(board_code1, fir_admin, boardname, 
+				commentage, upage, upnumage, upsizeage, type_code)
+			values(#{boardCode1}, #{firAdmin}, #{boardname}, #{commentage}, 
+					#{upage}, #{upnumage}, #{upsizeage}, #{typeCode})
+	</insert>
+	
+	<select id="selectBoardSerch" parameterType="map" resultType="boardVo">
+		select * from board 
+		<if test="content!='' and content!=null">
+			<if test="key!='' and key!=null">
+				where ${key} like '%'|| #{content} || '%'
+			</if>
+		</if>
+		<if test="fileter!='' and fileter!=null">
+			order by ${fileter}
+		</if>
+		<if test="fileter==null or fileter==''">
+			order by board_code1 
+		</if>
+		
+		<if test='useCheck=="N"'>
+			desc
+		</if>
+	</select>
+	
+	<update id="boardUpdate" parameterType="map" >
+		update board
+		
+		<if test='usage=="Y"'>
+			set usage='N'
+		</if>
+		<if test='usage=="N"'>
+			set usage='Y'
+		</if>
+		where board_code1=#{boardCode}
+	</update>
+	
+	<delete id="deleteMultDelete" parameterType="map">
+		delete from board 
+		where board_code1 in 
+		<foreach collection="boardCheckBox" item="BCB" 
+					index="index" open="(" close=")" separator=",">
+			#{BCB}
+		</foreach> 	
+	</delete>
+	
+	<select id="selectByCodeVariable" parameterType="map" resultType="boardVo">
+		select * from board
+		where board_code1 in
+		<foreach collection="boardCordList" item="adc" open="(" close=")" separator=",">
+			#{adc}
+		</foreach>
+	</select>
+
+	<update id="boardEdit" parameterType="boardVo" >
+		update board
+		set boardname=#{boardname}, boardupdate = sysdate , last_admin= #{lastAdmin} , usage='Y' , 
+			commentage=#{commentage}, upage=#{upage}, upnumage=#{upnumage} ,upsizeage=#{upsizeage} , type_code=#{typeCode}
+		where board_code1=#{boardCode1}
+	</update>
+</mapper>
+
+
+
+
+
+
+
+
+
