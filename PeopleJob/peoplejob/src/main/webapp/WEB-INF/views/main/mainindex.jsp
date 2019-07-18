@@ -517,12 +517,12 @@ img.imgsize {
 
 					</ul>
 				</c:if> 
-				<c:if test="${!empty sessionScope.memberName }">
+				<c:if test="${!empty sessionScope.memberName }"> 
 				<div class="logintop">
 					<img alt="회원이미지" src="<c:url value='/resources/main/images/people.PNG'/>" width="100px;">
-		        	<span style="margin-bottom: 10px;display: inline-block;">${sessionScope.memberName }님, 환영합니다.</span>
+		        	<span style="margin-bottom: 10px;display: inline-block;margin-left: -7px;">${sessionScope.memberName }님, 환영합니다.</span>
 					<input type="button" value="로그아웃" onclick="location='<c:url value='/login/logout.do'/>'" style="    margin-left: 174px;
-    margin-top: -28px;
+    margin-top: -25px;
     background: white;
     border: 1px solid gray;
     padding: 2px;">
@@ -811,10 +811,10 @@ img.imgsize {
 											<li class="deadline" style="    margin-bottom: 8px;
     font-size: 1.1em;">
 											<span class="titBx">
-											<a href="" class="devClick devHref" data-click-value="98">
+											<a href="" class="devClick devHref" data-click-value="98" style="color:gray">
 											~<fmt:formatDate value="${map['END_DATE']}" pattern="MM-dd"/></a>
-											</span> 
-													<span class="txBx">${map['JOBTITLE'] }</span></li>
+											</span> <!-- <a href="<c:url value='/company/jobopening_view.do?jobopening=${map["JOBOPENING"] }'/> "> -->
+													<span class="txBx" onclick="location.href='<c:url value='/company/jobopening_view.do?jobopening=${map["JOBOPENING"] }'/>'"> ${map['COMPANYNAME'] }</span></li>
 										</c:forEach>   
 										
 										<%--   <c:forEach var="map" items="${list }">
@@ -930,6 +930,26 @@ img.imgsize {
 						
 						<div class="row p-t-35"
 							style="padding-top: 0px; width: 1300px; margin-left: -125px;">
+							<c:forEach var="map" items="${list }">
+							<div class="col-sm-6 p-r-25 p-r-15-sr991" id="vvipone">
+								<a href="<c:url value='/company/jobopening_view.do?jobopening='/>" class="f1-m-3 cl2 hov-cl10 trans-03" style="font-size: 1.0em">
+								<!-- Item latest -->
+								<div class="m-b-45"> 
+									<div style="width:270px;height:127px;">
+										<img src ="<c:url value='/peoplejob_upload/${map["IMAGE"] }'/>" alt="IMG" class="imgsize">
+									</div>
+									<div class="p-t-16"> 
+										<h5 class="p-b-5" style="font-size: 1.3em; margin-top: -39px;"> ${map['JOBTITLE'] } </h5>
+										<h5 class="p-b-5" style="font-size: 1.1em;display: inline; margin-right: 10px;"> ${map['COMPANYNAME'] } </h5>
+										<span class="cl8">   D-13 </span><br>     
+											<img alt="스크랩임시사진" src="<c:url value='/peoplejob_upload/scrapstarwhite.PNG'/>" style="  margin-top: 3px;">
+											 <img alt="지원버튼사진" src="<c:url value='/peoplejob_upload/즉시지원.PNG'/>" style="float:right;"> 
+									</div> 
+								</div>
+						</a>
+							</div>
+							</c:forEach>
+							
 							<div class="col-sm-6 p-r-25 p-r-15-sr991" id="vvipone">
 								<a href="blog-detail-01.html" class="f1-m-3 cl2 hov-cl10 trans-03" style="font-size: 1.0em">
 								<!-- Item latest -->
@@ -944,8 +964,179 @@ img.imgsize {
 											 <img alt="스크랩임시사진" src="<c:url value='/peoplejob_upload/즉시지원.PNG'/>" style="float:right;">
 									</div>
 								</div>
-							</div>
 						</a>
+							</div>
+							
+							<div class="col-sm-6 p-r-25 p-r-15-sr991" id="vvipone">
+								<!-- Item latest -->
+								<div class="m-b-45">
+									<a href="blog-detail-01.html" class="wrap-pic-w hov1 trans-03">
+										<img src="<c:url value='/resources/main/images/naver.jpg'/>"
+										alt="IMG" class="imgsize">
+									</a>
+
+									<h5 class="p-b-5">
+										<a href="blog-detail-01.html"
+											class="f1-m-3 cl2 hov-cl10 trans-03"> 2019 네이버 개발자 채용 </a>
+									</h5>
+
+									<span class="cl8"> <a href="#"
+										class="f1-s-4 cl8 hov-cl10 trans-03"> by NAVER </a> <span
+										class="f1-s-3 m-rl-3"> - </span> <span class="f1-s-3">
+											2019-06-30 ~ 2019-07-15 </span>
+									</span>
+								</div>
+							</div>
+
+							<div class="col-sm-6 p-r-25 p-r-15-sr991" id="vvipone"> 
+								<!-- Item latest -->
+								<div class="m-b-45">
+									<a href="blog-detail-01.html" class="wrap-pic-w hov1 trans-03">
+										<img src="<c:url value='/resources/main/images/한화.png'/>"
+										alt="IMG" class="imgsize">
+									</a>
+
+									<div class="p-t-16">
+										<h5 class="p-b-5">
+											<a href="blog-detail-01.html"
+												class="f1-m-3 cl2 hov-cl10 trans-03"> 한화 2019 공채 </a>
+										</h5>
+
+										<span class="cl8"> <a href="#"
+											class="f1-s-4 cl8 hov-cl10 trans-03"> by HanWha </a> <span
+											class="f1-s-3 m-rl-3"> - </span> <span class="f1-s-3">
+												Feb 15 </span>
+										</span>
+									</div>
+								</div>
+							</div>
+
+							<div class="col-sm-6 p-r-25 p-r-15-sr991">
+								<!-- Item latest -->
+								<div class="m-b-45">
+									<a href="blog-detail-01.html" class="wrap-pic-w hov1 trans-03">
+										<img
+										src="<c:url value='/resources/main/images/kaokaobank.png'/>"
+										alt="IMG" class="imgsize">
+									</a>
+
+									<div class="p-t-16">
+										<h5 class="p-b-5">
+											<a href="blog-detail-01.html"
+												class="f1-m-3 cl2 hov-cl10 trans-03"> 한화 2019 공채 </a>
+										</h5>
+
+										<span class="cl8"> <a href="#"
+											class="f1-s-4 cl8 hov-cl10 trans-03"> by HanWha </a> <span
+											class="f1-s-3 m-rl-3"> - </span> <span class="f1-s-3">
+												Feb 15 </span>
+										</span>
+									</div>
+								</div>
+							</div>
+
+							<div class="col-sm-6 p-r-25 p-r-15-sr991">
+								<!-- Item latest -->
+								<div class="m-b-45">
+									<a href="blog-detail-01.html" class="wrap-pic-w hov1 trans-03">
+										<img src="<c:url value='/resources/main/images/ezen.jpg'/>"
+										alt="IMG" class="imgsize">
+									</a>
+
+									<div class="p-t-16">
+										<h5 class="p-b-5">
+											<a href="blog-detail-01.html"
+												class="f1-m-3 cl2 hov-cl10 trans-03"> 한화 2019 공채 </a>
+										</h5>
+
+										<span class="cl8"> <a href="#"
+											class="f1-s-4 cl8 hov-cl10 trans-03"> by HanWha </a> <span
+											class="f1-s-3 m-rl-3"> - </span> <span class="f1-s-3">
+												Feb 15 </span>
+										</span>
+									</div>
+								</div>
+							</div>
+
+							<div class="col-sm-6 p-r-25 p-r-15-sr991">
+								<!-- Item latest -->
+								<div class="m-b-45">
+									<a href="blog-detail-01.html" class="wrap-pic-w hov1 trans-03">
+										<img src="<c:url value='/resources/main/images/lg.png'/>"
+										alt="IMG" class="imgsize">
+									</a>
+
+									<div class="p-t-16">
+										<h5 class="p-b-5">
+											<a href="blog-detail-01.html"
+												class="f1-m-3 cl2 hov-cl10 trans-03"> 한화 2019 공채 </a>
+										</h5>
+
+										<span class="cl8"> <a href="#"
+											class="f1-s-4 cl8 hov-cl10 trans-03"> by HanWha </a> <span
+											class="f1-s-3 m-rl-3"> - </span> <span class="f1-s-3">
+												Feb 15 </span>
+										</span>
+									</div>
+								</div>
+							</div>
+						</div>
+
+
+
+				</div>
+				<div class="row justify-content-center" style="width: 1300px;margin-left: 67px;">  
+						<%-- <div class="how2 how2-cl4 flex-s-c m-r-10 m-r-0-sr991">
+							<h3 class="f1-m-2 cl3 tab01-title" style="float: right">
+								채용정보</h3>
+							<h5>VIP</h5>
+							<h5 style="margin-left: 525px;">
+								
+							</h5>   
+						</div> --%>  
+						<div style="margin-left: -115px;width: 1280px;margin-top: 10px;">
+						<h1>VIP</h1>  <a href="<c:url value='/service/payment.do'/> " style="font-size:1.1em;color:black;"> >상품문의 </a>
+						</div>
+						
+						<div class="row p-t-35"
+							style="padding-top: 0px; width: 1300px; margin-left: -125px;">
+							<c:forEach var="map" items="${list }">
+							<div class="col-sm-6 p-r-25 p-r-15-sr991" id="vvipone">
+								<a href="<c:url value='/company/jobopening_view.do?jobopening='/>" class="f1-m-3 cl2 hov-cl10 trans-03" style="font-size: 1.0em">
+								<!-- Item latest -->
+								<div class="m-b-45"> 
+									<div style="width:270px;height:127px;">
+										<img src ="<c:url value='/peoplejob_upload/${map["IMAGE"] }'/>" alt="IMG" class="imgsize">
+									</div>
+									<div class="p-t-16"> 
+										<h5 class="p-b-5" style="font-size: 1.3em; margin-top: -39px;"> ${map['JOBTITLE'] } </h5>
+										<h5 class="p-b-5" style="font-size: 1.1em;display: inline; margin-right: 10px;"> ${map['COMPANYNAME'] } </h5>
+										<span class="cl8">   D-13 </span><br>     
+											<img alt="스크랩임시사진" src="<c:url value='/peoplejob_upload/scrapstarwhite.PNG'/>" style="  margin-top: 3px;">
+											 <img alt="지원버튼사진" src="<c:url value='/peoplejob_upload/즉시지원.PNG'/>" style="float:right;"> 
+									</div> 
+								</div>
+						</a>
+							</div>
+							</c:forEach>
+							
+							<div class="col-sm-6 p-r-25 p-r-15-sr991" id="vvipone">
+								<a href="blog-detail-01.html" class="f1-m-3 cl2 hov-cl10 trans-03" style="font-size: 1.0em">
+								<!-- Item latest -->
+								<div class="m-b-45"> 
+										<img src="<c:url value='/resources/main/images/samsung.png'/>"
+										alt="IMG" class="imgsize">
+									<div class="p-t-16"> 
+										<h5 class="p-b-5" style="font-size: 1.3em; margin-top: -39px;"> 삼성전자 개발자 채용 </h5>
+										<h5 class="p-b-5" style="font-size: 1.1em;display: inline; margin-right: 10px;"> SAMSUNG </h5>
+										<span class="cl8">   D-13 </span><br>
+											<img alt="스크랩임시사진" src="<c:url value='/peoplejob_upload/scrapstarwhite.PNG'/>" style="  margin-top: 3px;">
+											 <img alt="스크랩임시사진" src="<c:url value='/peoplejob_upload/즉시지원.PNG'/>" style="float:right;">
+									</div>
+								</div>
+						</a>
+							</div>
+							
 							<div class="col-sm-6 p-r-25 p-r-15-sr991" id="vvipone">
 								<!-- Item latest -->
 								<div class="m-b-45">

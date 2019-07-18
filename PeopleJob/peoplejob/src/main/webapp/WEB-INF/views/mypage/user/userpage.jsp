@@ -263,7 +263,7 @@ function company(){
 									</a>
 									</c:if>
 									<c:if test="${sessionScope.author_code==2|| sessionScope.author_code==3 }" >
-									<a href="" class="dis-block f1-s-10 text-uppercase cl2 hov-cl10 trans-03 p-tb-13" onclick="company()">
+									<a href="#" class="dis-block f1-s-10 text-uppercase cl2 hov-cl10 trans-03 p-tb-13" onclick="company()">
 										기업정보 관리
 									</a>
 									</c:if>
