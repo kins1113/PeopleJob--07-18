@@ -70,7 +70,7 @@
 	  });//
   
  $('#pay2').click(function(){
-		  
+		   
 		  if(${sessionScope.memberid==null}){ 
 			  alert('로그인을 해주세요');
 			  location.href="<c:url value='/login/login.do'/>";
@@ -124,9 +124,9 @@
 	 
   
   });
-</script>
-<div class="container" style="margin-top: 30px; margin-bottom: 30px;">
-    <div class="row">
+</script> 
+<div class="container" style="margin-top: 30px; margin-bottom: 30px;min-height: 550px; ">
+    <div class="row" style="    margin-top: 50px;">
         <div class="col-12 col-md-6 col-lg-3">
             <div class="card text-center p-table p-red">
                 <div class="card-header">

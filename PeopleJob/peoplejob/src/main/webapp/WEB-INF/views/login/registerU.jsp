@@ -168,10 +168,6 @@ textarea {
 				alert('비밀번호가 일치하지 않습니다.');
 				event.preventDefault();
 				$('#pwd2').focus();
-			} else if (!$('#pwd').val().equlas($('#pwd2').val())) {
-				alert('비밀번호가 일치하지 않습니다.');
-				event.preventDefault();
-				$('#pwd2').focus();
 			} else if ($('#membername').val() == '') {
 				alert('이름을 입력해주세요');
 				$('#membername').focus();
@@ -326,7 +322,7 @@ textarea {
 				$('.pwd1error').hide(); 
 				$('#chkpwd').val('N');
 				 
-			}else {
+			}else if($('#pwd').val()>=4 && validate_pwd($('#pwd').val())){
 				$('.pwderror').html("비밀번호 규칙에 맞지 않습니다.");
 				$('.pwderror').show();
 				$('#chkpwd').val('N');
@@ -405,7 +401,7 @@ textarea {
 									<!--  <input type="hidden" name="companyCode" id="companyCode">  -->
 									
 									<div class="form-group" style="float: left; margin-right:30px;" >
-										<input type="text" name="memberid" id="memberid" tabindex="1" placeholder="아이디 *" 
+										<input type="text" name="memberid" id="memberid" tabindex="1" placeholder="아이디 " 
 										class="form-control infobox" style="width:250px" title="아이디" maxlength="10">2~10자의 영문자, 숫자와 특수기호(_)만 사용 가능합니다.
 										
 									</div>
@@ -420,7 +416,7 @@ textarea {
 
 								<div class="form-group" style="float: left; margin-right: 30px;">
 									<input type="password" name="pwd" id="pwd" tabindex="1"
-										placeholder="비밀번호 *" class="form-control" style="width: 250px"
+										placeholder="비밀번호 " class="form-control" style="width: 250px"
 										title="비밀번호">비밀번호는 4글자 이상, 영문자와 숫자로 만들어주세요.
 								</div>
 
