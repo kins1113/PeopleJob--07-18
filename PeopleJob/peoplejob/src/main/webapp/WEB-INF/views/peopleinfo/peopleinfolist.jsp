@@ -6,7 +6,7 @@
 				검색어 : ${param.searchKeyword}, ${pagingInfo.totalRecord}건 검색되었습니다.
 			</p>
 		</c:if>
-	 </div> 
+	 
 <div class="divSearch"> 
 	<!-- 페이징 처리에도 사용 -->
    	<form name="frmSearch" method="post" 
@@ -18,4 +18,8 @@
 		<div id="where">
 		
 		</div> 
+		<c:import url="occupation.jsp"/>
+		</form>
+		</div>
+			
 		<%@include file="../main/inc/bottom.jsp" %>

@@ -7,7 +7,12 @@
 		document.frmSearch.submit();
 	}
 </script>
-
+<style type="text/css">
+.divList {
+    width: 700px;
+    margin: 0 auto;
+}
+</style>
 <div class="divList">
 	  <input type="hidden" name="resumeCode" value="${param.resumeCode }"/>
 <table class="table"
