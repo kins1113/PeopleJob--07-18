@@ -91,7 +91,6 @@
 		insert into education
 		select #{academicCode},#{schoolname},#{major},#{degree},#{graduatecheck},#{schoollocal},#{graduatetype},#{graduate2},#{graduate} from education
 		where graduatetype=#{graduatetype} 
-		
 	</insert>
 	
 	<insert id="insertHopeWorking" parameterType="resumeVo">

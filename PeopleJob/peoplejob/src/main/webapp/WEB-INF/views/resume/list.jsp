@@ -13,7 +13,7 @@
     margin: 0 auto;
 }
 </style>
-<div class="divList">
+<div class="divList" style="min-height: 630px">
 	  <input type="hidden" name="resumeCode" value="${param.resumeCode }"/>
 <table class="table"
 	 	summary="이력서 현황에 관한 표로써, 이력서제목, 이력서 공개 설정, 내 이력서 열람 기업에 대한 정보를 제공합니다.">

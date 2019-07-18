@@ -41,7 +41,6 @@
 		</div>
 		<div>
 		<!--이력서 사진 https://kuzuro.blogspot.com/2018/10/11.html 여기 참고 -->
-		<img src="..." alt="..." class="img-thumbnail">
 		</div>
 		<div>
 		<label for="education">학력사항</label> &nbsp;
