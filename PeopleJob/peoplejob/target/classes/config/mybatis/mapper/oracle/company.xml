@@ -227,10 +227,13 @@
 	</select>
 	
 	<select id="deadlineimminentBymonth" resultType="map">
-		select jobtitle,end_date from 
+		select * from 
 	(
-	 select * from jobopening 
-	 order by end_date 
+	 select j.end_date,c.companyname, j.jobtitle, J.JOBOPENING
+	 from jobopening j join company c
+	 on j.COMPANY_CODE = c.COMPANY_CODE
+	 where (c.MANNUM+c.womannum)>200
+	 order by j.end_date 
 	 )
  <![CDATA[where rownum<=10
  and (end_date-sysdate)<30 ]]>

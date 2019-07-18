@@ -261,12 +261,13 @@ function company(){
 								<c:if test="${sessionScope.author_code==1 }">
 									<li><a href="#">이력서 관리</a></li>
 								</c:if>
-								<c:if test="${sessionScope.author_code==2 || sessionScope.author_code==3 }">
-									<li><a href="" onclick="jobopening()">채용공고 관리</a></li>
+								<c:if test="${sessionScope.author_code==2}">
+									<li><a href="#" onclick="alert('관리자의 승인을 받은 기업회원만 이용가능합니다.')">채용공고 관리</a></li>
 								</c:if>
-								<%-- <c:if test="${sessionScope.author_code==1 }">
-									<li><a href="#">지원현황</a></li>
-								</c:if> --%>
+								<c:if test="${sessionScope.author_code==3}">
+									<li><a href="<c:url value='/company/my_jobopening_list.do?companycode1=${memberVo.companyCode}'/> ">채용공고 관리</a></li>
+								</c:if>
+								
 								 <!-- 일반회원 -->
                         <c:if test="${sessionScope.author_code==1 }">
                            <li><a href="<c:url value='/apply/apply_list.do'/>">지원현황</a></li>
