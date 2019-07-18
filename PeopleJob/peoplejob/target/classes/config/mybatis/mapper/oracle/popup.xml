@@ -4,6 +4,7 @@
 
 <mapper namespace="config.mybatis.mapper.oracle.popup">
 
+	
 	<insert id="insertPopup" parameterType="popupVo" >
 		<selectKey keyProperty="popupCode" resultType="int" order="BEFORE">
 			select popup_seq.nextval from dual
@@ -17,6 +18,29 @@
 	<select id="selectPopupAll" resultType="popupVo">
 		select * from popup order by end_day
 	</select>
+
+	<update id="updateUsage" parameterType="map" >
+		update popup
+		<if test="usageCk=='미사용'"> set usage= 'Y'</if>
+		<if test="usageCk=='사용중'"> set usage= 'N'</if>
+		where popup_code=#{popupCode}
+	</update>
+	
+	<update id="updateUsageYandN" parameterType="map" >
+		update popup
+		<if test='NYck=="btUsageY"'>set usage='Y'</if>
+		<if test='NYck=="btUsageN"'>set usage='N'</if>
+		where popup_code in 
+		<foreach collection="popupCodeArr" item="i" open="(" close=")" separator=",">
+			#{i}
+		</foreach>
+	</update>
+	
+	<update id="updateTrem" parameterType="map">
+		update popup
+		set start_day = #{startDay}, end_day=#{endDay}
+		where popup_code=#{popupCode}
+	</update>
 
 </mapper>
 
