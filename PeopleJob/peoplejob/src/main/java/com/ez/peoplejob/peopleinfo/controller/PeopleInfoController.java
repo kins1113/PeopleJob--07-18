@@ -53,7 +53,7 @@ public class PeopleInfoController {
 		searchVo.setRecordCountPerPage(WebUtility.RECORD_COUNT_PER_PAGE);
 		searchVo.setFirstRecordIndex(pagingInfo.getFirstRecordIndex());
 		logger.info("셋팅 후 serchVo={}",searchVo);
-		return id;
+		return "peopleinfo/peopleinfolist";
 		
 		
 		

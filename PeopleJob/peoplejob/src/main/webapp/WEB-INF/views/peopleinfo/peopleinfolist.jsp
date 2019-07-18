@@ -18,8 +18,8 @@
 		<div id="where">
 		
 		</div> 
-		<c:import url="occupation.jsp"/>
 		</form>
+		<c:import url="../resume/occupation.jsp"/>
 		</div>
 			
 		<%@include file="../main/inc/bottom.jsp" %>
