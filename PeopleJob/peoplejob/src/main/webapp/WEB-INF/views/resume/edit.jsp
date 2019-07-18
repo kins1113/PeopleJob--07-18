@@ -1,6 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     <%@include file="../main/inc/top.jsp" %>
+    <style type="text/css">
+.divForm {
+    width: 700px;
+    margin: 0 auto;
+}
+</style>
     <script type="text/javascript">
 	$(document).ready(function(){
 		$('form[name=frm2]').submit(function(){
@@ -26,6 +32,11 @@
 	<!-- hidden필드에 no 넣기 -->
 		<input type="hidden" name="resumeCode" value="${param.resumeCode}" />
 		<input type="hidden" name="memberCode" value="${vo1.memberCode}" />
+		<input type="hidden" name="langlicenceCode" value="${vo5.langlicenceCode}">
+		<input type="hidden" name="licenceCode" value="${vo6.licenceCode}">
+		<input type="hidden" name="dvCode" value="${vo4.dvCode}">
+		<input type="hidden" name="academicCode" value="${vo3.academicCode}">
+		<input type="hidden" name="desiredWorkCode" value="${vo2.desiredWorkCode}">
 		<div>
 		<!--이력서 사진 https://kuzuro.blogspot.com/2018/10/11.html  -->
 		<img src="..." alt="..." class="img-thumbnail">

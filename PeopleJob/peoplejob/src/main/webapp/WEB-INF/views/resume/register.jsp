@@ -35,7 +35,25 @@
 		
     <div>
     <!--이력서 사진  https://kuzuro.blogspot.com/2018/10/11.html-->
-        <input type="text" class="form-control"  name="picture" id="picture"  style="ime-mode:active">
+    <div class="inputArea">
+ <label for="picture">이미지</label>
+ <input type="file" id="gdsImg" name="file" />
+ <div class="select_img"><img src="" /></div>
+ 
+ <script>
+  $("#picture").change(function(){
+   if(this.files && this.files[0]) {
+    var reader = new FileReader;
+    reader.onload = function(data) {
+     $(".select_img img").attr("src", data.target.result).width(200);        
+    }
+    reader.readAsDataURL(this.files[0]);
+   }
+  });
+ </script>
+ <%=request.getRealPath("/") %>
+</div>
+        <input type="hidden" class="form-control"  name="picture" id="picture"  >
     </div>
     <div>        
         <label for="membername">이름</label>
@@ -120,23 +138,23 @@
         <div>
 		 <label for="schoollocal">지역</label>&nbsp;
 			<select class="form-control" name="schoollocal" id="schoollocal" >
-        	<option value="서울">서울</option>
-        	<option value="경기">경기</option>
-        	<option value="광주">광주</option>
-        	<option value="대구">대구</option>
-        	<option value="대전">대전</option>
-        	<option value="부산">부산</option>
-        	<option value="울산">울산</option>
-        	<option value="인천">인천</option>
-        	<option value="강원">강원</option>
-        	<option value="경남">경남</option>
-        	<option value="경북">경북</option>
-        	<option value="전남">전남</option>
-        	<option value="전북">전북</option>
-        	<option value="충북">충북</option>
-        	<option value="충남">충남</option>
-        	<option value="제주">제주</option>
-        	<option value="세종">세종</option>
+        	<option data-value="101000" value="서울">서울</option>
+        	<option data-value="102000" value="경기">경기</option>
+        	<option data-value="103000" value="광주">광주</option>
+        	<option data-value="104000" value="대구">대구</option>
+        	<option data-value="105000" value="대전">대전</option>
+        	<option data-value="106000" value="부산">부산</option>
+        	<option data-value="107000" value="울산">울산</option>
+        	<option data-value="108000" value="인천">인천</option>
+        	<option data-value="109000" value="강원">강원</option>
+        	<option data-value="110000" value="경남">경남</option>
+        	<option data-value="111000" value="경북">경북</option>
+        	<option data-value="112000" value="전남">전남</option>
+        	<option data-value="113000" value="전북">전북</option>
+        	<option data-value="114000" value="충북">충북</option>
+        	<option data-value="115000" value="충남">충남</option>
+        	<option data-value="116000" value="제주">제주</option>
+        	<option data-value="118000" value="세종">세종</option>
         	
         </select>   
        </div>
@@ -187,6 +205,7 @@
 	<div>
         <label for="chargework">직종</label>
         <input type="text" class="form-control"  name="chargework" id="chargework" style="ime-mode:active">
+        <c:import url="occupation.jsp"/>
     </div>	
     <div>
         <label for="jobgrade">직급</label>

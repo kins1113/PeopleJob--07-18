@@ -1,7 +1,10 @@
 package com.ez.peoplejob.resume.controller;
 
+import java.io.File;
 import java.util.List;
+import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -14,7 +17,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.ez.peoplejob.common.FileUploadUtility;
 import com.ez.peoplejob.common.PaginationInfo;
 import com.ez.peoplejob.common.SearchVO;
 import com.ez.peoplejob.common.WebUtility;
@@ -27,7 +32,7 @@ public class ResumeController {
 	
 	@Autowired
 	private ResumeService resumeService;
-	
+	@Autowired private FileUploadUtility fileUploadUtil;
 	private Logger logger = LoggerFactory.getLogger(ResumeController.class);
 	
 	@RequestMapping(value="/register.do", method=RequestMethod.GET)
@@ -41,10 +46,20 @@ public class ResumeController {
 	}
 	
 	@RequestMapping(value="/register.do", method=RequestMethod.POST)
-	public String write_post(@ModelAttribute ResumeVO resumeVo,Model model) {
+	public String write_post(@ModelAttribute ResumeVO resumeVo,HttpServletRequest request,Model model) {
 		
 		
-		
+		//이미지 파일 업로드
+		List<Map<String, Object>> list
+		=fileUploadUtil.fileUpload(request);
+				
+				String picture="";
+				for(Map<String, Object> map : list) {
+					picture=(String) map.get("fileName");
+				}
+				resumeVo.setPicture(picture);
+				
+			
 		logger.info("이력서 등록화면 보여주기 매개변수 vo={}",resumeVo);
 		
 		int cnt=resumeService.insertResume(resumeVo);
@@ -111,6 +126,14 @@ public class ResumeController {
 		ResumeVO vo4=resumeService.selectBydvCode(vo.getDvCode());
 		ResumeVO vo5=resumeService.selectBylanglicenceCode(vo.getLanglicenceCode());
 		ResumeVO vo6=resumeService.selectBylicenceCode(vo.getLicenceCode());
+		ResumeVO vo7=resumeService.selectBylocation(vo.getLocalCode());
+		ResumeVO vo8=resumeService.selectBylocation2(vo.getLocalCode2());
+		ResumeVO vo9=resumeService.selectBybtype1(vo.getBtypeCode1());
+		ResumeVO vo10=resumeService.selectBybtype2(vo.getBtypeCode2());
+		ResumeVO vo11=resumeService.selectBybtype3(vo.getBtypeCode3());
+		ResumeVO vo12=resumeService.selectByfirst(vo.getFirstCode());
+		ResumeVO vo13=resumeService.selectBysecond(vo.getSecondCode());
+		ResumeVO vo14=resumeService.selectBythird(vo.getThirdCode());
 		logger.info("상세보기 결과 vo={}", vo);
 		
 		model.addAttribute("vo", vo);
@@ -120,7 +143,14 @@ public class ResumeController {
 		model.addAttribute("vo4", vo4);
 		model.addAttribute("vo5", vo5);
 		model.addAttribute("vo6", vo6);
-		
+		model.addAttribute("vo7", vo7);
+		model.addAttribute("vo8", vo8);
+		model.addAttribute("vo9", vo9);
+		model.addAttribute("vo10", vo10);
+		model.addAttribute("vo11", vo11);
+		model.addAttribute("vo12", vo12);
+		model.addAttribute("vo13", vo13);
+		model.addAttribute("vo14", vo14);
 		return "resume/detail";
 	}
 	
@@ -171,18 +201,34 @@ public class ResumeController {
 	}
 	
 	@RequestMapping(value="/edit.do", method=RequestMethod.POST)
-	public String edit_post(@ModelAttribute ResumeVO resumeVo, Model model) {
+	public String edit_post(@ModelAttribute ResumeVO resumeVo,@RequestParam String oldFileName,HttpServletRequest request, Model model) {
 		logger.info("이력서 수정 처리, 파라미터 resumeVo={}", resumeVo);
-		
-		String msg="", url="/resume/edit.do";
+		List<Map<String,Object>>list=fileUploadUtil.fileUpload(request);
+		 
+		String picture="";
+		for(Map<String,Object>map:list) {
+			picture=(String)map.get("fileName");
+		}
+		resumeVo.setPicture(picture);
+		String msg="", url="/resume/edit.do="+resumeVo.getResumeCode();
 			int cnt=resumeService.updateResume(resumeVo);
 			if(cnt>0) {
 				msg="이력서 수정되었습니다.";
 				url="/resume/detail.do?resumeCode="+resumeVo.getResumeCode();
+				if(picture!=null && !picture.isEmpty()) {
+					if(oldFileName!=null && !oldFileName.isEmpty()) {
+						String path=fileUploadUtil.getUploadPath(request);
+						File oldFile=new File(path, oldFileName);
+						if(oldFile.exists()) {
+							boolean bool=oldFile.delete();
+							logger.info("기존 파일 삭제 여부={}", bool);
+						}
+					}
+				}
 			}else {
 				msg="이력서 수정 실패.";
 			}
-			model.addAttribute("msg", msg);
+		model.addAttribute("msg", msg);
 			model.addAttribute("url", url);
 			
 			return "common/message";
@@ -222,5 +268,16 @@ public class ResumeController {
 		
 		return "common/message";
 	}
-	}	
+}
+	
+/*
+ * @RequestMapping("/ajaxJobtype.do")
+ * 
+ * @ResponseBody public List<ResumeVO> select(@RequestParam(defaultValue = "0")
+ * int resumeNo){ logger.info("ajax-select.do 요청");
+ * 
+ * List<ResumeVO> list = resumeService.selectAll(searscVo);
+ * 
+ * return list; }
+ */
 

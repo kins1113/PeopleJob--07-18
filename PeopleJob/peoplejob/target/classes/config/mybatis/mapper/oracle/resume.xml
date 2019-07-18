@@ -85,18 +85,22 @@
 	</insert>
 	
 	<insert id="insertEducation" parameterType="resumeVo">
-		
+		<selectKey order="BEFORE" keyProperty="academicCode" resultType="int">
+		select education_seq.nextval from dual
+		</selectKey>
 		insert into education
-		select * from education
-		where academic_code=#{academicCode} and graduatetype=#{graduatetype}
+		select #{academicCode},#{schoolname},#{major},#{degree},#{graduatecheck},#{schoollocal},#{graduatetype},#{graduate2},#{graduate} from education
+		where graduatetype=#{graduatetype} 
 		
 	</insert>
 	
 	<insert id="insertHopeWorking" parameterType="resumeVo">
-		
+		<selectKey order="BEFORE" keyProperty="hopeworkCode" resultType="int">
+		select hope_working_seq.nextval from dual
+		</selectKey>
 		insert into hope_working
-		select * from hope_working
-		where hopework_code=#{hopeworkCode} and hopeworkform=#{hopeworkform}
+		select #{hopeworkCode},#{hopeworkdate},#{hopepay},#{hopeworkform},#{localCode},#{btypeCode3},#{thirdCode} from hope_working
+		where  hopeworkform=#{hopeworkform} 
 		
 	</insert>
 	
@@ -104,62 +108,79 @@
 	
 	
 	<insert id="insertBtype1" parameterType="resumeVo">
-		
+		<selectKey order="BEFORE" keyProperty="btypeCode1" resultType="int">
+		select btype1_seq.nextval from dual
+		</selectKey>
 		insert into btype1
-		select * from btype1
+		select #{btypeCode1},#{btypename1} from btype1
 		where btypename1=#{btypename1} and btype_code1=#{btypeCode1}
 		
 	</insert>
 	
 	<insert id="insertBtype2" parameterType="resumeVo">
-		
+		<selectKey order="BEFORE" keyProperty="btypeCode2" resultType="int">
+		select btype2_seq.nextval from dual
+		</selectKey>
 		insert into btype2
-		select * from btype2
+		select #{btypeCode2},#{btypename2},#{btypeCode1} from btype2
 		where btypename2=#{btypename2} and btype_code2=#{btypeCode2}
 		
 	</insert>
 	
 	<insert id="insertBtype3" parameterType="resumeVo">
-		
+		<selectKey order="BEFORE" keyProperty="btypeCode3" resultType="int">
+		select btype3_seq.nextval from dual
+		</selectKey>
 		insert into btype3
-		select * from btype3
+		select #{btypeCode3},#{btypename3},#{btypeCode2} from btype3
 		where btypename3=#{btypename3} and btype_code3=#{btypeCode3}
 		
 	</insert>
 	
 	<insert id="insertLocation" parameterType="resumeVo">
-		
+		<selectKey order="BEFORE" keyProperty="localCode" resultType="int">
+		select location_seq.nextval from dual
+		</selectKey>
 		insert into location
-		select * from location
+		select #{localCode},#{sido},#{localCode2} from location
 		where sido=#{sido} and local_code=#{localCode}
 		
 	</insert>
 	<insert id="insertLocation2" parameterType="resumeVo">
-		
+		<selectKey order="BEFORE" keyProperty="localCode2" resultType="int">
+		select location2_seq.nextval from dual
+		</selectKey>
 		insert into location2
-		select * from location2
+		select #{localCode2},#{gugun} from location2
 		where gugun=#{gugun} and local_code2=#{localCode2}
 		
 	</insert>
 	
 	<insert id="insertThird" parameterType="resumeVo">
-
+		<selectKey order="BEFORE" keyProperty="thirdCode" resultType="int">
+		select third_seq.nextval from dual
+		</selectKey>
 		insert into third
-		select * from third
+		select #{thirdCode},#{thirdname},#{secondCode} from third
 		where thirdname=#{thirdname} and third_code=#{thirdCode}
 		
 	</insert> 
 	<insert id="insertSecond" parameterType="resumeVo">
-
+		<selectKey order="BEFORE" keyProperty="secondCode" resultType="int">
+		select second_seq.nextval from dual
+		</selectKey>
 		insert into second
-		select * from second
+		select #{secondCode},#{secondname},#{firstCode} from second
 		where secondname=#{secondname} and second_code=#{secondCode}
 		
 	</insert> 
 	<insert id="insertFirst" parameterType="resumeVo">
-
+		<selectKey order="BEFORE" keyProperty="firstCode" resultType="int">
+		select first_seq.nextval from dual
+		</selectKey>
+		
 		insert into first
-		select * from first
+		select #{firstCode},#{firstname} from first
 		where firstname=#{firstname} and first_code=#{firstCode}
 		
 	</insert> 
@@ -193,6 +214,13 @@
 	<select id="selectResumeByNo" resultType="resumeVo" parameterType="int">
 		select * from resume where resume_code=#{resumeCode}
 	</select>
+	
+	<update id="updateResume" parameterType="resumeVo">
+	update resume
+	set resume_code=#{resumeCode},resumetitle=#{resumetitle},introduce=#{introduce},award=#{award},langlicence_code=#{langlicenceCode},licence_code=#{licenceCode},dv_code=#{dvCode},academic_code=#{academicCode},desiredwork_code=#{desiredWorkCode},opencheck=#{opencheck},picture=#{picture}
+	
+	where resume_code=#{resumeCode}
+	</update>
 		<!-- <select id="selectResumeByNo" resultType="resumeVo" parameterType="int">
 		select resume_code, resumetitle, introduce, award, opencheck, langlicencename,lang_getdate,
     	institute,companyname,workterm,chargework,l_name,l_getdate,l_institution,
@@ -215,7 +243,7 @@
 		delete from resume where resume_code=#{resumeCode}
 		</delete>
 		
-	<!-- 	<update id="updateResume" parameterType="resumeVo">
+	<!-- <update id="updateResume" parameterType="resumeVo">
 		update (select resume_code, resumetitle, introduce, award, opencheck, langlicencename,lang_getdate,
     	institute,companyname,workterm,chargework,l_name,l_getdate,l_institution,
     	schoolname,major,degree,graduate,graduatecheck,jobtype,hopeworkdate,hopepay,
@@ -239,7 +267,7 @@
     	email=#{email},picture=#{picture},tel=#{tel},sido=#{sido},gugun=#{gugun},firstname=#{firstname},secondname=#{secondname},thirdname=#{thirdname}
 			 
 		where resume_code=#{resumeCode}
-	</update> -->
+	</update>  -->
 	
 	<!-- <insert id="insertResume" parameterType="resumeVo">
 		<selectKey order="BEFORE" keyProperty="resumeCode,langlicenceCode,dvCode,licenceCode,academicCode,desiredworkCode,memberCode" resultType="hashmap">
