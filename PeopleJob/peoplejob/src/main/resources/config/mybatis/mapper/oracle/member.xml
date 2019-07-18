@@ -221,7 +221,7 @@
 			( 
 				select * from member m
 	            left join company c
-	            on m.COMPANY_CODE = c.BUSSINESS_NUMBER          
+	            on m.COMPANY_CODE = c.COMPANY_CODE        
 	            where authority_code in (2,3)
 	 		) A
 		) 
@@ -243,13 +243,13 @@
 	<select id="getTotalRecordCompanyManager" parameterType="map" resultType="int"> 
 				select count(*) from member m
 	            left join company c
-	            on m.COMPANY_CODE = c.BUSSINESS_NUMBER          
+	            on m.COMPANY_CODE = c.COMPANY_CODE        
 	            where authority_code in (2,3)
 	</select>
 	<select id="selectAllCompanyManager" parameterType="map" resultType="map"> 
 				select * from member m
 	            left join company c
-	            on m.COMPANY_CODE = c.BUSSINESS_NUMBER          
+	            on m.COMPANY_CODE = c.COMPANY_CODE         
 	            where authority_code in (2,3)
 	            order by authority_code
 	</select>

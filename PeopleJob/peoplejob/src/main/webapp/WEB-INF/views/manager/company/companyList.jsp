@@ -154,7 +154,7 @@ input.btn.btn-secondary.btn-default {margin-top: 4px;}
 					<button type="button"class="btn btn-secondary btn-default" onclick="doExcelDownloadProcess('')" id="btExceil">엑셀 다운</button> 
 				</div>
 				<div class="form-group serDiv">
-					<input type="submit" class="btn btn-secondary btn-default" id="postSearch"value="검색">&nbsp;
+					<input type="submit" class="btn btn-secondary btn-default" id="postSearch" value="검색">&nbsp;
 				</div>
 				<div class="form-group serDiv">
 					<input type="text" class="form-control" placeholder="검색어"

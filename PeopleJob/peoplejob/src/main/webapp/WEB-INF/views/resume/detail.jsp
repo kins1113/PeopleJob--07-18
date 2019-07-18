@@ -10,8 +10,10 @@
 	 }
 	.divForm {
 		width: 500px;
+		margin: 0 auto;
 		}
-</style>  
+</style> 
+ 
 </head>
 <body>
 	<h2>이력서 상세보기</h2>
@@ -30,6 +32,10 @@
  				<td><span class="glyphicon glyphicon-globe" aria-hidden="true">주소</span> <span>${vo1.address}</span></td>
  				<td><span class="glyphicon glyphicon-globe" aria-hidden="true">상세주소</span> <span>${vo1.addressdetail}</span></td>
  				<td><span class="glyphicon glyphicon-phone" aria-hidden="true">핸드폰</span> <span>${vo1.tel}</span></td>
+				<td>
+					<img src="<c:url value='/peoplejob_images/${vo.picture }'/>" 
+						alt="${vo1.membername }" width="50">
+				</td>
 				</tr>
 			</table>
 		</div>
@@ -67,7 +73,7 @@
 			<table class="table">
 				<tr>
  				<td><span class="glyphicon glyphicon-credit-card" aria-hidden="true"></span> <span>${vo5.certificationtype}</span></td>
-				<c:if test="${vo.certificationtype=='자격증/면허증'}">            	
+				<c:if test="${vo5.certificationtype=='자격증/면허증'}">            	
             		 <label for="lName">자격증명</label>
  				<td><span class="glyphicon glyphicon-credit-card" aria-hidden="true"></span> <span>${vo6.lName}</span></td>
  				<label for="lInstitution">발행처/기관</label>
@@ -75,7 +81,7 @@
  				 <label for="lGetdate">취득일</label>
  				<td><span class="glyphicon glyphicon-credit-card" aria-hidden="true"></span> <span>${vo6.lGetdate}</span></td>
             	</c:if>
-				<c:if test="${vo.certificationtype=='어학시험'}">            	
+				<c:if test="${vo5.certificationtype=='어학시험'}">            	
             		 <label for="language">언어</label>
  				<td><span class="glyphicon glyphicon-credit-card" aria-hidden="true"></span> <span>${vo5.language}</span></td>
  				<label for="institution">발행처/기관</label>
@@ -102,14 +108,14 @@
 			<tr>
  				<td><span class="glyphicon glyphicon-star" aria-hidden="true">근무형태</span> <span>${vo2.hopeworkform}</span></td>
  				<td><span class="glyphicon glyphicon-star" aria-hidden="true">희망연봉</span> <span>${vo2.hopepay}</span></td>
- 				<td><span class="glyphicon glyphicon-star" aria-hidden="true">(희망근무지역)시도</span> <span>${vo2.sido}</span></td>
- 				<td><span class="glyphicon glyphicon-star" aria-hidden="true">(희망근무지역)구군</span> <span>${vo2.gugun}</span></td>
- 				<td><span class="glyphicon glyphicon-star" aria-hidden="true">(희망근무지역)업종1차</span> <span>${vo2.btypename1}</span></td>
- 				<td><span class="glyphicon glyphicon-star" aria-hidden="true">(희망근무지역)업종2차</span> <span>${vo2.btypename2}</span></td>
- 				<td><span class="glyphicon glyphicon-star" aria-hidden="true">(희망근무지역)업종3차</span> <span>${vo2.btypename3}</span></td>
- 				<td><span class="glyphicon glyphicon-star" aria-hidden="true">직종1차</span> <span>${vo2.firstname}</span></td>
- 				<td><span class="glyphicon glyphicon-star" aria-hidden="true">직종2차</span> <span>${vo2.secondname}</span></td>
- 				<td><span class="glyphicon glyphicon-star" aria-hidden="true">직종3차</span> <span>${vo2.thirdname}</span></td>
+ 				<td><span class="glyphicon glyphicon-star" aria-hidden="true">(희망근무지역)시도</span> <span>${vo7.sido}</span></td>
+ 				<td><span class="glyphicon glyphicon-star" aria-hidden="true">(희망근무지역)구군</span> <span>${vo8.gugun}</span></td>
+ 				<td><span class="glyphicon glyphicon-star" aria-hidden="true">(희망근무지역)업종1차</span> <span>${vo9.btypename1}</span></td>
+ 				<td><span class="glyphicon glyphicon-star" aria-hidden="true">(희망근무지역)업종2차</span> <span>${vo10.btypename2}</span></td>
+ 				<td><span class="glyphicon glyphicon-star" aria-hidden="true">(희망근무지역)업종3차</span> <span>${vo11.btypename3}</span></td>
+ 				<td><span class="glyphicon glyphicon-star" aria-hidden="true">직종1차</span> <span>${vo12.firstname}</span></td>
+ 				<td><span class="glyphicon glyphicon-star" aria-hidden="true">직종2차</span> <span>${vo13.secondname}</span></td>
+ 				<td><span class="glyphicon glyphicon-star" aria-hidden="true">직종3차</span> <span>${vo14.thirdname}</span></td>
  				<td><span class="glyphicon glyphicon-star" aria-hidden="true">근무일시</span> <span>${vo2.hopeworkdate}</span></td>
 			</tr>
 		</table>
