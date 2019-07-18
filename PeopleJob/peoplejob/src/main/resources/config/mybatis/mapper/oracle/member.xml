@@ -218,11 +218,72 @@
 	select * from 
 		(
 			select A.*, rownum as RNUM from 
-			( 
+			(
+			select * from
+				(
 				select * from member m
 	            left join company c
-	            on m.COMPANY_CODE = c.COMPANY_CODE        
-	            where authority_code in (2,3)
+	            on m.COMPANY_CODE = c.company_code
+	            <where>          
+							<!-- memberVo.searchCondition == -->            	
+	            	<if test="memberVo.searchKeyword!=null and memberVo.searchKeyword!=''">
+		            	<if test='memberVo.searchCondition=="all"'>
+		            		memberid like '%' || #{memberVo.searchKeyword} || '%' or 
+		            		membername like '%' || #{memberVo.searchKeyword} || '%' or
+		            		companyName like '%' || #{memberVo.searchKeyword} || '%' or
+		            		address like '%' || #{memberVo.searchKeyword} || '%' or
+		            		addressdetail like '%' || #{memberVo.searchKeyword} || '%' or
+		            		company_address like '%' || #{memberVo.searchKeyword} || '%' or
+		            		company_addressdetail like '%' || #{memberVo.searchKeyword} || '%' or
+		            		tel like '%' || #{memberVo.searchKeyword} || '%' or
+		            		email like '%' || #{memberVo.searchKeyword} || '%'
+		            	</if>
+		            	<if test='memberVo.searchCondition=="memberid,membername"'>
+		            		memberid like '%' || #{memberVo.searchKeyword} || '%' or 
+		            		membername like '%' || #{memberVo.searchKeyword} || '%' 
+		            	</if>
+		            	<if test='memberVo.searchCondition=="companyName"'>
+		            		companyName like '%' || #{memberVo.searchKeyword} || '%' 
+		            	</if>
+		            	<if test='memberVo.searchCondition=="address,addressdetail"'>
+		            		address like '%' || #{memberVo.searchKeyword} || '%' or
+		            		addressdetail like '%' || #{memberVo.searchKeyword} || '%' 
+		            	</if>
+		            	<if test='memberVo.searchCondition=="company_address,company_addressdetail"'>
+		            		company_address like '%' || #{memberVo.searchKeyword} || '%' or
+		            		company_addressdetail like '%' || #{memberVo.searchKeyword} || '%' 
+		            	</if>
+		            	<if test='memberVo.searchCondition=="tel"'>
+		            		tel like '%' || #{memberVo.searchKeyword} || '%' 
+		            	</if>
+		            	<if test='memberVo.searchCondition=="email"'>
+		            		email like '%' || #{memberVo.searchKeyword} || '%' 
+		            	</if>
+		            	<if test="startDay!=null and startDay !='' and endDay!=null and endDay != ''">
+							 <![CDATA[ and regdate >= #{startDay} and regdate <to_date(#{endDay})+1]]>
+						</if>
+	            	</if>
+	            	<if test='memberVo.searchKeyword==null or memberVo.searchKeyword==""'>
+		            	<if test="startDay!=null and startDay !='' and endDay!=null and endDay != ''">
+							 <![CDATA[ and regdate >= #{startDay} and regdate <to_date(#{endDay})+1]]>
+						</if>
+	            	</if>
+	            	
+	            </where>
+	            	
+	            <if test="filterCode!=null and filterKey!=null">
+					<if test='filterKey=="Y"'>
+						 order by ${filterCode} desc
+					</if>
+					<if test='filterKey=="N"'>
+						 order by ${filterCode}
+					</if>
+				</if>
+				  <if test="filterCode==null or filterKey==null">
+				 	order by member_code desc
+				 </if>
+				 )
+	 		where authority_code in (2,3)
 	 		) A
 		) 
 	<![CDATA[where RNUM>#{memberVo.firstRecordIndex}  
@@ -241,9 +302,56 @@
 	</select>
 	
 	<select id="getTotalRecordCompanyManager" parameterType="map" resultType="int"> 
-				select count(*) from member m
+			select count(*) from
+				(
+				select * from member m
 	            left join company c
-	            on m.COMPANY_CODE = c.COMPANY_CODE        
+	            on m.COMPANY_CODE = c.company_code
+	              <where>        
+	            	<if test="memberVo.searchKeyword!=null and memberVo.searchKeyword!=''">
+		            	<if test='memberVo.searchCondition=="all"'>
+		            		memberid like '%' || #{memberVo.searchKeyword} || '%' or 
+		            		membername like '%' || #{memberVo.searchKeyword} || '%' or
+		            		companyName like '%' || #{memberVo.searchKeyword} || '%' or
+		            		address like '%' || #{memberVo.searchKeyword} || '%' or
+		            		addressdetail like '%' || #{memberVo.searchKeyword} || '%' or
+		            		company_address like '%' || #{memberVo.searchKeyword} || '%' or
+		            		company_addressdetail like '%' || #{memberVo.searchKeyword} || '%' or
+		            		tel like '%' || #{memberVo.searchKeyword} || '%' or
+		            		email like '%' || #{memberVo.searchKeyword} || '%'
+		            	</if>
+		            	<if test='memberVo.searchCondition=="memberid,membername"'>
+		            		memberid like '%' || #{memberVo.searchKeyword} || '%' or 
+		            		membername like '%' || #{memberVo.searchKeyword} || '%' 
+		            	</if>
+		            	<if test='memberVo.searchCondition=="companyName"'>
+		            		companyName like '%' || #{memberVo.searchKeyword} || '%' 
+		            	</if>
+		            	<if test='memberVo.searchCondition=="address,addressdetail"'>
+		            		address like '%' || #{memberVo.searchKeyword} || '%' or
+		            		addressdetail like '%' || #{memberVo.searchKeyword} || '%' 
+		            	</if>
+		            	<if test='memberVo.searchCondition=="company_address,company_addressdetail"'>
+		            		company_address like '%' || #{memberVo.searchKeyword} || '%' or
+		            		company_addressdetail like '%' || #{memberVo.searchKeyword} || '%' 
+		            	</if>
+		            	<if test='memberVo.searchCondition=="tel"'>
+		            		tel like '%' || #{memberVo.searchKeyword} || '%' 
+		            	</if>
+		            	<if test='memberVo.searchCondition=="email"'>
+		            		email like '%' || #{memberVo.searchKeyword} || '%' 
+		            	</if>
+		            	<if test="startDay!=null and startDay !='' and endDay!=null and endDay != ''">
+							 <![CDATA[ and regdate >= #{startDay} and regdate <to_date(#{endDay})+1]]>
+						</if>
+	            	</if>
+	            	<if test="memberVo.searchKeyword==null or memberVo.searchKeyword==''">
+		            	<if test="startDay!=null and startDay !='' and endDay!=null and endDay != ''">
+							 <![CDATA[ and regdate >= #{startDay} and regdate <to_date(#{endDay})+1]]>
+						</if>
+	            	</if>
+	            </where>
+	            ) 
 	            where authority_code in (2,3)
 	</select>
 	<select id="selectAllCompanyManager" parameterType="map" resultType="map"> 

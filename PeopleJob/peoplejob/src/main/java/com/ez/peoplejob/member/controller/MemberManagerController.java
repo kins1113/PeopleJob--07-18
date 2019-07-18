@@ -70,7 +70,7 @@ public class MemberManagerController {
 			logger.info("일반 회원 조회 memList.size={}",memList.size());
 		}else if("company".equals(authorityCk)) {
 			comList=memberserviceAdmin.selectCompanyManager(map);
-			logger.info("일반 회원 조회 comList.size={}",comList.size());
+			logger.info("기업 회원 조회 comList.size={}",comList.size());
 		}
 			
 		
