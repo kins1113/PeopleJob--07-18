@@ -340,6 +340,7 @@
         </div>
         
         <div>
+        <c:import url="btype.jsp"/>
         <label for="btypename1">업종1차</label>
         
         <input type="text" class="form-control"  name="btypename1" id="btypename1"   style="ime-mode:active">

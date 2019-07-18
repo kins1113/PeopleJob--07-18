@@ -108,7 +108,7 @@ public class ResumeController {
 		}
 	
 	
-	@RequestMapping("/detail.do")
+	@RequestMapping("/resumedetail.do")
 	public String detail(@RequestParam(defaultValue = "0") int resumeCode, 
 			HttpSession session,Model model) {
 		logger.info("이력서 상세보기, 파라미터 resumeCode={}", resumeCode);
@@ -151,7 +151,7 @@ public class ResumeController {
 		model.addAttribute("vo12", vo12);
 		model.addAttribute("vo13", vo13);
 		model.addAttribute("vo14", vo14);
-		return "resume/detail";
+		return "resume/resumedetail";
 	}
 	
 	@RequestMapping(value="/edit.do", method=RequestMethod.GET)
@@ -214,7 +214,7 @@ public class ResumeController {
 			int cnt=resumeService.updateResume(resumeVo);
 			if(cnt>0) {
 				msg="이력서 수정되었습니다.";
-				url="/resume/detail.do?resumeCode="+resumeVo.getResumeCode();
+				url="/resume/resumedetail.do?resumeCode="+resumeVo.getResumeCode();
 				if(picture!=null && !picture.isEmpty()) {
 					if(oldFileName!=null && !oldFileName.isEmpty()) {
 						String path=fileUploadUtil.getUploadPath(request);

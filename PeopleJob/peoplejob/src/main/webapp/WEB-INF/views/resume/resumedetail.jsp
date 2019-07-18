@@ -1,30 +1,42 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<head>
-
+<%@include file="../main/inc/top.jsp" %>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="">
   <meta name="author" content="">
-
+<style>
+form {
+    width: 1277px;
+    margin: 0 auto;
+    border:1px;
+    margin-right: 46px;
+}
+.center{
+	margin: 0 auto;
+	padding-left: 630px;
+}
+button.btn.btn-success {
+    margin: 3px;
+}
+</style>
   <title>Resume - Start Bootstrap Theme</title>
 
   <!-- Bootstrap core CSS -->
-  <link href="resources/css/bootstrap.min.css" rel="stylesheet">
+  <link href="<c:url value='resources/css/bootstrap.min.css'/>" rel="stylesheet">
 
   <!-- Custom fonts for this template -->
   <link href="https://fonts.googleapis.com/css?family=Saira+Extra+Condensed:500,700" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=Muli:400,400i,800,800i" rel="stylesheet">
-  <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
+  <link href="<c:url value='resources/css/all.min.css'/>" rel="stylesheet">
 
   <!-- Custom styles for this template -->
-  <link href="css/resume.min.css" rel="stylesheet">
+  <link href="<c:url value='resources/css/resume.min.css'/>" rel="stylesheet">
 
-</head>
 
 <body id="page-top">
-
+	<form name="frm1" method="post" 
+	action="<c:url value='/resume/resumedetail.do'/>" enctype="multipart/form-data">
   <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top" id="sideNav">
     <a class="navbar-brand js-scroll-trigger" href="#page-top">
       <span class="d-block d-lg-none">Clarence Taylor</span>
@@ -38,22 +50,22 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav">
         <li class="nav-item">
-          <a class="nav-link js-scroll-trigger" href="#about">About</a>
+          <a class="nav-link js-scroll-trigger" href="#about">기본정보</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link js-scroll-trigger" href="#experience">Experience</a>
+          <a class="nav-link js-scroll-trigger" href="#experience">경력사항</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link js-scroll-trigger" href="#education">Education</a>
+          <a class="nav-link js-scroll-trigger" href="#education">학력사항</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link js-scroll-trigger" href="#skills">Skills</a>
+          <a class="nav-link js-scroll-trigger" href="#skills">자격증/어학</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link js-scroll-trigger" href="#interests">Interests</a>
+          <a class="nav-link js-scroll-trigger" href="#interests">희망근무</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link js-scroll-trigger" href="#awards">Awards</a>
+          <a class="nav-link js-scroll-trigger" href="#awards">수상내역</a>
         </li>
       </ul>
     </div>
@@ -63,27 +75,23 @@
 
     <section class="resume-section p-3 p-lg-5 d-flex align-items-center" id="about">
       <div class="w-100">
-        <h1 class="mb-0">Clarence
-          <span class="text-primary">Taylor</span>
-        </h1>
-        <div class="subheading mb-5">3542 Berry Street · Cheyenne Wells, CO 80810 · (317) 585-8468 ·
-          <a href="mailto:name@email.com">name@email.com</a>
+        <h1 class="mb-0">이력서
+          <span class="text-primary">상세보기</span>
+        </h1><p class="lead mb-7">이력서 제목:${vo.resumeTitle}</p><br>
+        <img src="<c:url value='/peoplejob_images/${vo.picture }'/>" 
+						alt="${vo1.membername }" width="50">&nbsp;&nbsp;
+        	<span class="glyphicon glyphicon-user" aria-hidden="true">이름:${vo1.membername}&nbsp;&nbsp;
+        	<span class="glyphicon glyphicon-gift" aria-hidden="true">생년월일:<span>${vo1.birth}</span>&nbsp;&nbsp;
+        	<span class="glyphicon glyphicon-gift" aria-hidden="true">성별:<span>${vo1.membergender}</span>
+ 				
+        <div class="subheading mb-5"><span class="glyphicon glyphicon-globe" aria-hidden="true">우편번호:<span>${vo1.zipcode}</span>&nbsp;&nbsp;
+        <span class="glyphicon glyphicon-globe" aria-hidden="true"><span>${vo1.address}</span>&nbsp;<span>${vo1.addressdetail}</span><br><br>
+        <span class="glyphicon glyphicon-phone" aria-hidden="true"><span>${vo1.tel}</span><br><br>
+          <span class="glyphicon glyphicon-envelope" aria-hidden="true"><a href="mailto:${vo1.email}">${vo1.email}</a>
         </div>
-        <p class="lead mb-5">I am experienced in leveraging agile frameworks to provide a robust synopsis for high level overviews. Iterative approaches to corporate strategy foster collaborative thinking to further the overall value proposition.</p>
-        <div class="social-icons">
-          <a href="#">
-            <i class="fab fa-linkedin-in"></i>
-          </a>
-          <a href="#">
-            <i class="fab fa-github"></i>
-          </a>
-          <a href="#">
-            <i class="fab fa-twitter"></i>
-          </a>
-          <a href="#">
-            <i class="fab fa-facebook-f"></i>
-          </a>
-        </div>
+        
+        <span>${vo.introduce}</span>
+        
       </div>
     </section>
 
@@ -91,20 +99,24 @@
 
     <section class="resume-section p-3 p-lg-5 d-flex justify-content-center" id="experience">
       <div class="w-100">
-        <h2 class="mb-5">Experience</h2>
+        <h2 class="mb-5">경력사항</h2>
 
         <div class="resume-item d-flex flex-column flex-md-row justify-content-between mb-5">
           <div class="resume-content">
-            <h3 class="mb-0">Senior Web Developer</h3>
-            <div class="subheading mb-3">Intelitec Solutions</div>
-            <p>Bring to the table win-win survival strategies to ensure proactive domination. At the end of the day, going forward, a new normal that has evolved from generation X is on the runway heading towards a streamlined cloud solution. User generated content in real-time will have multiple touchpoints for offshoring.</p>
+            <h3 class="mb-0">경력구분: <span>${vo4.workcheck}</span></h3><br><br>
+            <div class="subheading mb-3"><span class="glyphicon glyphicon-briefcase" aria-hidden="true">회사명</span> <span>${vo4.companyname}</span></div><br>
+            		<span class="glyphicon glyphicon-briefcase" aria-hidden="true">근무기간:${vo4.workterm}</span>
+            		~<span>${vo4.workterm2}</span>&nbsp;&nbsp;
+            		<span class="glyphicon glyphicon-briefcase" aria-hidden="true">${vo4.workcondition}</span>&nbsp;&nbsp;
+            		<span class="glyphicon glyphicon-briefcase" aria-hidden="true">직종:${vo4.chargework}</span>&nbsp;&nbsp;
+            		<span class="glyphicon glyphicon-briefcase" aria-hidden="true">직급:${vo4.jobgrade}</span>
           </div>
           <div class="resume-date text-md-right">
-            <span class="text-primary">March 2013 - Present</span>
+            <span class="text-primary">이력서 등록일:${vo.resumeRegdate}</span>
           </div>
         </div>
 
-        <div class="resume-item d-flex flex-column flex-md-row justify-content-between mb-5">
+       <!--  <div class="resume-item d-flex flex-column flex-md-row justify-content-between mb-5">
           <div class="resume-content">
             <h3 class="mb-0">Web Developer</h3>
             <div class="subheading mb-3">Intelitec Solutions</div>
@@ -135,7 +147,7 @@
           <div class="resume-date text-md-right">
             <span class="text-primary">September 2008 - June 2010</span>
           </div>
-        </div>
+        </div> -->
 
       </div>
 
@@ -145,21 +157,22 @@
 
     <section class="resume-section p-3 p-lg-5 d-flex align-items-center" id="education">
       <div class="w-100">
-        <h2 class="mb-5">Education</h2>
+        <h2 class="mb-5">학력</h2>
 
         <div class="resume-item d-flex flex-column flex-md-row justify-content-between mb-5">
           <div class="resume-content">
-            <h3 class="mb-0">University of Colorado Boulder</h3>
-            <div class="subheading mb-3">Bachelor of Science</div>
-            <div>Computer Science - Web Development Track</div>
-            <p>GPA: 3.23</p>
+            <h3 class="mb-0"><span class="glyphicon glyphicon-education" aria-hidden="true">학교명</span> <span>${vo3.schoolname}</span></h3><br>
+            <div class="subheading mb-3"><span class="glyphicon glyphicon-education" aria-hidden="true">전공</span> <span>${vo3.major}</span></div>
+            <div>지역<span>${vo3.schoollocal}</span></div><br>
+            <!-- <p>GPA: 3.23</p> -->
+            <span class="text-primary">졸업년도:<span>${vo3.graduate}</span></span>
+            ~<span>${vo3.graduate2}</span>
           </div>
           <div class="resume-date text-md-right">
-            <span class="text-primary">August 2006 - May 2010</span>
           </div>
         </div>
 
-        <div class="resume-item d-flex flex-column flex-md-row justify-content-between">
+        <!-- <div class="resume-item d-flex flex-column flex-md-row justify-content-between">
           <div class="resume-content">
             <h3 class="mb-0">James Buchanan High School</h3>
             <div class="subheading mb-3">Technology Magnet Program</div>
@@ -168,7 +181,7 @@
           <div class="resume-date text-md-right">
             <span class="text-primary">August 2002 - May 2006</span>
           </div>
-        </div>
+        </div> -->
 
       </div>
     </section>
@@ -177,62 +190,61 @@
 
     <section class="resume-section p-3 p-lg-5 d-flex align-items-center" id="skills">
       <div class="w-100">
-        <h2 class="mb-5">Skills</h2>
+        <h2 class="mb-5">자격증/어학</h2>
 
-        <div class="subheading mb-3">Programming Languages &amp; Tools</div>
-        <ul class="list-inline dev-icons">
+        <div class="subheading mb-3">
+        <span class="glyphicon glyphicon-credit-card" aria-hidden="true"></span> <span>${vo5.certificationtype}</span>
+			</div>
+				
+ 		 <ul class="list-inline dev-icons">
+		<c:if test="${vo5.certificationtype=='자격증/면허증'}">           	
           <li class="list-inline-item">
-            <i class="fab fa-html5"></i>
+            <i class="fab fa-html5"> </i><label for="lName">자격증명</label>
+ 				<span class="glyphicon glyphicon-credit-card" aria-hidden="true"></span> <span>${vo6.lName}</span>
           </li>
           <li class="list-inline-item">
-            <i class="fab fa-css3-alt"></i>
+            <i class="fab fa-css3-alt"></i><label for="lInstitution">발행처/기관</label>
+ 				<span class="glyphicon glyphicon-credit-card" aria-hidden="true"></span> <span>${vo6.lInstitution}</span>
           </li>
           <li class="list-inline-item">
-            <i class="fab fa-js-square"></i>
+            <i class="fab fa-js-square"></i><label for="lGetdate">취득일</label>
+ 				<span class="glyphicon glyphicon-credit-card" aria-hidden="true"></span> <span>${vo6.lGetdate}</span>
           </li>
-          <li class="list-inline-item">
-            <i class="fab fa-angular"></i>
-          </li>
-          <li class="list-inline-item">
-            <i class="fab fa-react"></i>
-          </li>
-          <li class="list-inline-item">
-            <i class="fab fa-node-js"></i>
-          </li>
-          <li class="list-inline-item">
-            <i class="fab fa-sass"></i>
-          </li>
-          <li class="list-inline-item">
-            <i class="fab fa-less"></i>
-          </li>
-          <li class="list-inline-item">
-            <i class="fab fa-wordpress"></i>
-          </li>
-          <li class="list-inline-item">
-            <i class="fab fa-gulp"></i>
-          </li>
-          <li class="list-inline-item">
-            <i class="fab fa-grunt"></i>
-          </li>
-          <li class="list-inline-item">
-            <i class="fab fa-npm"></i>
-          </li>
+           
+           </c:if>
+          
         </ul>
 
-        <div class="subheading mb-3">Workflow</div>
+        <div class="subheading mb-3"><span class="glyphicon glyphicon-credit-card" aria-hidden="true"></span> <span>${vo5.certificationtype}</span></div>
         <ul class="fa-ul mb-0">
+        <c:if test="${vo5.certificationtype=='어학시험'}"> 
           <li>
             <i class="fa-li fa fa-check"></i>
-            Mobile-First, Responsive Design</li>
+            <label for="language">언어</label>
+ 				<span class="glyphicon glyphicon-credit-card" aria-hidden="true"></span> <span>${vo5.language}</span></li>
           <li>
             <i class="fa-li fa fa-check"></i>
-            Cross Browser Testing &amp; Debugging</li>
+            <label for="institution">발행처/기관</label>
+ 				<span class="glyphicon glyphicon-credit-card" aria-hidden="true"></span> <span>${vo5.institution}</span></li>
           <li>
             <i class="fa-li fa fa-check"></i>
-            Cross Functional Teams</li>
+            <label for="langlicencename">시험종류</label>
+ 				<span class="glyphicon glyphicon-credit-card" aria-hidden="true"></span> <span>${vo5.langlicencename}</span></li>
           <li>
             <i class="fa-li fa fa-check"></i>
-            Agile Development &amp; Scrum</li>
+            <label for="langpoint">시험점수</label>
+ 				<span class="glyphicon glyphicon-credit-card" aria-hidden="true"></span> <span>${vo5.langpoint}</span></li>
+          <li>
+            <i class="fa-li fa fa-check"></i>
+            <label for="langGrade">시험급수</label>
+ 				<span class="glyphicon glyphicon-credit-card" aria-hidden="true"></span> <span>${vo5.langGrade}</span></li>
+          <li>
+            <i class="fa-li fa fa-check"></i>
+            <label for="langGetdate">취득일</label>
+ 				<span class="glyphicon glyphicon-credit-card" aria-hidden="true"></span> <span>${vo5.langGetdate}</span>
+            	
+				</li>
+            </c:if>
         </ul>
       </div>
     </section>
@@ -241,9 +253,18 @@
 
     <section class="resume-section p-3 p-lg-5 d-flex align-items-center" id="interests">
       <div class="w-100">
-        <h2 class="mb-5">Interests</h2>
-        <p>Apart from being a web developer, I enjoy most of my time being outdoors. In the winter, I am an avid skier and novice ice climber. During the warmer months here in Colorado, I enjoy mountain biking, free climbing, and kayaking.</p>
-        <p class="mb-0">When forced indoors, I follow a number of sci-fi and fantasy genre movies and television shows, I am an aspiring chef, and I spend a large amount of my free time exploring the latest technology advancements in the front-end web development world.</p>
+        <h2 class="mb-5">희망근무</h2>
+       	 <span class="glyphicon glyphicon-star" aria-hidden="true">근무형태:<span>${vo2.hopeworkform}</span><br><br>
+       	 <span class="glyphicon glyphicon-star" aria-hidden="true">희망연봉:</span> <span>${vo2.hopepay}</span><br><br>
+       	 <span class="glyphicon glyphicon-star" aria-hidden="true">(희망근무지역)시도:</span> <span>${vo7.sido}</span><br><br>
+       	 <span class="glyphicon glyphicon-star" aria-hidden="true">(희망근무지역)구군:</span> <span>${vo8.gugun}</span><br><br>
+ 		<span class="glyphicon glyphicon-star" aria-hidden="true">(희망근무지역)업종1차:</span> <span>${vo9.btypename1}</span><br><br>
+ 		<span class="glyphicon glyphicon-star" aria-hidden="true">(희망근무지역)업종2차:</span> <span>${vo10.btypename2}</span><br><br>
+ 		<span class="glyphicon glyphicon-star" aria-hidden="true">(희망근무지역)업종3차:</span> <span>${vo11.btypename3}</span><br><br>
+ 		<span class="glyphicon glyphicon-star" aria-hidden="true">직종1차:</span> <span>${vo12.firstname}</span><br><br>
+ 		<span class="glyphicon glyphicon-star" aria-hidden="true">직종2차:</span> <span>${vo13.secondname}</span><br><br>
+ 		<span class="glyphicon glyphicon-star" aria-hidden="true">직종3차:</span> <span>${vo14.thirdname}</span><br><br>
+ 		<span class="glyphicon glyphicon-star" aria-hidden="true">근무일시:</span> <span>${vo2.hopeworkdate}</span><br>
       </div>
     </section>
 
@@ -251,12 +272,12 @@
 
     <section class="resume-section p-3 p-lg-5 d-flex align-items-center" id="awards">
       <div class="w-100">
-        <h2 class="mb-5">Awards &amp; Certifications</h2>
+        <h2 class="mb-5">수상내역</h2>
         <ul class="fa-ul mb-0">
           <li>
             <i class="fa-li fa fa-trophy text-warning"></i>
-            Google Analytics Certified Developer</li>
-          <li>
+            <span class="glyphicon glyphicon-tower" aria-hidden="true"></span> <span>${vo.award}</span></li>
+          <!-- <li>
             <i class="fa-li fa fa-trophy text-warning"></i>
             Mobile Web Specialist - Google Certification</li>
           <li>
@@ -278,23 +299,30 @@
           <li>
             <i class="fa-li fa fa-trophy text-warning"></i>
             3<sup>rd</sup>
-            Place - James Buchanan High School - Hackathon 2005</li>
+            Place - James Buchanan High School - Hackathon 2005</li> -->
         </ul>
       </div>
+      <div>
+			<label>기업 인사담당자의 입사제의 및 면접제의를 받으시겠어요?</label>
+			<span class="glyphicon glyphicon-info-sign" aria-hidden="true">공개설정</span> <span>${vo.opencheck}</span>
+		</div>
     </section>
-
   </div>
+	</form>
 
   <!-- Bootstrap core JavaScript -->
-  <script src="vendor/jquery/jquery.min.js"></script>
-  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="<c:url value='resources/js/bootstrap.bundle.min.js'/>"></script>
 
   <!-- Plugin JavaScript -->
-  <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
-
+<script src="<c:url value='resources/js/resume.min.js'/>"></script>
   <!-- Custom scripts for this template -->
-  <script src="js/resume.min.js"></script>
-
+  <script src="<c:url value='resources/js/resume.min.js'/>"></script>
+	
+	<div class="center">
+		<button type="button" class="btn btn-success"><a href="<c:url value='/resume/edit.do?resumeCode=${param.resumeCode}'/>">수정</a> 
+		<button type="button" class="btn btn-success"><a href="<c:url value='/resume/delete.do?resumeCode=${param.resumeCode}'/>">삭제</a> 
+		<button type="button" class="btn btn-success"><a href="<c:url value='/resume/list.do'/>">목록</a>
+		</div>
 </body>
 
-</html>
+<%@include file="../main/inc/bottom.jsp" %>

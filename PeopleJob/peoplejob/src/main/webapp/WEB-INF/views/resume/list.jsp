@@ -9,8 +9,9 @@
 </script>
 <style type="text/css">
 .divList {
-    width: 700px;
+    width: 900px;
     margin: 0 auto;
+    padding: 10px;
 }
 </style>
 <div class="divList" style="min-height: 630px">
@@ -32,7 +33,7 @@
 					<tr>
 					<!-- 제목이 긴 경우 30글자만 보여주기 -->
 					<td>
-					<a href="<c:url value='/resume/detail.do?resumeCode=${vo.resumeCode}'/>">
+					<a href="<c:url value='/resume/resumedetail.do?resumeCode=${vo.resumeCode}'/>">
 					<c:if test="${fn:length(vo.resumeTitle) >=30 }">
 						${fn:substring(vo.resumeTitle, 0,30)}...
 					</c:if>
