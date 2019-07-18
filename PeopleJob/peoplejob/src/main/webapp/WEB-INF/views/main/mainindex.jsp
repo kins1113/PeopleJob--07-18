@@ -71,9 +71,7 @@ a.f1-m-3.cl2.hov-cl10.trans-03 {
 	font-size: 1.2em;
 }
 
-img.imgsize {
-	width: 160px;
-}
+
 
 .row {
 	display: block;
@@ -425,7 +423,7 @@ a {
 }
 
 img.imgsize {
-    width: 300px;
+    width: 270px;
 }
 
 .col-sm-6.p-r-25.p-r-15-sr991 {
@@ -511,8 +509,9 @@ img.imgsize {
 								저장</span>
 						</form>
 						<a href="<c:url value='/login/registerU.do'/>" style="float:left;margin-right: 10px;"> <strong>회원가입</strong></a>
-						<span class="idBx"><span>|</span> <a
-							href="<c:url value='/login/findId.do'/>" style="float:left;">     ID/PW 찾기</a></span>
+						<span class="idBx"><span style="    float: left;
+    margin-right: 10px;">|</span> <a
+							href="<c:url value='/login/findId.do'/>" style="float:left;    margin-left: -2px;">     ID/PW 찾기</a></span>
 					</div>
 					<ul class="memberType clear">
 
@@ -572,7 +571,7 @@ img.imgsize {
 											 <span style="display: block;">(java/jsp/spring)신입 채용 </span>
 											 <div>
 											 <button type="button" class="img_main btn_scrap on" value="36473003"><span class="blind">스크랩</span> </button>
-											 	<img alt="스크랩임시사진" src="<c:url value='/peoplejob_upload/scrapstar.PNG'/>" style="margin-top:40px;">
+											 	<img alt="스크랩임시사진" src="<c:url value='/peoplejob_upload/scrapstarwhite.PNG'/>" style="margin-top:40px;">
 											 	<img alt="스크랩임시사진" src="<c:url value='/peoplejob_upload/즉시지원.PNG'/>" style="float:right;margin-top:40px;margin-right:5px;">
 											 </div> 
 										</div>
@@ -584,7 +583,7 @@ img.imgsize {
 											 <span style="display: block;">(java/jsp/spring)신입 채용 </span>
 											 <div>
 											 <button type="button" class="img_main btn_scrap on" value="36473003"><span class="blind">스크랩</span> </button>
-											 	<img alt="스크랩임시사진" src="<c:url value='/peoplejob_upload/scrapstar.PNG'/>" style="margin-top:40px;">
+											 	<img alt="스크랩임시사진" src="<c:url value='/peoplejob_upload/scrapstarwhite.PNG'/>" style="margin-top:40px;">
 											 	<img alt="스크랩임시사진" src="<c:url value='/peoplejob_upload/즉시지원.PNG'/>" style="float:right;margin-top:40px;margin-right:5px;">
 											 </div> 
 										</div>
@@ -788,8 +787,12 @@ img.imgsize {
     		</tr>
     	</table> -->
     	<div class="devRankingWrap devStarter" style="display: block;width:200px;">  
- 
-						<div class="rankingColumn devRanking" id="ranking_carousel_1" style="width: 200px;margin-top: 0px;
+    	
+ 		<!-- <div class="how2 how2-cl4 flex-s-c m-b-35">
+			<h3 class="f1-m-2 cl3 tab01-title">마감 임박 공채</h3>
+		</div> -->
+				
+						<div class="rankingColumn devRanking" id="ranking_carousel_1" style="width: 200px;margin-top: 0px;   /*  margin-top: -36px; */
    							 height: 364px; border: 1px solid white;"> 
 							<h3 class="blind">신입 랭킹</h3>
 							<div id="ranking_carousel" class="rankListWap">
@@ -799,14 +802,19 @@ img.imgsize {
 
 
 									<li class="carousel-slide on">  
-										<h4 class="hd_4">마감 임박 공채</h4>
+										<h4 class="hd_4" style="    font-size: 18px;
+    border-bottom: 1px solid lightgray;
+    width: 208px;    padding-bottom: 7px;">마감 임박 공채</h4>
 										<ul class="infoList endList">
 										
 										  <c:forEach var="map" items="${deadlineList }">
-											<li class="deadline">
-											<span class="titBx"><a href="" class="devClick devHref" data-click-value="98">
-											${map['JOBTITLE'] }</a></span> 
-													<span class="txBx">~${map['END_DATE']}</span></li>
+											<li class="deadline" style="    margin-bottom: 8px;
+    font-size: 1.1em;">
+											<span class="titBx">
+											<a href="" class="devClick devHref" data-click-value="98">
+											~<fmt:formatDate value="${map['END_DATE']}" pattern="MM-dd"/></a>
+											</span> 
+													<span class="txBx">${map['JOBTITLE'] }</span></li>
 										</c:forEach>   
 										
 										<%--   <c:forEach var="map" items="${list }">
@@ -865,7 +873,7 @@ img.imgsize {
     </div>
 						<div class="p-l-10 p-rl-0-sr991 p-b-20" style="width: 271px;float: right;margin-top: -369px;padding: 0px;">
 							<!-- Video -->
-							<div class="notice" style="width: 292px; height: 156px;">
+							<div class="notice" style="width: 285px; height: 156px;">
 							<div class="p-b-23">
 								<div class="how2 how2-cl4 flex-s-c m-b-35">
 									<h3 class="f1-m-2 cl3 tab01-title">공지사항</h3>
@@ -923,28 +931,21 @@ img.imgsize {
 						<div class="row p-t-35"
 							style="padding-top: 0px; width: 1300px; margin-left: -125px;">
 							<div class="col-sm-6 p-r-25 p-r-15-sr991" id="vvipone">
+								<a href="blog-detail-01.html" class="f1-m-3 cl2 hov-cl10 trans-03" style="font-size: 1.0em">
 								<!-- Item latest -->
-								<div class="m-b-45">
-									<a href="blog-detail-01.html" class="wrap-pic-w hov1 trans-03">
+								<div class="m-b-45"> 
 										<img src="<c:url value='/resources/main/images/samsung.png'/>"
 										alt="IMG" class="imgsize">
-									</a>
-									<div class="p-t-16">
-										<h5 class="p-b-5">
-											<a href="blog-detail-01.html"
-												class="f1-m-3 cl2 hov-cl10 trans-03"
-												style="font-size: 1.0em"> 삼성전자 개발자 채용 </a>
-										</h5>
-
-										<span class="cl8"> <a href="#"
-											class="f1-s-4 cl8 hov-cl10 trans-03"> by SAMSUNG </a> <span
-											class="f1-s-3 m-rl-3"> - </span> <span class="f1-s-3">
-												2019-07-01 ~ 2019-07-13 </span>
-										</span>
+									<div class="p-t-16"> 
+										<h5 class="p-b-5" style="font-size: 1.3em; margin-top: -39px;"> 삼성전자 개발자 채용 </h5>
+										<h5 class="p-b-5" style="font-size: 1.1em;display: inline; margin-right: 10px;"> SAMSUNG </h5>
+										<span class="cl8">   D-13 </span><br>
+											<img alt="스크랩임시사진" src="<c:url value='/peoplejob_upload/scrapstarwhite.PNG'/>" style="  margin-top: 3px;">
+											 <img alt="스크랩임시사진" src="<c:url value='/peoplejob_upload/즉시지원.PNG'/>" style="float:right;">
 									</div>
 								</div>
 							</div>
-
+						</a>
 							<div class="col-sm-6 p-r-25 p-r-15-sr991" id="vvipone">
 								<!-- Item latest -->
 								<div class="m-b-45">

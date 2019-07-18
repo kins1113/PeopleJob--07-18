@@ -85,7 +85,7 @@ public JsonNode getAccessToken(String autorize_code) {
 </script>
 
 <div class="body" style="background-color: #f5f6f8;">
-<div class="container" style="min-height: 550px;padding:8px;">
+<div class="container" style="min-height: 629px;padding:8px;">
     	<div class="row">
 			<div class="col-md-6 col-md-offset-3">
 				<div class="panel panel-login">
@@ -144,6 +144,7 @@ public JsonNode getAccessToken(String autorize_code) {
 											</div>
 										</div>
 									</div>
+									<!--
 									<div class="form-group">
 										<div class="row">
 											<div class="col-lg-12">
@@ -154,7 +155,7 @@ public JsonNode getAccessToken(String autorize_code) {
 											</div>
 										</div>
 									</div>
-									<script type='text/javascript'>
+								 	<script type='text/javascript'>
         //<![CDATA[
         // 사용할 앱의 JavaScript 키를 설정해 주세요.
         Kakao.init('1bcb7cf50cc23edaa4993201da8c52b7');
@@ -169,17 +170,17 @@ public JsonNode getAccessToken(String autorize_code) {
             }
         });
       //]]>
-    </script>
+    </script> -->
 								</form>
 								
 								
-								<c:if test="${userId eq null}">
+								<%-- <c:if test="${userId eq null}">
         <a href="https://kauth.kakao.com/oauth/authorize
             ?client_id=2cf3b4aff785f5ac3fea03db7cc7efdd
             &redirect_uri=http://localhost:9090/peoplejob/login
             &response_type=code"> kaokaoLogin
         </a>
-    </c:if>
+    </c:if> --%>
     <c:if test="${userId ne null}">
         <h1>로그인 성공입니다</h1>
     </c:if>
