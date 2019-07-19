@@ -464,6 +464,7 @@ img.imgsize {
 	<!-- Banner -->
 	<div class="container" style="max-width: 150%;"> <!-- 원래105% -->
 	<div class="colortop">
+	<div class="divisionColor" style="background: ">
 		<div class="flex-c-c" style="margin-top: 10px;width: 1300px;">
 			<a href="#"> <img class="max-w-full"
 				src="<c:url value='/resources/main/images/190125_apple_752x110.png'/>"
@@ -910,6 +911,10 @@ img.imgsize {
 				</div>
  
 </div> 
+</div>
+
+
+
 				<!-- 복사 -->
 				<div class="row justify-content-center" style="width: 1300px;margin-left: 67px;">  
 						<%-- <div class="how2 how2-cl4 flex-s-c m-r-10 m-r-0-sr991">
@@ -1027,8 +1032,8 @@ img.imgsize {
 											class="f1-s-3 m-rl-3"> - </span> <span class="f1-s-3">
 												Feb 15 </span>
 										</span>
-									</div>
-								</div>
+									</div> 
+				 				</div>
 							</div>
 
 							<div class="col-sm-6 p-r-25 p-r-15-sr991">

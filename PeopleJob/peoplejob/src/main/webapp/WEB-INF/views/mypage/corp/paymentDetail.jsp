@@ -85,7 +85,7 @@ input.btn.btn-secondary.btn-default {
 div#cardBoduPostList {
     margin: 0 auto;
     min-height: 600px;
-    margin-top: 30px;
+    margin-top: 60px;
     width: 65%;
 }
 #btGroup {
@@ -111,72 +111,34 @@ div#cardBoduPostList {
  <script type="text/javascript">
  
  $(function(){ 
-	 $('#canclepay').click(function(){
-		  if(!confirm(${i}+'번 상품을 결제 취소 하시겠습니까?')){
-			 event.preventDefault();
-			 return false; 
-		 }
+	var time=new Date().getTime(); 
+	var paydate=$('#pd').val();
+	 
+	
+	 $('#cancelpay').click(function(){
+			 //현재시간이 결제일+1보다 크면 불가
+			 alert(paydate);
+		/*  if(time>(paydate+1)){
+		 alert('결제일로부터 하루가 지난 상품은 취소할 수 없습니다.');
+				event.preventDefault();
+				return false; 
+			   if(!confirm('해당 상품을 결제 취소 하시겠습니까?')){
+				  }else{
+					 event.preventDefault();
+					 return false; 
+				  }
+			 }  */ 
+			 
 	 });
  });
  </script>
-<%-- <div class="box1">
-	<h2>결제내역</h2>
-	<table border="1px solid lightgray;">
-		<c:if test="${empty list }">
-			<tr>
-				<td colspan="9">결제하신 상품이 없습니다.</td>
-			</tr>
-		</c:if>
 
-		<c:if test="${!empty list }">
-			<c:forEach var="map" items="${list }">
-				<tr>
-					<th>상품명</th>
-					<th>구매자 이름</th>
-					<th>할부 기간</th>
-					<th>결제 수단</th>
-					<th>결제 일시</th>
-					<th>결제 금액</th>
-					<th>사용 기간</th>
-					<th>구매 상점명</th>
-					<th>결제 취소</th>
-				</tr>
-
-				<tr>
-					<td>채용공고 vvip관</td>
-					<td>${sessionScope.memberName }</td>
-					<td>일시불</td>
-					<td>${map['PAYMENTWAY'] }</td>
-					<td>${map['PAYDATE'] }</td>
-					<td>${map['SERVICEPRICE'] }원</td>
-					<td>~<fmt:formatDate value="${map['PAYEND_DATE'] }"
-							pattern="yyyy/MM/dd HH:mm:ss" />
-					</td>
-					<td>[(주):케이지이니시스]</td>
-					<td><button>결제 취소</button></td>
-				</tr>
-
-			</c:forEach>
-		</c:if>
-		<!-- <tr>
-    <td>채용공고 vvip관</td>
-    <td>이름</td>
-    <td>일시불</td>
-    <td>카드</td>
-    <td>2019/07/15</td>
-    <td>1,000,000원</td>
-    <td>~2019/10/29</td>
-    <td>[(주):케이지이니시스] </td>
-    <td><button>결제 취소</button></td>
-  </tr> -->
-	</table>
-</div> --%>
 <!-- 결제 내역: 구매자이름(memberName), 전화번호(tel), 이메일, 
 상품명,  (결제수단, 결제 일시, 할부 기간(일시불), 승인번호,)
  구매 상점명 
 연락처 (1588-4954) , 결제금액, 사용기간?! , 결제취소 버튼 -->
 
-<div class="card-body" id="cardBoduPostList">
+<div class="card-body" id="cardBoduPostList" style="min-height: 629px; ">
 	<table class="table table-bordered">
 		<thead>
 			<tr> 
@@ -199,7 +161,7 @@ div#cardBoduPostList {
 			
 			<c:if test="${!empty list }">
 				<c:forEach var="map" items="${list }">
- 
+ 					<input type="text" value="${map['PAYDATE'] }" id="pd">
 					<tr>
 						<td>${map['SERVICENAME'] }</td>
 						<td>${sessionScope.memberName }</td>
@@ -213,7 +175,7 @@ div#cardBoduPostList {
 						<td>${map['PROGRESS'] }</td>
 						<form id="frmpay" method="post" action="<c:url value='/mypage/corp/paymentDetail.do'/>">
 						<input type="hidden" name="paymentCode" value="${map['PAYMENT_CODE'] }">
-						<td><input type="submit" value="결제 취소" id="canclepay"></td>
+						<td><input type="submit" value="결제 취소" id="cancelpay"></td>
 						</form>
  					</tr> 
 				  </c:forEach>  

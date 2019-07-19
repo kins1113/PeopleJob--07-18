@@ -18,7 +18,7 @@
 		  
 	  $('#pay').click(function(){
 		  
-		  if(${sessionScope.memberid==null}){ 
+		  if(${sessionScope.memberid==null}){  
 			  alert('로그인을 해주세요');
 			  location.href="<c:url value='/login/login.do'/>";
 		  }else{ //로그인을 했을 때 
@@ -69,9 +69,9 @@
 		 
 	  });//
   
- $('#pay2').click(function(){
+ $('#pay2').click(function(){ 
 		   
-		  if(${sessionScope.memberid==null}){ 
+		  if(${sessionScope.memberid==null}){  
 			  alert('로그인을 해주세요');
 			  location.href="<c:url value='/login/login.do'/>";
 		  }else{ //로그인을 했을 때 

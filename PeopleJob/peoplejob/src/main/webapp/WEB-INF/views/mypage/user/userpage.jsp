@@ -106,7 +106,12 @@ function company(){
                         </a>
                     </li>
                         <li class="img">
-                        <a href="#" onclick="" onmousedown="try{n_trackEvent('myhome', 'dashboard' , 'resume-manage', '');}catch(e){};">
+                         <c:if test="${sessionScope.author_code==1 }">
+                       		 <a href="<c:url value='/scrap/scrap_list.do'/>" onmousedown="try{n_trackEvent('myhome', 'dashboard' , 'resume-manage', '');}catch(e){};">
+                          </c:if>
+                         <c:if test="${sessionScope.author_code==2 || sessionScope.author_code==3  }">
+                       		 <a href="#" onmousedown="try{n_trackEvent('myhome', 'dashboard' , 'resume-manage', '');}catch(e){};">
+                          </c:if>
                            <img src="<c:url value='/resources/main/images/circle.PNG'/>"></img>
                            <div class="text">
                             <span class="doing"><em> ${fn:length(scraplist) }</em> </span>
@@ -116,12 +121,29 @@ function company(){
                     </li> 
                     
                     <li class="img">
-                        <a href="#" onclick="" onmousedown="try{n_trackEvent('myhome', 'dashboard' , 'resume-manage', '');}catch(e){};">
+                        <a href="<c:url value='/mypage/corp/paymentDetail.do'/>" onmousedown="try{n_trackEvent('myhome', 'dashboard' , 'resume-manage', '');}catch(e){};">
                            <img src="<c:url value='/resources/main/images/circle.PNG'/>"></img>
                            <div class="text">
                            <c:if test="${sessionScope.author_code==2 || sessionScope.author_code==3 }">
                             <span class="doing"><em> ${fn:length(list)}  </em> </span>
                             <span class="sname">결제내역</span>
+                            </c:if>
+                           <c:if test="${sessionScope.author_code==1 }">
+                            <span class="doing"><em> 0  </em> </span>
+                            <span class="sname">관심기업</span>
+                            </c:if>
+                           
+                           </div>
+                        </a>
+                    </li> 
+                    
+                    <li class="img">
+                        <a href="<c:url value='/resume/list.do'/>" onclick="" onmousedown="try{n_trackEvent('myhome', 'dashboard' , 'resume-manage', '');}catch(e){};">
+                           <img src="<c:url value='/resources/main/images/circle.PNG'/>"></img>
+                           <div class="text">
+                           <c:if test="${sessionScope.author_code==1}">
+                            <span class="doing"><em> 0  </em> </span>
+                            <span class="sname">이력서</span> 
                             </c:if>
                            
                            </div>
@@ -129,15 +151,6 @@ function company(){
                     </li> 
                                    
                                    
-                     <li class="img">
-                        <a href="#" onclick="" onmousedown="try{n_trackEvent('myhome', 'dashboard' , 'resume-manage', '');}catch(e){};">
-                           <img src="<c:url value='/resources/main/images/circle.PNG'/>"></img>
-                           <div class="text">
-                            <span class="doing"><em> ${fn:length(joblist) }</em></span>
-                            <span class="sname">채용공고</span>
-                           </div>
-                        </a>
-                    </li>
                             
                             </ul>
         </div>
@@ -223,7 +236,7 @@ function company(){
 							<ul class="p-t-35">
 								<li class="how-bor3 p-rl-4">
 									<c:if test="${sessionScope.author_code==1 }" >
-									<a href="#" class="dis-block f1-s-10 text-uppercase cl2 hov-cl10 trans-03 p-tb-13">
+									<a href="<c:url value='/resume/list.do'/>" class="dis-block f1-s-10 text-uppercase cl2 hov-cl10 trans-03 p-tb-13">
 										이력서 관리
 									</a>
 									</c:if>
@@ -235,10 +248,21 @@ function company(){
 								</li>
 
 								<li class="how-bor3 p-rl-4">
-									<a href="#" class="dis-block f1-s-10 text-uppercase cl2 hov-cl10 trans-03 p-tb-13" onclick="scrap()">
+								<c:if test="${sessionScope.author_code==1 }" >
+									<a href="<c:url value='/scrap/scrap_list.do'/>" class="dis-block f1-s-10 text-uppercase cl2 hov-cl10 trans-03 p-tb-13">
 										스크랩 정보
 									</a>
+								</c:if>
 								</li>
+								
+								<li class="how-bor3 p-rl-4"> 
+								<c:if test="${sessionScope.author_code==2 || sessionScope.author_code==3}" >
+									<a href="" class="dis-block f1-s-10 text-uppercase cl2 hov-cl10 trans-03 p-tb-13">
+										스크랩 정보
+									</a>
+								</c:if>
+								</li>
+								
 
 								<li class="how-bor3 p-rl-4">
 									<c:if test="${sessionScope.author_code==1 }" >
