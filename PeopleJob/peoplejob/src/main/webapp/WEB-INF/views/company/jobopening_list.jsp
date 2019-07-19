@@ -20,9 +20,17 @@
 		}); 
 	});
 </script>
+<style type="text/css">
+.divList {
+    width: 900px;
+    margin: 0 auto;
+    padding: 10px;
+}
+</style>
 <article>
 	<fieldset>
-    <div class="col-md-9">
+    
+<div class="divList" style="min-height: 630px">
         <div class="page-header">
             <h3>채용공고</h3>
        
@@ -36,7 +44,7 @@
 			</p>
 		</c:if>
 	 </div> 
-<div class="divSearch"> 
+	<div class="divSearch"> 
 	<!-- 페이징 처리에도 사용 -->
    	<form name="frmSearch" method="post" 
    		action='<c:url value="/company/jobopening_list.do"/>'>
@@ -48,7 +56,7 @@
 		<%-- <%@include file="jobopening_where.jsp" %> --%>
 			<c:import url="jobopening_where.jsp"/>
 		</div> 
-        </div>
+        
     </form>
 
         <div>
@@ -85,6 +93,7 @@
 					<br> 
 					<c:if test="${mvo.authorityCode==1 }"> 
 					<a href="<c:url value='/apply/insertapply.do?jobopening=${vo.jobopening}'/>"><input type="button" id="apply" name="apply"class="btn btn-primary" value="즉시지원"></a>
+					<a href="<c:url value='/scrap/insertscrap.do?jobopening=${vo.jobopening}&member_code=${mvo.memberCode }'/>"><input type="button" class="btn btn-default btn-mg" role="button" value="스크랩"></a>
 					</c:if>
 	            </div> 
 	        </div>

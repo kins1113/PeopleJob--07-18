@@ -36,9 +36,17 @@
 	  document.getElementById("welfare").value = total_str;
 	}
 </script>
+<style type="text/css">
+.divList {
+    width: 900px;
+    margin: 0 auto;
+    padding: 10px;
+}
+</style>
 <article>
-<fieldset>
-    <div class="col-md-9">
+	<fieldset>
+    
+<div class="divList" style="min-height: 630px">
         <div class="page-header">
             <h3>구인</h3>
         </div>

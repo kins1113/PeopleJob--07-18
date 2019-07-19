@@ -1,9 +1,24 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@include file="../main/inc/top.jsp" %>
+<style type="text/css">
+.divList {
+    width: 900px;
+    margin: 0 auto;
+    padding: 10px;
+}
+</style>
+<style type="text/css">
+.divList {
+    width: 900px;
+    margin: 0 auto;
+    padding: 10px;
+}
+</style>
 <article>
-<fieldset>
-    <div class="col-md-9">
+	<fieldset>
+    
+<div class="divList" style="min-height: 630px">
         <div class="page-header">
             <h3>채용공고</h3>
         </div>

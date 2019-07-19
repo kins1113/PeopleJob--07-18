@@ -68,6 +68,9 @@
 				#{jobopening}
 			</foreach>
 	</select>
+	<select id="cntpay" parameterType="int" resultType="int">
+		select count(*) from payment where member_code=#{memberCode}
+	</select>
 </mapper>
 
 

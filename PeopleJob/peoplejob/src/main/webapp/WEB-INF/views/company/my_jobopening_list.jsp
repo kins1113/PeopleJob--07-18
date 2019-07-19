@@ -51,9 +51,17 @@
 	  document.getElementById("jobopening").value = total_str;
 	}
 </script>
+<style type="text/css">
+.divList {
+    width: 900px;
+    margin: 0 auto;
+    padding: 10px;
+}
+</style>
 <article>
 	<fieldset>
-    <div class="col-md-9">
+    
+<div class="divList" style="min-height: 630px">
         <div class="page-header">
             <h3>내가 쓴 채용공고</h3> 
        
@@ -160,7 +168,6 @@
             <a href="<c:url value='/company/jobopening_register.do'/>" class="btn btn-primary" role="button">공고등록</a>
         </div>
         </c:if>
-    </div>
     </div>
     </fieldset>
     </article>

@@ -39,5 +39,9 @@ public class TableaplyDAOMybatis implements TableaplyDAO{
 	public int dupapply(Map<String, Object> map) {
 		return sqlSession.selectOne(namespace+"dupapply",map);
 	}
+	@Override
+	public int cntpay(int MemberCode) {
+		return sqlSession.selectOne(namespace+"cntpay",MemberCode);
+	}
 	
 }
