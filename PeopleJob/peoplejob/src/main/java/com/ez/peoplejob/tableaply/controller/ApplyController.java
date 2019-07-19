@@ -14,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.ez.peoplejob.common.PaginationInfo;
@@ -23,6 +24,8 @@ import com.ez.peoplejob.jobopening.model.JobopeningService;
 import com.ez.peoplejob.jobopening.model.JobopeningVO;
 import com.ez.peoplejob.member.model.MemberService;
 import com.ez.peoplejob.member.model.MemberVO;
+import com.ez.peoplejob.resume.model.ResumeService;
+import com.ez.peoplejob.resume.model.ResumeVO;
 import com.ez.peoplejob.tableaply.model.TableaplyService;
 import com.ez.peoplejob.tableaply.model.TableaplyVO;
 
@@ -33,6 +36,7 @@ public class ApplyController {
 	@Autowired JobopeningService jobopeningService;
 	@Autowired TableaplyService tableaplyService;
 	@Autowired MemberService memberService;
+	@Autowired ResumeService resumeService;
 	@RequestMapping("/insertapply.do")
 	public String insertapply(@RequestParam int jobopening,HttpSession session,Model model) {
 		String id=(String)session.getAttribute("memberid");
@@ -69,7 +73,7 @@ public class ApplyController {
 		model.addAttribute("url",url);
 		return "common/message";
 	}
-	@RequestMapping("/apply_list.do")
+	@RequestMapping(value="/apply_list.do",method = RequestMethod.GET)
 	public String apply_list(HttpSession session,
 			@ModelAttribute SearchVO searchVo,
 			Model model) {
@@ -177,7 +181,27 @@ public class ApplyController {
 		model.addAttribute("mvo", mvo);
 		return "apply/Capply_list";
 	}
-	@RequestMapping("/Capply_listDetail.do")
+	@RequestMapping("/Check_pay.do") 
+	public String Check_pay(@RequestParam (defaultValue = "0")int member_code,HttpSession session,Model model) {
+		logger.info("결제내역 확인 파라미터 member_code{}",member_code);
+		String id=(String)session.getAttribute("memberid");
+		MemberVO mvo=memberService.selectByUserid(id);
+		logger.info("로그인한 회원정보 mvo={}",mvo);
+		int cnt=tableaplyService.cntpay(mvo.getMemberCode());
+		ResumeVO rvo=resumeService.selectBymemberCode(member_code);
+		String msg="",url="";
+		if(cnt>0) {
+			msg="이력서보기로 이동합니다";
+			url="/resume/detail?resumeCode="+rvo.getResumeCode();
+		}else {
+			msg="결제내역이 없습니다. 결제후 진행가능합니다.";
+			url="/service/payment.do";
+		}
+		model.addAttribute("msg",msg);
+		model.addAttribute("url",url);
+		return "common/message";
+	}
+	@RequestMapping("/Capply_Detail.do")
 	public String Capply_listDetail() {
 		
 		return "";

@@ -3,8 +3,13 @@
     <%@include file="../main/inc/top.jsp" %>
     <style type="text/css">
 .divForm {
-    width: 700px;
+    width: 900px;
     margin: 0 auto;
+    background: white;
+    padding: 13px;
+}
+#editdiv {
+    background: #f2f4f7;
 }
 </style>
     <script type="text/javascript">
@@ -24,6 +29,7 @@
 	});
 </script>
 <article>
+<div id="editdiv">
 <div class="divForm">
 <form name="frm2" method="post" 
 	action="<c:url value='/resume/edit.do'/>">
@@ -521,7 +527,8 @@
     <input type="submit" value="이력서 수정"/>
 </fieldset> 
 </form>
-</div>       
+</div> 
+</div>      
 </article>
 <%@include file="../main/inc/bottom.jsp" %>
 
