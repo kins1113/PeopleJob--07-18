@@ -172,7 +172,7 @@
 									</a>
 										<ul class="collapse" id="forms">
 											<div class="sub-menu">
-												<li><a href="basic-input.html">상품 조회</a></li>
+												<li><a href="${pageContext.request.contextPath}/manager/service/list.do">상품 조회</a></li>
 												<li><a href="${pageContext.request.contextPath}/manager/service/register.do">상품 등록</a></li>
 											</div>
 										</ul></li>

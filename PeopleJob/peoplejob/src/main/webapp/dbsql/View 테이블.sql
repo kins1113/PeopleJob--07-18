@@ -38,7 +38,7 @@ and payend_date>=sysdate;
 
 CREATE OR REPLACE VIEW companyJobOpen 
 as
-select c.company_Code,c.image, c.companyname, j.jobtitle, j.end_date
+select c.company_Code,c.image, c.companyname, j.jobtitle, j.end_date, j.jobopening
 from company c join jobopening j 
 on j.COMPANY_CODE = c.COMPANY_CODE
 where end_date>=sysdate;

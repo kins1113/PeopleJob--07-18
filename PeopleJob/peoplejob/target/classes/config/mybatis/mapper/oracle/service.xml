@@ -11,4 +11,19 @@
 	insert into service(service_code, servicename, serviceprice, servicecontent, serviceday)
 	values(#{serviceCode}, #{serviceName},#{servicePrice},#{serviceContent},#{serviceDay} )
 	</insert>
+	
+<select id="selectService" resultType="serviceVo">
+	select 
+	service_code, servicename,serviceprice,servicecontent,serviceday 
+	from service 
+	order by service_code desc
+	
+	</select>
+	
+	<delete id="deleteService" parameterType="int">
+		delete from service
+		where service_Code=#{serviceCode}
+	</delete>
+	
 </mapper>
+	 
