@@ -12,8 +12,16 @@
     width: 900px;
     margin: 0 auto;
     padding: 10px;
+    background: white;
+}
+#divlist {
+    background: #f2f4f7;
+}
+button.btn.btn-success {
+    float: right;
 }
 </style>
+<div id="divlist">
 <div class="divList" style="min-height: 630px">
 	  <input type="hidden" name="resumeCode" value="${param.resumeCode }"/>
 <table class="table"
@@ -64,6 +72,7 @@
 	  </tbody>
 </table>	   
 </div>
+</div>
 <div class="divPage">
 	<!-- 이전블럭으로 이동하기 -->
 	<c:if test="${pagingInfo.firstPage>1 }">	
@@ -99,6 +108,7 @@
         
     </form>
 </div>
+
 
 <%@include file="../main/inc/bottom.jsp" %>
 

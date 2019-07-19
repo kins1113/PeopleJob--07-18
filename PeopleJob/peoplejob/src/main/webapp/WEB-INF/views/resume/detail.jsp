@@ -8,10 +8,12 @@
 		padding:5px;
 		margin:5px;
 	 }
-	.divForm {
-		width: 500px;
-		margin: 0 auto;
-		}
+	frm1 {
+    width: 1277px;
+    margin: 0 auto;
+    border: 1px;
+    margin-right: 299px;
+}
 </style> 
  
 </head>
@@ -33,7 +35,8 @@
  				<td><span class="glyphicon glyphicon-globe" aria-hidden="true">상세주소</span> <span>${vo1.addressdetail}</span></td>
  				<td><span class="glyphicon glyphicon-phone" aria-hidden="true">핸드폰</span> <span>${vo1.tel}</span></td>
 				<td>
-					<img src="<c:url value='/peoplejob_images/${vo.picture }'/>" 
+				${vo.picture }
+					<img src="<c:url value='/peoplejob_upload/${vo.picture }'/>" 
 						alt="${vo1.membername }" width="50">
 				</td>
 				</tr>

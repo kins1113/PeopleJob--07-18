@@ -29,7 +29,8 @@
 		select * from btype2 where btype_code2=#{btypeCode2}
 	</select>
 	<select id="selectBybtype3" parameterType="int" resultType="resumeVo">
-		select * from btype3 where btype_code3=#{btypeCode3}
+		select * from btype3 b,hope_working h
+		where b.BTYPE_CODE3=h.BTYPE_CODE3 and h.hopework_code=#{hopeworkCode}
 	</select>
 	<select id="selectBylocation" parameterType="int" resultType="resumeVo">
 		select * from location where local_code=#{localCode}
@@ -57,7 +58,7 @@
 			select resume_seq.nextval from dual
 		</selectKey>
 		insert into resume
-		values(#{resumeCode},#{resumeTitle},sysdate,#{introduce},#{award},#{langlicenceCode},#{licenceCode},#{dvCode},#{academicCode},#{desiredWorkCode},#{opencheck},#{memberCode},#{picture})
+		values(#{resumeCode},#{resumeTitle},sysdate,#{introduce},#{award},#{langlicenceCode},106,#{dvCode},101,#{desiredWorkCode},#{opencheck},#{memberCode},#{picture})
 	</insert>
 	
 	<insert id="insertLangcertification" parameterType="resumeVo">

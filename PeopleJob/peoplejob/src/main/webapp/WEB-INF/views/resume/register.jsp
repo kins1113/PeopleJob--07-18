@@ -8,13 +8,22 @@
 
 <style type="text/css">
 .divForm {
-    width: 700px;
+    width: 900px;
     margin: 0 auto;
+    background: white;
+    padding: 13px;
 }
+#registerdiv {
+    background: #f2f4f7;
+}
+
+<style>
+
 </style>
 <script type="text/javascript">
 </script>
 <article>
+<div id="registerdiv">
 <div class="divForm">
 <form name="frm1" method="post" 
 	action="<c:url value='/resume/register.do'/>" enctype="multipart/form-data">
@@ -205,7 +214,7 @@
 	<div>
         <label for="chargework">직종</label>
         <input type="text" class="form-control"  name="chargework" id="chargework" style="ime-mode:active">
-        <c:import url="occupation.jsp"/>
+        <%-- <c:import url="occupation.jsp"/> --%>
     </div>	
     <div>
         <label for="jobgrade">직급</label>
@@ -340,7 +349,7 @@
         </div>
         
         <div>
-        <c:import url="btype.jsp"/>
+        <%-- <c:import url="btype.jsp"/> --%>
         <label for="btypename1">업종1차</label>
         
         <input type="text" class="form-control"  name="btypename1" id="btypename1"   style="ime-mode:active">
@@ -394,7 +403,8 @@
     
 </fieldset> 
 </form>
-</div>       
+</div>  
+</div>     
 </article>
 <%@include file="../main/inc/bottom.jsp" %>
       

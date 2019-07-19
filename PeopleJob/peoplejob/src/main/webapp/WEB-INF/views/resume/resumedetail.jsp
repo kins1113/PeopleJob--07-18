@@ -10,16 +10,43 @@ form {
     width: 1277px;
     margin: 0 auto;
     border:1px;
-    margin-right: 46px;
+ 
+    margin-left: 17.2%;
 }
-.center{
-	margin: 0 auto;
-	padding-left: 630px;
-}
+
 button.btn.btn-success {
     margin: 3px;
 }
+div#detail {
+    background: #f2f4f7;
+    
+}
+
+section.redetail {
+    margin: 5px;
+    background: white;
+}
+img{
+
+    width: 100%;
+    height: 100%;
+
+}
+div#imgDiv {
+    width: 150px;
+    height: 170px;
+    float: left;
+}
+p.lead.mb-7 {
+    margin: 2px;
+}
 </style>
+<script type="text/javascript">
+$(window).scroll(function( ){  //스크롤이 움직일때마다 이벤트 발생 
+    var position = $(window).scrollTop(); // 현재 스크롤바의 위치값을 반환합니다.
+    $( id ).stop().animate({top:position+"px"}, 1); //해당 오브젝트 위치값 재설정
+});
+</script>
   <title>Resume - Start Bootstrap Theme</title>
 
   <!-- Bootstrap core CSS -->
@@ -35,6 +62,7 @@ button.btn.btn-success {
 
 
 <body id="page-top">
+<div id="detail">
 	<form name="frm1" method="post" 
 	action="<c:url value='/resume/resumedetail.do'/>" enctype="multipart/form-data">
   <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top" id="sideNav">
@@ -71,15 +99,19 @@ button.btn.btn-success {
     </div>
   </nav>
 
-  <div class="container-fluid p-0">
+  <div class="container-fluid p-0" id="section1">
 
-    <section class="resume-section p-3 p-lg-5 d-flex align-items-center" id="about">
+    <section class="resume-section p-3 p-lg-5 d-flex align-items-center redetail" id="about">
       <div class="w-100">
         <h1 class="mb-0">이력서
           <span class="text-primary">상세보기</span>
-        </h1><p class="lead mb-7">이력서 제목:${vo.resumeTitle}</p><br>
-        <img src="<c:url value='/peoplejob_images/${vo.picture }'/>" 
-						alt="${vo1.membername }" width="50">&nbsp;&nbsp;
+        </h1><p class="lead mb-7">이력서 제목:${vo.resumeTitle}</p>
+        
+        <div id="imgDiv">
+	        <img src="<c:url value='/peoplejob_upload/${vo.picture }'/>" 
+							alt="${vo1.membername }" width="50">
+        </div>
+						&nbsp;&nbsp;
         	<span class="glyphicon glyphicon-user" aria-hidden="true">이름:${vo1.membername}&nbsp;&nbsp;
         	<span class="glyphicon glyphicon-gift" aria-hidden="true">생년월일:<span>${vo1.birth}</span>&nbsp;&nbsp;
         	<span class="glyphicon glyphicon-gift" aria-hidden="true">성별:<span>${vo1.membergender}</span>
@@ -97,7 +129,7 @@ button.btn.btn-success {
 
     <hr class="m-0">
 
-    <section class="resume-section p-3 p-lg-5 d-flex justify-content-center" id="experience">
+    <section class="resume-section p-3 p-lg-5 d-flex justify-content-center redetail" id="experience">
       <div class="w-100">
         <h2 class="mb-5">경력사항</h2>
 
@@ -155,7 +187,7 @@ button.btn.btn-success {
 
     <hr class="m-0">
 
-    <section class="resume-section p-3 p-lg-5 d-flex align-items-center" id="education">
+    <section class="resume-section p-3 p-lg-5 d-flex align-items-center redetail" id="education">
       <div class="w-100">
         <h2 class="mb-5">학력</h2>
 
@@ -188,7 +220,7 @@ button.btn.btn-success {
 
     <hr class="m-0">
 
-    <section class="resume-section p-3 p-lg-5 d-flex align-items-center" id="skills">
+    <section class="resume-section p-3 p-lg-5 d-flex align-items-center redetail" id="skills">
       <div class="w-100">
         <h2 class="mb-5">자격증/어학</h2>
 
@@ -251,7 +283,7 @@ button.btn.btn-success {
 
     <hr class="m-0">
 
-    <section class="resume-section p-3 p-lg-5 d-flex align-items-center" id="interests">
+    <section class="resume-section p-3 p-lg-5 d-flex align-items-center redetail" id="interests">
       <div class="w-100">
         <h2 class="mb-5">희망근무</h2>
        	 <span class="glyphicon glyphicon-star" aria-hidden="true">근무형태:<span>${vo2.hopeworkform}</span><br><br>
@@ -270,7 +302,7 @@ button.btn.btn-success {
 
     <hr class="m-0">
 
-    <section class="resume-section p-3 p-lg-5 d-flex align-items-center" id="awards">
+    <section class="resume-section p-3 p-lg-5 d-flex align-items-center redetail" id="awards">
       <div class="w-100">
         <h2 class="mb-5">수상내역</h2>
         <ul class="fa-ul mb-0">
@@ -306,6 +338,12 @@ button.btn.btn-success {
 			<label>기업 인사담당자의 입사제의 및 면접제의를 받으시겠어요?</label>
 			<span class="glyphicon glyphicon-info-sign" aria-hidden="true">공개설정</span> <span>${vo.opencheck}</span>
 		</div>
+		</div>
+	<div class="center">
+		<button type="button" class="btn btn-success"><a href="<c:url value='/resume/edit.do?resumeCode=${param.resumeCode}'/>">수정</a> 
+		<button type="button" class="btn btn-success"><a href="<c:url value='/resume/delete.do?resumeCode=${param.resumeCode}'/>">삭제</a> 
+		<button type="button" class="btn btn-success"><a href="<c:url value='/resume/list.do'/>">목록</a>
+		</div>
     </section>
   </div>
 	</form>
@@ -318,11 +356,6 @@ button.btn.btn-success {
   <!-- Custom scripts for this template -->
   <script src="<c:url value='resources/js/resume.min.js'/>"></script>
 	
-	<div class="center">
-		<button type="button" class="btn btn-success"><a href="<c:url value='/resume/edit.do?resumeCode=${param.resumeCode}'/>">수정</a> 
-		<button type="button" class="btn btn-success"><a href="<c:url value='/resume/delete.do?resumeCode=${param.resumeCode}'/>">삭제</a> 
-		<button type="button" class="btn btn-success"><a href="<c:url value='/resume/list.do'/>">목록</a>
-		</div>
 </body>
 
 <%@include file="../main/inc/bottom.jsp" %>
