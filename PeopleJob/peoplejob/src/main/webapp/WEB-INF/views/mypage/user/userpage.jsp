@@ -100,8 +100,8 @@ function company(){
                         <a href="#" onclick="" onmousedown="try{n_trackEvent('myhome', 'dashboard' , 'resume-manage', '');}catch(e){};">
                            <img src="<c:url value='/resources/main/images/circle.PNG'/>"></img>
                            <div class="text">
-                            <span class="doing"><em>2</em> / 10</span>
-                            <span class="sname">???</span>
+                           <span class="doing"><em> 0 </em> </span>
+                            <span class="sname">지원현황</span> 
                            </div>
                         </a>
                     </li>
@@ -123,10 +123,7 @@ function company(){
                             <span class="doing"><em> ${fn:length(list)}  </em> </span>
                             <span class="sname">결제내역</span>
                             </c:if>
-                             <c:if test="${sessionScope.author_code==1 }">
-                            <span class="doing"><em> 0 </em> </span>
-                            <span class="sname">지원현황</span>
-                            </c:if>
+                           
                            </div>
                         </a>
                     </li> 

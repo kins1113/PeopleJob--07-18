@@ -154,6 +154,7 @@ public class MemberController {
 			session.setAttribute("memberid", memberId);
 			session.setAttribute("author_code", memVo.getAuthorityCode());
 			session.setAttribute("memberName", memVo.getMembername());
+			session.setAttribute("companyCode", memVo.getCompanyCode());
 			
 			//[2] 쿠키에 저장
 			Cookie ck=new Cookie("ck_memberid", memberId);
