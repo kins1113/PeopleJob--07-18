@@ -38,5 +38,9 @@ public class TableaplyServiceImpl implements TableaplyService{
 	public int selectapplyCompcount(Map<String, Object> map) {
 		return tableaplyDao.selectapplyCompcount(map);
 	}
+	@Override
+	public int cntpay(int MemberCode) {
+		return tableaplyDao.cntpay(MemberCode);
+	}
 
 }

@@ -29,7 +29,7 @@
 	});
 </script>
 
-<div class="container" style="min-height: 550px;padding:8px;">
+<div class="container" style="min-height: 629px;padding:8px;">
     	<div class="row">
 			<div class="col-md-6 col-md-offset-3">
 				<div class="panel panel-login">

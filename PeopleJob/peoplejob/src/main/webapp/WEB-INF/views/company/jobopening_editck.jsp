@@ -45,9 +45,23 @@
 		
 	});
 </script>
-</head>
-<body>
-<div class="divForm">
+<style type="text/css">
+.divList {
+    width: 900px;
+    margin: 0 auto;
+    padding: 10px;
+}
+</style>
+<style type="text/css">
+.divList {
+    width: 900px;
+    margin: 0 auto;
+    padding: 10px;
+}
+</style>
+<article>
+	<fieldset>
+<div class="divList" style="min-height: 630px">
 <form name="frmDelete" method="post" enctype="multipart/form-data"	
 	action="<c:url value='/company/jobopening_editck.do'/>" >
 		<fieldset>
@@ -70,5 +84,7 @@
 	        </div>
 	    </fieldset>
     </form>
-</div>
+    </div>
+	</fieldset>
+	</article>
 <%@include file="../main/inc/bottom.jsp" %>

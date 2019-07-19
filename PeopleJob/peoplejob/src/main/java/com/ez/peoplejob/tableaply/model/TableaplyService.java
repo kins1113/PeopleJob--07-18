@@ -11,4 +11,5 @@ public interface TableaplyService {
 	int deleteJobOpen(Map<String,Object>map);
 	List<TableaplyVO> selectapplyComp(Map<String,Object> map);
 	int selectapplyCompcount(Map<String,Object> map);
+	int cntpay(int MemberCode);
 }

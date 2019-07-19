@@ -51,9 +51,17 @@
 	  document.getElementById("applyCode").value = total_str;
 	}
 </script>
+<style type="text/css">
+.divList {
+    width: 900px;
+    margin: 0 auto;
+    padding: 10px;
+}
+</style>
 <article>
 	<fieldset>
-    <div class="col-md-9">
+    
+<div class="divList" style="min-height: 630px">
         <div class="page-header">
             <h3>지원현황</h3>
        
@@ -67,9 +75,7 @@
    	<form name="frmSearch" method="post" 
    		action='<c:url value="/apply/Capply_list.do"/>'>
    		<!-- 현재 페이지 hidden에 넣기 -->  
-   		<input type="button" id="search" class="btn btn-primary" name="search" value="검색조건"> 
    		<input type="hidden" name='currentPage' value="1" >
-		<input type="submit" class="btn btn-primary" value="검색">
 <%-- 		<div id="where">
 		<%@include file="jobopening_where.jsp" %>
 			<c:import url="jobopening_where.jsp"/>
@@ -99,7 +105,7 @@
 	                 <c:if test="${not loop_flag }">
 				        <c:if test="${vo.memberCode==mvo.memberCode}">
 			                | 	<small>지원자 : ${mvo.membername}</small>
-			                <input type="button" id="detail" class="btn btn-primary" name="detail" value="자세히보기"> 
+			                <a href="<c:url value='/apply/Check_pay.do?member_code=${vo.memberCode }'/>"><input type="button" id="detail" class="btn btn-primary" name="detail" value="자세히보기"></a> 
 				            <c:set var="loop_flag" value="true" />
 				        </c:if>
 				    </c:if>

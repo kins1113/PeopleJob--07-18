@@ -30,9 +30,17 @@
 	  document.getElementById("welfare").value = total_str;
 	}
 </script>
+<style type="text/css">
+.divList {
+    width: 900px;
+    margin: 0 auto;
+    padding: 10px;
+}
+</style>
 <article>
-<fieldset>
-    <div class="col-md-9">
+	<fieldset>
+    
+<div class="divList" style="min-height: 630px">
         <div class="page-header">
             <h3>구인</h3>
         </div>
@@ -53,8 +61,8 @@
                 <label for="title" class="col-sm-2 control-label">지역구분</label>
                     <select name="localcheck">
                 		<option value="서울특별시">서울</option>
-                		<option value="부산광역시">서울</option>
-                		<option value="인천광역시">서울</option>
+                		<option value="부산광역시">부산</option>
+                		<option value="인천광역시">인천</option>
                 		<option value="대전">대전</option>
                 		<option value="광주">광주</option>
                 		<option value="대구">대구</option>

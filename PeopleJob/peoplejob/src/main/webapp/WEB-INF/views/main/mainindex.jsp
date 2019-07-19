@@ -32,24 +32,18 @@ $(function() {
 	});
 	 
 	 
-	$('#vvipone').hover(function(){
-				
-			$(this).css("border","2px solid blue");
-			},
-		function(){
-			$('#vvipone').css("border","");
-			
-		
-	});
-		
-	
-	
 
 });
 </script>
 
 <!------ Include the above in your HEAD tag ---------->
 <style type="text/css">
+#vvipone:HOVER {     
+
+	border: 2px solid blue; 
+}
+
+
 /* .col-sm-6.p-r-25.p-r-15-sr991 {
     border: 1px solid lightgray;
 } */
@@ -412,6 +406,7 @@ table td {
 
 h1 {
     display: inline;
+    font-size: 1.5em;
 }
 
 a {
@@ -520,7 +515,8 @@ img.imgsize {
 				<c:if test="${!empty sessionScope.memberName }"> 
 				<div class="logintop">
 					<img alt="회원이미지" src="<c:url value='/resources/main/images/people.PNG'/>" width="100px;">
-		        	<span style="margin-bottom: 10px;display: inline-block;margin-left: -7px;">${sessionScope.memberName }님, 환영합니다.</span>
+		        	<span style="margin-bottom: 10px;display: inline-block;margin-left: -7px;">
+		        	<strong>${sessionScope.memberName }</strong>님, 환영합니다.</span>
 					<input type="button" value="로그아웃" onclick="location='<c:url value='/login/logout.do'/>'" style="    margin-left: 174px;
     margin-top: -25px;
     background: white;
@@ -932,7 +928,7 @@ img.imgsize {
 							style="padding-top: 0px; width: 1300px; margin-left: -125px;">
 							<c:forEach var="map" items="${list }">
 							<div class="col-sm-6 p-r-25 p-r-15-sr991" id="vvipone">
-								<a href="<c:url value='/company/jobopening_view.do?jobopening='/>" class="f1-m-3 cl2 hov-cl10 trans-03" style="font-size: 1.0em">
+								<a href="<c:url value='/company/jobopening_view.do?jobopening=${map["JOBOPENING"] } ' />" class="f1-m-3 cl2 hov-cl10 trans-03" style="font-size: 1.0em">
 								<!-- Item latest -->
 								<div class="m-b-45"> 
 									<div style="width:270px;height:127px;">
