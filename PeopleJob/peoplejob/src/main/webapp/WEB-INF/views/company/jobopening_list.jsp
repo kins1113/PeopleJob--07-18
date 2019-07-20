@@ -68,9 +68,11 @@
 		<c:if test="${!empty list }">
 			<c:forEach var="vo" items="${list }"> 
 			<c:set var="loop_flag" value="false" /> 
+			
 	        <div class="list-group"> 
 	            <div class="list-group-item">
-	                <h4 class="list-group-item-heading"><a href="<c:url value='/company/jobopening_upHit.do?jobopening=${vo.jobopening }'/>">공고제목:${vo.jobtitle }</a></h4>
+	                <img src="<c:url value='/peoplejob_upload/${vo.companyimage }'/>" 
+							alt="공고이미지" width="50px" height="50px" style="float:left;"> <h4 class="list-group-item-heading"><a href="<c:url value='/company/jobopening_upHit.do?jobopening=${vo.jobopening }'/>">공고제목:${vo.jobtitle }</a></h4>
 	                <p class="list-group-item-text">
 	                <c:forEach var="cvo" items="${clist }">
 	                 <c:if test="${not loop_flag }">
@@ -85,11 +87,8 @@
 	                | <small>근무방식 : ${vo.workway }</small>
 	                | <small>급여방식 : ${vo.payway }</small>
 	                | <small>조회수 : ${vo.hits }</small>
-	                <span class="label label-info">
-					<img src="<c:url value='/peoplejob_upload/${vo.companyimage }'/>" 
-							alt="공고이미지" width="50">
-					
-					</span> <span class="label label-info">복리후생 : ${vo.welfare }</span>
+	                <br>
+	                 <span class="label label-info">복리후생 : ${vo.welfare }</span>
 					<br> 
 					<c:if test="${mvo.authorityCode==1 }"> 
 					<a href="<c:url value='/apply/insertapply.do?jobopening=${vo.jobopening}'/>"><input type="button" id="apply" name="apply"class="btn btn-primary" value="즉시지원"></a>

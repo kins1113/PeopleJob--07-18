@@ -10,17 +10,17 @@ public class JobopeningVO extends SearchVO{
 	public String workway;
 	public String workdate;
 	public String dayofweek;
-	public int worktime;
+	public String worktime;
 	public String payway;
 	public String pay;
 	public String workform;
 	public String welfare;
 	public String gender;
-	public int agelimit;
+	public String agelimit;
 	public String academicCondition;
 	public String career;
 	public String sweetener;
-	public int recruit;
+	public String recruit;
 	public String recruitmentTarget;
 	public String endDate;
 	public String receiveway;
@@ -75,10 +75,10 @@ public class JobopeningVO extends SearchVO{
 	public void setDayofweek(String dayofweek) {
 		this.dayofweek = dayofweek;
 	}
-	public int getWorktime() {
+	public String getWorktime() {
 		return worktime;
 	}
-	public void setWorktime(int worktime) {
+	public void setWorktime(String worktime) {
 		this.worktime = worktime;
 	}
 	public String getPayway() {
@@ -111,13 +111,12 @@ public class JobopeningVO extends SearchVO{
 	public void setGender(String gender) {
 		this.gender = gender;
 	}
-	public int getAgelimit() {
+	public String getAgelimit() {
 		return agelimit;
 	}
-	public void setAgelimit(int agelimit) {
+	public void setAgelimit(String agelimit) {
 		this.agelimit = agelimit;
 	}
-	
 	public String getAcademicCondition() {
 		return academicCondition;
 	}
@@ -136,10 +135,10 @@ public class JobopeningVO extends SearchVO{
 	public void setSweetener(String sweetener) {
 		this.sweetener = sweetener;
 	}
-	public int getRecruit() {
+	public String getRecruit() {
 		return recruit;
 	}
-	public void setRecruit(int recruit) {
+	public void setRecruit(String recruit) {
 		this.recruit = recruit;
 	}
 	public String getRecruitmentTarget() {

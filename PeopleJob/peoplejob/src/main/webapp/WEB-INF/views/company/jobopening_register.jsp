@@ -96,13 +96,11 @@
               <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-10">
                 <label class="control-label">근무형태</label>
-                <input id="workform" name="workform" class="form-control" type="text" />
-               <!--  <select name="workform">
-                		<option value="정규직(경력)">정규직(경력)</option>
-                		<option value="정규직(신입)">정규직(신입)</option>
-                		<option value="계약직">계약직</option>
-                		<option value="인턴">인턴</option>
-                </select> -->
+               <select name="workform">
+                		<option value="평일">평일</option>
+                		<option value="주말">주말</option>
+                		<option value="교대근무">교대근무</option>
+                </select>
                 </div>
             </div>
             <c:import url="jobopening_date.jsp"/>
@@ -121,7 +119,15 @@
              <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-10">
                 <label class="control-label">근무요일</label>
-                    <input id="dayofweek" name="dayofweek" class="form-control" type="text" />
+                    <select name="dayofweek">
+                		<option value="1일">1일</option>
+                		<option value="2일">2일</option>
+                		<option value="3일">3일</option>
+                		<option value="4일">4일</option>
+                		<option value="5일">5일</option>
+                		<option value="6일">6일</option>
+                		<option value="7일">7일</option>
+                </select>
                 </div>
             </div>
             

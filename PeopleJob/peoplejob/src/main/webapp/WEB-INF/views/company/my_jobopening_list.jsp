@@ -96,13 +96,15 @@
 	 		<td colspan="5" class="align_center">데이터가 존재하지 않습니다.</td>
 	 	</tr>
 		</c:if>
+	                
 		<c:if test="${!empty list }">
 			<c:forEach var="vo" items="${list }"> 
 			<c:set var="loop_flag" value="false" /> 
 	        <div class="list-group"> 
 	            <div class="list-group-item">
 	            <input type="checkbox" name="jobopening1" id="jobopening1" value="${vo.jobopening }" onclick="javascript_:s_it()">
-	                <h4 class="list-group-item-heading"><a href="<c:url value='/company/jobopening_upHit.do?jobopening=${vo.jobopening }'/>">공고제목:${vo.jobtitle }</a></h4>
+	               <img src="<c:url value='/peoplejob_upload/${vo.companyimage }'/>" 
+							alt="공고이미지" width="50px" height="50px" style="float:left;"> <h4 class="list-group-item-heading"><a href="<c:url value='/company/jobopening_upHit.do?jobopening=${vo.jobopening }'/>">공고제목:${vo.jobtitle }</a></h4>
 	                <p class="list-group-item-text">
 	                <c:forEach var="cvo" items="${clist }">
 	                 <c:if test="${not loop_flag }">
@@ -118,12 +120,8 @@
 	                | <small>급여방식 : ${vo.payway }</small>
 	                | <small>조회수 : ${vo.hits }</small>
 	                | <small>활성화여부 : ${vo.adminagree }</small>
-	                </p> 
-	                <span class="label label-info">
-					<img src="<c:url value='/peoplejob_upload/${vo.companyimage }'/>" 
-							alt="공고이미지" width="50">
-					
-					</span> <span class="label label-info">복리후생 : ${vo.welfare }</span>
+	                </p>  
+	               <span class="label label-info">복리후생 : ${vo.welfare }</span>
 	            </div>
 	        </div>
 			</c:forEach>

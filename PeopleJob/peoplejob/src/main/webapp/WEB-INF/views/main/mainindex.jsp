@@ -872,27 +872,11 @@ img.imgsize {
 							<!-- Video -->
 							<div class="notice" style="width: 285px; height: 156px;">
 							<div class="p-b-23">
-								<div class="how2 how2-cl4 flex-s-c m-b-35">
+								<div class="how2 how2-cl4 flex-s-c m-b-35"> 
 									<h3 class="f1-m-2 cl3 tab01-title">공지사항</h3>
-								</div>
-								<ul class="p-t-35" style="padding-top: 0px"> 
-									<li style="margin-bottom: 5px;" >
-										<a href="#"
-										class="size-w-3 f1-s-7 cl3 hov-cl10 trans-03" style="margin-left: 30px;margin-right: 30px;margin-bottom: 7px; "> 1  기업회원
-											회원가입시 주의사항 </a>
-									</li>
-
-									<li style="margin-bottom: 5px"> <a href="#"
-										class="size-w-3 f1-s-7 cl3 hov-cl10 trans-03" style="margin-left: 30px;  margin-bottom: 7px;  margin-right: 30px;"> 2  배너광고
-											문의 </a>
-									</li>
-
-									<li style="margin-bottom: 5px"> <a href="#"
-										class="size-w-3 f1-s-7 cl3 hov-cl10 trans-03" style="margin-left: 30px; margin-bottom: 7px;   margin-right: 30px;"> 3  자주하는
-											질문 </a>
-									</li>
-
-								</ul>
+									<a href="<c:url value='/notice/list.do'/>">더보기</a> 
+								</div> 
+								<c:import url="/notice/notice_view.do"/>
 							</div> 
 						</div>
 						
