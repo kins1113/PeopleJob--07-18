@@ -118,7 +118,7 @@ div#cardBoduPostList {
 	 $('#cancelpay').click(function(){
 			 //현재시간이 결제일+1보다 크면 불가
 			 alert(paydate);
-		/*  if(time>(paydate+1)){
+		  if(time>(paydate+1)){
 		 alert('결제일로부터 하루가 지난 상품은 취소할 수 없습니다.');
 				event.preventDefault();
 				return false; 
@@ -127,7 +127,7 @@ div#cardBoduPostList {
 					 event.preventDefault();
 					 return false; 
 				  }
-			 }  */ 
+			 }  
 			 
 	 });
  });

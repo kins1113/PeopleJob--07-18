@@ -478,10 +478,12 @@ img.imgsize {
     height: 110px;
     margin-right: -22px;">
     	<div class="left" style=" width: 50%;float: left; box-sizing: border-box; height: 100%;">
-        <br><img alt="" src="<c:url value='/resources/main/images/글자수세기.PNG'/>" style="width: 55px;"><br>
-        글자수 세기</div>
+    	<a href="<c:url value='/main/chkLchar.do'/>" style="float: none;color: darkslategray;">
+        <br><img alt="글자수 세기" src="<c:url value='/resources/main/images/글자수세기.PNG'/>" style="width: 55px;"><br>
+        글자수 세기</a></div>
         <div class="right" style=" width: 50%;float: right;box-sizing: border-box; height: 100%;">
-          <br><img alt="" src="<c:url value='/resources/main/images/맞춤법검사.PNG'/>"  style="width: 55px;"><br>맞춤법 검사</div>  
+        <a href="<c:url value='/main/chkgrammer.do'/>" style="float: none;color: darkslategray;">
+          <br><img alt="" src="<c:url value='/resources/main/images/맞춤법검사.PNG'/>"  style="width: 55px;"><br>맞춤법 검사</a></div>  
 
 
     </div>
@@ -926,12 +928,12 @@ img.imgsize {
 									<div class="p-t-16"> 
 										<h5 class="p-b-5" style="font-size: 1.3em; margin-top: -39px;"> ${map['JOBTITLE'] } </h5>
 										<h5 class="p-b-5" style="font-size: 1.1em;display: inline; margin-right: 10px;"> ${map['COMPANYNAME'] } </h5>
-										<span class="cl8">   D-13 </span><br>     
+										<span class="cl8" id="Dday">   D-${map['DDAY'] } </span><br>     
 											<img alt="스크랩임시사진" src="<c:url value='/peoplejob_upload/scrapstarwhite.PNG'/>" style="  margin-top: 3px;">
 											 <img alt="지원버튼사진" src="<c:url value='/peoplejob_upload/즉시지원.PNG'/>" style="float:right;"> 
 									</div> 
 								</div>
-						</a>
+						</a> 
 							</div>
 							</c:forEach>
 							

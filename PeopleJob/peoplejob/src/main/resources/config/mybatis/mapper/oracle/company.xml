@@ -229,7 +229,7 @@
 	<select id="deadlineimminentBymonth" resultType="map">
 		select * from 
 	(
-	 select j.end_date,c.companyname, j.jobtitle, J.JOBOPENING
+	 select j.end_date,c.companyname, j.jobtitle, J.JOBOPENING, sysdate-end_date as Dday
 	 from jobopening j join company c
 	 on j.COMPANY_CODE = c.COMPANY_CODE
 	 where (c.MANNUM+c.womannum)>200
