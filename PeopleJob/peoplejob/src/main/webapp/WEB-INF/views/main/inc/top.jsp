@@ -224,7 +224,7 @@ function company(){
 
 							<li class="mega-menu-item">
 							<c:if test="${ sessionScope.author_code==null}">
-								<a href="#" onclick="alert('로그인을 해주세요')">
+								<a href="#" onclick="alert('로그인을 해주세요'); location.href='<c:url value="/login/login.do"/>' ">
 								이력서관리
 								</a> 
 							</c:if>

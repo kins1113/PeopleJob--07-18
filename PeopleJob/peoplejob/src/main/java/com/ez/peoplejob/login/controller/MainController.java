@@ -34,4 +34,18 @@ public class MainController {
 		return "main/mainindex";
 	}
 	
+	@RequestMapping("/main/chkLchar.do")
+	public String chkLchar() {
+		logger.info("글자수 세기 화면 보여주기");
+		return "main/chkLchar";
+		
+	}
+	
+	@RequestMapping("/main/chkgrammer.do")
+	public String chkgrammer() {
+		logger.info("글자수 세기 화면 보여주기");
+		return "main/chkgrammer";
+		
+	}
+	
 }
