@@ -32,5 +32,13 @@ public class ScrapServiceImpl implements ScrapService{
 	public int deleteScrap(Map<String, Object> map) {
 		return scrapDao.deleteScrap(map);
 	}
+	@Override
+	public int deleteScrap2(Map<String, Object> map) {
+		return scrapDao.deleteScrap2(map);
+	}
+	@Override
+	public int dupscrap(Map<String, Object> map) {
+		return scrapDao.dupscrap(map);
+	}
 	
 }

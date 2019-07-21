@@ -83,6 +83,12 @@
 <label><input type="checkbox" id="academicCondition1" name="academicCondition1" value="석사졸업">석사졸업</label>
 <label><input type="checkbox" id="academicCondition1" name="academicCondition1" value="박사졸업">박사졸업</label>
 <label><input type="checkbox" id="academicCondition1" name="academicCondition1" value="학력무관">학력무관</label>
+
+<br><label>경력</label> <br>
+<label><input type="checkbox" id="career1" name="career1" value="경력무관">경력무관</label>
+<label><input type="checkbox" id="career1" name="career1" value="1~3년">1~3년</label>
+<label><input type="checkbox" id="career1" name="career1" value="4~6년">4~6년</label>
+<label><input type="checkbox" id="career1" name="career1" value="7~9년">7~9년</label>
 <br><br><hr> 
 <input type="button" id="wheresubmit" name="wheresubmit"value="확인">
 </fieldset>

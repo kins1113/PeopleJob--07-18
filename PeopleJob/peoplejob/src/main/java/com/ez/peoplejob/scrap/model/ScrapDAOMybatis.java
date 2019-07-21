@@ -33,4 +33,12 @@ public class ScrapDAOMybatis implements ScrapDAO{
 	public int deleteScrap(Map<String, Object> map) {
 		return sqlSession.delete(namespace+"deleteScrap",map);
 	}
+	@Override
+	public int deleteScrap2(Map<String,Object>map) {
+		return sqlSession.delete(namespace+"deleteScrap2",map);
+	}
+	@Override
+	public int dupscrap(Map<String, Object> map) {
+		return sqlSession.selectOne(namespace+"dupscrap",map);
+	}
 }

@@ -32,7 +32,7 @@
 <script type="text/javascript">
 	$(document).ready(function(){
 		$('form[name=frmDelete]').submit(function(){
-			if(confirm("삭제하시겠습니까?")){
+			if(confirm("활성화수정하시겠습니까?")){
 				if($('#pwd').val().length<1){
 					alert('비밀번호를 입력하세요');
 					$('#pwd').focus();

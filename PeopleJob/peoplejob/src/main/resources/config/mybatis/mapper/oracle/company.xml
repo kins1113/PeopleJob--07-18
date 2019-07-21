@@ -57,6 +57,13 @@
 					#{academicCondition}
 					</foreach>
 				</if>		
+				<if test="career1 != null">
+					and career IN 
+					<foreach collection="career1" item="career" 
+						index="index" open="(" close=")" separator=",">
+					#{career}
+					</foreach>
+				</if>		
 				order by jobregdate desc
 		    ) A
 		)
@@ -103,7 +110,14 @@
 						index="index" open="(" close=")" separator=",">
 					#{academicCondition}
 					</foreach>
-				</if>		
+				</if>	
+				<if test="career1 != null">
+					and career IN 
+					<foreach collection="career1" item="career" 
+						index="index" open="(" close=")" separator=",">
+					#{career}
+					</foreach>
+				</if>			
 				order by jobregdate desc
 		    ) A
 		)
@@ -174,6 +188,13 @@
 					#{academicCondition}
 					</foreach>
 				</if>		
+				<if test="career1 != null">
+					and career IN 
+					<foreach collection="career1" item="career" 
+						index="index" open="(" close=")" separator=",">
+					#{career}
+					</foreach>
+				</if>		
 				order by jobregdate desc
 	</select>
 	<select id="selectTotalCount2" resultType="int" parameterType="map">
@@ -205,6 +226,13 @@
 					<foreach collection="academicCondition1" item="academicCondition" 
 						index="index" open="(" close=")" separator=",">
 					#{academicCondition}
+					</foreach>
+				</if>		
+				<if test="career1 != null">
+					and career IN 
+					<foreach collection="career1" item="career" 
+						index="index" open="(" close=")" separator=",">
+					#{career}
 					</foreach>
 				</if>		
 				order by jobregdate desc
