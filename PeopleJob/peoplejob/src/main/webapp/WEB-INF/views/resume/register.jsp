@@ -16,7 +16,27 @@
 #registerdiv {
     background: #f2f4f7;
 }
-
+select#schoollocal {
+    height: 35px;
+}
+select#graduatecheck {
+    height: 35px;
+}
+select#workcondition {
+    height: 35px;
+}
+select#certificationtype {
+    height: 35px;
+}
+select#hopeworkform {
+    height: 35px;
+}
+select#hopepay {
+    height: 35px;
+}
+select#hopeworkdate {
+    height: 35px;
+}
 <style>
 
 </style>
@@ -45,7 +65,7 @@
     <div>
     <!--이력서 사진  https://kuzuro.blogspot.com/2018/10/11.html-->
     <div class="inputArea">
- <label for="picture">이미지</label>
+ <label for="picture">이력서 정보</label>
  <input type="file" id="gdsImg" name="file" />
  <div class="select_img"><img src="" /></div>
  
@@ -60,7 +80,7 @@
    }
   });
  </script>
- <%=request.getRealPath("/") %>
+
 </div>
         <input type="hidden" class="form-control"  name="picture" id="picture"  >
     </div>
@@ -220,20 +240,35 @@
         <label for="jobgrade">직급</label>
         <input type="text" class="form-control"  name="jobgrade" id="jobgrade" style="ime-mode:active">
    </div>
-  
+  <script>
+$(function () {
+	$("#certificationtype").hide();
+	$("#certification").click(function () {
+		$("#certificationtype").toggle(500);
+	});
+	$("#award").hide();
+	$("#awardbt").click(function () {
+		$("#award").toggle(500);
+	});
+	$("#hopework").hide();
+	$("#hopeworkbt").click(function () {
+		$("#hopework").toggle(500);
+	});
 
-   
+});
+</script>
+   <button type="button" id="certification" class="btn btn-success" value="자격증/어학">자격증/어학</button>
+   <div id="certificationtype">
    <h3>자격증/어학</h3>
         <label for="certificationtype">항목선택</label>
         <select class="form-control" name="certificationtype" id="certificationtype" >
         	<option value="자격증/면허증">자격증/면허증</option>
         	<option value="어학시험">어학시험</option>
         </select>
-     <div>
+        
    <h5>자격증/면허증</h5>
         <label for="lName">자격증명</label>
         <input type="text" class="form-control"  name="lName" id="lName" style="ime-mode:active">
-    </div>
     <div>    
         <label for="lInstitution">발행처/기관</label>
         <input type="text" class="form-control"  name="lInstitution" id="lInstitution" style="ime-mode:active">
@@ -267,15 +302,16 @@
      <div>
      	<c:import url="resume_date4.jsp"/>             
 	</div>
+	</div>
      &nbsp;
 
-  <div class="well">
+   <button type="button" id="awardbt" class="btn btn-success" value="수상내역">수상내역</button>
+    <div class="well" id="award">
      <h5>수상내역</h5>
       <label for="award">수상명</label>
         <input type="text" class="form-control"  name="award" id="award" style="ime-mode:active">
   </div>
      &nbsp;
-
      <h3>자기소개서</h3>
       <div>	
     	<!-- <label for="introduce">자기소개서</label>
@@ -286,8 +322,10 @@
 		</c:import>
         
         
-      </div>
+   </div>
       &nbsp;
+      <button type="button" id="hopeworkbt" class="btn btn-success" value="희망근무">희망근무</button>
+	 <div  id="hopework">
       <h3>희망근무 선택</h3>
       <div>
     	<label for="hopeworkform">근무형태</label>
@@ -386,6 +424,7 @@
         	<option value="10시~06시">10시~06시</option>
         	<option value="자율근무제">자율근무제</option>
         </select>
+        </div>
         </div>
    &nbsp;
     <div>
