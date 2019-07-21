@@ -46,7 +46,7 @@
 	<selectKey keyProperty="companyCode" order="BEFORE" resultType="int">
 		select company_seq.nextval from dual
 	</selectKey> 
-	insert into company(company_code,companyname, companyno)
+	insert into company(company_code,companyname, business_Number)
 	values(#{companyCode}, #{companyname},#{businessNumber})
 	</insert>
 	

@@ -31,5 +31,9 @@ public class ServiceServiceImpl implements ServiceService  {
 		}
 		return count;
 	}
+	@Override
+	public ServiceVO selectServiceByCode(int serviceCode) {
+		return serviceDao.selectServiceByCode(serviceCode);
+	}
 	
 }

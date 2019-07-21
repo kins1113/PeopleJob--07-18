@@ -43,6 +43,9 @@ $(function() {
 	border: 2px solid blue; 
 }
 
+.recommend:HOVER {
+	border: 2px solid blue; 
+}
 
 /* .col-sm-6.p-r-25.p-r-15-sr991 {
     border: 1px solid lightgray;
@@ -551,7 +554,7 @@ img.imgsize {
 
 							<table border="1">
 								<tr>
-									<td>
+									<td class="recommend">
 										<div style="padding: 20px;">
 											<strong style="display: block;">(주) 이트리즈시스템</strong> 
 											<span style="display: block;">이트리즈 시스템 SI 웹개발자 </span>
@@ -563,7 +566,7 @@ img.imgsize {
 											 </div> 
 										</div>
 										</td>
-									<td>
+									<td class="recommend">
 										<div style="padding: 20px;">
 											<strong style="display: block;">(주) 이트리즈시스템</strong> 
 											<span style="display: block;">이트리즈 시스템 SI 웹개발자 </span>
@@ -1256,7 +1259,249 @@ img.imgsize {
 						</div>
 
 
+<!-- grand 추가 -->
+<div class="row justify-content-center">
+				<div class="col-md-10 col-lg-8 p-b-20">
+					<div class="how2 how2-cl4 flex-s-c m-r-10 m-r-0-sr991">
+						<h3 class="f1-m-2 cl3 tab01-title" style="float:right">
+							채용정보
+						</h3>
+						<h5> VVIP</h5>
+						<h5 style="margin-left: 510px;"><a href="<c:url value='/service/payment.do'/> "> >상품문의 </a></h5>
+					</div>
 
+					<div class="row p-t-35" style="padding-top: 0px;margin-left: 0px;width: 109%;">
+						<c:forEach var="map" items="${list }">
+					 			<div class="col-sm-6 p-r-25 p-r-15-sr991" style="    margin-bottom: -38px;">
+							<!-- Item latest -->	
+							<div class="m-b-45">
+								<a href="blog-detail-01.html" class="wrap-pic-w hov1 trans-03">
+									<img src="<c:url value='/peoplejob_upload/${map["IMAGE"] }'/>" alt="IMG" class="imgsize">
+								</a>
+ 
+	 							<div class="p-t-16" style="padding-top: 0px;">
+									<h5 class="p-b-5">
+										<a href="blog-detail-01.html" class="f1-m-3 cl2 hov-cl10 trans-03" style="font-size: 1.0em">
+											${map['JOBTITLE'] }
+										</a>
+									</h5>
+
+									<span class="cl8" style="">
+										<a href="#" class="f1-s-4 cl8 hov-cl10 trans-03">
+											by ${map['COMPANYNAME'] }
+										</a>
+
+										<span class="f1-s-3 m-rl-3">
+											-
+										</span>
+
+										<span class="f1-s-3">
+										~<fmt:formatDate value="${map['END_DATE'] }" pattern="yyyy-MM-dd"/> 
+											
+										</span>
+									</span>
+								</div>
+							</div>
+						</div>
+					 
+						</c:forEach> 
+						
+						<div class="col-sm-6 p-r-25 p-r-15-sr991">
+							<!-- Item latest -->	
+							<div class="m-b-45">
+								<a href="blog-detail-01.html" class="wrap-pic-w hov1 trans-03">
+									<img src="<c:url value='/resources/main/images/samsung.png'/>" alt="IMG" class="imgsize">
+								</a>
+
+								<div class="p-t-16">
+									<h5 class="p-b-5">
+										<a href="blog-detail-01.html" class="f1-m-3 cl2 hov-cl10 trans-03" style="font-size: 1.0em">
+											삼성전자 개발자 채용 
+										</a>
+									</h5>
+
+									<span class="cl8">
+										<a href="#" class="f1-s-4 cl8 hov-cl10 trans-03">
+											by SAMSUNG
+										</a>
+
+										<span class="f1-s-3 m-rl-3">
+											-
+										</span>
+
+										<span class="f1-s-3">
+											2019-07-01 ~ 2019-07-13
+										</span>
+									</span>
+								</div>
+							</div>
+						</div>
+
+						<div class="col-sm-6 p-r-25 p-r-15-sr991">
+							<!-- Item latest -->	
+							<div class="m-b-45">
+								<a href="blog-detail-01.html" class="wrap-pic-w hov1 trans-03">
+									<img src="<c:url value='/resources/main/images/naver.jpg'/>" alt="IMG" class="imgsize">
+								</a>
+
+									<h5 class="p-b-5">
+										<a href="blog-detail-01.html" class="f1-m-3 cl2 hov-cl10 trans-03">
+											2019 네이버 개발자 채용 
+										</a>
+									</h5>
+
+									<span class="cl8">
+										<a href="#" class="f1-s-4 cl8 hov-cl10 trans-03">
+											by NAVER
+										</a>
+
+										<span class="f1-s-3 m-rl-3">
+											-
+										</span>
+
+										<span class="f1-s-3">
+											2019-06-30 ~ 2019-07-15
+										</span>
+									</span>
+							</div>
+						</div>
+
+						<div class="col-sm-6 p-r-25 p-r-15-sr991">
+							<!-- Item latest -->	
+							<div class="m-b-45">
+								<a href="blog-detail-01.html" class="wrap-pic-w hov1 trans-03">
+									<img src="<c:url value='/resources/main/images/한화.png'/>" alt="IMG" class="imgsize">
+								</a>
+
+								<div class="p-t-16">
+									<h5 class="p-b-5">
+										<a href="blog-detail-01.html" class="f1-m-3 cl2 hov-cl10 trans-03">
+											한화 2019 공채 
+										</a>
+									</h5>
+
+									<span class="cl8">
+										<a href="#" class="f1-s-4 cl8 hov-cl10 trans-03">
+											by HanWha
+										</a>
+
+										<span class="f1-s-3 m-rl-3">
+											-
+										</span>
+
+										<span class="f1-s-3">
+											Feb 15
+										</span>
+									</span>
+								</div>
+							</div>
+						</div>
+
+						<div class="col-sm-6 p-r-25 p-r-15-sr991">
+							<!-- Item latest -->	
+							<div class="m-b-45">
+								<a href="blog-detail-01.html" class="wrap-pic-w hov1 trans-03">
+									<img src="<c:url value='/resources/main/images/kaokaobank.png'/>" alt="IMG" class="imgsize">
+								</a>
+
+								<div class="p-t-16">
+									<h5 class="p-b-5">
+										<a href="blog-detail-01.html" class="f1-m-3 cl2 hov-cl10 trans-03">
+											한화 2019 공채 
+										</a>
+									</h5>
+
+									<span class="cl8">
+										<a href="#" class="f1-s-4 cl8 hov-cl10 trans-03">
+											by HanWha
+										</a>
+
+										<span class="f1-s-3 m-rl-3">
+											-
+										</span>
+
+										<span class="f1-s-3">
+											Feb 15
+										</span>
+									</span>
+								</div>
+							</div>
+						</div>
+
+						<div class="col-sm-6 p-r-25 p-r-15-sr991">
+							<!-- Item latest -->	
+							<div class="m-b-45">
+								<a href="blog-detail-01.html" class="wrap-pic-w hov1 trans-03">
+									<img src="<c:url value='/resources/main/images/ezen.jpg'/>" alt="IMG" class="imgsize">
+								</a>
+
+								<div class="p-t-16">
+									<h5 class="p-b-5">
+										<a href="blog-detail-01.html" class="f1-m-3 cl2 hov-cl10 trans-03">
+											한화 2019 공채 
+										</a>
+									</h5>
+
+									<span class="cl8">
+										<a href="#" class="f1-s-4 cl8 hov-cl10 trans-03">
+											by HanWha
+										</a>
+
+										<span class="f1-s-3 m-rl-3">
+											-
+										</span>
+
+										<span class="f1-s-3">
+											Feb 15
+										</span>
+									</span>
+								</div>
+							</div>
+						</div>
+
+						<div class="col-sm-6 p-r-25 p-r-15-sr991">
+							<!-- Item latest -->	
+							<div class="m-b-45">
+								<a href="blog-detail-01.html" class="wrap-pic-w hov1 trans-03">
+									<img src="<c:url value='/resources/main/images/lg.png'/>" alt="IMG" class="imgsize">
+								</a>
+
+								<div class="p-t-16">
+									<h5 class="p-b-5">
+										<a href="blog-detail-01.html" class="f1-m-3 cl2 hov-cl10 trans-03">
+											한화 2019 공채 
+										</a>
+									</h5>
+
+									<span class="cl8">
+										<a href="#" class="f1-s-4 cl8 hov-cl10 trans-03">
+											by HanWha
+										</a>
+
+										<span class="f1-s-3 m-rl-3">
+											-
+										</span>
+
+										<span class="f1-s-3">
+											Feb 15
+										</span>
+									</span>
+								</div>
+							</div>
+						</div>
+					</div>
+					
+					
+				</div>
+
+				
+				
+</div>
+
+    </div>
+				
+				</div>
+				
 				</div>
 			</div>
 	</div>

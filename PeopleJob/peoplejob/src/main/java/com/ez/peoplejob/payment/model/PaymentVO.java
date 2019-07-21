@@ -12,6 +12,9 @@ public class PaymentVO {
 	private int serviceCode;   //서비스 코드
 	private int memberCode;  //회원 코드
 	
+	//추가
+	private int jobopening;  //채용공고 코드
+	
 	public int getPaymentCode() {
 		return paymentCode;
 	}
@@ -60,12 +63,22 @@ public class PaymentVO {
 	public void setMemberCode(int memberCode) {
 		this.memberCode = memberCode;
 	}
+	
+	
+	public int getJobopening() {
+		return jobopening;
+	}
+	public void setJobopening(int jobopening) {
+		this.jobopening = jobopening;
+	}
 	@Override
 	public String toString() {
 		return "PaymentVO [paymentCode=" + paymentCode + ", paymentway=" + paymentway + ", progress=" + progress
 				+ ", discount=" + discount + ", paydate=" + paydate + ", payendDate=" + payendDate + ", serviceCode="
-				+ serviceCode + ", memberCode=" + memberCode + "]";
+				+ serviceCode + ", memberCode=" + memberCode + ", jobopening=" + jobopening + "]";
 	}
+	
+	
 	
 
 	
