@@ -11,4 +11,6 @@ public interface ScrapService {
 	List<JobopeningVO>selectScrapJobOpen(Map<String, Object>map);
 	int selectTotalCount(Map<String,Object>map);
 	int deleteScrap(Map<String,Object> map);
+	int deleteScrap2(Map<String,Object> map);
+	int dupscrap(Map<String,Object> map);
 }

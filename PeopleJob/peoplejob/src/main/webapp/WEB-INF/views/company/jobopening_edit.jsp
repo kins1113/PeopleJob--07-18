@@ -291,8 +291,24 @@
             
             <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-10">
-                    <label class="control-label">경력사항 :</label> 
-                    <input id="career" name="career" class="form-control" type="text" value="${vo.career }"/>
+                    <label class="control-label">경력사항 :</label>
+                    <div class="form-group">
+                    <label class="control-label">경력사항</label> 
+                    <select id="career" name="career">
+                        <option value="경력무관"
+                        <c:if test="${vo.career =='1~3년'}">selected</c:if>
+                        >경력무관</option>
+                        <option value="1~3년"
+                        <c:if test="${vo.career =='1~3년'}">selected</c:if>
+                        >1~3년</option>
+                        <option value="4~6년"
+                        <c:if test="${vo.career =='4~6년'}">selected</c:if>
+                        >4~6년</option>
+                        <option value="7~9년"
+                        <c:if test="${vo.career =='7~9년'}">selected</c:if>
+                        >7~9년</option>
+                    </select>
+            </div>  
                 </div>
             </div>
             <div class="form-group">
@@ -355,12 +371,12 @@
             <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-10">
                     <label class="control-label">활성화여부</label> 
-                    
                     <input id="adminagree" name="adminagree"  type="radio" value="Y"
-                    <c:if test="${vo.adminagree='Y' }">checked</c:if>
+                    
+                    <c:if test="${vo.adminagree=='Y' }">checked</c:if>
                     />Y
                     <input id="adminagree" name="adminagree"  type="radio" value="N"
-                     <c:if test="${vo.adminagree='N' }">checked</c:if>
+                     <c:if test="${vo.adminagree=='N' }">checked</c:if>
                     />N 
                 </div>
             </div>

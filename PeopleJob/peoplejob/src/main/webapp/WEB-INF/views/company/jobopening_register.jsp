@@ -218,7 +218,12 @@
             <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-10">
                     <label class="control-label">경력사항</label> 
-                    <input id="career" name="career" class="form-control" type="text" />
+                    <select id="career" name="career">
+                        <option value="경력무관">경력무관</option>
+                        <option value="1~3년">1~3년</option>
+                        <option value="4~6년">4~6년</option>
+                        <option value="7~9년">7~9년</option>
+                    </select>
                 </div>
             </div>
             <div class="form-group">

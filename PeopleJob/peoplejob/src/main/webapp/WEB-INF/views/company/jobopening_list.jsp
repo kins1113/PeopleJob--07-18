@@ -72,28 +72,35 @@
 	        <div class="list-group"> 
 	            <div class="list-group-item">
 	                <img src="<c:url value='/peoplejob_upload/${vo.companyimage }'/>" 
-							alt="공고이미지" width="50px" height="50px" style="float:left;"> <h4 class="list-group-item-heading"><a href="<c:url value='/company/jobopening_upHit.do?jobopening=${vo.jobopening }'/>">공고제목:${vo.jobtitle }</a></h4>
-	                <p class="list-group-item-text">
-	                <c:forEach var="cvo" items="${clist }">
+							alt="공고이미지" width="50px" height="50px" style="float:right;"> 
+							<div style="width=100px;float:left;">
+							<c:forEach var="cvo" items="${clist }">
 	                 <c:if test="${not loop_flag }">
 				        <c:if test="${vo.companyCode==cvo.companyCode}">
-			                ${cvo.companyname}
+			                <h1>${cvo.companyname}</h1>
 				            <c:set var="loop_flag" value="true" />
 				        </c:if>
 				    </c:if>
 	                </c:forEach>
-	                 | 지역:${vo.localcheck} | 기간 : ${fn:substring(vo.workdate,0,10) }~${fn:substring(vo.endDate,0,10)} 
+	                </div>
+							<h4 class="list-group-item-heading"><a href="<c:url value='/company/jobopening_upHit.do?jobopening=${vo.jobopening }'/>">공고제목:${vo.jobtitle }</a></h4>
+	                <p class="list-group-item-text">
+	                
+	                  지역:${vo.localcheck} | 기간 : ${fn:substring(vo.workdate,0,10) }~${fn:substring(vo.endDate,0,10)} 
 	                | <small>등록일 : ${fn:substring(vo.jobregdate,0,10)}</small> 
 	                | <small>근무방식 : ${vo.workway }</small>
-	                | <small>급여방식 : ${vo.payway }</small>
+	                | <small>급여방식 : ${vo.payway }</small><br>
+	                 <small>경력사항 : ${vo.career }</small>
+	                | <small>학력사항 : ${vo.academicCondition }</small>
 	                | <small>조회수 : ${vo.hits }</small>
 	                <br>
 	                 <span class="label label-info">복리후생 : ${vo.welfare }</span>
-					<br> 
-					<c:if test="${mvo.authorityCode==1 }"> 
+	                 <c:if test="${mvo.authorityCode==1 }"> 
 					<a href="<c:url value='/apply/insertapply.do?jobopening=${vo.jobopening}'/>"><input type="button" id="apply" name="apply"class="btn btn-primary" value="즉시지원"></a>
-					<a href="<c:url value='/scrap/insertscrap.do?jobopening=${vo.jobopening}&member_code=${mvo.memberCode }'/>"><input type="button" class="btn btn-default btn-mg" role="button" value="스크랩"></a>
+					<a href="<c:url value='/scrap/insertscrap.do?jobopening=${vo.jobopening}&member_code=${mvo.memberCode }'/>"><img alt="스크랩" src="<c:url value='/peoplejob_upload/scrapstarwhite.PNG'/>"></a>
 					</c:if>
+					<br> 
+					
 	            </div> 
 	        </div>
 	        </c:forEach>

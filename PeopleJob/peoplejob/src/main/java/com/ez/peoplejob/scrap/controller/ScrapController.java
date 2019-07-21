@@ -43,13 +43,23 @@ public class ScrapController {
 		ScrapVO vo=new ScrapVO();
 		vo.setJobopeningCode(jobopening);
 		vo.setScrapmemberCode(member_code);
-		int cnt=scrapService.insertScrap(vo);
-		String msg="",url="/scrap/scrap_list.do";
-		if(cnt>0) {
-			msg="추가성공";
-		}else {
-			msg="추가실패";
-			url="/company/jobopening_view.do?jobopening="+jobopening;
+		Map<String,Object> map=new HashMap<String, Object>();
+		map.put("jobopening", jobopening);
+		map.put("memberCode", member_code);
+		String msg="",url="/company/jobopening_list.do";
+		int cnt2=scrapService.dupscrap(map);
+		int cnt=0;
+		if(cnt2>0) {
+			msg="이미 스크랩한 공고입니다.";
+		}
+		else if(cnt2==0) {
+			cnt=scrapService.insertScrap(vo);
+			if(cnt>0) {
+				msg="추가성공";
+				url="/scrap/scrap_list.do";
+			}else {
+				msg="추가실패";
+			}
 		}
 		model.addAttribute("msg", msg);
 		model.addAttribute("url",url);
@@ -131,11 +141,30 @@ public class ScrapController {
 	}
 	
 	@RequestMapping("/deletescrap.do")
-	public String del_scrap(@RequestParam int[]jobopening,Model model) {
-		logger.info("스크랩 삭제 파라미터 jobopening={}",jobopening);
+	public String del_scrap(@RequestParam int[]jobopening,@RequestParam int member_code,Model model) {
+		logger.info("스크랩 삭제 파라미터 jobopening={},member_code={}",jobopening,member_code);
 		Map<String,Object> map=new HashMap<String, Object>();
 		map.put("jobopening", jobopening);
+		map.put("memberCode", member_code);
 		int cnt=scrapService.deleteScrap(map);
+		String msg="",url="/scrap/scrap_list.do";
+		if(cnt>0) {
+			msg="삭제성공";
+		}else {
+			msg="삭제실패";
+		}
+		model.addAttribute("msg", msg);
+		model.addAttribute("url", url);
+		return "common/message";
+		
+	}
+	@RequestMapping("/deletescrap2.do")
+	public String del_scrap2(@RequestParam int jobopening,@RequestParam int member_code,Model model) {
+		logger.info("버튼 클릭시 스크랩 삭제 파라미터 jobopening={},member_code={}",jobopening,member_code);
+		Map<String,Object> map=new HashMap<String, Object>();
+		map.put("jobopening", jobopening);
+		map.put("memberCode", member_code);
+		int cnt=scrapService.deleteScrap2(map);
 		String msg="",url="/scrap/scrap_list.do";
 		if(cnt>0) {
 			msg="삭제성공";

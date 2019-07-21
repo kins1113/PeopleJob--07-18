@@ -88,7 +88,9 @@ public class JobopeningController {
 			@RequestParam(required=false) String[] localcheck1,
 			@RequestParam(required=false) String[] workway1,
 			@RequestParam(required=false) String[] payway1,
-			@RequestParam(required=false) String[] academicCondition1, HttpSession session,
+			@RequestParam(required=false) String[] academicCondition1,
+			@RequestParam(required = false) String[] career1,
+			HttpSession session,
 			@ModelAttribute SearchVO searchVo,Model model) {
 		String id=(String)session.getAttribute("memberid");
 		if(id==null) {
@@ -112,11 +114,13 @@ public class JobopeningController {
 		Map<String, Object> map = new HashMap<String, Object>();
 		logger.info("localcheck1={},workway1={}",localcheck1,workway1);
 		logger.info("payway1={},academicCondition1={}",payway1,academicCondition1);
+		logger.info("career1={}",career1);
 		logger.info("searchVo.getFirstRecordIndex()={},getRecordCountPerPage={}",searchVo.getFirstRecordIndex(),searchVo.getRecordCountPerPage());
 			map.put("localcheck1", localcheck1);
 			map.put("workway1", workway1);
 			map.put("payway1", payway1);
 			map.put("academicCondition1", academicCondition1);
+			map.put("career1", career1);
 			map.put("firstRecordIndex", searchVo.getFirstRecordIndex());
 			map.put("recordCountPerPage", searchVo.getRecordCountPerPage());
 			logger.info("map={}",map);

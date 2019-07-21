@@ -112,8 +112,18 @@
 		<foreach collection="jobopening" item="jobopening1" 
 					index="index" open="(" close=")" separator=",">
 			#{jobopening1}
-		</foreach> 	
+		</foreach>
+		and scrapmember_code=#{memberCode}
 	</delete>
+	
+	<delete id="deleteScrap2" parameterType="map">
+		delete from scrap 
+		where jobopening_code=#{jobopening} and scrapmember_code=#{memberCode}
+	</delete>
+	
+	<select id="dupscrap" parameterType="map" resultType="int">
+		select count(*) from scrap where jobopening_code=#{jobopening} and scrapmember_code=#{memberCode}
+	</select>
 </mapper>
 
 
