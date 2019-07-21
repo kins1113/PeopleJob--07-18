@@ -6,4 +6,5 @@ public interface ServiceDAO {
 	public int insertService(ServiceVO vo);
 	public List<ServiceVO> selectAll();
 	public int deleteService(int serviceCode);
+	ServiceVO selectServiceByCode(int serviceCode);
 }

@@ -758,7 +758,7 @@ input[type="checkbox"] {
 				<%-- <div class="col-md-10 col-lg-4">
 					<img alt="사이드배너" src="<c:url value='/resources/main/images/skybanner.png'/>">
 					</div> --%>
-				</div>
+				</div> 
 				<div class="row justify-content-center">
 				<div class="col-md-10 col-lg-8 p-b-20">
 					<div class="how2 how2-cl4 flex-s-c m-r-10 m-r-0-sr991">

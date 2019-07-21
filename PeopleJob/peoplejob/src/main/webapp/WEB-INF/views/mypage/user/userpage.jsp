@@ -86,8 +86,8 @@ function company(){
 </script>
 	<!-- Content -->
 	<section class="bg0 p-b-140 p-t-10">
-		<div class="container">
-			<div class="row justify-content-center">
+		<div class="container" style=" max-width: 1230px;">
+			<div class="row justify-content-center" style="width: 1250px;">
 				<div class="col-md-10 col-lg-8 p-b-30" style="float: right;">
 					<div class="p-r-10 p-r-0-sr991">
 						<!-- Blog Detail -->
@@ -132,7 +132,6 @@ function company(){
                             <span class="doing"><em> 0  </em> </span>
                             <span class="sname">관심기업</span>
                             </c:if>
-                           
                            </div>
                         </a>
                     </li> 
@@ -145,7 +144,10 @@ function company(){
                             <span class="doing"><em> 0  </em> </span>
                             <span class="sname">이력서</span> 
                             </c:if>
-                           
+                           <c:if test="${sessionScope.author_code==2 || sessionScope.author_code==3 }">
+                            <span class="doing"><em> 0  </em> </span>
+                            <span class="sname">채용공고</span>
+                            </c:if>
                            </div>
                         </a>
                     </li> 
@@ -223,7 +225,6 @@ function company(){
 				</div>
 				
 				<!-- Sidebar -->
-				<div class="col-md-10 col-lg-4 p-b-30" style="float: left;">
 					<div class="p-l-10 p-rl-0-sr991 p-t-70" style="padding-top: 29px;">						
 						<!-- Category -->
 						<div class="p-b-60">
@@ -310,7 +311,6 @@ function company(){
 					
 						
 					</div>
-				</div>
 			</div>
 		</div>
 	</section>

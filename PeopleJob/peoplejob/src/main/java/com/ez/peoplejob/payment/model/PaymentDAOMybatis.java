@@ -12,10 +12,8 @@ public class PaymentDAOMybatis implements PaymentDAO{
 
 	private String namespace="config.mybatis.mapper.oracle.payment.";
 	@Autowired private SqlSessionTemplate sqlSession;
-	@Override
-	public int insertPayService1(PaymentVO paymentVo) {
-		return sqlSession.insert(namespace+"insertPayService1",paymentVo);
-	}
+
+	
 	@Override
 	public List<Map<String, Object>> selectPaymentById(String memberid) {
 		return sqlSession.selectList(namespace+"selectPaymentById",memberid);
@@ -32,4 +30,17 @@ public class PaymentDAOMybatis implements PaymentDAO{
 	public List<Map<String, Object>> selectMainAdvertiseByServiceCode(int serviceCode) {
 		return sqlSession.selectList(namespace+"selectMainAdvertiseByServiceCode",serviceCode);
 	}
+	@Override
+	public int insertPayment(PaymentVO paymentVo) {
+		return sqlSession.insert(namespace+"insertPayment",paymentVo);
+	}
+	@Override
+	public int getpaymentJobCount(PaymentVO paymentVo) {
+		return sqlSession.selectOne(namespace+"getpaymentJobCount",paymentVo);
+	}
+	@Override
+	public int getCountByJobopening(int jobno) {
+		return sqlSession.selectOne(namespace+"getCountByJobopening",jobno);
+	}
+	
 }

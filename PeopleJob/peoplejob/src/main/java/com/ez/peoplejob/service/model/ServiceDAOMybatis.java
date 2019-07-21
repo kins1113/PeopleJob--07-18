@@ -26,5 +26,9 @@ public class ServiceDAOMybatis implements ServiceDAO {
 	public int deleteService(int serviceCode) {
 		return sqlSession.delete(namespace+"deleteService",serviceCode);
 	}
+	@Override
+	public ServiceVO selectServiceByCode(int serviceCode) {
+		return sqlSession.selectOne(namespace+"selectServiceByCode",serviceCode);
+	}
 
 }

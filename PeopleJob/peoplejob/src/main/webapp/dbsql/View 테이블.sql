@@ -30,7 +30,7 @@ where RNUM>?     and RNUM<=? + ?;
 --결제완료된 채용공고 메인화면에 광고
 CREATE OR REPLACE VIEW vvipMain
 as
-select m.company_code,m.member_code, m.membername, p.progress, p.payend_date, p.service_code, p.paydate, to_char(sysdate-p.paydate) as cancellimit
+select m.company_code,m.member_code, m.membername, p.progress, p.payend_date, p.service_code, p.paydate,(sysdate-p.paydate) as cancellimit
 from member m join payment p
 on p.MEMBER_CODE = m.MEMBER_CODE
 and p.progress='결제완료'

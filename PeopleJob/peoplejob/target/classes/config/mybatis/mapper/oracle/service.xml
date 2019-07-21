@@ -25,5 +25,8 @@
 		where service_Code=#{serviceCode}
 	</delete>
 	
+	<select id="selectServiceByCode" resultType="serviceVo"> 
+		select * from service where service_code=#{serviceCode}
+	</select>
 </mapper>
 	 
