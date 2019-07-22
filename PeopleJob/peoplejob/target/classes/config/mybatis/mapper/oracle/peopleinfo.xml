@@ -4,7 +4,6 @@
 
 <mapper namespace="config.mybatis.mapper.oracle.peopleinfo">
 	<select id="selectCareer" parameterType="map" resultType="resumeVo">	
-
 	select workterm,workterm2,trunc(months_between(workterm2,workterm)/12,0>2) as "term" from career
 	<if test="term != null">
 				and term IN 

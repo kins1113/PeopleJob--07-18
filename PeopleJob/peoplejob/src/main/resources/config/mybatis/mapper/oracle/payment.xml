@@ -49,5 +49,24 @@
 	set progress='결제완료'
 	where payment_code=#{paymentCode}
 	</update>
+	
+	<select id="selectPayment" resultType="paymentVo">
+		select payment_code,paymentway,progress,discount,paydate, s.servicename, m.memberid
+		from payment p join service s
+		on p.service_code = s.service_code
+		join member m
+		on p.member_code = m.member_code
+	</select>
+	<!--  
+	<select id="selectPayment" parameterType="searchVo" resultType="map" >
+	select payment_code,paymentway,progress,discount,paydate, s.servicename, m.memberid
+		from payment p join service s
+		on p.service_code = s.service_code
+		join member m
+		on p.member_code = m.member_code
+	
+	</select>
+	-->
+	
 </mapper>
 

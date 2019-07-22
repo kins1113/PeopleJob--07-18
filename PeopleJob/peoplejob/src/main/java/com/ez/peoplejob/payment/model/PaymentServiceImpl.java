@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.ez.peoplejob.common.SearchVO;
 import com.ez.peoplejob.jobopening.model.JobopeningVO;
 
 @Service
@@ -71,6 +72,24 @@ public class PaymentServiceImpl implements PaymentService{
 	public int getCountByJobopening(int jobno) {
 		return paymentDao.getCountByJobopening(jobno);
 	}
+/*
+	@Override
+	public List<Map<String, Object>> selectAll(SearchVO searchVo) {
+		return paymentDao.selectAll(searchVo);
+	}
+
+	@Override
+	public int selectTotalCount(SearchVO searchVo) {
+		return paymentDao.selectTotalCount(searchVo);
+	}
+	*/
+
+	@Override
+	public List<PaymentVO> selectAll() {
+		return paymentDao.selectAll();
+	}
+	
+	
 
 	
 }
