@@ -76,8 +76,23 @@ public class ResumeVO {
 	private String btypename1;
 	private String btypename2;
 	private String btypename3;
+	private String term;
+	private String age;
 	
 
+	
+	public String getTerm() {
+		return term;
+	}
+	public void setTerm(String term) {
+		this.term = term;
+	}
+	public String getAge() {
+		return age;
+	}
+	public void setAge(String age) {
+		this.age = age;
+	}
 	public String getBtypename1() {
 		return btypename1;
 	}
@@ -543,7 +558,7 @@ public class ResumeVO {
 				+ ", certificationtype=" + certificationtype + ", language=" + language + ", langpoint=" + langpoint
 				+ ", langGrade=" + langGrade + ", major=" + major + ", degree=" + degree + ", workterm2=" + workterm2
 				+ ", graduate2=" + graduate2 + ", btypename1=" + btypename1 + ", btypename2=" + btypename2
-				+ ", btypename3=" + btypename3 + "]";
+				+ ", btypename3=" + btypename3 + ", term=" + term + ", age=" + age + "]";
 	}
 	
 	

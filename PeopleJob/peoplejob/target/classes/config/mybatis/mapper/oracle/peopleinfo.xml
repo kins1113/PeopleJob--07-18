@@ -3,16 +3,183 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="config.mybatis.mapper.oracle.peopleinfo">
-	<select id="selectCareer" parameterType="map" resultMap="resumeVo">	
-	select workterm,workterm2,trunc(months_between(workterm2,workterm)/12,0>2) as "term" from career
+	<select id="selectCareer" parameterType="map" resultType="resumeVo">	
+	select workterm,workterm2,trunc(months_between(workterm2,workterm)/12,0) as "term" from career
+	
 	<if test="term != null">
 				and term IN 
-				<foreach collection="term1" item="term" 
+				<foreach collection="term" item="term" 
 					index="index" open="(" close=")" separator=",">
 				#{term}
 				</foreach>
 				</if>	
 	</select>
+	
+	<select id="selectAge" parameterType="map" resultType="resumeVo">
+	SELECT NVL(TRUNC(MONTHS_BETWEEN(SYSDATE, TO_DATE(SUBSTR(birth, 1, 4), 'YYYY'))/12), 0) AS AGE 
+	FROM   member
+	<if test="age != null">
+	and age in
+	<foreach collection="age" item="age" index="index" open="(" close=")" separator=",">
+	#{age}
+	</foreach>
+	</if>
+	
+	</select>
+	
+	<select id="selectGraduatetype" parameterType="map" resultType="resumeVo">
+	select graduatetype from education
+	<if test="graduatetype != null">
+	and graduatetype in
+	<foreach collection="graduatetype" item="graduatetype" index="index" open="(" close=")" separator=",">
+	#{graduatetype}
+	</foreach>
+	</if>
+	
+	</select>
+	
+	<select id="selectSido" parameterType="map" resultType="resumeVo">
+	select sido from location
+	<if test="sido != null">
+	and sido in
+	<foreach collection="sido" item="sido" index="index" open="(" close=")" separator=",">
+	#{sido}
+	</foreach>
+	</if>
+	
+	</select>
+	<select id="selectBtype" parameterType="map" resultType="resumeVo">
+	select * from btype1 b1, btype2 b2, btype3 b3
+	where b1.BTYPE_CODE1=b2.btype_code1 and b2.BTYPE_CODE2 = b3.BTYPE_CODE2
+	<if test="btypename1 != null">
+	and btypename1 in
+	<foreach collection="btypename1" item="btypename1" index="index" open="(" close=")" separator=",">
+	#{btypename1}
+	</foreach>
+	</if>
+	<if test="btypename2 != null">
+	and btypename2 in
+	<foreach collection="btypename2" item="btypename2" index="index" open="(" close=")" separator=",">
+	#{btypename2}
+	</foreach>
+	</if>
+	<if test="btypename3 != null">
+	and btypename3 in
+	<foreach collection="btypename3" item="btypename3" index="index" open="(" close=")" separator=",">
+	#{btypename3}
+	</foreach>
+	</if>
+	
+	</select>
+	<select id="selectJobtype" parameterType="map" resultType="resumeVo">
+	select * from first f, second s, third t
+	where f.first_code=s.first_code and s.second_code = t.second_code
+	<if test="firstname != null">
+	and firstname in
+	<foreach collection="firstname" item="firstname" index="index" open="(" close=")" separator=",">
+	#{firstname}
+	</foreach>
+	</if>
+	<if test="secondname != null">
+	and secondname in
+	<foreach collection="secondname" item="secondname" index="index" open="(" close=")" separator=",">
+	#{secondname}
+	</foreach>
+	</if>
+	<if test="thirdname != null">
+	and thirdname in
+	<foreach collection="thirdname" item="thirdname" index="index" open="(" close=")" separator=",">
+	#{thirdname}
+	</foreach>
+	</if>
+	
+	</select>
+	
+	 <select id="selectTotalCountCareer" parameterType="map" resultType="int">
+	select count(*),trunc(months_between(workterm2,workterm)/12,0) as "term" from career 
+	
+	<if test="term != null">
+				and term IN 
+				<foreach collection="term" item="term" 
+					index="index" open="(" close=")" separator=",">
+				#{term}
+				</foreach>
+				</if>
+	</select>
+	<select id="selectTotalCountAge" parameterType="map" resultType="int">
+	select count(*),NVL(TRUNC(MONTHS_BETWEEN(SYSDATE, TO_DATE(SUBSTR(birth, 1, 4), 'YYYY'))/12), 0) AS AGE from member 
+	<if test="age != null">
+				and age IN 
+				<foreach collection="age" item="age" 
+					index="index" open="(" close=")" separator=",">
+				#{age}
+				</foreach>
+				</if>
+	</select>
+	<select id="selectTotalCountGraduatetype" parameterType="map" resultType="int">
+	select count(*) from education 
+	<if test="graduatetype != null">
+				and graduatetype IN 
+				<foreach collection="graduatetype" item="graduatetype" 
+					index="index" open="(" close=")" separator=",">
+				#{graduatetype}
+				</foreach>
+				</if>
+	</select>
+	<select id="selectTotalCountSido" parameterType="map" resultType="int">
+	select count(*) from location 
+	<if test="sido != null">
+				and sido IN 
+				<foreach collection="sido" item="sido" 
+					index="index" open="(" close=")" separator=",">
+				#{sido}
+				</foreach>
+				</if>
+	</select>
+	<select id="selectTotalCountBtype" parameterType="map" resultType="int">
+	select count(*) from btype1 b1, btype2 b2, btype3 b3
+	where b1.BTYPE_CODE1=b2.btype_code1 and b2.BTYPE_CODE2 = b3.BTYPE_CODE2
+	<if test="btypename1 != null">
+	and btypename1 in
+	<foreach collection="btypename1" item="btypename1" index="index" open="(" close=")" separator=",">
+	#{btypename1}
+	</foreach>
+	</if>
+	<if test="btypename2 != null">
+	and btypename2 in
+	<foreach collection="btypename2" item="btypename2" index="index" open="(" close=")" separator=",">
+	#{btypename2}
+	</foreach>
+	</if>
+	<if test="btypename3 != null">
+	and btypename3 in
+	<foreach collection="btypename3" item="btypename3" index="index" open="(" close=")" separator=",">
+	#{btypename3}
+	</foreach>
+	</if>
+	</select>
+	<select id="selectTotalCountJobtype" parameterType="map" resultType="int">
+	select count(*) from first f, second s, third t
+	where f.first_code=s.first_code and s.second_code = t.second_code
+	<if test="firstname != null">
+	and firstname in
+	<foreach collection="firstname" item="firstname" index="index" open="(" close=")" separator=",">
+	#{firstname}
+	</foreach>
+	</if>
+	<if test="secondname != null">
+	and secondname in
+	<foreach collection="secondname" item="secondname" index="index" open="(" close=")" separator=",">
+	#{secondname}
+	</foreach>
+	</if>
+	<if test="thirdname != null">
+	and thirdname in
+	<foreach collection="thirdname" item="thirdname" index="index" open="(" close=")" separator=",">
+	#{thirdname}
+	</foreach>
+	</if>
+	</select> 
 </mapper>
 
 

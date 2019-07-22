@@ -525,23 +525,374 @@ var type = 'worknet';
     <!-- //변경없음 -->
   </div>
   <!-- 이미지 삭제 <img src="http://www.work.go.kr/images/common/next_step.gif" class="next" alt="다음단계"> -->
-  <div class="category">
-
-    <!-- 변경없음 -->
-    <h3>2차 분류</h3>
-    <div class="multyCheck" id="subJobDiv">
+    <div class="wrap_detail_panel depth2_division">
+        <div class="title_detail_box">
+            <strong>희망 직종</strong>
+            <span class="box_add_util">
+                <label for="exp-career"><input type="checkbox" name="" id="exp-career" title="이 직종 경력자만"> <span class="txt">이 직종 경력자만</span></label>
+                <div class="ico_tooltip">
+                    <span class="txt_tooltip">툴팁</span>
+                    <div class="lpop_tooltip_wrap">
+                        인재가 희망한 직종과 근무경력 직종이<br>
+                        동일한 인재만 검색합니다.
+                        <button class="btn_close_lpop" type="button">닫기</button>
+                    </div>
+                </div>
+            </span>
+        </div>
+        <div class="box_detail_panel">
+            <ul class="list_depth2_select" id="job-category-depth2">
+                                    <li>
+                        <label for="job-category-depth2-all">
+                            <input type="checkbox" name="" id="job-category-depth2-all" title="전체" data-depth="1"
+                                   data-mcode=""
+                                   data-mname=""
+                                   data-bcode=""
+                                   data-bname=""
+                                   data-code="all"
+                                   data-name="전체"
+                                   value="all"
+                                >
+                            <span class="txt " title="전체">전체</span>
+                            <span class="count all">(1)</span>
+                        </label>
+                    </li>
+                                    <li>
+                        <label for="job-category-depth2-501">
+                            <input type="checkbox" name="" id="job-category-depth2-501" title="경영분석·컨설턴트" data-depth="1"
+                                   data-mcode="5"
+                                   data-mname="전문직"
+                                   data-bcode="501"
+                                   data-bname="경영분석·컨설턴트"
+                                   data-code="501"
+                                   data-name="경영분석·컨설턴트"
+                                   value="501"
+                                checked>
+                            <span class="txt select" title="경영분석·컨설턴트">경영분석·컨설턴트</span>
+                            <span class="count 501">(0)</span>
+                        </label>
+                    </li>
+                                    <li>
+                        <label for="job-category-depth2-502">
+                            <input type="checkbox" name="" id="job-category-depth2-502" title="증권·투자·펀드·외환" data-depth="1"
+                                   data-mcode="5"
+                                   data-mname="전문직"
+                                   data-bcode="502"
+                                   data-bname="증권·투자·펀드·외환"
+                                   data-code="502"
+                                   data-name="증권·투자·펀드·외환"
+                                   value="502"
+                                >
+                            <span class="txt " title="증권·투자·펀드·외환">증권·투자·펀드·외환</span>
+                            <span class="count 502">(0)</span>
+                        </label>
+                    </li>
+                                    <li>
+                        <label for="job-category-depth2-504">
+                            <input type="checkbox" name="" id="job-category-depth2-504" title="헤드헌팅·노무·직업상담" data-depth="1"
+                                   data-mcode="5"
+                                   data-mname="전문직"
+                                   data-bcode="504"
+                                   data-bname="헤드헌팅·노무·직업상담"
+                                   data-code="504"
+                                   data-name="헤드헌팅·노무·직업상담"
+                                   value="504"
+                                >
+                            <span class="txt " title="헤드헌팅·노무·직업상담">헤드헌팅·노무·직업상담</span>
+                            <span class="count 504">(0)</span>
+                        </label>
+                    </li>
+                                    <li>
+                        <label for="job-category-depth2-505">
+                            <input type="checkbox" name="" id="job-category-depth2-505" title="설문·통계·리서치" data-depth="1"
+                                   data-mcode="5"
+                                   data-mname="전문직"
+                                   data-bcode="505"
+                                   data-bname="설문·통계·리서치"
+                                   data-code="505"
+                                   data-name="설문·통계·리서치"
+                                   value="505"
+                                checked>
+                            <span class="txt " title="설문·통계·리서치">설문·통계·리서치</span>
+                            <span class="count 505">(0)</span>
+                        </label>
+                    </li>
+                                    <li>
+                        <label for="job-category-depth2-509">
+                            <input type="checkbox" name="" id="job-category-depth2-509" title="외국어·번역·통역" data-depth="1"
+                                   data-mcode="5"
+                                   data-mname="전문직"
+                                   data-bcode="509"
+                                   data-bname="외국어·번역·통역"
+                                   data-code="509"
+                                   data-name="외국어·번역·통역"
+                                   value="509"
+                                checked>
+                            <span class="txt " title="외국어·번역·통역">외국어·번역·통역</span>
+                            <span class="count 509">(1)</span>
+                        </label>
+                    </li>
+                                    <li>
+                        <label for="job-category-depth2-510">
+                            <input type="checkbox" name="" id="job-category-depth2-510" title="법률·특허·상표" data-depth="1"
+                                   data-mcode="5"
+                                   data-mname="전문직"
+                                   data-bcode="510"
+                                   data-bname="법률·특허·상표"
+                                   data-code="510"
+                                   data-name="법률·특허·상표"
+                                   value="510"
+                                >
+                            <span class="txt " title="법률·특허·상표">법률·특허·상표</span>
+                            <span class="count 510">(0)</span>
+                        </label>
+                    </li>
+                                    <li>
+                        <label for="job-category-depth2-511">
+                            <input type="checkbox" name="" id="job-category-depth2-511" title="세무·회계·CPA" data-depth="1"
+                                   data-mcode="5"
+                                   data-mname="전문직"
+                                   data-bcode="511"
+                                   data-bname="세무·회계·CPA"
+                                   data-code="511"
+                                   data-name="세무·회계·CPA"
+                                   value="511"
+                                >
+                            <span class="txt " title="세무·회계·CPA">세무·회계·CPA</span>
+                            <span class="count 511">(0)</span>
+                        </label>
+                    </li>
+                                    <li>
+                        <label for="job-category-depth2-512">
+                            <input type="checkbox" name="" id="job-category-depth2-512" title="채권·보험·보상·심사" data-depth="1"
+                                   data-mcode="5"
+                                   data-mname="전문직"
+                                   data-bcode="512"
+                                   data-bname="채권·보험·보상·심사"
+                                   data-code="512"
+                                   data-name="채권·보험·보상·심사"
+                                   value="512"
+                                checked>
+                            <span class="txt " title="채권·보험·보상·심사">채권·보험·보상·심사</span>
+                            <span class="count 512">(0)</span>
+                        </label>
+                    </li>
+                                    <li>
+                        <label for="job-category-depth2-513">
+                            <input type="checkbox" name="" id="job-category-depth2-513" title="도서관사서" data-depth="1"
+                                   data-mcode="5"
+                                   data-mname="전문직"
+                                   data-bcode="513"
+                                   data-bname="도서관사서"
+                                   data-code="513"
+                                   data-name="도서관사서"
+                                   value="513"
+                                checked>
+                            <span class="txt " title="도서관사서">도서관사서</span>
+                            <span class="count 513">(0)</span>
+                        </label>
+                    </li>
+                                    <li>
+                        <label for="job-category-depth2-518">
+                            <input type="checkbox" name="" id="job-category-depth2-518" title="연구소·R&D" data-depth="1"
+                                   data-mcode="5"
+                                   data-mname="전문직"
+                                   data-bcode="518"
+                                   data-bname="연구소·R&D"
+                                   data-code="518"
+                                   data-name="연구소·R&D"
+                                   value="518"
+                                >
+                            <span class="txt " title="연구소·R&D">연구소·R&D</span>
+                            <span class="count 518">(0)</span>
+                        </label>
+                    </li>
+                                    <li>
+                        <label for="job-category-depth2-522">
+                            <input type="checkbox" name="" id="job-category-depth2-522" title="문화·예술·종교" data-depth="1"
+                                   data-mcode="5"
+                                   data-mname="전문직"
+                                   data-bcode="522"
+                                   data-bname="문화·예술·종교"
+                                   data-code="522"
+                                   data-name="문화·예술·종교"
+                                   value="522"
+                                checked>
+                            <span class="txt " title="문화·예술·종교">문화·예술·종교</span>
+                            <span class="count 522">(0)</span>
+                        </label>
+                    </li>
+                                    <li>
+                        <label for="job-category-depth2-523">
+                            <input type="checkbox" name="" id="job-category-depth2-523" title="특수직" data-depth="1"
+                                   data-mcode="5"
+                                   data-mname="전문직"
+                                   data-bcode="523"
+                                   data-bname="특수직"
+                                   data-code="523"
+                                   data-name="특수직"
+                                   value="523"
+                                >
+                            <span class="txt " title="특수직">특수직</span>
+                            <span class="count 523">(0)</span>
+                        </label>
+                    </li>
+                                    <li>
+                        <label for="job-category-depth2-524">
+                            <input type="checkbox" name="" id="job-category-depth2-524" title="임원·CEO" data-depth="1"
+                                   data-mcode="5"
+                                   data-mname="전문직"
+                                   data-bcode="524"
+                                   data-bname="임원·CEO"
+                                   data-code="524"
+                                   data-name="임원·CEO"
+                                   value="524"
+                                checked>
+                            <span class="txt " title="임원·CEO">임원·CEO</span>
+                            <span class="count 524">(0)</span>
+                        </label>
+                    </li>
+                            </ul>
+            <button class="btn_depth3_expand"><span>상세직종</span></button>
+            <ul class="list_depth3_select" id="job-category-depth3">
+                                    <li>
+                        <label for="job-category-depth3-50101">
+                            <input type="checkbox" name="" id="job-category-depth3-50101" title="컨설턴트" data-depth="2"
+                                   data-mcode="5"
+                                   data-mname="전문직"
+                                   data-bcode="501"
+                                   data-bname="경영분석·컨설턴트"
+                                   data-code="50101"
+                                   data-name="컨설턴트"
+                                   value="50101"
+                                >
+                            <span class="txt" title="컨설턴트">컨설턴트</span>
+                            <span class="count">(0)</span>
+                        </label>
+                    </li>
+                                    <li>
+                        <label for="job-category-depth3-50102">
+                            <input type="checkbox" name="" id="job-category-depth3-50102" title="금융컨설팅" data-depth="2"
+                                   data-mcode="5"
+                                   data-mname="전문직"
+                                   data-bcode="501"
+                                   data-bname="경영분석·컨설턴트"
+                                   data-code="50102"
+                                   data-name="금융컨설팅"
+                                   value="50102"
+                                >
+                            <span class="txt" title="금융컨설팅">금융컨설팅</span>
+                            <span class="count">(0)</span>
+                        </label>
+                    </li>
+                                    <li>
+                        <label for="job-category-depth3-50103">
+                            <input type="checkbox" name="" id="job-category-depth3-50103" title="경영컨설팅" data-depth="2"
+                                   data-mcode="5"
+                                   data-mname="전문직"
+                                   data-bcode="501"
+                                   data-bname="경영분석·컨설턴트"
+                                   data-code="50103"
+                                   data-name="경영컨설팅"
+                                   value="50103"
+                                >
+                            <span class="txt" title="경영컨설팅">경영컨설팅</span>
+                            <span class="count">(0)</span>
+                        </label>
+                    </li>
+                                    <li>
+                        <label for="job-category-depth3-50104">
+                            <input type="checkbox" name="" id="job-category-depth3-50104" title="창업컨설팅" data-depth="2"
+                                   data-mcode="5"
+                                   data-mname="전문직"
+                                   data-bcode="501"
+                                   data-bname="경영분석·컨설턴트"
+                                   data-code="50104"
+                                   data-name="창업컨설팅"
+                                   value="50104"
+                                >
+                            <span class="txt" title="창업컨설팅">창업컨설팅</span>
+                            <span class="count">(0)</span>
+                        </label>
+                    </li>
+                                    <li>
+                        <label for="job-category-depth3-50106">
+                            <input type="checkbox" name="" id="job-category-depth3-50106" title="IT컨설팅" data-depth="2"
+                                   data-mcode="5"
+                                   data-mname="전문직"
+                                   data-bcode="501"
+                                   data-bname="경영분석·컨설턴트"
+                                   data-code="50106"
+                                   data-name="IT컨설팅"
+                                   value="50106"
+                                >
+                            <span class="txt" title="IT컨설팅">IT컨설팅</span>
+                            <span class="count">(0)</span>
+                        </label>
+                    </li>
+                                    <li>
+                        <label for="job-category-depth3-50107">
+                            <input type="checkbox" name="" id="job-category-depth3-50107" title="경영분석" data-depth="2"
+                                   data-mcode="5"
+                                   data-mname="전문직"
+                                   data-bcode="501"
+                                   data-bname="경영분석·컨설턴트"
+                                   data-code="50107"
+                                   data-name="경영분석"
+                                   value="50107"
+                                >
+                            <span class="txt" title="경영분석">경영분석</span>
+                            <span class="count">(0)</span>
+                        </label>
+                    </li>
+                                    <li>
+                        <label for="job-category-depth3-50113">
+                            <input type="checkbox" name="" id="job-category-depth3-50113" title="부동산컨설팅" data-depth="2"
+                                   data-mcode="5"
+                                   data-mname="전문직"
+                                   data-bcode="501"
+                                   data-bname="경영분석·컨설턴트"
+                                   data-code="50113"
+                                   data-name="부동산컨설팅"
+                                   value="50113"
+                                >
+                            <span class="txt" title="부동산컨설팅">부동산컨설팅</span>
+                            <span class="count">(0)</span>
+                        </label>
+                    </li>
+                                    <li>
+                        <label for="job-category-depth3-50114">
+                            <input type="checkbox" name="" id="job-category-depth3-50114" title="이미지컨설팅" data-depth="2"
+                                   data-mcode="5"
+                                   data-mname="전문직"
+                                   data-bcode="501"
+                                   data-bname="경영분석·컨설턴트"
+                                   data-code="50114"
+                                   data-name="이미지컨설팅"
+                                   value="50114"
+                                >
+                            <span class="txt" title="이미지컨설팅">이미지컨설팅</span>
+                            <span class="count">(0)</span>
+                        </label>
+                    </li>
+                                    <li>
+                        <label for="job-category-depth3-50115">
+                            <input type="checkbox" name="" id="job-category-depth3-50115" title="HR컨설팅" data-depth="2"
+                                   data-mcode="5"
+                                   data-mname="전문직"
+                                   data-bcode="501"
+                                   data-bname="경영분석·컨설턴트"
+                                   data-code="50115"
+                                   data-name="HR컨설팅"
+                                   value="50115"
+                                >
+                            <span class="txt" title="HR컨설팅">HR컨설팅</span>
+                            <span class="count">(0)</span>
+                        </label>
+                    </li>
+                            </ul>
+        </div>
     </div>
-    <!-- //변경없음 -->
-  </div>
-
-  <!-- 이미지 삭제 <img src="http://www.work.go.kr/images/common/next_step.gif" class="next" alt="다음단계"> -->
-  <div class="category jobly">
-    <!-- 변경없음 -->
-    <h3>3차 분류</h3>
-    <div id="thirdJobDiv">
-    </div>
-    <!-- //변경없음 -->
-  </div>
 </div>
 <!--  class="choice_wrap new mt20 mb10" 변경& 그 외 변경 없음 -->
 <div class="choice_wrap new mt20 mb10">
