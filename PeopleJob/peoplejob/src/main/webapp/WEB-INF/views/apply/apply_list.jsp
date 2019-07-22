@@ -64,6 +64,7 @@
 <div class="divList" style="min-height: 630px">
         <div class="page-header">
             <h3>지원현황</h3>
+       
        <!--  지역<input type="text" name="hi" id="hi">
         근무방식<input type="text" name="hi2" id="hi2">
        	급여방식<input type="text" name="hi3" id="hi3">
@@ -91,14 +92,13 @@
 		</c:if>
 		<c:if test="${!empty list }">
 			<c:forEach var="vo" items="${list }"> 
-			 
 			<input type="checkbox" name="applyCode1" id="applyCode1" value="${vo.applyCode }" onclick="javascript_:s_it()">
 	        <div class="list-group"> 
 	            <div class="list-group-item">
 	                <p class="list-group-item-text">
 	                 	<small>지원번호 : ${vo.applyCode}</small>
 	                 	<small>지원일 : ${fn:substring(vo.applydate,0,10) }</small>
-	                | <small>열람여부 : ${vo.opencheck }</small>
+	                | <small>열람여부 : ${vo.oepncheck }</small>
 	                | <small>지원한 채용공고 : <a href="<c:url value='/company/jobopening_view.do?jobopening=${vo.jobopening}'/>">${vo.jobopening }</a></small>
 	            </div> 
 	        </div>

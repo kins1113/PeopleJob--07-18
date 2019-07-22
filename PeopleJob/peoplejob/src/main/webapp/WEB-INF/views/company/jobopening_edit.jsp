@@ -246,42 +246,15 @@
             </div>
             <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-10">
-                <label class="control-label">제한연령</label>
-                    <select id="agelimit" name="agelimit">
-                        <option value="나이제한없음"
-                        <c:if test="${vo.agelimit=='나이제한없음' }">
-                        selected
-                        </c:if>
-                        >나이제한없음</option>
-                        <option value="30이하"
-                         <c:if test="${vo.agelimit=='30이하' }">
-                        selected
-                        </c:if>
-                        >30이하</option>
-                        <option value="30이상40미만"
-                         <c:if test="${vo.agelimit=='30이상40미만' }">
-                        selected
-                        </c:if>
-                        >30이상40미만</option>
-                        <option value="40이상50미만"
-                         <c:if test="${vo.agelimit=='40이상50미만' }">
-                        selected
-                        </c:if>
-                        >40이상50미만</option>
-                        <option value="50이상60미만"
-                         <c:if test="${vo.agelimit=='50이상60미만' }">
-                        selected
-                        </c:if>
-                        >50이상60미만</option>
-                    </select>
-             </div>
+                <label for="title" class="col-sm-2 control-label">제한연령</label>
+                    <input id="agelimit" name="agelimit" class="form-control" type="text" value="${vo.agelimit }"/>
                 </div>
-             
-			
+             </div>
+
             <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-10">
                 <label class="col-sm-2 control-label">학력조건</label>
-                    <select id="academicCondition" name="academicCondition">
+                    <select class="form-control" id="academicCondition" name="academicCondition">
                         <option value="고졸"
                         <c:if test="${vo.academicCondition=='고졸'}">
                         selected
@@ -413,7 +386,7 @@
                     <a href="<c:url value='/company/jobopening_view.do?jobopening=${vo.jobopening }'/>" id="cancelBtn" class="btn btn-default btn-mg" role="button">취소</a>
                 </div>
             </div>
-		</div> 
+
         </form> 
     </div>
     </fieldset>
