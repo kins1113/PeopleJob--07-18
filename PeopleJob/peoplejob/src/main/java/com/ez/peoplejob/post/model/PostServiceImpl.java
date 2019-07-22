@@ -27,6 +27,10 @@ public class PostServiceImpl implements PostService{
 	public int changeDelete(Map<String, Object> map) {
 		return postDao.changeDelete(map);
 	}
+	@Override
+	public int insertPosToManager(PostVO postVo) {
+		return postDao.insertPosToManager(postVo);
+	}
 	
 	
 }

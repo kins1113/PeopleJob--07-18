@@ -9,4 +9,5 @@ public interface PostDAO {
 	int gettotalRecord(PostVO postVO);
 	int updateDelete(Map<String, int[]> map);
 	int changeDelete(Map<String, Object> map);
+	int insertPosToManager(PostVO postVo);
 }

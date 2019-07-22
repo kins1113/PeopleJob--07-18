@@ -16,7 +16,14 @@ public class PostVO extends SearchVO{
 	private String reportCk; 			//신고 체크 여부 
 	private String reportUser;			//신고 유저 아이디
 	private String reportComent;		//신고 내용
+	private int adminCode;				//관리자 번호
 	
+	public int getAdminCode() {
+		return adminCode;
+	}
+	public void setAdminCode(int adminCode) {
+		this.adminCode = adminCode;
+	}
 	public String getReportCk() {
 		return reportCk;
 	}
@@ -104,8 +111,8 @@ public class PostVO extends SearchVO{
 		return "PostVO [boardCode2=" + boardCode2 + ", boardtitle=" + boardtitle + ", boardcontent=" + boardcontent
 				+ ", boardregdate2=" + boardregdate2 + ", boardhits=" + boardhits + ", deletecheck=" + deletecheck
 				+ ", memberCode=" + memberCode + ", boardCode=" + boardCode + ", reportCk=" + reportCk + ", reportUser="
-				+ reportUser + ", reportComent=" + reportComent + ", filterCode=" + filterCode + ", filterKey="
-				+ filterKey + ", toString()=" + super.toString() + "]";
+				+ reportUser + ", reportComent=" + reportComent + ", adminCode=" + adminCode + ", filterCode="
+				+ filterCode + ", filterKey=" + filterKey + "]";
 	}
 	
 	

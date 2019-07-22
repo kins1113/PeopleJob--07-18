@@ -8,4 +8,5 @@ public interface PostService {
 	int gettotalRecord(PostVO postVo);
 	int updateDelete(Map<String, int[]> map);
 	int changeDelete(Map<String, Object> map);
+	int insertPosToManager(PostVO postVo);
 }

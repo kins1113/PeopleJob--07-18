@@ -68,6 +68,14 @@
 			commentage=#{commentage}, upage=#{upage}, upnumage=#{upnumage} ,upsizeage=#{upsizeage} , type_code=#{typeCode}
 		where board_code1=#{boardCode1}
 	</update>
+	
+	<select id="getBoardList" resultType="boardVo">
+		select * from board
+	</select>
+	
+	<select id="selectByBoardCode" parameterType="int" resultType="boardVo">
+		select * from board where board_code1=#{code}
+	</select>
 </mapper>
 
 

@@ -9,9 +9,8 @@
 		<selectKey keyProperty="popupCode" resultType="int" order="BEFORE">
 			select popup_seq.nextval from dual
 		</selectKey>
-		insert into popup (admin_code, popup_name, width, height, left, top,
-							 usage, popup_code, end_day, start_day )
-		values(#{adminCode}, #{popupName},  #{width}, #{height}, #{left}, #{top},
+		insert into popup (admin_code, popup_name, popup_img, width, height, left, top, usage, popup_code, end_day, start_day)
+		values(#{adminCode}, #{popupName}, #{popupImg},  #{width}, #{height}, #{left}, #{top},
 							#{usage}, #{popupCode}, #{endDay}, #{startDay})	
 	</insert>
 
@@ -42,6 +41,27 @@
 		where popup_code=#{popupCode}
 	</update>
 
+	<delete id="deleteByPopupCode" parameterType="int">
+	  delete from popup
+	  where popup_code = #{popupCode}
+	</delete>
+	
+	<select id="selectByPopupCode" parameterType="int" resultType="popupVo">
+		select * from popup where popup_code = #{popupCode}
+	</select>
+	
+	<update id="updatePopup" parameterType="popupVo">
+		  update popup
+		  set admin_code=#{adminCode}, popup_name=#{popupName} ,popup_img =#{popupImg} ,
+		  			width=#{width}, height=#{height}, left=#{left},
+		            top=#{top}, usage=#{usage}, start_day=#{startDay} , end_day=#{endDay}
+		  where popup_code=#{popupCode}
+	</update>
+	
+	<select id="selectUsageY" resultType="popupVo">
+		select * from popup
+		where usage='Y' and end_day > sysdate
+	</select>
 </mapper>
 
 

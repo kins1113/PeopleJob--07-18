@@ -37,6 +37,4 @@ public class BoardKindServiceImpl implements BoardKindService{
 		return count;
 	}
 	
-	
-	
 }

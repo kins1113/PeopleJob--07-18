@@ -47,8 +47,36 @@ public class PopupServiceImpl implements PopupService{
 	public int updateTrem(Map<String, Object> map) {
 		return popupDao.updateTrem(map);
 	}
-	
-	
-	
+
+	@Override
+	public int deleteByPopupCode(int popupCode) {
+		return popupDao.deleteByPopupCode(popupCode);
+	}
+
+	@Override
+	public int deleteMultiByPopupCode(int[] popupCode) {
+		int re=0;
+		for(int i=0;i<popupCode.length;i++) {
+			int code=popupCode[i];
+			re+=popupDao.deleteByPopupCode(code);
+		}
+		logger.info("service에서 popup다중 삭제 처리 결과 re ={}" ,re);
+		return re;
+	}
+
+	@Override
+	public PopupVO selectByPopupCode(int popupCode) {
+		return popupDao.selectByPopupCode(popupCode);
+	}
+
+	@Override
+	public int updatePopup(PopupVO popupVo) {
+		return popupDao.updatePopup(popupVo);
+	}
+
+	@Override
+	public List<PopupVO> selectUsageY() {
+		return popupDao.selectUsageY();
+	}
 	
 }

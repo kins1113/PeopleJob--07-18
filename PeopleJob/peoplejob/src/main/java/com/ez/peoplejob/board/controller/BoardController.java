@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -22,6 +23,8 @@ import com.ez.peoplejob.board.model.BoardKindService;
 import com.ez.peoplejob.board.model.BoardKindVO;
 import com.ez.peoplejob.board.model.BoardService;
 import com.ez.peoplejob.board.model.BoardVO;
+import com.ez.peoplejob.common.FileUploadUtility;
+import com.ez.peoplejob.post.model.PostVO;
 
 @Controller
 @RequestMapping("/manager/board")
@@ -29,6 +32,7 @@ public class BoardController {
 	private Logger logger=LoggerFactory.getLogger(BoardController.class);
 	@Autowired private BoardKindService boardKindService; 
 	@Autowired private BoardService boardService;
+	@Autowired private FileUploadUtility fileUploadUtil;
 	
 	@RequestMapping(value="/boardAdd.do",method = RequestMethod.GET)
 	public String boardAdd_get(Model model) {
@@ -208,6 +212,38 @@ public class BoardController {
 		int re = boardService.boardEdit(boardVo);
 		logger.info("수정 결과 : re={}",re);
 		
+		return boardVo;
+	}
+	
+	@RequestMapping("/getBoardList.do")
+	@ResponseBody
+	public List<BoardVO> boardList(HttpServletRequest request,@ModelAttribute PostVO postVo) {
+		logger.info("ajax로 boardList 가져오기 파라미터 postVo={}",postVo);
+		
+		List<BoardVO> list=boardService.getBoardList();
+		logger.info("boardList 가져온 결과 list.size={}",list.size());
+		
+		return list;
+	}
+	
+	@RequestMapping("/boardInfo.do")
+	@ResponseBody
+	public BoardVO boardInfo(@RequestParam(defaultValue = "0")int boardCode) {
+		logger.info("ajax로 boardCode에 맞는 board에 정보 가져오기 파라미터 boardCode={}",boardCode);
+		BoardVO boardVo=boardService.selectByBoardCode(boardCode);
+		if(boardVo.getCommentage().equals("Y")) {
+			boardVo.setCommentage("불가능");
+		}else {
+			boardVo.setCommentage("가능");
+		}
+		logger.info("boardVo.getUpage boardVo.getUpage()={}",boardVo.getUpage()	);
+		if(boardVo.getUpage().equals("N")) {
+			boardVo.setUpage("불가능");
+		}else {
+			boardVo.setUpage("가능");
+		}
+		
+		logger.info("결과 boardVo={}",boardVo);
 		return boardVo;
 	}
 	

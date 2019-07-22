@@ -6,5 +6,4 @@ public interface BoardKindService {
 	public int insertBKind(BoardKindVO boardKindVO);
 	public List<BoardKindVO> selectBKind();
 	public int deleteBKind(String[] bkList);
-	
 }

@@ -7,6 +7,7 @@ public class UploadInfoVO {
 	private int downcount;      
 	private String originalFileName; 
 	private int boardCode2;
+	
 	public int getUploadCode() {
 		return uploadCode;
 	}

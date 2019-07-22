@@ -11,9 +11,14 @@ input.btn.btn-secondary.btn-default {margin-top: 4px;}
 #cardBoduPostList {margin: 0 5px 5px 5px;padding: 0 5px 5px 5px;}
 #btGroup {margin-right: 20px;}
 #pageSize {	float: left;margin-left: 20px;margin-top: 9px;}
+.spanInfo{color: #90b1e2; font-size: 0.8em;}
 </style>
 <script type="text/javascript">
 	$(document).ready(function (){
+		//등록 버튼 넘어가기
+		$("#postWrite").click(function(){
+			location.href="<c:url value='/manager/post/postWrite.do'/>";			
+		});
 		//맨위에 체크박스 누르면 전체 선택
 		$("#postCkAll").click(function(){
 			$("input[name=postCheck]").prop("checked",this.checked)
@@ -79,7 +84,7 @@ input.btn.btn-secondary.btn-default {margin-top: 4px;}
 			<!-- 해더 부분 버튼 그룹 시작  -->
 			<div>
 				<div align="right" class="form-group serDiv" id="btGroup">
-					<input type="button" class="btn btn-secondary btn-default" id="boardAdd" value="등록"> 
+					<input type="button" class="btn btn-secondary btn-default" id="postWrite" value="등록"> 
 					<input type="button"class="btn btn-secondary btn-default" id="checkEdit"value="아직 기능 미정"> 
 					<input type="button" class="btn btn-secondary btn-default" id="checkDelete"value="선택한 것 삭제">
 				</div>
@@ -176,7 +181,14 @@ input.btn.btn-secondary.btn-default {margin-top: 4px;}
 								</label></td>
 								<td>${map['TYPE'] }</td>
 								<td scope="row">${map['BOARDNAME'] }</td>
-								<td>${map['MEMBERID'] }</td>
+								<td>
+								<c:if test="${!empty map['MEMBERID'] }">
+									<span class="spanInfo">user : </span>${map['MEMBERID'] }								
+								</c:if>
+								<c:if test="${!empty map['ADMINID'] }">
+									<span class="spanInfo">manager : </span>${map['ADMINID'] }								
+								</c:if>
+								</td>
 								<td>${map['BOARDTITLE']}</td>
 								<%-- <td>${vo.boardcontent }</td> --%>
 								<td><fmt:formatDate value="${map['BOARDREGDATE2']}" pattern="yyyy-MM-dd"/></td>
@@ -200,7 +212,11 @@ input.btn.btn-secondary.btn-default {margin-top: 4px;}
 								</td>
 								<td>
 									<!-- 파일이 있을 수 도 있고 없을 수 도 있다.? -->
-								파일 O,X
+									<c:forEach var="uploadInfoVo" items="${uploadInfoList}">
+										<c:if test="${uploadInfoVo.boardCode2 == map['BOARD_CODE2']}">
+											${uploadInfoVo.originalFileName }<br>
+										</c:if>
+									</c:forEach>
 								</td>
 							</tr>
 						</c:forEach>

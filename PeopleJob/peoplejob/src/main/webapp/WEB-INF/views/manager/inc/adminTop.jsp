@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+${param.popupImg}<%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -108,7 +108,7 @@
 
 
 
-						<li class="has-sub active expand"><a
+						<li class="has-sub expand"><a
 							class="sidenav-item-link" href="javascript:void(0)"
 							data-toggle="collapse" data-target="#dashboard"
 							aria-expanded="false" aria-controls="dashboard"> <i
@@ -121,7 +121,7 @@
 									<!-- <li class="active"><a class="sidenav-item-link"
 										href="#"> <span class="nav-text">통합 관리</span>
 									</a></li> -->
-									<li class="active"><a class="sidenav-item-link"
+									<li><a class="sidenav-item-link"
 										href="${pageContext.request.contextPath}/manager/member/memberList.do?authorityCk=member"> <span class="nav-text">일반 회원</span>
 									</a></li>
 									<li><a class="sidenav-item-link" href="${pageContext.request.contextPath}/manager/member/memberList.do?authorityCk=company">
@@ -176,13 +176,10 @@
 												<li><a href="${pageContext.request.contextPath}/manager/service/register.do">상품 등록</a></li>
 											</div>
 										</ul></li>
-
-									<li class="has-sub"><a class="sidenav-item-link"
-										href="javascript:void(0)" data-toggle="collapse"
-										data-target="#maps" aria-expanded="false" aria-controls="maps">
-											<span class="nav-text">지원 관리</span> <b class="caret"></b>
-									</a>
-										</li>
+										
+										<li><a class="sidenav-item-link"
+										href="${pageContext.request.contextPath}/manager/service/applyList.do"> <span class="nav-text">입사 지원 관리</span>
+									</a></li>
 								</div>
 							</ul></li>
 						<li class="has-sub"><a class="sidenav-item-link"
@@ -242,9 +239,9 @@
 										<ul class="collapse" id="abc">
 											<div class="sub-menu">
 
-												<li><a href="<c:url value='/manager/post/postList.do'/>">전체 조회</a></li>
+												<li><a href="${pageContext.request.contextPath}/manager/post/postList.do">전체 조회</a></li>
 
-												<li><a href="sign-up.html">변경</a></li>
+												<li><a href="${pageContext.request.contextPath}/manager/post/postWrite.do">등록</a></li>
 
 											</div>
 										</ul></li>

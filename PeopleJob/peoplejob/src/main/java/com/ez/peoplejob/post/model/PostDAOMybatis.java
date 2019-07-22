@@ -33,5 +33,9 @@ public class PostDAOMybatis implements PostDAO{
 	public int changeDelete(Map<String, Object> map) {
 		return sqlsession.update(namespace+"changeDelete",map);
 	}
+	@Override
+	public int insertPosToManager(PostVO postVo) {
+		return sqlsession.insert(namespace+"insertPosToManager",postVo);
+	}
 
 }

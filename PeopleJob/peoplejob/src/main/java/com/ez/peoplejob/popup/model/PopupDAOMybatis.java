@@ -38,5 +38,26 @@ public class PopupDAOMybatis implements PopupDAO{
 	public int updateTrem(Map<String, Object> map) {
 		return sqlSession.update(namespace+"updateTrem", map);
 	}
+
+	@Override
+	public int deleteByPopupCode(int popupCode) {
+		return sqlSession.delete(namespace+"deleteByPopupCode",popupCode);
+	}
+
+	@Override
+	public PopupVO selectByPopupCode(int popupCode) {
+		return sqlSession.selectOne(namespace+"selectByPopupCode",popupCode);
+	}
+
+	@Override
+	public int updatePopup(PopupVO popupVo) {
+		return sqlSession.update(namespace+"updatePopup",popupVo);
+	}
+
+	@Override
+	public List<PopupVO> selectUsageY() {
+		return sqlSession.selectList(namespace+"selectUsageY");
+	}
+	
 	
 }

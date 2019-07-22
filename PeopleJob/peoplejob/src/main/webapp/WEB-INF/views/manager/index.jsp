@@ -2,6 +2,29 @@
 	pageEncoding="UTF-8"%>
 
 <%@include file="/WEB-INF/views/manager/inc/adminTop.jsp"%>
+<c:forEach var="popupVo" items="${popupList}">
+
+	<c:set var="popupName" value=" ${popupVo.popupName }"/> 
+	<c:set var="popupImg" value="${popupVo.popupImg }"/>
+	<c:set var="width" value="${popupVo.width }"/>
+	<c:set var="height" value="${popupVo.height }"/>
+	<c:set var="left" value="${popupVo.left }"/>
+	<c:set var="top" value="${popupVo.top }"/>
+	<c:set var="popupImg" value="${popupVo.popupImg}"/>
+
+
+<script type="text/javascript">
+$(function(){
+	var count = ${fn:length(popupList)}
+	for(var i=0;i<count;i++){
+		window.open("<c:url value='/manager/popup/popupOpen.do?popupImg=${popupImg}'/>",
+			"${popupName}","width=${width},height=${height},left=${left},top=${top}")
+			/* window.open("<c:url value='/manager/popup/popupOpen.do'/>",
+			"popupNam","width=500,height=600,left=100,top=20") */
+	}
+})
+</script>
+</c:forEach>
           
           <!-- 여기가 top이였음 -->
 

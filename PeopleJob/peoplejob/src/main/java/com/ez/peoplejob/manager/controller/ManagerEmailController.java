@@ -90,7 +90,7 @@ public class ManagerEmailController {
 		   //파일 처리 
 		   
 		   String fileName="";
-		   List<Map<String, Object>> fileList=fileUtility.fileUpload(request);
+		   List<Map<String, Object>> fileList=fileUtility.fileUpload(request,FileUploadUtility.PEOPLEJOB_UPLOAD);
 		   if(fileList.size()>0) {
 			   
 		   
@@ -102,7 +102,7 @@ public class ManagerEmailController {
 		   MimeBodyPart mbp1=new MimeBodyPart();
 		   mbp1.setContent(coment,"text/html; charset=utf-8");
 		   
-		   File file=new File(fileUtility.getUploadPath(request),fileName);
+		   File file=new File(fileUtility.getUploadPath(request,FileUploadUtility.PEOPLEJOB_UPLOAD),fileName);
 		   
 		   MimeBodyPart mbp2= new MimeBodyPart();
 		   FileDataSource fds=new FileDataSource(file.getAbsolutePath());
@@ -219,7 +219,7 @@ public class ManagerEmailController {
 			//파일 처리 
 			
 			String fileName="";
-			List<Map<String, Object>> fileList=fileUtility.fileUpload(request);
+			List<Map<String, Object>> fileList=fileUtility.fileUpload(request,FileUploadUtility.PEOPLEJOB_UPLOAD);
 			if(fileList.size()>0) {
 				for(int i=0;i<fileList.size();i++) {
 					Map<String, Object> map=fileList.get(i);
@@ -230,7 +230,7 @@ public class ManagerEmailController {
 			MimeBodyPart mbp1=new MimeBodyPart();
 			mbp1.setContent(coment,"text/html; charset=utf-8");
 			
-			File file=new File(fileUtility.getUploadPath(request),fileName);
+			File file=new File(fileUtility.getUploadPath(request,FileUploadUtility.PEOPLEJOB_UPLOAD),fileName);
 			
 			MimeBodyPart mbp2= new MimeBodyPart();
 			FileDataSource fds=new FileDataSource(file.getAbsolutePath());

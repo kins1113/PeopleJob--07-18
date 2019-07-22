@@ -33,7 +33,11 @@
     </script>
 </head>
 <body>
-        <input id="${param.id }" name="${param.name}" class="form-control" type="text" readonly/>
+        <input id="${param.id }" name="${param.name}" 
+        	<c:if test="${param.val!=null || param.val!=''}">
+        		value="${param.val}"
+        	</c:if>
+        class="form-control" type="text" readonly/>
 </body>
 </html>
     

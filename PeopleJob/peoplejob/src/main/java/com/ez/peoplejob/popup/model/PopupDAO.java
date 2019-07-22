@@ -10,4 +10,8 @@ public interface PopupDAO {
 	int updateUsage(Map<String, Object> map);
 	int updateUsageYandN(Map<String, Object> map);
 	int updateTrem(Map<String, Object> map);
+	public int deleteByPopupCode(int popupCode);
+	public PopupVO selectByPopupCode(int popupCode);
+	public int updatePopup(PopupVO popupVo);
+	public List<PopupVO> selectUsageY();
 }

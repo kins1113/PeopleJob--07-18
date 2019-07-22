@@ -51,7 +51,7 @@ public class ResumeController {
 		
 		//이미지 파일 업로드
 		List<Map<String, Object>> list
-		=fileUploadUtil.fileUpload(request);
+		=fileUploadUtil.fileUpload(request,FileUploadUtility.PEOPLEJOB_UPLOAD);
 				
 				String picture="";
 				for(Map<String, Object> map : list) {
@@ -203,7 +203,7 @@ public class ResumeController {
 	@RequestMapping(value="/edit.do", method=RequestMethod.POST)
 	public String edit_post(@ModelAttribute ResumeVO resumeVo,@RequestParam String oldFileName,HttpServletRequest request, Model model) {
 		logger.info("이력서 수정 처리, 파라미터 resumeVo={}", resumeVo);
-		List<Map<String,Object>>list=fileUploadUtil.fileUpload(request);
+		List<Map<String,Object>>list=fileUploadUtil.fileUpload(request,FileUploadUtility.PEOPLEJOB_UPLOAD);
 		 
 		String picture="";
 		for(Map<String,Object>map:list) {
@@ -217,7 +217,7 @@ public class ResumeController {
 				url="/resume/resumedetail.do?resumeCode="+resumeVo.getResumeCode();
 				if(picture!=null && !picture.isEmpty()) {
 					if(oldFileName!=null && !oldFileName.isEmpty()) {
-						String path=fileUploadUtil.getUploadPath(request);
+						String path=fileUploadUtil.getUploadPath(request,FileUploadUtility.PEOPLEJOB_UPLOAD);
 						File oldFile=new File(path, oldFileName);
 						if(oldFile.exists()) {
 							boolean bool=oldFile.delete();
