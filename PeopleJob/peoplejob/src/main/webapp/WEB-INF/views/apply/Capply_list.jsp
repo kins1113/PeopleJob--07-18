@@ -63,7 +63,7 @@
     
 <div class="divList" style="min-height: 630px">
         <div class="page-header">
-            <h3>지원현황</h3>
+            <h3>지원현황</h3> 
        
        <!--  지역<input type="text" name="hi" id="hi">
         근무방식<input type="text" name="hi2" id="hi2">
@@ -88,7 +88,7 @@
         <c:if test="${empty list }">	 
 	 	<tr>
 	 		<td colspan="5" class="align_center">데이터가 존재하지 않습니다.</td>
-	 	</tr>
+	 	</tr> 
 		</c:if>
 		<c:if test="${!empty list }">
 			<c:forEach var="vo" items="${list }"> 
@@ -99,13 +99,13 @@
 	                <p class="list-group-item-text">
 	                <small>채용공고 : <a href="<c:url value='/company/jobopening_view.do?jobopening=${vo.jobopening}'/>">${vo.jobopening }</a></small>
 	                | 	<small>지원일 : ${fn:substring(vo.applydate,0,10) }</small>
-	                | <small>열람여부 : ${vo.oepncheck }</small>
+	                | <small>열람여부 : ${vo.opencheck }</small>
 	                | 	<small>지원번호 : ${vo.applyCode}</small>
 	                <c:forEach var="mvo" items="${list3 }">
 	                 <c:if test="${not loop_flag }">
 				        <c:if test="${vo.memberCode==mvo.memberCode}">
 			                | 	<small>지원자 : ${mvo.membername}</small>
-			                <a href="<c:url value='/apply/Check_pay.do?member_code=${vo.memberCode }'/>"><input type="button" id="detail" class="btn btn-primary" name="detail" value="자세히보기"></a> 
+			                <a href="<c:url value='/apply/Check_pay.do?member_code=${vo.memberCode }&jobopening=${vo.jobopening }'/>"><input type="button" id="detail" class="btn btn-primary" name="detail" value="자세히보기"></a> 
 				            <c:set var="loop_flag" value="true" />
 				        </c:if>
 				    </c:if>

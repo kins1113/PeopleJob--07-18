@@ -253,9 +253,10 @@ public class JobopeningController {
 			imageURL=(String)map.get("fileName");
 		}
 		vo.setCompanyimage(imageURL);
-		
+		logger.info("처리전 companyimage={}",vo.getCompanyimage());
 		int cnt=jobopeningService.updateJobOpen(vo);
 		logger.info("수정처리결과 cnt={}",cnt);
+		logger.info("처리후 companyimage={}",vo.getCompanyimage());
 		String msg="",url="/company/jobopening_edit.do?jobopening="+vo.getJobopening();
 		if(cnt>0) {
 			msg="수정성공";
@@ -280,7 +281,7 @@ public class JobopeningController {
 	}
 	@RequestMapping(value="/jobopening_upHit.do",method = RequestMethod.GET)
 	public String jobopening_upHit(@RequestParam (defaultValue = "0")int jobopening,HttpServletRequest request,Model model) {
-		logger.info("수정처리");
+		logger.info("조회수처리");
 		int cnt=jobopeningService.updateHits(jobopening);
 		logger.info("조회수 증가 결과 cnt={}",cnt);
 		String url="";

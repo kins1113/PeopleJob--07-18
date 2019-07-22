@@ -182,8 +182,10 @@ public class ApplyController {
 		return "apply/Capply_list";
 	}
 	@RequestMapping("/Check_pay.do") 
-	public String Check_pay(@RequestParam (defaultValue = "0")int member_code,HttpSession session,Model model) {
-		logger.info("결제내역 확인 파라미터 member_code{}",member_code);
+	public String Check_pay(@RequestParam (defaultValue = "0")int member_code,
+			@RequestParam(defaultValue = "0")int jobopening,
+			HttpSession session,Model model) {
+		logger.info("결제내역 확인 파라미터 member_code{},jobopening{}",member_code,jobopening);
 		String id=(String)session.getAttribute("memberid");
 		MemberVO mvo=memberService.selectByUserid(id);
 		logger.info("로그인한 회원정보 mvo={}",mvo);
@@ -191,6 +193,11 @@ public class ApplyController {
 		ResumeVO rvo=resumeService.selectBymemberCode(member_code);
 		String msg="",url="";
 		if(cnt>0) {
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("memberCode",member_code);
+			map.put("jobopening",jobopening);
+			int cnt2=tableaplyService.opencheckY(map);
+			logger.info("읽음처리 결과cnt2={}",cnt2);
 			msg="이력서보기로 이동합니다";
 			url="/resume/detail?resumeCode="+rvo.getResumeCode();
 		}else {

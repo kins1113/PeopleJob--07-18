@@ -43,5 +43,9 @@ public class TableaplyDAOMybatis implements TableaplyDAO{
 	public int cntpay(int MemberCode) {
 		return sqlSession.selectOne(namespace+"cntpay",MemberCode);
 	}
+	@Override
+	public int opencheckY(Map<String,Object> map) {
+		return sqlSession.update(namespace+"opencheckY",map);
+	}
 	
 }

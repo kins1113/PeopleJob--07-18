@@ -71,6 +71,9 @@
 	<select id="cntpay" parameterType="int" resultType="int">
 		select count(*) from payment where member_code=#{memberCode}
 	</select>
+	<update id="opencheckY" parameterType="map" >
+	update apply set opencheck='Y' where member_code=#{memberCode} and jobopening=#{jobopening}
+	</update>
 </mapper>
 
 

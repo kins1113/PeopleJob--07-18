@@ -52,6 +52,35 @@
 	}
 </script>
 <style type="text/css">
+.where{
+	min-height: 600px; 
+}
+.where div input[type="checkbox"]{  
+	width:50px;
+	margin:0 auto;
+	float: right;
+}
+.where div label{ 
+	width:130px; 
+	margin:0 auto;  
+	height:30px;
+}
+.where fieldset{
+	min-width: 0;
+ 	 padding: 0;
+  	margin: 0;
+  	border: 1px solid black !important;
+}
+.divList {
+    width: 900px;
+    margin: 0 auto;
+    padding: 10px;
+}
+.where input[name="wheresubmit"]{
+	position: absolute; 
+	left: 50%; 
+	transform: translateX(-50%);
+}
 .divList {
     width: 900px;
     margin: 0 auto;
@@ -78,11 +107,9 @@
 <div class="divSearch"> 
 	<!-- 페이징 처리에도 사용 -->
    	<form name="frmSearch" method="post" 
-   		action='<c:url value="/company/jobopening_list.do"/>'>
+   		action='<c:url value="/company/my_jobopening_list.do"/>'>
    		<!-- 현재 페이지 hidden에 넣기 -->  
-   		<input type="button" id="search" class="btn btn-primary" name="search" value="검색조건"> 
    		<input type="hidden" name='currentPage' value="1" >
-		<input type="submit" class="btn btn-primary" value="검색">
 		<div id="where">
 		<%-- <%@include file="jobopening_where.jsp" %> --%>
 			<c:import url="jobopening_where.jsp"/>
@@ -109,7 +136,7 @@
 							<c:forEach var="cvo" items="${clist }">
 	                 <c:if test="${not loop_flag }">
 				        <c:if test="${vo.companyCode==cvo.companyCode}">
-			                <h1>${cvo.companyname}</h1>
+			                <div style="height:100px; width:120px;"><h2>${cvo.companyname}</h2></div>
 				            <c:set var="loop_flag" value="true" />
 				        </c:if>
 				    </c:if>

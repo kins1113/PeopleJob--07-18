@@ -11,5 +11,6 @@ public interface TableaplyDAO {
 	int deleteapply(Map<String,Object>map);
 	List<TableaplyVO> selectapplyComp(Map<String,Object> map);
 	int selectapplyCompcount(Map<String,Object> map);
-	int cntpay(int MemberCode);	
+	int cntpay(int MemberCode);
+	int opencheckY(Map<String,Object> map);
 }

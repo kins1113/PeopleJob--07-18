@@ -42,5 +42,9 @@ public class TableaplyServiceImpl implements TableaplyService{
 	public int cntpay(int MemberCode) {
 		return tableaplyDao.cntpay(MemberCode);
 	}
+	@Override
+	public int opencheckY(Map<String,Object> map) {
+		return tableaplyDao.opencheckY(map);
+	}
 
 }

@@ -197,7 +197,13 @@
              <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-10">
                 <label class="control-label">제한연령</label>
-                    <input id="agelimit" name="agelimit" class="form-control" type="text" />
+                    <select id="agelimit" name="agelimit">
+                        <option value="나이제한없음">나이제한없음</option>
+                        <option value="30이하">30이하</option>
+                        <option value="30이상40미만">30이상40미만</option>
+                        <option value="40이상50미만">40이상50미만</option>
+                        <option value="50이상60미만">50이상60미만</option>
+                    </select>
                 </div>
              </div>
 

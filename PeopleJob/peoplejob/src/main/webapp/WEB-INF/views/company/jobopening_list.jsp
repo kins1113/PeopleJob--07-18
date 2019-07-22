@@ -21,10 +21,37 @@
 	});
 </script>
 <style type="text/css">
+.where{
+	min-height: 600px; 
+}
+.where div input[type="checkbox"]{  
+	width:50px;
+	margin:0 auto;
+	float: right;
+}
+.where div label{ 
+	width:130px; 
+	margin:0 auto;  
+	height:30px;
+}
+.where fieldset{
+	min-width: 0;
+ 	 padding: 0;
+  	margin: 0;
+  	border: 1px solid black !important;
+}
 .divList {
     width: 900px;
     margin: 0 auto;
     padding: 10px;
+}
+.where input[name="wheresubmit"]{
+	position: absolute; 
+	left: 50%; 
+	transform: translateX(-50%);
+}
+.cname{
+	padding-top:40px; 
 }
 </style>
 <article>
@@ -52,7 +79,7 @@
    		<input type="button" id="search" class="btn btn-primary" name="search" value="검색조건"> 
    		<input type="hidden" name='currentPage' value="1" >
 		<input type="submit" class="btn btn-primary" value="검색">
-		<div id="where">
+		<div id="where" class="where">
 		<%-- <%@include file="jobopening_where.jsp" %> --%>
 			<c:import url="jobopening_where.jsp"/>
 		</div> 
@@ -76,8 +103,8 @@
 							<div style="width=100px;float:left;">
 							<c:forEach var="cvo" items="${clist }">
 	                 <c:if test="${not loop_flag }">
-				        <c:if test="${vo.companyCode==cvo.companyCode}">
-			                <h1>${cvo.companyname}</h1>
+				        <c:if test="${vo.companyCode==cvo.companyCode}">   
+			                <div class="cname"style="height:100px; width:120px;"><h2>${cvo.companyname}</h2></div>
 				            <c:set var="loop_flag" value="true" />
 				        </c:if>
 				    </c:if>
@@ -95,12 +122,11 @@
 	                | <small>조회수 : ${vo.hits }</small>
 	                <br>
 	                 <span class="label label-info">복리후생 : ${vo.welfare }</span>
+	                 <br>
 	                 <c:if test="${mvo.authorityCode==1 }"> 
 					<a href="<c:url value='/apply/insertapply.do?jobopening=${vo.jobopening}'/>"><input type="button" id="apply" name="apply"class="btn btn-primary" value="즉시지원"></a>
 					<a href="<c:url value='/scrap/insertscrap.do?jobopening=${vo.jobopening}&member_code=${mvo.memberCode }'/>"><img alt="스크랩" src="<c:url value='/peoplejob_upload/scrapstarwhite.PNG'/>"></a>
 					</c:if>
-					<br> 
-					
 	            </div> 
 	        </div>
 	        </c:forEach>
