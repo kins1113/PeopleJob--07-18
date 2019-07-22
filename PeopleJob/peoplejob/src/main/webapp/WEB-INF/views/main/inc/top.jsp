@@ -216,8 +216,9 @@ function company(){
 							<li style="width: 98px;">
 								<a href="#">자료실</a>
 								<ul class="sub-menu">
-									<li><a href="category-01.html">이력서 양식</a></li>
-									<li><a href="category-02.html">취업 뉴스</a></li>
+									<li><a href="">이력서 양식</a></li>
+									<li><a href="">취업 뉴스</a></li>
+									<li><a href="">무료 강좌</a></li>
 									
 								</ul>
 							</li>
