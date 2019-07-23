@@ -20,7 +20,7 @@ import com.ez.peoplejob.common.PaginationInfo;
 import com.ez.peoplejob.common.SearchVO;
 import com.ez.peoplejob.common.WebUtility;
 
-import com.ez.peoplejob.peopleinfo.model.PeopleinfoService;
+import com.ez.peoplejob.peopleinfo.model.PeopleInfoService;
 import com.ez.peoplejob.resume.model.ResumeService;
 import com.ez.peoplejob.resume.model.ResumeVO;
 
@@ -32,7 +32,7 @@ public class PeopleInfoController {
 	@Autowired
 	private ResumeService resumeService;
 	@Autowired
-	private PeopleinfoService peopleinfoService;
+	private PeopleInfoService peopleinfoService;
 	
 	@RequestMapping("/peopleinfolist.do")
 	public String peopleinfolist(

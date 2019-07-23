@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import com.ez.peoplejob.resume.model.ResumeVO;
 
 @Service
-public class PeopleInfoServiceImpl implements PeopleinfoService {
+public class PeopleInfoServiceImpl implements PeopleInfoService {
 	
 	@Autowired
 	private PeopleInfoDAO peopleinfoDao;

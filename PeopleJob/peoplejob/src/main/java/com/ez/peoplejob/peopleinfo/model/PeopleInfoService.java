@@ -5,7 +5,7 @@ import java.util.Map;
 
 import com.ez.peoplejob.resume.model.ResumeVO;
 
-public interface PeopleinfoService {
+public interface PeopleInfoService {
 	List<ResumeVO>selectCareer(Map<String, Object> map);
 	List<ResumeVO>selectAge(Map<String, Object> map);
 	List<ResumeVO>selectGraduatetype(Map<String, Object> map);
