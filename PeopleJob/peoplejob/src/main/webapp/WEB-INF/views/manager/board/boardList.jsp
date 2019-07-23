@@ -2,21 +2,13 @@
 	pageEncoding="UTF-8"%>
 <%@include file="/WEB-INF/views/manager/inc/adminTop.jsp"%>
 <style type="text/css">
- 	#pageDiv{
- 		width:30%;
- 	}
- 	.serDiv{
- 		float: right;
- 	}
- 	input.form-control {
-  		margin-top: 4px;
-	}
-	input.btn.btn-secondary.btn-default {
-	    margin-top: 4px;
-	}
-	#boardTable{
-	font-size: 1.0em;
-	}
+ 	#pageDiv{width:30%;	}
+ 	.serDiv{float: right;}
+ 	input.form-control {margin-top: 4px;}
+	input.btn.btn-secondary.btn-default {margin-top: 4px;}
+	#boardTable{font-size: 1.0em;}
+	#boardTable th a{color: black;}
+	#boardTable td a{color: #8A909D;}
 </style>
 <script type="text/javascript">
 	$(document).ready(function(){
@@ -101,6 +93,13 @@
 				$("form[name=boardListForm]").submit();
 			}
 		});
+		
+		//등록 버튼 눌렀을때 게시판에 맞는 게시글 추가하기.
+		$(".postAdd").click(function(){
+			var boardCode=$(this).parent().parent().find("input[name=boardCheckBox]").val();
+			location.href="<c:url value='/manager/post/postAddByBoardCode.do?boardCode="+boardCode+"'/>";
+		});
+		
 	});
 	// 사용가능 불가능 변경하는 함수
 	function boardUpdate(boardCode,usage){
@@ -222,6 +221,7 @@
 									<th>파일수 </th>
 									<th>사이즈</th>
 									<th ><a href="#" id="filterUsage">사용여부</a></th>
+									<th>기타</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -243,9 +243,9 @@
 										</c:if> 
 									</c:forEach>
 									</td>
-									<td>${vo.boardname }</td>
+									<td>${vo.boardname}</td>
 									<td>${vo.firAdmin }</td>
-									<td>${vo.boardregdate1 }</td>
+									<td><fmt:formatDate value="${vo.boardregdate1 }" pattern=""/></td>
 									<td>${vo.lastAdmin }</td>
 									<td>${vo.boardupdate }</td>
 									<td>
@@ -274,6 +274,7 @@
 											<a href="#" onclick="boardUpdate('${vo.boardCode1 }','${vo.usage }')">미사용</a>
 										</c:if>
 									</td>
+									<td><button type="button" class="postAdd">등록</button></td>
 								</tr>
 								<!--  게시판 반복 끝 -->
 								</c:forEach>
