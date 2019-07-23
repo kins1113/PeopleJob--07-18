@@ -42,7 +42,7 @@
 	</select>
 	
 	<select id="selectMainAdvertiseByServiceCode" resultType="map" parameterType="int">
-	select v.*, c.*
+	select v.*, c.*, trunc(end_date-sysdate) as dday
 	from vvipmain v join companyJobOpen c
 	on c.COMPANY_CODE = v.COMPANY_CODE
 	where service_code=#{serviceCode}
@@ -65,6 +65,7 @@
 		join member m
 		on p.member_code = m.member_code
 	</select>
+	
 	<!--  
 	<select id="selectPayment" parameterType="searchVo" resultType="map" >
 	select payment_code,paymentway,progress,discount,paydate, s.servicename, m.memberid

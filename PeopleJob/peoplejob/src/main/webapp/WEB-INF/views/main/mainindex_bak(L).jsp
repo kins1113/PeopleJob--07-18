@@ -489,6 +489,7 @@ input[type="checkbox"] {
 table, div.recomtable {
 	width: 753px;
     height: 300px;
+    border: 1px solid lightgray;
     margin-left: 7px;
 }
 
@@ -582,12 +583,12 @@ img.publicimg{
 
 .btn_more {
     position: absolute;
-    top: 700px;
+    top: 717px;
     right: 328px;
     display: table;
-    width: 72px;
+    width: 68px;
     height: 59px;
-    border: 1px solid #e4ebf6; 
+    /* border: 1px solid #e4ebf6; */
     background-color: #f7faff;
     text-align: center;
     box-sizing: border-box;
@@ -712,30 +713,89 @@ span[name=publicname]{
 						</div>
 
 						<div class="row p-t-35" style="padding: 0px; margin-left: 0px; width: 91%;">
-							<div class="recomtable">
-							<c:forEach begin="0" end="4">
-								<div class="recom1" style="border: 1px solid lightgray;width: 33.3%;height: 50%;float: left;padding: 20px;">
+
+							<%-- <table border="1">
+								<tr>
+									<td class="recommend">
+										<div style="padding: 20px;">
 											<strong style="display: block;">(주) 이트리즈시스템</strong> 
 											<span style="display: block;">이트리즈 시스템 SI 웹개발자 </span>
 											 <span style="display: block;">(java/jsp/spring)신입 채용 </span>
 											 <div>
 											 <button type="button" class="img_main btn_scrap on" value="36473003"><span class="blind">스크랩</span> </button>
-											 	<img alt="스크랩임시사진" src="<c:url value='/peoplejob_upload/scrapstarwhite.PNG'/>" style="margin-top:40px;cursor: pointer;"
-											 	onclick="scrap()">
-											 	<img alt="즉시지원버튼" src="<c:url value='/peoplejob_upload/즉시지원.PNG'/>" style="float:right;margin-top:40px;margin-right:5px;cursor: pointer;"
-											 	onclick="apply()">
+											 	<img alt="스크랩임시사진" src="<c:url value='/peoplejob_upload/scrapstarwhite.PNG'/>" style="margin-top:40px;">
+											 	<img alt="스크랩임시사진" src="<c:url value='/peoplejob_upload/즉시지원.PNG'/>" style="float:right;margin-top:40px;margin-right:5px;">
 											 </div>  
-								</div>
-							</c:forEach>
-								<div class="recom1" style="border: 1px solid lightgray;width: 33.3%;height: 50%;float: left;padding: 20px;">
-									<span style="font-weight: bold;font-size: 1.1em;"> 나에게 딱맞는</span><br>
-									<span style="color: #4876ef;font-weight: bold;font-size: 1.1em;">추천공고</span>
-									<span style="font-weight: bold;font-size: 1.1em;">를 확인하려면?</span><br>
-									<input type="button" class="form-control btn btn-register" value="로그인하기" style="font-size: 1.1em;margin-top: 12px;background: cornflowerblue;border-color: cornflowerblue;"
-									onclick="location.href='<c:url value='/login/login.do'/>'" >
-								</div>
-								</div>
-								
+										</div>
+										</td>
+									<td class="recommend">
+										<div style="padding: 20px;">
+											<strong style="display: block;">(주) 이트리즈시스템</strong> 
+											<span style="display: block;">이트리즈 시스템 SI 웹개발자 </span>
+											 <span style="display: block;">(java/jsp/spring)신입 채용 </span>
+											 <div>
+											 <button type="button" class="img_main btn_scrap on" value="36473003"><span class="blind">스크랩</span> </button>
+											 	<img alt="스크랩임시사진" src="<c:url value='/peoplejob_upload/scrapstarwhite.PNG'/>" style="margin-top:40px;">
+											 	<img alt="스크랩임시사진" src="<c:url value='/peoplejob_upload/즉시지원.PNG'/>" style="float:right;margin-top:40px;margin-right:5px;">
+											 </div> 
+										</div>
+										</td>
+									<td>
+										<div style="padding: 20px;">
+											<strong style="display: block;">(주) 이트리즈시스템</strong> 
+											<span style="display: block;">이트리즈 시스템 SI 웹개발자 </span>
+											 <span style="display: block;">(java/jsp/spring)신입 채용 </span>
+											 <div>
+											 <button type="button" class="img_main btn_scrap on" value="36473003"><span class="blind">스크랩</span> </button>
+											 	<img alt="스크랩임시사진" src="<c:url value='/peoplejob_upload/scrapstarwhite.PNG'/>" style="margin-top:40px;">
+											 	<img alt="스크랩임시사진" src="<c:url value='/peoplejob_upload/즉시지원.PNG'/>" style="float:right;margin-top:40px;margin-right:5px;">
+											 </div> 
+										</div>
+										</td>
+								</tr>
+								<tr>
+									<td>
+										<div style="padding: 20px;"> 
+											<strong style="display: block;">(주) 이트리즈시스템</strong> 
+											<span style="display: block;">이트리즈 시스템 SI 웹개발자 </span>
+											 <span style="display: block;">(java/jsp/spring)신입 채용 </span>
+											 <div>
+											 <button type="button" class="img_main btn_scrap on" value="36473003"><span class="blind">스크랩</span> </button>
+											 	<img alt="스크랩임시사진" src="<c:url value='/peoplejob_upload/scrapstarwhite.PNG'/>" style="margin-top:40px;">
+											 	<img alt="스크랩임시사진" src="<c:url value='/peoplejob_upload/즉시지원.PNG'/>" style="float:right;margin-top:40px;margin-right:5px;">
+											 </div> 
+										</div>
+										</td>
+									<td>
+										<div style="padding: 20px;">
+											<strong style="display: block;">(주) 이트리즈시스템</strong> 
+											<span style="display: block;">이트리즈 시스템 SI 웹개발자 </span>
+											 <span style="display: block;">(java/jsp/spring)신입 채용 </span>
+											 <div>
+											 <button type="button" class="img_main btn_scrap on" value="36473003"><span class="blind">스크랩</span> </button>
+											 	<img alt="스크랩임시사진" src="<c:url value='/peoplejob_upload/scrapstarwhite.PNG'/>" style="margin-top:40px;">
+											 	<img alt="스크랩임시사진" src="<c:url value='/peoplejob_upload/즉시지원.PNG'/>" style="float:right;margin-top:40px;margin-right:5px;">
+											 </div> 
+										</div>
+										</td>
+									<td>
+										<div style="padding: 20px;">
+											<strong style="display: block;">(주) 이트리즈시스템</strong> 
+											<span style="display: block;">이트리즈 시스템 SI 웹개발자 </span>
+											 <span style="display: block;">(java/jsp/spring)신입 채용 </span>
+											 <div>
+											 <button type="button" class="img_main btn_scrap on" value="36473003"><span class="blind">스크랩</span> </button>
+											 	<img alt="스크랩임시사진" src="<c:url value='/peoplejob_upload/scrapstarwhite.PNG'/>" style="margin-top:40px;">
+											 	<img alt="스크랩임시사진" src="<c:url value='/peoplejob_upload/즉시지원.PNG'/>" style="float:right;margin-top:40px;margin-right:5px;">
+											 </div> 
+										</div>
+										</td>
+								</tr>
+							</table> --%>
+							
+	<div class="recomtable">
+	
+	</div>
 						</div>
 
 
@@ -744,10 +804,9 @@ span[name=publicname]{
 		<div style="border: 1px solid lightgray;
     width: 210px;
     float: right;
-    /* margin-right: 288px; */
-    height: 338px;
-    display: inline;
-    float: left;">
+    margin-right: 288px;
+    height: 366px;
+    display: inline;">
   
     	<div class="devRankingWrap devStarter" style="display: block;width:200px;">  
     	
@@ -772,6 +831,51 @@ span[name=publicname]{
 													<span class="txBx" onclick="location.href='<c:url value='/company/jobopening_view.do?jobopening=${map["JOBOPENING"] }'/>'"> ${map['COMPANYNAME'] }</span></li>
 										</c:forEach>   
 										
+										<%--   <c:forEach var="map" items="${list }">
+										<li class="deadline"><span class="titBx"><a href="#" class="devClick devHref" data-click-value="98">
+											${map['JOBTITLE'] }</a></span> 
+													<span class="txBx"></span></li>
+										</c:forEach>  --%>
+										
+										
+											<%-- <li class="deadline"><span class="titBx"><a href="#"
+													class="devClick devHref" data-click-value="98"
+													target="_blank">㈜GS리테일</a></span> <span class="txBx">~16시</span></li>
+											<li class="deadline"><span class="titBx"><a href="#"
+													class="devClick devHref" data-click-value="98"
+													target="_blank">호텔신라</a></span> <span class="txBx">~17시</span></li>
+											<li class="deadline"><span class="titBx"><a href="#"
+													class="devClick devHref" data-click-value="98"
+													target="_blank">에스케이이노베이션</a></span> <span class="txBx">~24시</span>
+											</li>
+											<li class="deadline"><span class="titBx"><a href="#"
+													class="devClick devHref" data-click-value="98"
+													target="_blank">한국국제협력단</a></span> <span class="txBx">~15시</span>
+											</li>
+											<li class="deadline"><span class="titBx"><a href="#"
+													class="devClick devHref" data-click-value="98"
+													target="_blank">주식회사 캠시스</a></span> <span class="txBx">~07.08</span>
+											</li>
+											<li class="deadline"><span class="titBx"><a href="#"
+													class="devClick devHref" data-click-value="98"
+													target="_blank">대한무역투자진흥공사</a></span> <span class="txBx">~24시</span>
+											</li>
+											<li class="deadline"><span class="titBx"><a href="#"
+													class="devClick devHref" data-click-value="98"
+													target="_blank"> 한국건설기술연구원</a></span> <span class="txBx">~24시</span>
+											</li>
+											<li class="deadline"><span class="titBx"><a href="#"
+													class="devClick devHref" data-click-value="98"
+													target="_blank">(재)씨젠의료재단</a></span> <span class="txBx">~24시</span>
+											</li>
+											<li class="deadline"><span class="titBx"><a
+													href="<c:url value='https://www.naver.com'/>"
+													class="devClick devHref" data-click-value="98"
+													target="_blank">(재)전라북도생물산업진흥원</a></span> <span class="txBx">~18시</span>
+											</li>
+											<li class="deadline"><span class="titBx"><a href="#"
+													class="devClick devHref" data-click-value="98" target="">위본건설㈜</a></span>
+												<span class="txBx">~24시</span></li> --%>
 										</ul>
 									</li>
 
@@ -781,7 +885,7 @@ span[name=publicname]{
 						</div>
 					</div> 
     </div>
-						<div class="p-l-10 p-rl-0-sr991 p-b-20" style="width: 271px;float: left; padding: 0px; margin-left: 15px;">
+						<div class="p-l-10 p-rl-0-sr991 p-b-20" style="width: 271px;float: right;margin-top: -369px;padding: 0px;">
 							<!-- Video -->
 							<div class="notice" style="width: 285px; height: 156px;">
 							<div class="p-b-23">
@@ -796,7 +900,7 @@ span[name=publicname]{
 						<div class="devRankingWrap devStarter" style="display: block;">
 
 						<div class="rankingColumn devRanking" id="ranking_carousel_1" style="width: 258px;margin-top: -27px;  height:240px;">
-							<img alt="" src="<c:url value='/resources/main/images/getImage.png'/>" style="">
+							<img alt="" src="<c:url value='/resources/main/images/getImage.png'/>" style="    margin-top: 22px;">
 						</div>
 					</div>
 						</div> <!-- 여기까지 공지사항 -->
@@ -981,7 +1085,7 @@ span[name=publicname]{
 									<div class="p-t-16"> 
 										<h5 class="p-b-5" style="font-size: 1.3em; margin-top: -39px;"> ${map['JOBTITLE'] } </h5>
 										<h5 class="p-b-5" style="font-size: 1.1em;display: inline; margin-right: 10px;"> ${map['COMPANYNAME'] } </h5>
-										<span class="cl8" id="Dday">   D-${map['DDAY']} </span><br>      
+										<span class="cl8" id="Dday">   D-${fn:substring(map['CANCELLIMIT'],0,1)} </span><br>      
 											<img alt="스크랩임시사진" src="<c:url value='/peoplejob_upload/scrapstarwhite.PNG'/>" style="  margin-top: 3px;">
 											 <img alt="지원버튼사진" src="<c:url value='/peoplejob_upload/즉시지원.PNG'/>" style="float:right;"> 
 									</div> 

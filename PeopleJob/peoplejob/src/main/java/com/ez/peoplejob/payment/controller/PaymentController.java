@@ -151,13 +151,7 @@ public class PaymentController {
 	}
 	
 	@RequestMapping("/service/ListForPay.do")
-	public String ListForPay(Model model,HttpSession session) {
-		String memberid=(String)session.getAttribute("memberid");
-		MemberVO memVo=memberService.selectByUserid(memberid);
-		
-		List<JobopeningVO> list=jobService.selectJobopeningBycomcode(memVo.getCompanyCode());
-		logger.info("회사코드로 조회한 채용공고 리스트 list.size={}",list.size());
-		model.addAttribute("list",list);
+	public String ListForPay() {
 		
 		return "service/ListForPay";
 	}
