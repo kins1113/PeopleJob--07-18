@@ -122,14 +122,16 @@ public class PeopleInfoController {
 		
 	}
 	@RequestMapping("/peopleinfodetail.do")
-	public String peopleinfodetail(@RequestParam(required = false) int resumeCode,@ModelAttribute ResumeVO resumeVo,HttpSession session,Model model) {
+	public String peopleinfodetail(@RequestParam(required = false) int resumeCode,@RequestParam(required = false) String[] term,@ModelAttribute ResumeVO resumeVo,HttpSession session,Model model) {
 		logger.info("resumeCode={}",resumeCode);
 		ResumeVO vo=resumeService.selectResumeByNo(resumeCode);
 		String id=(String)session.getAttribute("memberid");
 		if(id==null) {
 			id="비회원";
 		}
-	
+		List<ResumeVO> list=new ArrayList<ResumeVO>();
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("term", term);
 		ResumeVO vo1=resumeService.selectByMemverid(id);
 		ResumeVO vo2=resumeService.selectBydesiredWorkCode(vo.getDesiredWorkCode());
 		ResumeVO vo3=resumeService.selectByacademicCode(vo.getAcademicCode());
@@ -144,6 +146,7 @@ public class PeopleInfoController {
 		ResumeVO vo12=resumeService.selectByfirst(vo.getFirstCode());
 		ResumeVO vo13=resumeService.selectBysecond(vo.getSecondCode());
 		ResumeVO vo14=resumeService.selectBythird(vo.getThirdCode());
+		List<ResumeVO> vo15=peopleinfoService.selectCareer(map);
 		logger.info("상세보기 결과 vo={}", vo);
 		
 		model.addAttribute("vo", vo);
@@ -161,6 +164,7 @@ public class PeopleInfoController {
 		model.addAttribute("vo12", vo12);
 		model.addAttribute("vo13", vo13);
 		model.addAttribute("vo14", vo14);
+		model.addAttribute("vo15", vo15);
 	
 		return "peopleinfo/peopleinfodetail";
 	}

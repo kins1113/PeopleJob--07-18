@@ -1,11 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    <%@include file="../main/inc/top.jsp" %>
-  <c:if test="${!empty param.searchKeyword}">
-			<p>
-				검색어 : ${param.searchKeyword}, ${pagingInfo.totalRecord}건 검색되었습니다.
-			</p>
-		</c:if>
+    
+  
 		
 <script>
 $("div").data("name")==="서울";
@@ -205,4 +201,4 @@ $("div").data("name")==="전국";
 		<c:import url="../resume/occupation.jsp"/>
 		</div>
 		<input type="submit" class="btn btn-primary" value="검색">	
-		<%@include file="../main/inc/bottom.jsp" %>
+		
