@@ -64,6 +64,14 @@ public class PeopleInfoDAOMybatis implements PeopleInfoDAO {
 	public int selectTotalCountJobtype(Map<String, Object> map) {
 		return sqlSession.selectOne(namespace+"selectTotalCountJobtype",map);
 	}
+	@Override
+	public List<ResumeVO> selectPeoplew(Map<String, Object> map) {
+		return sqlSession.selectList(namespace+"selectPeoplew",map);
+	}
+	@Override
+	public int selectTotalCountPeople(Map<String, Object> map) {
+		return sqlSession.selectOne(namespace+"selectTotalCountPeople",map);
+	}
 	
 	
 }

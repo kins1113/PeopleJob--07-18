@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import com.ez.peoplejob.resume.model.ResumeVO;
 
 @Service
-public class PeopleInfoServiceImpl implements PeopleInfoService {
+public class PeopleInfoServiceImpl implements PeopleinfoService {
 	
 	@Autowired
 	private PeopleInfoDAO peopleinfoDao;
@@ -72,6 +72,16 @@ public class PeopleInfoServiceImpl implements PeopleInfoService {
 	@Override
 	public int selectTotalCountJobtype(Map<String, Object> map) {
 		return peopleinfoDao.selectTotalCountJobtype(map);
+	}
+
+	@Override
+	public List<ResumeVO> selectPeoplew(Map<String, Object> map) {
+		return peopleinfoDao.selectPeoplew(map);
+	}
+
+	@Override
+	public int selectTotalCountPeople(Map<String, Object> map) {
+		return peopleinfoDao.selectTotalCountPeople(map);
 	}
 
 }

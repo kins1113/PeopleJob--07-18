@@ -1,5 +1,6 @@
 package com.ez.peoplejob.popup.controller;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -46,20 +47,26 @@ public class PopupController {
 	}
 	
 	@RequestMapping(value = "/popupAdd.do",method = RequestMethod.POST)
-	@ResponseBody
-	public int popupAdd_post(HttpServletRequest request ,@ModelAttribute PopupVO popupVo) {
+	public String popupAdd_post(@ModelAttribute PopupVO popupVo, HttpServletRequest request) {
 		int adminCode=(Integer)request.getSession().getAttribute("adminCode");
-		logger.info("ajax 팝업 등록 처리 파라미터 adminCode={} ,  popupVo={} ",adminCode,popupVo);
+		logger.info("팝업 등록 처리 파라미터 adminCode={} popupVo={} , ",adminCode,popupVo);
 		
-		List<Map<String,Object>>list=fileUploadUtil.fileUpload(request);
-		 
+		List<Map<String,Object>>list=fileUploadUtil.fileUpload(request,FileUploadUtility.POPUP_UPLOAD);
+		
 		//파일 이름 확인후 insert 
 		String imageURL="";
 		for(Map<String,Object>map:list) {
 			imageURL=(String)map.get("fileName");
 		}
+		logger.info("popup등록된 img 이름 imageURL={}",imageURL);
+		popupVo.setPopupImg(imageURL);
+		popupVo.setAdminCode(adminCode);
+		logger.info("insert 전  popupVo={} ",popupVo);
 		
-		return 1;
+		int re=popupService.insertPopup(popupVo);
+		logger.info("insert 결과 re={} ",re);
+		
+		return "redirect:/manager/popup/popupList.do";
 	}
 	
 	@RequestMapping("/updateUsage.do")
@@ -117,6 +124,119 @@ public class PopupController {
 		int result = popupService.updateTrem(map);
 		
 		return result;
+	}
+
+	@RequestMapping("/popupDeleteMulti.do")
+	@ResponseBody
+	public int deleteMulti(@RequestParam int[] popupCodeArr, HttpServletRequest request) {
+		logger.info("선택 삭제 파라미터 popupCodeArr.length={}",popupCodeArr.length);
+		for(int i=0;i<popupCodeArr.length;i++) {
+			logger.info("{}번째 popupCode= {}",i,popupCodeArr[i]);
+		}
+		
+		int re=popupService.deleteMultiByPopupCode(popupCodeArr);
+		logger.info("다중 삭제 처리결과 re={}",re);
+		if(re>0) {
+			for(int i=0; i<popupCodeArr.length;i++) {
+				int popupCode=popupCodeArr[i];
+				logger.info("for문 안에서 {}번째 popupCode= {}",i,popupCodeArr[i]);
+				PopupVO popupVo=popupService.selectByPopupCode(popupCode);
+				//파일 삭제
+				String fileName="";
+				logger.info("nullpoint 나는 곳 바로 위 popupVo= {}",popupVo);
+				if(popupVo.getPopupImg()!=null && !popupVo.getPopupImg().isEmpty()) {
+					fileName=popupVo.getPopupImg();
+				}
+				if(fileName!=null && !fileName.isEmpty()) {
+					String path=fileUploadUtil.getUploadPath(request,FileUploadUtility.POPUP_UPLOAD);
+					File delFile=new File(path,fileName);
+					if(delFile.exists()) {
+						boolean bool=delFile.delete();
+						logger.info("파일 삭제여부 bool={}",bool);
+					}
+				}
+			}
+		}
+		return re;
+	}
+	
+	@RequestMapping("/popupDelete.do")
+	@ResponseBody
+	public int delete(@RequestParam(defaultValue = "0") int popupCode, HttpServletRequest request) {
+		logger.info("팝업 하나 삭제 파라미터 popupCode={}",popupCode);
+		PopupVO popupVo=popupService.selectByPopupCode(popupCode);
+		int re=popupService.deleteByPopupCode(popupCode);
+		
+		logger.info("팝업 삭제 결과 re={}",re);
+		
+		if(re>0) {
+			//파일 삭제
+			String fileName=popupVo.getPopupImg();
+			if(fileName!=null && !fileName.isEmpty()) {
+				String path=fileUploadUtil.getUploadPath(request,FileUploadUtility.POPUP_UPLOAD);
+				File delFile=new File(path,fileName);
+				if(delFile.exists()) {
+					boolean bool=delFile.delete();
+					logger.info("파일 삭제여부 bool={}",bool);
+				}
+			}
+		}
+		return re;
+	}
+	
+	@RequestMapping(value = "/popupEdit.do",method = RequestMethod.GET)
+	public String popupEdit(@RequestParam(defaultValue = "0")int popupCode,
+			HttpServletRequest request,
+			Model model) {
+		logger.info("팜업 수정 화면 보여주 파라미터 popupCode={}",popupCode);
+		PopupVO popupVo=popupService.selectByPopupCode(popupCode);
+		
+		model.addAttribute("popupVo",popupVo);
+		
+		return "manager/popup/popupAdd";
+	}
+	
+	@RequestMapping(value = "/popupEdit.do", method = RequestMethod.POST)
+	public String popupEdit_post(@ModelAttribute PopupVO popupVo, HttpServletRequest request) {
+		logger.info("popup수정 처리 파라미터 popupVo={}",popupVo);
+		String oldFileName="";
+		if(popupVo.getPopupImg()!=null && !popupVo.getPopupImg().isEmpty()) {
+			oldFileName=popupVo.getPopupImg();
+		}
+		List<Map<String,Object>>list=fileUploadUtil.fileUpload(request,FileUploadUtility.POPUP_UPLOAD);
+		//파일 이름 확인후 insert 
+		String imageURL="";
+		for(Map<String,Object>map:list) {
+			imageURL=(String)map.get("fileName");
+		}
+		
+		
+		logger.info("popup등록된 img 이름 imageURL={}",imageURL);
+		popupVo.setPopupImg(imageURL);
+		
+		
+		
+		//업로드 처리
+		int re=popupService.updatePopup(popupVo);
+		if (re>0) {
+			//새로 업로드한 경우, 기존 파일이 있으면 기존 파일은 삭제
+			if(imageURL!=null && !imageURL.isEmpty()) {
+				if(oldFileName != null && !oldFileName.isEmpty()) {
+					String path=fileUploadUtil.getUploadPath(request,FileUploadUtility.POPUP_UPLOAD);
+					File oldFile=new File(path, oldFileName);
+					oldFile.delete();
+				}
+			}
+		}
+		
+		return "redirect:/manager/popup/popupList.do";
+	}
+	
+	@RequestMapping("/popupOpen.do")
+	public String popupOpne(@RequestParam String popupImg) {
+		logger.info("팝업창 띄우기");
+		
+		return "inc/popupFrame";
 	}
 	
 	
