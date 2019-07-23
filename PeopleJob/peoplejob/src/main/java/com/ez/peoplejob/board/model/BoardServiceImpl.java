@@ -41,5 +41,14 @@ public class BoardServiceImpl implements BoardService{
 	public int boardEdit(BoardVO boardVo) {
 		return boardDao.boardEdit(boardVo);
 	}
+	@Override
+	public List<BoardVO> getBoardList() {
+		return boardDao.getBoardList();
+	}
+	@Override
+	public BoardVO selectByBoardCode(int boardCode) {
+		return boardDao.selectByBoardCode(boardCode);
+	}
+
 
 }
