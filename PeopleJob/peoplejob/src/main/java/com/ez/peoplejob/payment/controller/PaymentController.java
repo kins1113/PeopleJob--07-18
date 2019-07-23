@@ -1,6 +1,7 @@
 package com.ez.peoplejob.payment.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -15,6 +16,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.ez.peoplejob.common.PaginationInfo;
+import com.ez.peoplejob.common.SearchVO;
+import com.ez.peoplejob.common.WebUtility;
 import com.ez.peoplejob.jobopening.model.JobopeningListVO;
 import com.ez.peoplejob.jobopening.model.JobopeningService;
 import com.ez.peoplejob.jobopening.model.JobopeningVO;
@@ -147,13 +151,7 @@ public class PaymentController {
 	}
 	
 	@RequestMapping("/service/ListForPay.do")
-	public String ListForPay(Model model,HttpSession session) {
-		String memberid=(String)session.getAttribute("memberid");
-		MemberVO memVo=memberService.selectByUserid(memberid);
-		
-		List<JobopeningVO> list=jobService.selectJobopeningBycomcode(memVo.getCompanyCode());
-		logger.info("회사코드로 조회한 채용공고 리스트 list.size={}",list.size());
-		model.addAttribute("list",list);
+	public String ListForPay() {
 		
 		return "service/ListForPay";
 	}
@@ -204,6 +202,60 @@ public class PaymentController {
 			
 		}
 		logger.info("payment 등록 결과 cnt={}",cnt);
+		
 		return "main/mainindex";
+	}
+	/*
+	@RequestMapping("/manager/payment/list.do")
+	public String list(@ModelAttribute SearchVO searchVo, Model model) {
+		//1
+		
+		logger.info("결제 목록 파라미터 searchVo={}" ,searchVo);
+		
+		
+		//2
+		//[1] PaginationInfo 객체 생성
+		PaginationInfo pagingInfo=new PaginationInfo();
+		pagingInfo.setBlockSize(WebUtility.BLOCK_SIZE);
+		pagingInfo.setRecordCountPerPage(WebUtility.RECORD_COUNT_PER_PAGE);
+		pagingInfo.setCurrentPage(searchVo.getCurrentPage());
+		
+		//[2] SearchVo에 페이징 관련 변수 셋팅
+		searchVo.setRecordCountPerPage(WebUtility.RECORD_COUNT_PER_PAGE);
+		searchVo.setFirstRecordIndex(pagingInfo.getFirstRecordIndex());
+		searchVo.setBlockSize(WebUtility.BLOCK_SIZE);
+		logger.info("셋팅 후 searchVo={}", searchVo);
+		
+		//[3] 조회처리
+		List<Map<String, Object>> list=paymentService.selectAll(searchVo);
+		logger.info("공지 글 목록 결과, list.size={}",list.size());
+		
+		//[4] 전체 레코드 개수 조회
+		int totalRecord=0;
+		totalRecord=paymentService.selectTotalCount(searchVo);
+		logger.info("전체 레코드 개수 조회 결과, totalRecord={}", totalRecord);
+		
+		//[5] PaginationInfo에 totalRecord 값 셋팅
+		pagingInfo.setTotalRecord(totalRecord);
+		
+		//3
+		model.addAttribute("list", list);
+		model.addAttribute("pagingInfo", pagingInfo);
+		
+		return "manager/payment/list";
+	}
+	*/
+		
+	
+	@RequestMapping("manager/payment/list.do")
+	public String list(Model model) {
+		
+		List<PaymentVO>list=paymentService.selectAll();
+		logger.info("결제 목록 결과 , list.size={}",list.size());
+		
+		model.addAttribute("list",list);
+		
+		return "manager/payment/list";
+		
 	}
 }
