@@ -37,11 +37,27 @@ public class PaymentController {
 	@Autowired private ServiceService serviceService;
 	
 	@RequestMapping("/service/success.do")
-	public String sucesspay(HttpSession session, Model model) {
-		logger.info("결제 성공시 보여주는 userpage화면");
+	public String sucesspay(HttpSession session, Model model, @RequestParam int[] jobno) {
+		logger.info("결제 성공시 보여주는 화면 파라미터, jobno={}",jobno);
 		String memberId=(String) session.getAttribute("memberid");
 		MemberVO memberVo=memberService.selectByUserid(memberId);
 		
+		int cnt=0;
+		for(int i=0;i<jobno.length;i++) {
+			logger.info(i+":"+jobno[i]);
+			
+			PaymentVO paymentVo=new PaymentVO();
+			paymentVo.setJobopening(jobno[i]);
+			paymentVo.setServiceCode(1);
+			paymentVo.setMemberCode(memberVo.getMemberCode());
+			
+			//cnt=paymentService.insertPayment(paymentVo);
+		}
+		//logger.info(" payment 등록 결과 cnt={}",cnt);
+		
+		return "service/payment";
+		
+		/*
 		List<JobopeningVO> list=jobService.selectJobopeningBycomcode(memberVo.getCompanyCode());
 		logger.info("company_code로 조회한 채용공고 list.size={}",list.size());
 		
@@ -55,6 +71,7 @@ public class PaymentController {
 			paymentVo.setMemberCode(memberVo.getMemberCode());
 			paymentVo.setPaymentway("카드");
 			paymentVo.setProgress("결제완료");
+			paymentVo.setJobopening(jobopening);
 			
 			//int cnt=paymentService.insertPayService1(paymentVo);
 			int cnt=0;
@@ -62,6 +79,8 @@ public class PaymentController {
 			
 			return "redirect:/mypage/user/userpage.do";
 		}
+		*/
+		
 		
 	}
 	
@@ -142,14 +161,17 @@ public class PaymentController {
 	
 	@RequestMapping(value="/service/ajaxpayList.do", method = RequestMethod.POST)
 	@ResponseBody
-	public Boolean ajaxpayList(@ModelAttribute JobopeningListVO job,int memberCode, int serviceCode) {
-		logger.info("결제할 공고 리스트 jobopeningListVo={}",job);
+	public Boolean ajaxpayList(@ModelAttribute JobopeningListVO job,@RequestParam int memberCode, @RequestParam int serviceCode) {
+		logger.info("결제할 공고 리스트 파라미터, jobopeningListVo={}",job);
+		logger.info("결제할 공고 리스트 파라미터 memberCode={}, serviceCode={}",memberCode, serviceCode);
 		
 		List<JobopeningVO> list=job.getJobItems();
 		
 		int count=0;
 		for(int i=0;i<list.size();i++) {
 			JobopeningVO jobvo=list.get(i);
+			logger.info("{} : jobNo={}",i, jobvo.getJobopening());
+			
 			count+=paymentService.getCountByJobopening(jobvo.getJobopening());
 		}
 		logger.info("이미 결제한 상품인지 count={}",count);
@@ -164,5 +186,24 @@ public class PaymentController {
 		
 		logger.info("bool={}",bool+"\n");
 		return bool;
+	}
+	
+	@RequestMapping(value="/service/paysuccess.do", method = RequestMethod.POST)
+	public String paysuccess(@ModelAttribute JobopeningListVO job, @RequestParam int memberCode, @RequestParam int serviceCode ) {
+		logger.info("결제 성공, jobopeningListVo={}",job);
+		logger.info("결제 성공 memberCode={}, serviceCode={}",memberCode, serviceCode);
+		
+		List<JobopeningVO> list=job.getJobItems();
+		
+		int cnt=0;
+		for(int i=0;i<list.size();i++) {
+			JobopeningVO jobvo=list.get(i);
+			logger.info("{}번째 : jobNo={}",i, jobvo.getJobopening());
+			
+			cnt=paymentService.insertPayment(list, serviceCode, memberCode);
+			
+		}
+		logger.info("payment 등록 결과 cnt={}",cnt);
+		return "main/mainindex";
 	}
 }

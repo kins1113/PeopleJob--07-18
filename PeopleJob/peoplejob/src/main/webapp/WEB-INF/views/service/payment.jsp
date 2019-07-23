@@ -7,8 +7,16 @@
 table.table.table-bordered {
     font-size: 1.5em;
     text-align: center;
+    border:1px solid black;
 }
-input[type="submit"] {float: right;font-size: 2em;width: 100px;padding: 5px;}
+input[type="submit"] {
+float: right;
+font-size: 2em;
+width: 100px;
+padding: 5px;  
+  background-color: coral;
+  color:white;
+  }
 </style>
 <script type="text/javascript" src="<c:url value='/resources/main/js/jquery-3.4.1.min.js'/>"></script>
 
@@ -19,13 +27,32 @@ input[type="submit"] {float: right;font-size: 2em;width: 100px;padding: 5px;}
   <script type="text/javascript">
   $(function(){
 	  
+	  $('#hideList').click(function(){
+			$('#cardBoduPostList').hide();
+	  });
+	  
+	  function check(){
+		var length=  $('.check:checked').length;
+		$('#chklength').text(length);
+	  }
+	  check();
+	  
+	  $('.check').click(check);
+	  
 		  
-	  $('#pay').click(function(){
+	  $('button[name=pay]').click(function(){
+		  $('input[type=checkbox]:checked').each(function(){
+				  $(this).prop("checked",false);
+		  });
+			  
 		  
-		  if(${sessionScope.memberid==null}){  
+		  
+		  $('#cardBoduPostList').hide();
+		  
+		  if(${sessionScope.memberid==null}){   
 			  alert('로그인을 해주세요');
 			  location.href="<c:url value='/login/login.do'/>";
-		  }else{ //로그인을 했을 때 
+		  }else{ //로그인을 했을 때  
 			  if(${sessionScope.author_code!=3}){
 				  if(${sessionScope.author_code==2}){
 				 	 alert('기업회원 승인을 받은 후 서비스 이용가능합니다.');
@@ -34,39 +61,9 @@ input[type="submit"] {float: right;font-size: 2em;width: 100px;padding: 5px;}
 				 	 alert('기업회원만 이용가능한 상품입니다.');
 				  }     
 			  }else if(${sessionScope.author_code==3 && fn:length(list)>=1}){ //승인받은 기업회원 일 때 
-				  /*
-				  var IMP = window.IMP; // 생략해도 괜찮습니다.
-				  IMP.init("imp49241177"); // "imp00000000" 대신 발급받은 "가맹점 식별코드"를 사용합니다.
-				  
-				   IMP.request_pay({
-					  	pg : 'inicis', // version 1.1.0부터 지원.
-					    pay_method : 'card',
-					    merchant_uid : 'peoplejob_' + new Date().getTime(),
-					    name : 'PEOPLEJOB 채용공고 vvip관',
-					    amount : 10,
-					    buyer_email : '${memberVo.email}',
-					    buyer_name : '${sessionScope.memberName}',
-					    buyer_tel : '${memberVo.tel}',
-					    buyer_addr : '${companyVo.companyAddress}',
-					    buyer_postcode : '${companyVo.companyZipcode}',
-					    m_redirect_url : '<c:url value="/service/payment.do"/>' //모바일 결제 후 이동될 주소
-					}, function(rsp) {
-					    if ( rsp.success ) {
-					        var msg = '결제가 완료되었습니다.\n';
-					        msg+='결제일로부터 30일간 이용가능합니다.\n';
-					        msg += '고유ID : ' + rsp.imp_uid;
-					        msg += '상점 거래ID : ' + rsp.merchant_uid;
-					        msg += '결제 금액 : ' + rsp.paid_amount+'원';
-					        msg += '카드 승인번호 : ' + rsp.apply_num;
-					        location.href="<c:url value='/service/success.do'/>";
-					    } else {
-					        var msg = '결제에 실패하였습니다.';
-					        msg += ' : ' + rsp.error_msg;
-					    }
-					    alert(msg);
-					}); */
-					//window.open("<c:url value='/service/ListForPay.do'/>", "listForPay","width=570, height=350, resizable=yes");
+				  $('#cardBoduPostList').hide();
 			  	$('#cardBoduPostList').show();
+			  
 			  }else if(${sessionScope.author_code==3 && fn:length(list)<1}){   
 				  alert('등록된 채용공고가 없습니다. 채용공고를 먼저 등록해주세요');
 				  location.href="<c:url value='/company/jobopening_register.do'/>";  
@@ -76,99 +73,86 @@ input[type="submit"] {float: right;font-size: 2em;width: 100px;padding: 5px;}
 		 
 	  });//pay1
   
- $('#pay2').click(function(){ 
-		   
-		  if(${sessionScope.memberid==null}){  
-			  alert('로그인을 해주세요');
-			  location.href="<c:url value='/login/login.do'/>";
-		  }else{ //로그인을 했을 때 
-			  if(${sessionScope.author_code!=3}){
-				  if(${sessionScope.author_code==2}){
-				 	 alert('기업회원 승인을 받은 후 서비스 이용가능합니다.');
-					   
-				  }else if(${sessionScope.author_code==1}){
-				 	 alert('기업회원만 이용가능한 상품입니다.');
-				  }      
-			  }else if(${sessionScope.author_code==3 && fn:length(list)>=1}){ //승인받은 기업회원 일 때 
-				  var IMP = window.IMP; // 생략해도 괜찮습니다.
-				  IMP.init("imp49241177"); // "imp00000000" 대신 발급받은 "가맹점 식별코드"를 사용합니다.
-				  
-				  IMP.request_pay({
-					  	pg : 'inicis', // version 1.1.0부터 지원.
-					    pay_method : 'card',
-					    merchant_uid : 'peoplejob_' + new Date().getTime(),
-					    name : 'PEOPLEJOB 채용공고 vip관',
-					    amount : 10,
-					    buyer_email : '${memberVo.email}',
-					    buyer_name : '${sessionScope.memberName}',
-					    buyer_tel : '${memberVo.tel}',
-					    buyer_addr : '${companyVo.companyAddress}',
-					    buyer_postcode : '${companyVo.companyZipcode}',
-					    m_redirect_url : '<c:url value="/service/payment.do"/>' //모바일 결제 후 이동될 주소
-					}, function(rsp) {
-					    if ( rsp.success ) {
-					        var msg = '결제가 완료되었습니다.\n';
-					        msg+='결제일로부터 30일간 이용가능합니다.\n';
-					        msg += '고유ID : ' + rsp.imp_uid;
-					        msg += '상점 거래ID : ' + rsp.merchant_uid;
-					        msg += '결제 금액 : ' + rsp.paid_amount+'원';
-					        msg += '카드 승인번호 : ' + rsp.apply_num;
-					        location.href="<c:url value='/service/success.do'/>";
-					    } else {
-					        var msg = '결제에 실패하였습니다.';
-					        msg += ' : ' + rsp.error_msg;
-					    }
-					    alert(msg);
-					});
-			  }else if(${sessionScope.author_code==3 && fn:length(list)<1}){   
-				  alert('등록된 채용공고가 없습니다. 채용공고를 먼저 등록해주세요');
-				  location.href="<c:url value='/company/jobopening_register.do'/>";  
-			  }
-		  }//로그인해서 아이디 있을 때
-		  
-		 
-	  });//pay2
-	 //////////////////////////////////
-	  var lists=[];
-	  $(".check:checked").each(function(){
-		 
-		  lists.push($(this).val());
-		  
-	  });
-	  
-	  var cnt=0;
+ 
+	  /* var cnt=0;
 	  $(".check").change(function(){
 		  if($(".check").is(":checked")){
 			  cnt++;
 		  }else {
 			  cnt--;
 		  }
-	  $('#chklength').text(cnt);
-	  });
+	  	$('#chklength').text(cnt);
+	  }); */
 	  
-  
-	  $('input[type=submit]').click(function(){ 
+	  $("#frmList").submit(function(){ 
 		  if($('input[type=checkbox]:checked').length<1){
 				alert('결제할 채용공고를 먼저 선택하세요');
 				event.preventDefault();
 				return;
-			}else{
+			}else if($('#agree:checked').length<1){
+				alert('개인정보 수집 및 이용에 동의해 주십시오.');
+				$('#agree').focus();
+				event.preventDefault();
+				return false;
+				
+			} else{ 
 				//$('form[name=frmList]').prop('action','<c:url value="/service/payList.do"/>');
 				//$('form[name=frmList]').submit();
 				
-				var param=$("form[name=frmList]").serialize();
+			        var jobno = new Array(); // 배열 선언
+			 
+			        $('.check:checked').each(function() { // 체크된 체크박스의 value 값을 가지고 온다.
+			            jobno.push(this.value);
+			        });
+				
+				var param=$("#frmList").serialize();
+				var length=  $('.check:checked').length;
 				$.ajax({
 					url : "<c:url value='/service/ajaxpayList.do'/>",
-					type : "post",
-					//traditional : true,
+					type : "POST",
+					//cache: false,
+					traditional : true,
 					data : param,
 					dataType:"json",
-					async: false,
+					//async: false,
 					success : function(res) {
 						 if(res){
-							if(confirm('결제 진행하시겠습니까?')){
+							if(confirm(length+'개 채용광고를 결제하시겠습니까?')){
 							
-								location.href="<c:url value='/service/successpay.do'/>";
+								var IMP = window.IMP; // 생략가능
+								  IMP.init("imp49241177"); 
+								  
+								  IMP.request_pay({
+									  	pg : 'inicis', // version 1.1.0부터 지원.
+									    pay_method : 'card',
+									    merchant_uid : 'peoplejob_' + new Date().getTime(),
+									    name : 'PEOPLEJOB 채용공고 vvip관',
+									    amount : 10*length,
+									    buyer_email : '${memberVo.email}',
+									    buyer_name : '${sessionScope.memberName}',
+									    buyer_tel : '${memberVo.tel}',
+									    buyer_addr : '${companyVo.companyAddress}',
+									    buyer_postcode : '${companyVo.companyZipcode}',
+									    m_redirect_url : '<c:url value="/service/payment.do"/>' //모바일 결제 후 이동될 주소
+									}, function(rsp) {
+									    if ( rsp.success ) {
+									        var msg = '결제가 완료되었습니다.\n';
+									        msg+='결제일로부터 30일간 이용가능합니다.\n';
+									        msg += '고유ID : ' + rsp.imp_uid;
+									        msg += '상점 거래ID : ' + rsp.merchant_uid;
+									        msg += '결제 금액 : ' + rsp.paid_amount+'원';
+									        msg += '카드 승인번호 : ' + rsp.apply_num;
+									        
+									        $('#frmList').prop('action','<c:url value="/service/paysuccess.do"/>');
+											$('#frmList').submit();
+									        //location.href="<c:url value='/service/success.do?jobno="+jobno+"'/>";
+									    } else {
+									        var msg = '결제에 실패하였습니다.';
+									        msg += ' : ' + rsp.error_msg;
+									    }
+									    alert(msg);
+									    
+									}); 
 							}
 						 }else{
 							alert('이미 결제완료한 채용공고 상품입니다.');
@@ -180,14 +164,11 @@ input[type="submit"] {float: right;font-size: 2em;width: 100px;padding: 5px;}
 						alert(status + ":" + error);
 					}
 				});
+				
 			}
+		  event.preventDefault();
 	  }); //submit 
 
-	  
-	 
-
-	  
-	  
 	  
 	  //전부 체크
 	  $("#chkAll").click(function(){
@@ -207,18 +188,17 @@ input[type="submit"] {float: right;font-size: 2em;width: 100px;padding: 5px;}
 		$("#multiPrint").text(str);  // #multiPrint에 체크된 원소를 출력한다.
 		});
 
-	  
-	
-	 
-	 
-	  
   });
   
- 
-
-
 </script> 
-<div class="container" style="margin-top: 30px; margin-bottom: 30px;min-height: 550px; ">
+<div class="container" style="margin-top: 30px; margin-bottom: 30px;min-height: 629px; ">
+
+<div class="info" style="font-size: 1.7em;
+    margin-top: 10px;
+    margin-bottom: -25px;">
+	PEOPLEJOB 첫 페이지 메인 상단에 노출되는 로고/배너 광고 상품입니다.<br>
+	업계 최대 로고사이즈 및 다양한 옵션으로 최상의 주목도 및 노출 효과를 보장합니다.
+</div>
     <div class="row" style="    margin-top: 50px;">
         <div class="col-12 col-md-6 col-lg-3">
             <div class="card text-center p-table p-red">
@@ -229,7 +209,7 @@ input[type="submit"] {float: right;font-size: 2em;width: 100px;padding: 5px;}
                 </div>
                 <div class="card-body">
 
-                    <ul class="list-unstyled">
+                    <ul class="list-unstyled"> 
                         <li>메인 채용정보 VVIP</li>
                         <li>노출위치 : VVIP채용관</li>
                         <li>부가서비스 : 채용관 상단고정</li>
@@ -237,7 +217,7 @@ input[type="submit"] {float: right;font-size: 2em;width: 100px;padding: 5px;}
                         <li>모바일 : 모바일 홈 VVIP</li>
                         <li>매월1일</li>
                     </ul>
-                    <button type="button" class="btn btn-lg btn-primary" id="pay">결제하기</button>
+                    <button type="button" class="btn btn-lg btn-primary" id="pay" title="vvip" name="pay">신청하기</button>
                 </div>
             </div>
         </div>
@@ -247,7 +227,7 @@ input[type="submit"] {float: right;font-size: 2em;width: 100px;padding: 5px;}
                 <div class="card-header">
                     <h3 class="p-name p-name">VIP</h3>
                     <h4 class="p-price">700,000원 </h4>
-                    <small class="text-muted">매월</small>
+                    <small class="text-muted">매월</small> 
                 </div>
                 <div class="card-body">
 
@@ -259,7 +239,7 @@ input[type="submit"] {float: right;font-size: 2em;width: 100px;padding: 5px;}
                         <li>모바일 : 모바일 홈 VVIP</li>
                         <li>매월1일</li>
                     </ul>
-                    <button type="button" class="btn btn-lg btn-primary" id="pay2">결제하기</button>
+                    <button type="button" class="btn btn-lg btn-primary" id="pay" title="vip" name="pay">신청하기</button>
                 </div>
             </div>
         </div>
@@ -281,10 +261,10 @@ input[type="submit"] {float: right;font-size: 2em;width: 100px;padding: 5px;}
                         <li>모바일 : 모바일 홈 VVIP</li>
                         <li>매월1일</li>
                     </ul>
-                    <button type="button" class="btn btn-lg btn-primary">결제하기</button>
+                    <button type="button" class="btn btn-lg btn-primary" id="pay" title="premium" name="pay">신청하기</button>
                 </div>
             </div>
-        </div>
+        </div> 
 
         <div class="col-12 col-md-6 col-lg-3">
             <div class="card text-center p-table p-violet">
@@ -303,14 +283,17 @@ input[type="submit"] {float: right;font-size: 2em;width: 100px;padding: 5px;}
                         <li>모바일 : 모바일 홈 VVIP</li>
                         <li>매월1일</li>
                     </ul>
-                    <button type="button" class="btn btn-lg btn-primary">결제하기</button>
+                    <button type="button" class="btn btn-lg btn-primary" id="pay" title="grand" name="pay">신청하기</button>
                 </div>
             </div>
         </div>
         
         <!-- 결제하기 버튼 누르면  -->
-        <div class="card-body" id="cardBoduPostList" style="min-height: 300px; display: none; ">
-	<table class="table table-bordered">
+        <button value="▼" id="showList" style="display: none;"></button>
+        <button value="▲"></button>
+        <div class="card-body" id="cardBoduPostList" style="min-height: 300px; display: none; background-color: #26323824; "> 
+        <span id="hideList" style="cursor: pointer;font-size:1.5em;" >채용공고 리스트 목록 닫기 ▲</span>
+	<table class="table table-bordered" style="margin-top: 15px; ">
 		<thead>
 			<tr> 
 				<th scope="col"><input type="checkbox" id="chkAll" style="margin: 0 auto;"></th>
@@ -329,18 +312,22 @@ input[type="submit"] {float: right;font-size: 2em;width: 100px;padding: 5px;}
 			<c:if test="${!empty list }">
 			<c:set var="idx" value="0"/>
 			<c:set var="no" value="1"/>
+				
 				<c:forEach var="jobopeningVo" items="${list }">
-				<form name="frmList">
+				<form id="frmList" method="post" name="frmList">
 				
 						<input type="hidden" value="${memberVo.memberCode }" name="memberCode">
 						<input type="hidden" value="${serviceVo1.serviceCode }" name="serviceCode">
-						<input type="hidden" value="${jobopeningVo.jobopening }" name="jobno">
+						<input type="hidden" value="${jobopeningVo.jobopening }" name="jobno" id="jobnoparam">
 					<tr>
-						<td align="center"><input type="checkbox" name="jobItems[${idx }].jobopening" value="${jobopeningVo.jobopening }" class="check"></td>
+						<td align="center">
+						<input type="checkbox" name="jobItems[${idx }].jobopening" value="${jobopeningVo.jobopening }" class="check">
+						</td>
 						<td align="center">${no }</td>
 						<td align="center">${jobopeningVo.jobtitle }</td>
-						<td align="center">${jobopeningVo.workdate } ~ ${jobopeningVo.endDate }
-						</td> 
+						<td align="center">
+						${fn:substring(jobopeningVo.workdate,0,10) }
+						 ~ 	${fn:substring(jobopeningVo.endDate,0,10) } </td>  
 						
  					</tr> 
 				  <c:set var="idx" value="${idx+1 }"/> 
@@ -350,8 +337,16 @@ input[type="submit"] {float: right;font-size: 2em;width: 100px;padding: 5px;}
 			<!-- 반복 끝 -->
 		</tbody>
 	</table>
-	checkbox 확인 : <span id="multiPrint"></span><br>
-	checkbox 개수: <span id="chklength"></span><br>
+	<!-- checkbox 확인 : <span id="multiPrint"></span><br> -->
+	<!-- <span>checkbox 개수: <span id="chklength"></span></span> <br> -->
+	
+	<div class="agreement" style="font-size: 1.5em;margin-top: 10px;margin-bottom: 10px;">
+	< 개인정보 수집 및 이용동의  > <span><input type="checkbox" id="agree" style="display: inline-block;"></span><br>
+수집 항목 기업회원 ID, 기업명, 담당자 이름, 이메일 주소, 연락처 <br>
+수집 목적 기업의 광고상품 문의에 따른 원활한 상담 제공 <br>
+보유 기간 문의처리 후 1년간 보관 <br>
+</div>
+
 	<input type="submit" value="결제하기">
 	</form>
 

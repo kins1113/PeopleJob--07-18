@@ -47,6 +47,10 @@ table {
 	margin: 0 auto;
 }
 
+td{
+	text-align: center;
+}
+
 h2 {
 	text-align: center;
 }
@@ -105,6 +109,36 @@ div#cardBoduPostList {
 #btGroup button {
 	margin-top: 4px;
 }
+
+.badge {
+	display:block;  
+    text-transform: uppercase;
+    color: #ffffff;
+    padding-top: .75em;
+}
+
+.badge-success {
+    color: #ffffff;
+    background-color: #29cc97;
+}
+.badge {
+    padding: 0.5em 1em; 
+    font-size: 75%;
+    font-weight: 500;
+    line-height: 1;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: baseline;
+    border-radius: 0.125rem;
+}
+.badge-warning {
+    color: #212529;
+    background-color: #fec400;
+}
+.badge-danger {
+    color: #ffffff;
+    background-color: #fe5461;
+}
 </style>
 
 <script type="text/javascript" src="<c:url value='/resources/main/js/jquery-3.4.1.min.js'/>"></script>
@@ -159,9 +193,9 @@ div#cardBoduPostList {
 				<td colspan="10" align="center">결제하신 상품이 없습니다.</td>
 			</c:if>
 			
-			<c:if test="${!empty list }">
+			<c:if test="${!empty list }"> 
 				<c:forEach var="map" items="${list }">
- 					<input type="text" value="${map['PAYDATE'] }" id="pd">
+ 					<input type="hidden" value="${map['PAYDATE'] }" id="pd">
 					<tr>
 						<td>${map['SERVICENAME'] }</td>
 						<td>${sessionScope.memberName }</td>
@@ -169,20 +203,39 @@ div#cardBoduPostList {
 						<td>${map['PAYMENTWAY'] }</td> 
 						<td>${map['PAYDATE'] }</td>
 						<td>${map['SERVICEPRICE'] }원</td>
-						<td>~<fmt:formatDate value="${map['PAYEND_DATE'] }"
-								pattern="yyyy/MM/dd HH:mm:ss" />
-						</td> 
-						<td>${map['PROGRESS'] }</td>
+						<td>
+						<fmt:formatDate value="${map['PAYDATE'] }"
+								pattern="yyyy/MM/dd HH:mm" />
+						~<fmt:formatDate value="${map['PAYEND_DATE'] }"
+								pattern="yyyy/MM/dd HH:mm" />
+						</td>  
+						
+						<td>
+						<c:if test="${map['PROGRESS']=='결제완료' }">
+						<span class="badge badge-success">Completed</span>
+						</c:if>
+						<c:if test="${map['PROGRESS']=='결제취소요청' }">
+						<span class="badge badge-warning">On Hold</span>
+						</c:if>
+						<c:if test="${map['PROGRESS']=='결제취소' }">
+						<span class="badge badge-danger">Cancelled</span>
+						</c:if>
+						</td>
+						
+						
 						<form id="frmpay" method="post" action="<c:url value='/mypage/corp/paymentDetail.do'/>">
 						<input type="hidden" name="paymentCode" value="${map['PAYMENT_CODE'] }">
-						<td><input type="submit" value="결제 취소" id="cancelpay"></td>
+						<td><input type="submit" value="결제 취소" id="cancelpay" style="    padding: 5px;
+    font-size: 0.9em;"></td>
 						</form>
  					</tr> 
 				  </c:forEach>  
-			</c:if>
+			</c:if> 
+			
 			<!-- 반복 끝 -->
 		</tbody>
 	</table>
+			<a href="<c:url value='/service/payment.do'/>" style="float: right; font-size: 1.3em; color: steelblue;">채용광고 및 배너 광고 신청 문의</a>
 
 </div>
 

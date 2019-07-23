@@ -15,4 +15,10 @@ public interface PaymentService {
 	List<Map<String , Object>> selectMainAdvertiseByServiceCode(int serviceCode);
 	int getpaymentJobCount(PaymentVO paymentVo);
 	int getCountByJobopening(int jobno);
+	public List<PaymentVO> selectAll();
+	/*
+	  public List<Map<String, Object>> selectAll(SearchVO searchVo); int
+	  selectTotalCount(SearchVO searchVo);
+	 */
+
 }

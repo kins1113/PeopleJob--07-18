@@ -10,6 +10,4 @@ public interface BoardService {
 	int deleteMultDelete(Map<String, int[]> map);
 	public List<BoardVO> selectByCodeVariable(Map<String, int[]> map);
 	int boardEdit(BoardVO boardVo);
-	public List<BoardVO> getBoardList();
-	public BoardVO selectByBoardCode(int boardCode);
 }

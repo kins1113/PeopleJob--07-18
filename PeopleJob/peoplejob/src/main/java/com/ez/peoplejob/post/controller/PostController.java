@@ -1,11 +1,8 @@
 package com.ez.peoplejob.post.controller;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,12 +17,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.ez.peoplejob.board.model.BoardKindService;
 import com.ez.peoplejob.board.model.BoardService;
-import com.ez.peoplejob.common.FileUploadUtility;
 import com.ez.peoplejob.common.PaginationInfo;
 import com.ez.peoplejob.post.model.PostService;
 import com.ez.peoplejob.post.model.PostVO;
-import com.ez.peoplejob.post.model.UploadInfoService;
-import com.ez.peoplejob.post.model.UploadInfoVO;
 
 @Controller
 @RequestMapping("/manager/post")
@@ -34,8 +28,6 @@ public class PostController {
 	@Autowired private PostService postService;
 	@Autowired private BoardKindService boardKindService;
 	@Autowired private BoardService boardService;
-	@Autowired private UploadInfoService uploadInfoService;
-	@Autowired private FileUploadUtility fileUploadUtil;
 
 	@RequestMapping(value="/postList.do", method = {RequestMethod.POST, RequestMethod.GET})	//게시글 보여주는 핸들러
 	public String postList(@ModelAttribute PostVO postVo,
@@ -77,18 +69,9 @@ public class PostController {
 		int totalRecord=postService.gettotalRecord(postVo);
 		pagingInfo.setTotalRecord(totalRecord);
 		
-		List<UploadInfoVO> uploadInfoList=new ArrayList<UploadInfoVO>();
-		for(int i=0;i<postList.size();i++) {
-			Map<String, Object> postMap=postList.get(i);
-			List<UploadInfoVO> upInfoList=uploadInfoService.uploadInfoSelectByBoardCode2(Integer.parseInt(postMap.get("BOARD_CODE2")+""));
-			logger.info("for문 안에서 postMap.get(\"BOARD_CODE2\")={} upInfoList.size={}",postMap.get("BOARD_CODE2"),upInfoList.size());
-			for(UploadInfoVO vo : upInfoList) {
-				uploadInfoList.add(vo);
-			}
-		}
+
 		model.addAttribute("postList",postList);
 		model.addAttribute("pagingInfo", pagingInfo);
-		model.addAttribute("uploadInfoList",uploadInfoList);
 		return "manager/post/postList";
 	}
 	
@@ -114,36 +97,6 @@ public class PostController {
 		return "common/message";
 	}
 	
-	@RequestMapping(value = "postWrite.do",method = RequestMethod.GET)
-	public void postWrite() {
-		logger.info("postWrite 창 보여주기");
-	}
-	
-	@RequestMapping(value = "/postWrite.do",method = RequestMethod.POST)
-	@Transactional
-	public String postWrite_post(@ModelAttribute PostVO postVo,HttpServletRequest request) {
-		logger.info("게시글 추가 처리 파라미터 postVo={}",postVo);
-
-		int re=postService.insertPosToManager(postVo);
-
-		List<Map<String,Object>> list=fileUploadUtil.fileMultiUpload("file", request,  FileUploadUtility.POST_UPLOAD);
-		logger.info("list.size={}",list.size());
-		
-		
-		//업로드를 insert하기 위한 객체 생성
-		UploadInfoVO uploadInfoVo=new UploadInfoVO();
-		uploadInfoVo.setBoardCode2(postVo.getBoardCode2());
-		
-		for(Map<String, Object> map:list) {
-			uploadInfoVo.setFileName(map.get("fileName")+"");
-			uploadInfoVo.setFileSize(Integer.parseInt(map.get("fileSize")+""));
-			uploadInfoVo.setOriginalFileName(map.get("originalFileName")+"");
-			
-			logger.info("insert전 uploadInfoVo={}",uploadInfoVo);
-			uploadInfoService.fileUpload(uploadInfoVo);
-		}
-		return "redirect:/manager/post/postList.do";
-	}
 	
 }
 

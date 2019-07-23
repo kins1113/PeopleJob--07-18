@@ -449,7 +449,7 @@ public class MemberController {
 		logger.info("아이디로 memberVo 가져오기 결과 memberVo={}",memberVo);
 		
 		//파일이 있을 경우 파일 업로드
-		List<Map<String,Object>>list=fileUploadUtil.fileUpload(request,FileUploadUtility.PEOPLEJOB_UPLOAD);
+		List<Map<String,Object>>list=fileUploadUtil.fileUpload(request);
 		String imageURL="";
 		for(Map<String,Object>map:list) {
 			imageURL=(String)map.get("fileName");
@@ -471,7 +471,7 @@ public class MemberController {
 			url="/mypage/user/userpage.do";
 			if(imageURL!=null && !imageURL.isEmpty()) {
 				if(oldFileName!=null && !oldFileName.isEmpty()) {
-					String path=fileUploadUtil.getUploadPath(request,FileUploadUtility.PEOPLEJOB_UPLOAD);
+					String path=fileUploadUtil.getUploadPath(request);
 					File oldFile=new File(path, oldFileName);
 					if(oldFile.exists()) {
 						boolean bool=oldFile.delete();

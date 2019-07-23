@@ -11,7 +11,7 @@ public class PopupVO {
 	private int height;		//팝업창 세로사이즈
 	private int left;	   //왼쪽위치
 	private int top;		   //세로위치
-	private Timestamp regdate;		//등록일	
+	private Timestamp regdate;		//등록일
 	private String usage;		//사용여부
 	private int popupCode;	//팝업 코드
 	private String startDay;	//시작날짜
@@ -75,7 +75,7 @@ public class PopupVO {
 	public Timestamp getRegdate() {
 		return regdate;
 	}
-	public void String(Timestamp regdate) {
+	public void setRegdate(Timestamp regdate) {
 		this.regdate = regdate;
 	}
 	public String getUsage() {

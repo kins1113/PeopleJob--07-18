@@ -7,6 +7,9 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.ez.peoplejob.common.SearchVO;
+import com.ez.peoplejob.service.model.ServiceVO;
+
 @Repository
 public class PaymentDAOMybatis implements PaymentDAO{
 
@@ -41,6 +44,25 @@ public class PaymentDAOMybatis implements PaymentDAO{
 	@Override
 	public int getCountByJobopening(int jobno) {
 		return sqlSession.selectOne(namespace+"getCountByJobopening",jobno);
+	}
+	/*
+	@Override
+	public List<Map<String, Object>> selectAll(SearchVO searchVo) {
+		List<Map<String, Object>>list
+		=sqlSession.selectList(namespace+"selectSearch",searchVo);
+		return list;
+	}
+	@Override
+	public int selectTotalCount(SearchVO searchVo) {
+		return sqlSession.selectOne(namespace+"selectTotalCount",searchVo);
+	}
+	*/
+	@Override
+	public List<PaymentVO> selectAll() {
+		List<PaymentVO> list
+		=sqlSession.selectList(namespace+"selectPayment");
+		
+		return list;
 	}
 	
 }

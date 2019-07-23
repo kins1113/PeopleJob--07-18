@@ -1,19 +1,19 @@
-﻿--view �����
+--view �����
 
 -- �Խñ� ��ü ��ȸ ��
 CREATE OR REPLACE VIEW post_All
 as
 select p.* , b.BOARDNAME,b.USAGE "bUSAGE",b.TYPE_CODE, b.COMMENTAGE,
     b.UPAGE ,b.UPNUMAGE,b.UPSIZEAGE,bk.TYPE,bk.USAGE as BKUSAGE,
-    me.MEMBERID,me.MEMBERNAME, ma.ADMINID   from post p
+    m.MEMBERID,m.MEMBERNAME 
+from post p
 join board b
 on p.board_code=b.BOARD_CODE1
 join board_kind bk
 on bk.TYPE_CODE =b.TYPE_CODE
-left JOIN MEMBER me
-on p.MEMBER_CODE = me.MEMBER_CODE
-left join manager ma
-on p.ADMIN_CODE = ma.ADMIN_CODE;
+JOIN MEMBER m
+on p.MEMBER_CODE = m.MEMBER_CODE ;
+
 
 
 
