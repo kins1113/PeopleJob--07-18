@@ -13,7 +13,7 @@
 		        select r.resume_code,t.thirdname,s.secondname,f.firstname,b3.btypename3,b2.btypename2,b1.btypename1,l.sido,e.graduatetype,NVL(TRUNC(MONTHS_BETWEEN(SYSDATE, TO_DATE(SUBSTR(m.birth, 1, 4), 'YYYY'))/12), 0) AS AGE,trunc(months_between(c.workterm2,c.workterm)/12,0) as "term" from resume r,career c,member m,education e,hope_working h,location l,btype1 b1, btype2 b2, btype3 b3,first f, second s, third t where
 		        
                 r.DV_CODE = c.DV_CODE and r.academic_code=e.ACADEMIC_CODE and r.member_code=m.member_code and h.HOPEWORK_CODE = r.DESIREDWORK_CODE and h.LOCAL_CODE=l.LOCAL_CODE and b1.BTYPE_CODE1=b2.btype_code1 and b2.BTYPE_CODE2 = b3.BTYPE_CODE2 and
-                f.first_code=s.first_code and s.second_code = t.second_code and resume_code =#{resumeCode}
+                f.first_code=s.first_code and s.second_code = t.second_code and resume_code =78
 		    
 		    <if test="term != null">
 				and term IN 
@@ -267,7 +267,7 @@
 	
 		        
              where  r.DV_CODE = c.DV_CODE and r.academic_code=e.ACADEMIC_CODE and r.member_code=m.member_code and h.HOPEWORK_CODE = r.DESIREDWORK_CODE and h.LOCAL_CODE=l.LOCAL_CODE and b1.BTYPE_CODE1=b2.btype_code1 and b2.BTYPE_CODE2 = b3.BTYPE_CODE2 and
-                f.first_code=s.first_code and s.second_code = t.second_code and resume_code =#{resumeCode}
+                f.first_code=s.first_code and s.second_code = t.second_code and resume_code =78
 		    
 		      <if test="term != null">
 				and term IN 

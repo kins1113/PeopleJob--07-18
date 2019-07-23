@@ -5,7 +5,7 @@ import java.util.Map;
 
 import com.ez.peoplejob.resume.model.ResumeVO;
 
-public interface PeopleInfoService {
+public interface PeopleinfoService {
 	List<ResumeVO>selectCareer(Map<String, Object> map);
 	List<ResumeVO>selectAge(Map<String, Object> map);
 	List<ResumeVO>selectGraduatetype(Map<String, Object> map);
@@ -18,4 +18,6 @@ public interface PeopleInfoService {
 	int selectTotalCountSido(Map<String, Object> map);
 	int selectTotalCountBtype(Map<String, Object> map);
 	int selectTotalCountJobtype(Map<String, Object> map);
+	List<ResumeVO>selectPeoplew(Map<String, Object>map);
+	int selectTotalCountPeople(Map<String, Object> map);
 }

@@ -6,18 +6,22 @@
    		<!-- 현재 페이지 hidden에 넣기 -->  
    		<input type="hidden" name='currentPage' value="1" >
    		<input type="hidden" name='resumeCode' value="${vo.resumeCode}" >
+   		<div id="whereall" style="margin-left: -209px;
+    padding: 23px;">
    		<div id="where" class="where">
 			<c:import url="peopleinfowhere.jsp"/>
 		</div> 
-        
-
-        <div>
+        <c:import url="../resume/occupation.jsp"/>
+		</div>
         <c:if test="${empty list }">	 
+        <div style="margin: 0 auto; min-height: 630px;position: relative;bottom: 0;width: 446px;">
+	 	<table class="table table-bordered">
 	 	<tr>
 	 		<td colspan="5" class="align_center">데이터가 존재하지 않습니다.</td>
 	 	</tr>
-		</c:if>
+	 	</table>
 		</div>
+		</c:if>
             <div class="divPage">
 	<!-- 이전블럭으로 이동하기 -->
 	<c:if test="${pagingInfo.firstPage>1 }">	
@@ -47,6 +51,7 @@
 </div>
    		</form>
    		 <c:if test="${!empty list }">
+   		<div class="talent_list" style="margin: 0 auto; min-height: 630px;position: relative;bottom: 0;width: 446px;">
    		 	<c:forEach var="vo" items="${resumelist }">
 	                 <c:if test="${not loop_flag }">
 				        <c:if test="${vo.resumeCode==vo.resumeCode}">   
@@ -55,8 +60,7 @@
 				        </c:if>
 				    </c:if>
 	                </c:forEach>
-   		<div class="talent_list">
-    <table>
+    <table class="table table-bordered">
         <caption>인재검색 리스트</caption>
         <colgroup>
             <col width="46">
@@ -71,7 +75,7 @@
             <th scope="col" class="contents">이력서 요약</th>
             <th scope="col" class="update" id="date_type">등록일</th>
             <td id="peoplelist" >${vo.membername}<br>(${vo.membergender}|${vo.age})</td>
-            <td id="peoplelist" >경력${vo.term}&nbps;${vo.resumeTitle}<br>
+            <td id="peoplelist" >경력${vo.term}&nbsp;${vo.resumeTitle}<br>
             ${vo.schoolname}|${vo.hopepay}|${vo.sido}</td>
             <td id="peoplelist" >${vo.resumeRegdate}</td>
             

@@ -19,10 +19,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.ez.peoplejob.common.PaginationInfo;
 import com.ez.peoplejob.common.SearchVO;
 import com.ez.peoplejob.common.WebUtility;
-import com.ez.peoplejob.jobopening.model.JobopeningVO;
-import com.ez.peoplejob.member.model.CompanyVO;
-import com.ez.peoplejob.member.model.MemberVO;
-import com.ez.peoplejob.peopleinfo.model.PeopleInfoService;
+
+import com.ez.peoplejob.peopleinfo.model.PeopleinfoService;
 import com.ez.peoplejob.resume.model.ResumeService;
 import com.ez.peoplejob.resume.model.ResumeVO;
 
@@ -34,7 +32,7 @@ public class PeopleInfoController {
 	@Autowired
 	private ResumeService resumeService;
 	@Autowired
-	private PeopleInfoService peopleinfoService;
+	private PeopleinfoService peopleinfoService;
 	
 	@RequestMapping("/peopleinfolist.do")
 	public String peopleinfolist(
@@ -42,7 +40,7 @@ public class PeopleInfoController {
 			@ModelAttribute SearchVO searchVo,Model model,@RequestParam(required = false) String[] term,@RequestParam(required = false) String[] age,
 			@RequestParam(required = false) String[] graduatetype,@RequestParam(required = false) String[] sido,@RequestParam(required = false) String[] btypename1 ,
 			@RequestParam(required = false) String[] btypename2,@RequestParam(required = false) String[] btypename3,@RequestParam(required = false) String[] firstname,
-			@RequestParam(required = false) String[] secondname,@RequestParam(required = false) String[] thirdname) {
+			@RequestParam(required = false) String[] secondname,@RequestParam(required = false) String[] thirdname,@RequestParam(value="resumeCode", defaultValue="0") int resumeCode) {
 		String id=(String)session.getAttribute("memberid");
 		if(id==null) {
 			id="비회원";
@@ -85,6 +83,7 @@ public class PeopleInfoController {
 		map.put("thirdname",thirdname);
 		map.put("firstRecordIndex", searchVo.getFirstRecordIndex());
 		map.put("recordCountPerPage", searchVo.getRecordCountPerPage());
+		map.put("resumeCode", resumeCode);
 		logger.info("map={}",map);
 		list=peopleinfoService.selectPeoplew(map);
 		
@@ -99,9 +98,11 @@ public class PeopleInfoController {
 		}
 		logger.info("resumelist.size={}",resumelist.size());
 		int totalRecord=0;
-		totalRecord=peopleinfoService.selectTotalCountPeople(map);
-		
-		logger.info("전체 레코드 개수 조회 결과, totalRecord={}",totalRecord);
+		/*
+		 * totalRecord=peopleinfoService.selectTotalCountPeople(map);
+		 * 
+		 * logger.info("전체 레코드 개수 조회 결과, totalRecord={}",totalRecord);
+		 */
 		
 		//5]PaginationInfo에 totalRecord값셋팅
 		pagingInfo.setTotalRecord(totalRecord);
