@@ -62,7 +62,7 @@ public class JobopeningController {
 		 */
 		String id=(String)session.getAttribute("memberid");
 		logger.info("채용공고 등록 파라미터 vo={}",vo);
-		List<Map<String,Object>>list=fileUploadUtil.fileUpload(request,FileUploadUtility.PEOPLEJOB_UPLOAD);
+		List<Map<String,Object>>list=fileUploadUtil.fileUpload(request,FileUploadUtility.JOBOPENING_UPLOAD);
 		 
 		String imageURL="";
 		for(Map<String,Object>map:list) {
@@ -96,6 +96,7 @@ public class JobopeningController {
 		if(id==null) {
 			id="비회원";
 		}
+		
 		MemberVO mvo=memberService.selectByUserid(id);
 		logger.info("로그인한 회원정보 mvo={}",mvo);
 		logger.info("채용공고 리스트");
@@ -246,7 +247,7 @@ public class JobopeningController {
 	public String jobopening_edit_post(@ModelAttribute JobopeningVO vo,@RequestParam String oldFileName,HttpServletRequest request,Model model) {
 		logger.info("수정처리");
 		
-		List<Map<String,Object>>list=fileUploadUtil.fileUpload(request,FileUploadUtility.PEOPLEJOB_UPLOAD);
+		List<Map<String,Object>>list=fileUploadUtil.fileUpload(request,FileUploadUtility.JOBOPENING_UPLOAD);
 		 
 		String imageURL="";
 		for(Map<String,Object>map:list) {
@@ -264,7 +265,7 @@ public class JobopeningController {
 			//새로 업로드한 경우, 기존 파일이 있으면 기존파일은 삭제
 			if(imageURL!=null && !imageURL.isEmpty()) {
 				if(oldFileName!=null && !oldFileName.isEmpty()) {
-					String path=fileUploadUtil.getUploadPath(request,FileUploadUtility.PEOPLEJOB_UPLOAD);
+					String path=fileUploadUtil.getUploadPath(request,FileUploadUtility.JOBOPENING_UPLOAD);
 					File oldFile=new File(path, oldFileName);
 					if(oldFile.exists()) {
 						boolean bool=oldFile.delete();
@@ -323,7 +324,7 @@ public class JobopeningController {
 				url="/company/jobopening_list.do";
 				if(vo.getCompanyimage()!=null 
 						&& !vo.getCompanyimage().isEmpty()) {
-					String path=fileUploadUtil.getUploadPath(request,FileUploadUtility.PEOPLEJOB_UPLOAD);
+					String path=fileUploadUtil.getUploadPath(request,FileUploadUtility.JOBOPENING_UPLOAD);
 					File file=new File(path, vo.getCompanyimage());
 					if(file.exists()) {
 						boolean bool=file.delete();
@@ -364,7 +365,7 @@ public class JobopeningController {
 				url="/company/jobopening_list.do";
 				if(vo.getCompanyimage()!=null 
 						&& !vo.getCompanyimage().isEmpty()) {
-					String path=fileUploadUtil.getUploadPath(request,FileUploadUtility.PEOPLEJOB_UPLOAD);
+					String path=fileUploadUtil.getUploadPath(request,FileUploadUtility.JOBOPENING_UPLOAD);
 					File file=new File(path, vo.getCompanyimage());
 					if(file.exists()) {
 						boolean bool=file.delete();

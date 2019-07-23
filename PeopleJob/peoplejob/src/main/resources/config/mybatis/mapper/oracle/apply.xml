@@ -7,8 +7,8 @@
 		<selectKey resultType="int" order="BEFORE" keyProperty="applyCode">
 			select apply_seq.nextval from dual
 		</selectKey>
-		insert into apply(apply_code,applydate,opencheck,member_code,jobopening) 
-		values(#{applyCode},sysdate,'N',#{memberCode},#{jobopening})
+		insert into apply(apply_code,applydate,opencheck,member_code,jobopening,resume_code) 
+		values(#{applyCode},sysdate,'N',#{memberCode},#{jobopening},#{resumeCode})
 	</insert>
 	<select id="selectapply" parameterType="map" resultType="tableaplyVO">
 	select *
@@ -74,6 +74,17 @@
 	<update id="opencheckY" parameterType="map" >
 	update apply set opencheck='Y' where member_code=#{memberCode} and jobopening=#{jobopening}
 	</update>
+	
+	<select id="cntresume" parameterType="int" resultType="int">
+		select count(*) from resume where member_code=#{memberCode}
+	</select>
+	
+	<select id="selectresumebyid" parameterType="int" resultType="resumeVo">
+		select * from resume where member_code=#{memberCode}
+	</select>
+	<select id="selectresumebyid2" parameterType="int" resultType="resumeVo">
+		select * from resume where member_code=#{memberCode}
+	</select>
 </mapper>
 
 

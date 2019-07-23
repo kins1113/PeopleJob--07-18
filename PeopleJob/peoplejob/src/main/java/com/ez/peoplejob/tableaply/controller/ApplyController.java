@@ -11,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -41,32 +42,49 @@ public class ApplyController {
 	public String insertapply(@RequestParam int jobopening,HttpSession session,Model model) {
 		String id=(String)session.getAttribute("memberid");
 		MemberVO mvo=memberService.selectByUserid(id);
+		ResumeVO rvo=tableaplyService.selectresumebyid(mvo.getMemberCode());
 		logger.info("지원현황 인서트 파라미터 jobopening={}",jobopening);
 		logger.info("로그인 회원 정보 mvo={}",mvo);
+		logger.info("회원의 이력서 정보 rvo={}",rvo);
 		TableaplyVO vo=new TableaplyVO();
 		vo.setJobopening(jobopening);
 		vo.setMemberCode(mvo.getMemberCode());
 		logger.info("지원현황 인서트 파라미터 vo={}",vo);
-		int cnt=0;
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("jobopening", jobopening);
 		map.put("memberCode", mvo.getMemberCode());
-		int cnt2=(int)tableaplyService.dupapply(map);
 		
+		if(rvo!=null){
+			vo.setResumeCode(rvo.getResumeCode());
+			map.put("resumeCode", rvo.getResumeCode());
+		}
+		int cnt=0;
+		int cnt2=(int)tableaplyService.dupapply(map);
+		int cnt3=tableaplyService.cntresume(mvo.getMemberCode());
 		logger.info("지원현황 중복검사 cnt2={}",cnt2);
-			if(cnt2==0) {
-				cnt=tableaplyService.insertapply(vo);
-			}
+		logger.info("이력서 작성여부 cnt3={}",cnt3);
 		String msg="",url="";
-		if(cnt>0) {
-			msg="지원성공";
-			url="/apply/apply_list.do";
-		}else {
-			if(cnt2==0) {
-				msg="지원실패";
-			}else {
-				msg="같은 공고에 중복지원은 안됩니다.";
+		if(cnt2==0) {
+			if(cnt3>0) {
+				cnt=tableaplyService.insertapply(vo);
+				if(cnt>0) {
+					msg="지원성공";
+					url="/apply/apply_list.do";
+				}else {
+					if(cnt2==0) {
+						msg="지원실패";
+					}else {
+						msg="같은 공고에 중복지원은 안됩니다.";
+					}
+					url="/company/jobopening_list.do";
+				}
 			}
+			else {
+				msg="이력서를 작성 후 지원가능합니다";
+				url="/resume/register.do";
+			}
+		}else {
+			msg="같은 공고에 중복지원은 안됩니다.";
 			url="/company/jobopening_list.do";
 		}
 		model.addAttribute("msg",msg);
@@ -117,7 +135,7 @@ public class ApplyController {
 		logger.info("삭제처리 파라미터 applyCode1={}",applyCode);
 		Map<String,Object> map=new HashMap<String, Object>();
 		map.put("applyCode1", applyCode);
-		int cnt=tableaplyService.deleteJobOpen(map);
+		int cnt=tableaplyService.deleteapply(map);
 		String msg="",url="/apply/apply_list.do";
 		if (cnt>0) {
 			msg="삭제성공";
@@ -208,10 +226,33 @@ public class ApplyController {
 		model.addAttribute("url",url);
 		return "common/message";
 	}
-	@RequestMapping("/Capply_Detail.do")
-	public String Capply_listDetail() {
-		
-		return "";
-	}
+	@RequestMapping("/resumelist.do")
+	public String list(@ModelAttribute SearchVO searchVo, Model model) {
+
+			//1
+			logger.info("이력서목록 파라미터 searchVo={}", searchVo);
+			
+			//2
+			//[1] PaginationInfo 객체 생성
+			PaginationInfo pagingInfo=new PaginationInfo();
+			pagingInfo.setBlockSize(WebUtility.BLOCK_SIZE);
+			pagingInfo.setRecordCountPerPage(WebUtility.RECORD_COUNT_PER_PAGE);
+			pagingInfo.setCurrentPage(searchVo.getCurrentPage());
+			
+			//[2] SearchVo에 페이징 관련 변수 셋팅
+			searchVo.setRecordCountPerPage(WebUtility.RECORD_COUNT_PER_PAGE);
+			searchVo.setFirstRecordIndex(pagingInfo.getFirstRecordIndex());
+			logger.info("셋팅 후 searchVo={}", searchVo);
+			
+			//[3] 조회처리
+			List<ResumeVO> list=resumeService.selectAll(searchVo);
+			logger.info("이력서목록 결과, list.size={}",list.size());
+				
+			//3
+			model.addAttribute("list", list);
+			model.addAttribute("pagingInfo", pagingInfo);
+			
+			return "apply/resumelist";
+		}
 	
 }

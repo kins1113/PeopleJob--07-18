@@ -123,7 +123,7 @@ public class FileUploadUtility {
 			}else if(uploadePathDi==POST_UPLOAD) {
 				result=props.getProperty("postFile.upload.path.test");
 			}else if(uploadePathDi==JOBOPENING_UPLOAD) {
-				result=props.getProperty("postFile.upload.path.test");
+				result=props.getProperty("jobopeningFile.upload.path.test");
 			}
 			//여기에 경로 추가해야함.
 			
@@ -139,6 +139,8 @@ public class FileUploadUtility {
 				key="popupFile.upload.path";
 			}else if(uploadePathDi==POST_UPLOAD) {	//개시판
 				key="postFile.upload.path";
+			}else if(uploadePathDi==JOBOPENING_UPLOAD) {
+				result=props.getProperty("jobopeningFile.upload.path");
 			}
 			String path=props.getProperty(key);	//pds_upload
 			//실제 물리적 경로 구하기

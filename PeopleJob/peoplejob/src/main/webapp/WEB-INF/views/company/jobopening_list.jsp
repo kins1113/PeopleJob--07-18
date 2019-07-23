@@ -6,6 +6,9 @@
 		document.frmSearch.currentPage.value=curPage;
 		document.frmSearch.submit();
 	}
+	function go(){ 
+		window.open("<c:url value='/apply/resumelist.do?jobopening=${vo.jobopening}'/>","이력서 선택","height=400,width=600,resizable=yes");
+	}
 	$(document).ready(function(){
 		$("#where").hide();
 		$("#search").click(function(){
@@ -18,6 +21,7 @@
 			$("#hi3").val($("#payway").val());
 			$("#hi4").val($("#academicCondition").val()); */
 		}); 
+		
 	});
 </script>
 <style type="text/css">
@@ -98,7 +102,7 @@
 			
 	        <div class="list-group"> 
 	            <div class="list-group-item">
-	                <img src="<c:url value='/peoplejob_upload/${vo.companyimage }'/>" 
+	                <img src="<c:url value='/jobopening_upload/${vo.companyimage }'/>" 
 							alt="공고이미지" width="50px" height="50px" style="float:right;"> 
 							<div style="width=100px;float:left;">
 							<c:forEach var="cvo" items="${clist }">
@@ -124,7 +128,8 @@
 	                 <span class="label label-info">복리후생 : ${vo.welfare }</span>
 	                 <br>
 	                 <c:if test="${mvo.authorityCode==1 }"> 
-					<a href="<c:url value='/apply/insertapply.do?jobopening=${vo.jobopening}'/>"><input type="button" id="apply" name="apply"class="btn btn-primary" value="즉시지원"></a>
+					<%-- <a href="<c:url value='/apply/insertapply.do?jobopening=${vo.jobopening}'/>"><input type="button" id="apply" name="apply"class="btn btn-primary" value="즉시지원"></a> --%>
+					<input type="button" id="apply" name="apply"class="btn btn-primary" value="즉시지원" onclick="go();">
 					<a href="<c:url value='/scrap/insertscrap.do?jobopening=${vo.jobopening}&member_code=${mvo.memberCode }'/>"><img alt="스크랩" src="<c:url value='/peoplejob_upload/scrapstarwhite.PNG'/>"></a>
 					</c:if>
 	            </div> 

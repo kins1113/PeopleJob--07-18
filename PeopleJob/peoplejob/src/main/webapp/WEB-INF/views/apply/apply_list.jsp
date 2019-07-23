@@ -100,6 +100,7 @@
 	                 	<small>지원일 : ${fn:substring(vo.applydate,0,10) }</small>
 	                | <small>열람여부 : ${vo.opencheck }</small>
 	                | <small>지원한 채용공고 : <a href="<c:url value='/company/jobopening_view.do?jobopening=${vo.jobopening}'/>">${vo.jobopening }</a></small>
+	                | <small>이력서 : <a href="<c:url value='/resume/resumedetail.do?resumeCode=${vo.resumeCode }'/>">${vo.resumeCode }</a></small>
 	            </div> 
 	        </div>
 	        </c:forEach>

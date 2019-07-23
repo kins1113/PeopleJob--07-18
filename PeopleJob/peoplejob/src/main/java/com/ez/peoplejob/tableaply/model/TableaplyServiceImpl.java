@@ -6,6 +6,8 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.ez.peoplejob.resume.model.ResumeVO;
+
 @Service
 public class TableaplyServiceImpl implements TableaplyService{
 	@Autowired TableaplyDAO tableaplyDao;
@@ -27,7 +29,8 @@ public class TableaplyServiceImpl implements TableaplyService{
 		return tableaplyDao.dupapply(map);
 	}
 	@Override
-	public int deleteJobOpen(Map<String, Object> map) {
+	
+	public int deleteapply(Map<String,Object>map) {
 		return tableaplyDao.deleteapply(map);
 	}
 	@Override
@@ -45,6 +48,18 @@ public class TableaplyServiceImpl implements TableaplyService{
 	@Override
 	public int opencheckY(Map<String,Object> map) {
 		return tableaplyDao.opencheckY(map);
+	}
+	@Override
+	public int cntresume(int MemberCode) {
+		return tableaplyDao.cntresume(MemberCode);
+	}
+	@Override
+	public ResumeVO selectresumebyid(int memberCode) {
+		return tableaplyDao.selectresumebyid(memberCode);
+	}
+	@Override
+	public List<ResumeVO> selectresumebyid2(int memberCode) {
+		return tableaplyDao.selectresumebyid2(memberCode);
 	}
 
 }
