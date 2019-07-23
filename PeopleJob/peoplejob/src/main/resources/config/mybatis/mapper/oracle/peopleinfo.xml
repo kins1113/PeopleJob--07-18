@@ -3,8 +3,88 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="config.mybatis.mapper.oracle.peopleinfo">
+	<select id="selectPeoplew" parameterType="map" resultType="resumeVo">
+	select *
+		from
+		(
+		    select A.*, rownum as RNUM 
+		    from
+		    (
+		        select r.resume_code,t.thirdname,s.secondname,f.firstname,b3.btypename3,b2.btypename2,b1.btypename1,l.sido,e.graduatetype,NVL(TRUNC(MONTHS_BETWEEN(SYSDATE, TO_DATE(SUBSTR(m.birth, 1, 4), 'YYYY'))/12), 0) AS AGE,trunc(months_between(c.workterm2,c.workterm)/12,0) as "term" from resume r,career c,member m,education e,hope_working h,location l,btype1 b1, btype2 b2, btype3 b3,first f, second s, third t where
+		        
+                r.DV_CODE = c.DV_CODE and r.academic_code=e.ACADEMIC_CODE and r.member_code=m.member_code and h.HOPEWORK_CODE = r.DESIREDWORK_CODE and h.LOCAL_CODE=l.LOCAL_CODE and b1.BTYPE_CODE1=b2.btype_code1 and b2.BTYPE_CODE2 = b3.BTYPE_CODE2 and
+                f.first_code=s.first_code and s.second_code = t.second_code and resume_code =#{resumeCode}
+		    
+		    <if test="term != null">
+				and term IN 
+				<foreach collection="term" item="term" 
+					index="index" open="(" close=")" separator=",">
+				#{term}
+				</foreach>
+				</if>
+				<if test="age != null">
+				and age in
+			<foreach collection="age" item="age" index="index" open="(" close=")" separator=",">
+			#{age}
+			</foreach>
+			</if>
+			<if test="graduatetype != null">
+	and e.graduatetype in
+	<foreach collection="graduatetype" item="graduatetype" index="index" open="(" close=")" separator=",">
+	#{graduatetype}
+	</foreach>
+	</if>
+	<if test="sido != null">
+	and l.sido in
+	<foreach collection="sido" item="sido" index="index" open="(" close=")" separator=",">
+	#{sido}
+	</foreach>
+	</if>
+	<if test="btypename1 != null">
+	and b1.btypename1 in
+	<foreach collection="btypename1" item="btypename1" index="index" open="(" close=")" separator=",">
+	#{btypename1}
+	</foreach>
+	</if>
+	<if test="btypename2 != null">
+	and b2.btypename2 in
+	<foreach collection="btypename2" item="btypename2" index="index" open="(" close=")" separator=",">
+	#{btypename2}
+	</foreach>
+	</if>
+	<if test="btypename3 != null">
+	and b3.btypename3 in
+	<foreach collection="btypename3" item="btypename3" index="index" open="(" close=")" separator=",">
+	#{btypename3}
+	</foreach>
+	</if>
+	<if test="firstname != null">
+	and f.firstname in
+	<foreach collection="firstname" item="firstname" index="index" open="(" close=")" separator=",">
+	#{firstname}
+	</foreach>
+	</if>
+	<if test="secondname != null">
+	and s.secondname in
+	<foreach collection="secondname" item="secondname" index="index" open="(" close=")" separator=",">
+	#{secondname}
+	</foreach>
+	</if>
+	<if test="thirdname != null">
+	and t.thirdname in
+	<foreach collection="thirdname" item="thirdname" index="index" open="(" close=")" separator=",">
+	#{thirdname}
+	</foreach>
+	</if>
+	)A
+	)
+	<where>
+		<![CDATA[ RNUM>#{firstRecordIndex}  
+		and RNUM<=#{firstRecordIndex} + #{recordCountPerPage}]]>
+		</where>
+	</select>
 	<select id="selectCareer" parameterType="map" resultType="resumeVo">	
-	select workterm,workterm2,trunc(months_between(workterm2,workterm)/12,0>2) as "term" from career
+	select workterm,workterm2,trunc(months_between(workterm2,workterm)/12,0) as "term" from career
 	<if test="term != null">
 				and term IN 
 				<foreach collection="term" item="term" 
@@ -95,8 +175,7 @@
 	</select>
 	
 	 <select id="selectTotalCountCareer" parameterType="map" resultType="int">
-	select count(*),trunc(months_between(workterm2,workterm)/12,0) as "term" from career 
-	
+	select count(*),trunc(months_between(workterm2,workterm)/12,0) as term from career 
 	<if test="term != null">
 				and term IN 
 				<foreach collection="term" item="term" 
@@ -104,6 +183,7 @@
 				#{term}
 				</foreach>
 				</if>
+				group by term
 	</select>
 	<select id="selectTotalCountAge" parameterType="map" resultType="int">
 	select count(*),NVL(TRUNC(MONTHS_BETWEEN(SYSDATE, TO_DATE(SUBSTR(birth, 1, 4), 'YYYY'))/12), 0) AS AGE from member 
@@ -114,6 +194,7 @@
 				#{age}
 				</foreach>
 				</if>
+				group by age
 	</select>
 	<select id="selectTotalCountGraduatetype" parameterType="map" resultType="int">
 	select count(*) from education 
@@ -179,6 +260,82 @@
 	</foreach>
 	</if>
 	</select> 
+	
+	
+	<select id="selectTotalCountPeople" parameterType="map" resultType="int">
+	select count(*),trunc(months_between(c.workterm2,c.workterm)/12,0) as "term",NVL(TRUNC(MONTHS_BETWEEN(SYSDATE, TO_DATE(SUBSTR(m.birth, 1, 4), 'YYYY'))/12), 0) AS AGE  from resume r,career c,member m,education e,hope_working h,location l,btype1 b1, btype2 b2, btype3 b3,first f, second s, third t 
+	
+		        
+             where  r.DV_CODE = c.DV_CODE and r.academic_code=e.ACADEMIC_CODE and r.member_code=m.member_code and h.HOPEWORK_CODE = r.DESIREDWORK_CODE and h.LOCAL_CODE=l.LOCAL_CODE and b1.BTYPE_CODE1=b2.btype_code1 and b2.BTYPE_CODE2 = b3.BTYPE_CODE2 and
+                f.first_code=s.first_code and s.second_code = t.second_code and resume_code =#{resumeCode}
+		    
+		      <if test="term != null">
+				and term IN 
+				<foreach collection="term" item="term" 
+					index="index" open="(" close=")" separator=",">
+				#{term}
+				</foreach>
+				</if>
+				<if test="age != null">
+				and age in
+			<foreach collection="age" item="age" index="index" open="(" close=")" separator=",">
+			#{age}
+			</foreach>
+			</if>
+			<if test="graduatetype != null">
+	and e.graduatetype in
+	<foreach collection="graduatetype" item="graduatetype" index="index" open="(" close=")" separator=",">
+	#{graduatetype}
+	</foreach>
+	</if>
+	<if test="sido != null">
+	and l.sido in
+	<foreach collection="sido" item="sido" index="index" open="(" close=")" separator=",">
+	#{sido}
+	</foreach>
+	</if>
+	<if test="btypename1 != null">
+	and b1.btypename1 in
+	<foreach collection="btypename1" item="btypename1" index="index" open="(" close=")" separator=",">
+	#{btypename1}
+	</foreach>
+	</if>
+	<if test="btypename2 != null">
+	and b2.btypename2 in
+	<foreach collection="btypename2" item="btypename2" index="index" open="(" close=")" separator=",">
+	#{btypename2}
+	</foreach>
+	</if>
+	<if test="btypename3 != null">
+	and b3.btypename3 in
+	<foreach collection="btypename3" item="btypename3" index="index" open="(" close=")" separator=",">
+	#{btypename3}
+	</foreach>
+	</if>
+	<if test="firstname != null">
+	and f.firstname in
+	<foreach collection="firstname" item="firstname" index="index" open="(" close=")" separator=",">
+	#{firstname}
+	</foreach>
+	</if>
+	<if test="secondname != null">
+	and s.secondname in
+	<foreach collection="secondname" item="secondname" index="index" open="(" close=")" separator=",">
+	#{secondname}
+	</foreach>
+	</if>
+	<if test="thirdname != null">
+	and t.thirdname in
+	<foreach collection="thirdname" item="thirdname" index="index" open="(" close=")" separator=",">
+	#{thirdname}
+	</foreach>
+	</if>
+		    group by trunc(months_between(c.workterm2,c.workterm)/12,0), NVL(TRUNC(MONTHS_BETWEEN(SYSDATE, TO_DATE(SUBSTR(m.birth, 1, 4), 'YYYY'))/12), 0)
+		    order by resumeregdate desc
+	
+	
+	</select>
+	
 </mapper>
 
 

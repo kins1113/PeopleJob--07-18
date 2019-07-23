@@ -86,26 +86,20 @@ public class PeopleInfoController {
 		map.put("firstRecordIndex", searchVo.getFirstRecordIndex());
 		map.put("recordCountPerPage", searchVo.getRecordCountPerPage());
 		logger.info("map={}",map);
-		list=peopleinfoService.selectCareer(map);
-		list=peopleinfoService.selectAge(map);
-		list=peopleinfoService.selectGraduatetype(map);
-		list=peopleinfoService.selectSido(map);
-		list=peopleinfoService.selectBtype(map);
-		list=peopleinfoService.selectJobtype(map);
-		logger.info("조회결과 list.size()={}",list.size());
+		list=peopleinfoService.selectPeoplew(map);
+		
+		logger.debug("조회결과 list.size()={}",list.size());
 		List<ResumeVO> resumelist=new ArrayList<ResumeVO>();
-		for(int i=0;i<list.size();i++){
+		logger.info("list.size={} , resumelist.size={}",list.size(),resumelist.size());
+		if(resumelist.size()>0) {
+			for(int i=0;i<list.size();i++){
 			resumelist.add(resumeService.selectResumeByNo(list.get(i).getResumeCode()));
-			logger.info("resumelist[{}]={}",i,resumelist.get(i).getResumeCode());
+				logger.info("resumelist[{}]={}",i,resumelist.get(i).getResumeCode());
+			}
 		}
 		logger.info("resumelist.size={}",resumelist.size());
 		int totalRecord=0;
-		totalRecord=peopleinfoService.selectTotalCountCareer(map);
-		totalRecord=peopleinfoService.selectTotalCountAge(map);
-		totalRecord=peopleinfoService.selectTotalCountGraduatetype(map);
-		totalRecord=peopleinfoService.selectTotalCountSido(map);
-		totalRecord=peopleinfoService.selectTotalCountBtype(map);
-		totalRecord=peopleinfoService.selectTotalCountJobtype(map);
+		totalRecord=peopleinfoService.selectTotalCountPeople(map);
 		
 		logger.info("전체 레코드 개수 조회 결과, totalRecord={}",totalRecord);
 		

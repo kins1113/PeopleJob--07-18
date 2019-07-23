@@ -5,6 +5,7 @@
    		action='<c:url value="/peopleinfo/peopleinfolist.do"/>'>
    		<!-- 현재 페이지 hidden에 넣기 -->  
    		<input type="hidden" name='currentPage' value="1" >
+   		<input type="hidden" name='resumeCode' value="${vo.resumeCode}" >
    		<div id="where" class="where">
 			<c:import url="peopleinfowhere.jsp"/>
 		</div> 
@@ -16,7 +17,7 @@
 	 		<td colspan="5" class="align_center">데이터가 존재하지 않습니다.</td>
 	 	</tr>
 		</c:if>
-		
+		</div>
             <div class="divPage">
 	<!-- 이전블럭으로 이동하기 -->
 	<c:if test="${pagingInfo.firstPage>1 }">	
@@ -44,7 +45,16 @@
 		</a>
 	</c:if>
 </div>
-   		</form> 
+   		</form>
+   		 <c:if test="${!empty list }">
+   		 	<c:forEach var="vo" items="${resumelist }">
+	                 <c:if test="${not loop_flag }">
+				        <c:if test="${vo.resumeCode==vo.resumeCode}">   
+			                <div class="cname"style="height:100px; width:120px;"><h2>${vo.resumeTitle}</h2></div>
+				            <c:set var="loop_flag" value="true" />
+				        </c:if>
+				    </c:if>
+	                </c:forEach>
    		<div class="talent_list">
     <table>
         <caption>인재검색 리스트</caption>
@@ -69,4 +79,6 @@
         </thead>
         </table>
         </div>
+        </c:if>
+        
 <%@include file="../main/inc/bottom.jsp" %>
