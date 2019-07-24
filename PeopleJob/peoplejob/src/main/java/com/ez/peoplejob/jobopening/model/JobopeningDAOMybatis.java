@@ -72,6 +72,11 @@ public class JobopeningDAOMybatis implements JobopeningDAO{
 		return sqlSession.selectList(namespace+"deadlineimminentBymonth");
 	}
 
+	@Override
+	public List<Map<String, Object>> selectRandom() {
+		return sqlSession.selectList(namespace+"selectRandom");
+	}
+
 
 	         
 	

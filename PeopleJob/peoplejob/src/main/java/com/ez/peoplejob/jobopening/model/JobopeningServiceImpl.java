@@ -88,5 +88,12 @@ public class JobopeningServiceImpl implements JobopeningService{
 
 
 
+	@Override
+	public List<Map<String, Object>> selectRandom() {
+		return jobopeningDao.selectRandom();
+	}
+
+
+
 	
 }

@@ -22,5 +22,6 @@ public interface JobopeningDAO {
 	List<JobopeningVO>selectJobopeningBycomcode(int companyCode);
 	
 	List<Map<String, Object>> deadlineimminentBymonth();
+	List<Map<String, Object>> selectRandom();
 	
 }

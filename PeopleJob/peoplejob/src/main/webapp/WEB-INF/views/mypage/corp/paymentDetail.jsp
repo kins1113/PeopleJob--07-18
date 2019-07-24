@@ -176,7 +176,8 @@ div#cardBoduPostList {
 	<table class="table table-bordered">
 		<thead>
 			<tr> 
-				<th scope="col">상품명</a></th>
+				<th scope="col">번호</th>
+				<th scope="col">상품명</th>
 				<th scope="col">구매자 이름</th>
 				<th scope="col">할부 기간</th>
 				<th scope="col">결제 수단</th>
@@ -221,7 +222,6 @@ div#cardBoduPostList {
 						<span class="badge badge-danger">Cancelled</span>
 						</c:if>
 						</td>
-						
 						
 						<form id="frmpay" method="post" action="<c:url value='/mypage/corp/paymentDetail.do'/>">
 						<input type="hidden" name="paymentCode" value="${map['PAYMENT_CODE'] }">
