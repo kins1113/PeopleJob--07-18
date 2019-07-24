@@ -218,6 +218,5 @@ public class PaymentController {
 		
 		model.addAttribute("list",list);
 		return "manager/payment/list";
-		
 	}
 }
