@@ -19,9 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.ez.peoplejob.common.PaginationInfo;
 import com.ez.peoplejob.common.SearchVO;
 import com.ez.peoplejob.common.WebUtility;
-import com.ez.peoplejob.jobopening.model.JobopeningVO;
-import com.ez.peoplejob.member.model.CompanyVO;
-import com.ez.peoplejob.member.model.MemberVO;
+
 import com.ez.peoplejob.peopleinfo.model.PeopleInfoService;
 import com.ez.peoplejob.resume.model.ResumeService;
 import com.ez.peoplejob.resume.model.ResumeVO;
@@ -42,7 +40,7 @@ public class PeopleInfoController {
 			@ModelAttribute SearchVO searchVo,Model model,@RequestParam(required = false) String[] term,@RequestParam(required = false) String[] age,
 			@RequestParam(required = false) String[] graduatetype,@RequestParam(required = false) String[] sido,@RequestParam(required = false) String[] btypename1 ,
 			@RequestParam(required = false) String[] btypename2,@RequestParam(required = false) String[] btypename3,@RequestParam(required = false) String[] firstname,
-			@RequestParam(required = false) String[] secondname,@RequestParam(required = false) String[] thirdname) {
+			@RequestParam(required = false) String[] secondname,@RequestParam(required = false) String[] thirdname,@RequestParam(value="resumeCode", defaultValue="0") int resumeCode) {
 		String id=(String)session.getAttribute("memberid");
 		if(id==null) {
 			id="비회원";
@@ -85,29 +83,26 @@ public class PeopleInfoController {
 		map.put("thirdname",thirdname);
 		map.put("firstRecordIndex", searchVo.getFirstRecordIndex());
 		map.put("recordCountPerPage", searchVo.getRecordCountPerPage());
+		map.put("resumeCode", resumeCode);
 		logger.info("map={}",map);
-		list=peopleinfoService.selectCareer(map);
-		list=peopleinfoService.selectAge(map);
-		list=peopleinfoService.selectGraduatetype(map);
-		list=peopleinfoService.selectSido(map);
-		list=peopleinfoService.selectBtype(map);
-		list=peopleinfoService.selectJobtype(map);
-		logger.info("조회결과 list.size()={}",list.size());
+		list=peopleinfoService.selectPeoplew(map);
+		
+		logger.debug("조회결과 list.size()={}",list.size());
 		List<ResumeVO> resumelist=new ArrayList<ResumeVO>();
-		for(int i=0;i<list.size();i++){
+		logger.info("list.size={} , resumelist.size={}",list.size(),resumelist.size());
+		if(resumelist.size()>0) {
+			for(int i=0;i<list.size();i++){
 			resumelist.add(resumeService.selectResumeByNo(list.get(i).getResumeCode()));
-			logger.info("resumelist[{}]={}",i,resumelist.get(i).getResumeCode());
+				logger.info("resumelist[{}]={}",i,resumelist.get(i).getResumeCode());
+			}
 		}
 		logger.info("resumelist.size={}",resumelist.size());
 		int totalRecord=0;
-		totalRecord=peopleinfoService.selectTotalCountCareer(map);
-		totalRecord=peopleinfoService.selectTotalCountAge(map);
-		totalRecord=peopleinfoService.selectTotalCountGraduatetype(map);
-		totalRecord=peopleinfoService.selectTotalCountSido(map);
-		totalRecord=peopleinfoService.selectTotalCountBtype(map);
-		totalRecord=peopleinfoService.selectTotalCountJobtype(map);
-		
-		logger.info("전체 레코드 개수 조회 결과, totalRecord={}",totalRecord);
+		/*
+		 * totalRecord=peopleinfoService.selectTotalCountPeople(map);
+		 * 
+		 * logger.info("전체 레코드 개수 조회 결과, totalRecord={}",totalRecord);
+		 */
 		
 		//5]PaginationInfo에 totalRecord값셋팅
 		pagingInfo.setTotalRecord(totalRecord);
@@ -122,14 +117,16 @@ public class PeopleInfoController {
 		
 	}
 	@RequestMapping("/peopleinfodetail.do")
-	public String peopleinfodetail(@RequestParam(required = false) int resumeCode,@ModelAttribute ResumeVO resumeVo,HttpSession session,Model model) {
+	public String peopleinfodetail(@RequestParam(required = false) int resumeCode,@RequestParam(required = false) String[] term,@ModelAttribute ResumeVO resumeVo,HttpSession session,Model model) {
 		logger.info("resumeCode={}",resumeCode);
 		ResumeVO vo=resumeService.selectResumeByNo(resumeCode);
 		String id=(String)session.getAttribute("memberid");
 		if(id==null) {
 			id="비회원";
 		}
-	
+		List<ResumeVO> list=new ArrayList<ResumeVO>();
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("term", term);
 		ResumeVO vo1=resumeService.selectByMemverid(id);
 		ResumeVO vo2=resumeService.selectBydesiredWorkCode(vo.getDesiredWorkCode());
 		ResumeVO vo3=resumeService.selectByacademicCode(vo.getAcademicCode());
@@ -144,6 +141,7 @@ public class PeopleInfoController {
 		ResumeVO vo12=resumeService.selectByfirst(vo.getFirstCode());
 		ResumeVO vo13=resumeService.selectBysecond(vo.getSecondCode());
 		ResumeVO vo14=resumeService.selectBythird(vo.getThirdCode());
+		List<ResumeVO> vo15=peopleinfoService.selectCareer(map);
 		logger.info("상세보기 결과 vo={}", vo);
 		
 		model.addAttribute("vo", vo);
@@ -161,6 +159,7 @@ public class PeopleInfoController {
 		model.addAttribute("vo12", vo12);
 		model.addAttribute("vo13", vo13);
 		model.addAttribute("vo14", vo14);
+		model.addAttribute("vo15", vo15);
 	
 		return "peopleinfo/peopleinfodetail";
 	}
