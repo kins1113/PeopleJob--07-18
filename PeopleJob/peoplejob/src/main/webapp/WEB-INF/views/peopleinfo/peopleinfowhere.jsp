@@ -1,11 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    <%@include file="../main/inc/top.jsp" %>
-  <c:if test="${!empty param.searchKeyword}">
-			<p>
-				검색어 : ${param.searchKeyword}, ${pagingInfo.totalRecord}건 검색되었습니다.
-			</p>
-		</c:if>
+    
+  
 		
 <script>
 $("div").data("name")==="서울";
@@ -34,10 +30,10 @@ $("div").data("name")==="전국";
     margin: 0 auto;
 }	 
 </style>
-<div class="divSearch"> 
 	<!-- 페이징 처리에도 사용 -->
    
-		
+<div class="divSearch"> 
+		<div style="border: 1px solid gold; float: left; width: 23%; margin: 10px;">
 		 <label>경력</label><br>
 <label><input type="checkbox" id="workcheck" name="workcheck" value="경력">경력</label>
 <label><input type="checkbox" id="workcheck" name="workcheck" value="신입">신입</label><br>
@@ -49,10 +45,10 @@ $("div").data("name")==="전국";
                 <li><label class="frm_chkbox01" for="career-years05"><input type="checkbox" id="career-years" name="term" title="10~15년" value="10,16"><span>10~15년</span></label></li>
                 <li><label class="frm_chkbox01" for="career-years06"><input type="checkbox" id="career-years" name="term" title="15년 이상" value="15,"><span>15년 <em class="ico_over">이상</em></span></label></li>
             </ul>
-             <div class="wrap_detail_panel age_interval" id="gender-age">
-        <div class="title_detail_box"><strong>성별·나이</strong></div>
-        <div class="box_detail_panel">
-            <strong class="title_basic_sub">성별</strong>
+            </div>
+        <div class="box_detail_panel" style="border: 1px solid gold; float: left; width: 23%; margin: 10px;">
+        <strong>성별</strong>
+            <strong class="title_basic_sub">나이</strong>
             <label class="form_sp frm_chk02" for="male01"><input type="checkbox" id="male01" value="male"><span>남</span></label><label class="form_sp frm_chk02" for="female01"><input type="checkbox" id="female01" value="female"><span>여</span></label>
             <ul class="wrap_list_value column_two">
                 <li><label class="frm_chkbox01" for="age-interval01"><input type="checkbox" id="age" name="age" value=",20"><span>20세 <em class="ico_under">이하</em></span></span></label></li>
@@ -64,8 +60,8 @@ $("div").data("name")==="전국";
             </ul>
             </div>
                <div class="wrap_detail_panel edu_last" id="basic-search-edu-part">
+        <div class="box_detail_panel" style="border: 1px solid gold; float: left; width: 23%; margin: 10px;">
         <div class="title_detail_box"><strong>최종학력</strong></div>
-        <div class="box_detail_panel">
             <ul class="wrap_list_value">
                                     <li><label class="frm_chkbox01" for="basic-search-final-edu0"><input type="checkbox" id="graduatecheck" value="대학교졸업(4년)" ><span>대학교 4년 </span></label></li>
                                     <li><label class="frm_chkbox01" for="basic-search-final-edu1"><input type="checkbox" id="graduatecheck" value="대학졸업(2,3년)" ><span>대학교 2,3년 </span></label></li>
@@ -85,7 +81,7 @@ $("div").data("name")==="전국";
             </div>
         </div>
     </div>
-    <div class="wrap_detail_panel area_domestic">
+    <div class="wrap_detail_panel area_domestic" style="border: 1px solid gold; float: left; width: 13%; margin: 10px;">
         <div class="title_detail_box"><strong>희망 근무지역</strong></div>
         <div class="box_detail_panel">
             <ul class="wrap_list_value" id="basic-search-location">
@@ -202,7 +198,6 @@ $("div").data("name")==="전국";
         </div>
     </div>
     </div>
-		<c:import url="../resume/occupation.jsp"/>
-		</div>
+ 
 		<input type="submit" class="btn btn-primary" value="검색">	
-		<%@include file="../main/inc/bottom.jsp" %>
+		

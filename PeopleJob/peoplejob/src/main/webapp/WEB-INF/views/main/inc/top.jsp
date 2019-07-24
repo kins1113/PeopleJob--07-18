@@ -147,7 +147,7 @@ function jobopening(){
 		alert('기업회원은 관리자의 승인을 받은 후 채용공고를 등록할 수 있습니다.');
 	}else if(author_code==3){
 		
-		location.href="<c:url value='/company/my_jobopening_list.do?companycode1=${memberVo.companyCode}'/>";  
+		location.href="<c:url value='/company/my_jobopening_list.do?companycode1=${session.companyCode}'/>";  
 	}
 }  
 
@@ -203,6 +203,7 @@ function company(){
 							<li class="main-menu-active">
 								<a href="<c:url value='/company/jobopening_list.do'/>">채용정보</a>
 								<ul class="sub-menu">
+									<li><a href="<c:url value='/company/jobopening_list.do'/>">공채정보</a></li>
 									<li><a href="<c:url value='/company/jobopening_list.do'/>">직종별</a></li>
 									<li><a href="<c:url value='/company/jobopening_list.do'/>">지역별</a></li>
 									<li><a href="<c:url value='/company/jobopening_list.do'/>">업무별</a></li>
@@ -216,8 +217,9 @@ function company(){
 							<li style="width: 98px;">
 								<a href="#">자료실</a>
 								<ul class="sub-menu">
-									<li><a href="category-01.html">이력서 양식</a></li>
-									<li><a href="category-02.html">취업 뉴스</a></li>
+									<li><a href="">이력서 양식</a></li>
+									<li><a href="">취업 뉴스</a></li>
+									<li><a href="">무료 강좌</a></li>
 									
 								</ul>
 							</li>
@@ -259,11 +261,11 @@ function company(){
 							</li>
 
 							<li>
-								<a href="#">게시판</a>
+								<a href="">게시판</a>
 								<ul class="sub-menu">
 									<li><a href="">자유게시판</a></li>
 									<li><a href="">QnA</a></li>
-									<li><a href="">공지사항</a></li>
+									<li><a href="<c:url value='/notice/list.do'/>">공지사항</a></li>
 								</ul>
 							</li>
 							

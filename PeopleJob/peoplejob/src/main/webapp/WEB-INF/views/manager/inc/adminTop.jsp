@@ -1,4 +1,4 @@
-${param.popupImg}<%@ page language="java" contentType="text/html; charset=UTF-8"
+<%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -72,6 +72,37 @@ ${param.popupImg}<%@ page language="java" contentType="text/html; charset=UTF-8"
 	<script>
       NProgress.configure({ showSpinner: false });
       NProgress.start();
+      
+      $(function(){
+    	  
+	      //show 클래스 주어서 선택한것 열려있게 하기
+	    var showKey="${param.showKey}"
+		if(showKey=="member"){
+			$(".member").addClass("show")
+		}else if(showKey=="service"){
+			$(".resume").addClass("show")
+			$(".service").addClass("show")
+		}else if(showKey=="resume"){
+			$(".resume").addClass("show")
+		}else if(showKey=="mail"){
+			$(".mail").addClass("show")
+		}else if(showKey=="board"){
+			$(".community").addClass("show")
+			$(".board").addClass("show")
+		}else if(showKey=="post"){
+			$(".community").addClass("show")
+			$(".post").addClass("show")
+		}else if(showKey=="community"){
+			$(".community").addClass("show")
+		}else if(showKey=="pay"){
+			$(".pay").addClass("show")
+		}else if(showKey=="manager"){
+			$(".manager").addClass("show")
+		}else if(showKey=="popup"){
+			$(".popup").addClass("show")
+		}
+      });      
+      
     </script>
 
 	<div class="mobile-sticky-body-overlay"></div>
@@ -115,45 +146,38 @@ ${param.popupImg}<%@ page language="java" contentType="text/html; charset=UTF-8"
 								class="mdi mdi-view-dashboard-outline"></i> <span
 								class="nav-text">사용자 관리</span> <b class="caret"></b>
 						</a>
-							<ul class="collapse show" id="dashboard"
+							<ul class="collapse member" id="dashboard"
 								data-parent="#sidebar-menu">
 								<div class="sub-menu">
 									<!-- <li class="active"><a class="sidenav-item-link"
 										href="#"> <span class="nav-text">통합 관리</span>
 									</a></li> -->
 									<li><a class="sidenav-item-link"
-										href="${pageContext.request.contextPath}/manager/member/memberList.do?authorityCk=member"> <span class="nav-text">일반 회원</span>
+										href="${pageContext.request.contextPath}/manager/member/memberList.do?authorityCk=member&showKey=member"> <span class="nav-text">일반 회원</span>
 									</a></li>
-									<li><a class="sidenav-item-link" href="${pageContext.request.contextPath}/manager/member/memberList.do?authorityCk=company">
+									<li><a class="sidenav-item-link" href="${pageContext.request.contextPath}/manager/member/memberList.do?authorityCk=company&showKey=member">
 											<span class="nav-text">기업 회원</span>
 											 <!-- <span	class="badge badge-success">new</span> -->
 
 									</a></li>
 								</div>
 							</ul></li>
-						<li class="has-sub"><a class="sidenav-item-link"
+						<li class="has-sub">
+							<a class="sidenav-item-link"
 							href="javascript:void(0)" data-toggle="collapse"
 							data-target="#ui-elements" aria-expanded="false"
 							aria-controls="ui-elements"> <i
-								class="mdi mdi-folder-multiple-outline"></i> <span
-								class="nav-text">서비스 관리</span> <b class="caret"></b>
+								class="mdi mdi-folder-multiple-outline"></i> 
+								<span class="nav-text">서비스 관리</span> <b class="caret"></b>
 						</a>
-							<ul class="collapse" id="ui-elements" data-parent="#sidebar-menu">
+							<ul class="collapse resume" id="ui-elements" data-parent="#sidebar-menu">
 								<div class="sub-menu">
-									<li class="has-sub"><a class="sidenav-item-link"
-										href="#" data-toggle="collapse"
-										data-target="#components" aria-expanded="false"
-										aria-controls="components"> <span class="nav-text">이력서
-												관리</span> 
-									</a>
-										</li>
-
-									<li class="has-sub"><a class="sidenav-item-link"
-										href="#" data-toggle="collapse"
-										data-target="#icons" aria-expanded="false"
-										aria-controls="icons"> <span class="nav-text">채용공고
-												관리</span> <b class="caret"></b>
-									</a>
+								<li><a class="sidenav-item-link"
+										href="${pageContext.request.contextPath }/manager/resume/resumeList.do?showKey=resume"> <span class="nav-text">이력서	관리</span>
+									</a></li>
+								<li><a class="sidenav-item-link"
+										href="${pageContext.request.contextPath }/manager/jobopening/jobopeningList.do?showKey=resume"> <span class="nav-text">채용공고 관리</span>
+									</a></li>
 						<!-- 			<ul class="collapse" id="icons">
 											<div class="sub-menu">
 
@@ -170,15 +194,15 @@ ${param.popupImg}<%@ page language="java" contentType="text/html; charset=UTF-8"
 										aria-controls="forms"> <span class="nav-text">상품 관리
 												</span> <b class="caret"></b>
 									</a>
-										<ul class="collapse" id="forms">
+										<ul class="collapse service" id="forms">
 											<div class="sub-menu">
-												<li><a href="${pageContext.request.contextPath}/manager/service/list.do">상품 조회</a></li>
-												<li><a href="${pageContext.request.contextPath}/manager/service/register.do">상품 등록</a></li>
+												<li><a href="${pageContext.request.contextPath}/manager/service/list.do?showKey=service">상품 조회</a></li>
+												<li><a href="${pageContext.request.contextPath}/manager/service/register.do?showKey=service">상품 등록</a></li>
 											</div>
 										</ul></li>
 										
 										<li><a class="sidenav-item-link"
-										href="${pageContext.request.contextPath}/manager/service/applyList.do"> <span class="nav-text">입사 지원 관리</span>
+										href="${pageContext.request.contextPath}/manager/service/applyList.do?showKey=resume"> <span class="nav-text">입사 지원 관리</span>
 									</a></li>
 								</div>
 							</ul></li>
@@ -188,13 +212,13 @@ ${param.popupImg}<%@ page language="java" contentType="text/html; charset=UTF-8"
 							aria-controls="charts"> <i class="mdi mdi-chart-pie"></i> <span
 								class="nav-text">메일</span> <b class="caret"></b>
 						</a>
-							<ul class="collapse" id="charts" data-parent="#sidebar-menu">
+							<ul class="collapse mail" id="charts" data-parent="#sidebar-menu">
 								<div class="sub-menu">
-									<li><a class="sidenav-item-link" href="${pageContext.request.contextPath }/manager/email_sms/emailWrite.do">
+									<li><a class="sidenav-item-link" href="${pageContext.request.contextPath }/manager/email_sms/emailWrite.do?showKey=mail">
 											<span class="nav-text">메일</span>
 									</a>
 									</li>
-									<li><a class="sidenav-item-link" href="${pageContext.request.contextPath }/manager/email_sms/emailMultWrite.do">	<!-- ${pageContext.request.contextPath} -->
+									<li><a class="sidenav-item-link" href="${pageContext.request.contextPath }/manager/email_sms/emailMultWrite.do?showKey=mail">	<!-- ${pageContext.request.contextPath} -->
 											<span class="nav-text">다중 메일</span>
 									</a>
 									</li>
@@ -207,9 +231,9 @@ ${param.popupImg}<%@ page language="java" contentType="text/html; charset=UTF-8"
 								<i class="mdi mdi-image-filter-none"></i> <span class="nav-text">커뮤니티
 									관리</span> <b class="caret"></b>
 						</a>
-							<ul class="collapse" id="pages" data-parent="#sidebar-menu">
+							<ul class="collapse community" id="pages" data-parent="#sidebar-menu">
 								<div class="sub-menu">
-									<li><a class="sidenav-item-link" href="${pageContext.request.contextPath}/manager/notice/list.do"> <span
+									<li><a class="sidenav-item-link" href="${pageContext.request.contextPath}/manager/notice/list.do?showKey=community"> <span
 											class="nav-text">공지사항 관리</span>
 									</a></li>
 									<li class="has-sub"><a class="sidenav-item-link"
@@ -218,14 +242,14 @@ ${param.popupImg}<%@ page language="java" contentType="text/html; charset=UTF-8"
 										aria-controls="authentication"> <span class="nav-text">게시판
 												관리</span> <b class="caret"></b>
 									</a>
-										<ul class="collapse" id="authentication">
+										<ul class="collapse board" id="authentication">
 											<div class="sub-menu">
 
 												<li><a
-													href="${pageContext.request.contextPath}/manager/board/boardList.do">게시판
+													href="${pageContext.request.contextPath}/manager/board/boardList.do?showKey=board">게시판
 														리스트</a></li>
 												<li><a
-													href="${pageContext.request.contextPath}/manager/board/boardAdd.do">게시판
+													href="${pageContext.request.contextPath}/manager/board/boardAdd.do?showKey=board">게시판
 														추가</a></li>
 
 											</div>
@@ -236,12 +260,12 @@ ${param.popupImg}<%@ page language="java" contentType="text/html; charset=UTF-8"
 										data-target="#abc" aria-expanded="false" aria-controls="abc">
 											<span class="nav-text">게시글 관리</span> <b class="caret"></b>
 									</a>
-										<ul class="collapse" id="abc">
+										<ul class="collapse post" id="abc">
 											<div class="sub-menu">
 
-												<li><a href="${pageContext.request.contextPath}/manager/post/postList.do">전체 조회</a></li>
+												<li><a href="${pageContext.request.contextPath}/manager/post/postList.do?showKey=post">전체 조회</a></li>
 
-												<li><a href="${pageContext.request.contextPath}/manager/post/postWrite.do">등록</a></li>
+												<li><a href="${pageContext.request.contextPath}/manager/post/postWrite.do?showKey=post">등록</a></li>
 
 											</div>
 										</ul></li>
@@ -254,13 +278,13 @@ ${param.popupImg}<%@ page language="java" contentType="text/html; charset=UTF-8"
 								class="mdi mdi-book-open-page-variant"></i> <span
 								class="nav-text">결제 관리</span> <b class="caret"></b>
 						</a>
-							<ul class="collapse" id="documentation"
+							<ul class="collapse pay" id="documentation"
 								data-parent="#sidebar-menu">
 								<div class="sub-menu">
 									<!-- <li class="section-title">
                               Getting Started
                             </li> -->
-
+									<!-- ?showKey=pay -->
 									<li><a class="sidenav-item-link" href="#">
 											<span class="nav-text">통합 관리</span>
 									</a></li>
@@ -291,13 +315,13 @@ ${param.popupImg}<%@ page language="java" contentType="text/html; charset=UTF-8"
 							aria-controls="Manager"> <i class="mdi mdi-chart-pie"></i> <span
 								class="nav-text">Manager</span> <b class="caret"></b>
 						</a>
-							<ul class="collapse" id="Manager" data-parent="#sidebar-menu">
+							<ul class="collapse manager" id="Manager" data-parent="#sidebar-menu">
 								<div class="sub-menu">
 
 
 
 									<li><a class="sidenav-item-link"
-										href="<c:url value='/manager/manager/managerList.do'/>"> <span
+										href="<c:url value='/manager/manager/managerList.do?showKey=manager'/>"> <span
 											class="nav-text">조회</span>
 									</a></li>
 									<!-- <li><a class="sidenav-item-link" href="#"> <span
@@ -312,15 +336,15 @@ ${param.popupImg}<%@ page language="java" contentType="text/html; charset=UTF-8"
 							aria-controls="popup"> <i class="mdi mdi-chart-pie"></i> <span
 								class="nav-text">팝업관리</span> <b class="caret"></b>
 						</a>
-							<ul class="collapse" id="popup" data-parent="#sidebar-menu">
+							<ul class="collapse popup" id="popup" data-parent="#sidebar-menu">
 								<div class="sub-menu">
 
 									<li><a class="sidenav-item-link"
-										href="${pageContext.request.contextPath}/manager/popup/popupList.do"> <span
+										href="${pageContext.request.contextPath}/manager/popup/popupList.do?showKey=popup"> <span
 											class="nav-text">관리</span>
 									</a></li>
 									<li><a class="sidenav-item-link"
-										href="${pageContext.request.contextPath}/manager/popup/popupAdd.do"> <span
+										href="${pageContext.request.contextPath}/manager/popup/popupAdd.do?showKey=popup"> <span
 											class="nav-text">등록</span>
 									</a></li>
 									<!-- <li><a class="sidenav-item-link" href="#"> <span

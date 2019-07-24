@@ -15,8 +15,105 @@
 	src="<c:url value='/resources/main/js/jquery-3.4.1.min.js'/>"></script>
 <script type="text/javascript">
 $(function() {
-
+    
 	
+	//공채 롤링배너
+	   var $panel = $(".rolling_panel").find("ul");
+		
+	   var $li=$(".rolling_panel").find("li");
+	   
+       var itemWidth = $panel.children().outerWidth(); // 아이템 가로 길이
+       var itemLength = $panel.children().length;      // 아이템 수
+
+       // Auto 롤링 아이디
+       var rollingId;
+
+       auto();
+
+       // 배너 마우스 오버 이벤트
+       $panel.mouseover(function() {
+           clearInterval(rollingId);
+       });
+       
+       // 배너 마우스 아웃 이벤트
+       $panel.mouseout(function() {
+           auto();
+       });
+       
+       //각각 li 마우스 이벤트
+       $li.mouseover(function(){
+    	   $(this).find( 'div[name=publicblack]').hide();
+           $(this).find('div[name=mouseover_show]').show();
+       });
+       
+       $li.mouseout(function(){
+    	   $(this).find('div[name=publicblack]').show();
+           $(this).find('div[name=mouseover_show]').hide();
+       });
+
+       // 이전 이벤트
+       $("#prev").on("click", prev);
+
+       $("#prev").mouseover(function(e) {
+           clearInterval(rollingId);
+       });
+
+       $("#prev").mouseout(auto);
+
+       // 다음 이벤트
+       $("#next").on("click", next);
+
+       $("#next").mouseover(function(e) {
+           clearInterval(rollingId);
+       });
+
+       $("#next").mouseout(auto);
+
+       function auto() {
+
+           // 2초마다 start 호출
+           rollingId = setInterval(function() {
+               start();
+           }, 2000);  
+       }
+
+       function start() {
+            $panel.css("width", itemWidth * itemLength);
+           $panel.animate({"left": - itemWidth + "px"}, function() {
+
+               // 첫번째 아이템을 마지막에 추가하기
+               $(this).append("<li>" + $(this).find("li:first").html() + "</li>");
+
+               // 첫번째 아이템을 삭제하기
+               $(this).find("li:first").remove();
+
+               // 좌측 패널 수치 초기화
+               $(this).css("left", 0);
+           }); 
+       }
+
+       // 이전 이벤트 실행
+       function prev(e) {
+    	   $('#prev').attr('disabled',true);
+           $panel.css("left", - itemWidth);
+          
+           $panel.prepend("<li>" + $panel.find("li:last").html() + "</li>");
+           $panel.animate({"left": "0px"}, function() {
+               $(this).find("li:last").remove();
+               $('#prev').attr('disabled',false);
+           });
+       }
+
+       // 다음 이벤트 실행
+       function next(e) {
+           $panel.animate({"left": - itemWidth + "px"}, function() {
+               $(this).append("<li>" + $(this).find("li:first").html() + "</li>");
+               $(this).find("li:first").remove();
+               $(this).css("left", 0);
+           });
+       }
+	
+       
 	$('form[name=loginform]').submit(function(){
 		
 		$('.getId').each(function(){
@@ -389,10 +486,9 @@ input[type="checkbox"] {
 	text-align: right;
 }
 
-table {
+table, div.recomtable {
 	width: 753px;
     height: 300px;
-    border: 1px solid lightgray;
     margin-left: 7px;
 }
 
@@ -428,6 +524,7 @@ img.imgsize {
     border: 1px solid lightgray;
 }
  
+ /* 글자수세기, 맞춤법검사 */
  div.left {
         width: 50%;
         float: left;
@@ -450,9 +547,74 @@ img.imgsize {
  .logintop{
  	height: 70%;
  }
+ 
+ 
+ /* 공채롤링배너 */
+ .rolling_panel {
+	position: relative;
+	width: 1137px;
+	height: 70px;
+	margin: 0;
+	padding: 0;
+	/* border: 1px solid #c7c7c7; */
+	overflow: hidden;
+	
+	display: inline-block;
+}
+
+.rolling_panel ul {
+	position: absolute;
+	margin: 5px;
+	padding: 0;
+	list-style: none;
+}
+
+.rolling_panel ul li {
+	float: left;
+	width: 140px;
+	height: 140px;
+}
+
+img.publicimg{
+	width: 120px;
+	height: 60px;
+}
+
+.btn_more {
+    position: absolute;
+    top: 700px;
+    right: 328px;
+    display: table;
+    width: 72px;
+    height: 59px;
+    border: 1px solid #e4ebf6; 
+    background-color: #f7faff;
+    text-align: center;
+    box-sizing: border-box;
+    color: black;
+    padding: 6px;
+}
+
+#mouseover_show{
+    background: black;
+    width: 100px;
+    height: 60px;
+    color: white;
+    opacity: 0.7;
+    text-align: center;
+    display: none;
+    margin-left: 15px;
+}
+
+span[name=publicname]{
+	padding: 17px; 
+	text-decoration: underline;
+}
+
+
 </style>
 </head>
-<body class="animsition">
+<body class="animsition">  
 
 	<!-- Header -->
 
@@ -467,7 +629,7 @@ img.imgsize {
 	<!-- Banner -->
 	<div class="container" style="max-width: 150%;"> <!-- 원래105% -->
 	<div class="colortop">
-	<div class="divisionColor" style="background: ">
+	<div class="divisionColor" style="background: "> 
 		<div class="flex-c-c" style="margin-top: 10px;width: 1300px;">
 			<a href="#"> <img class="max-w-full"
 				src="<c:url value='/resources/main/images/190125_apple_752x110.png'/>"
@@ -549,217 +711,31 @@ img.imgsize {
 							</h5>
 						</div>
 
-						<div class="row p-t-35"
-							style="padding: 0px; margin-left: 0px; width: 91%;">
-
-							<table border="1">
-								<tr>
-									<td class="recommend">
-										<div style="padding: 20px;">
+						<div class="row p-t-35" style="padding: 0px; margin-left: 0px; width: 91%;">
+							<div class="recomtable">
+							<c:forEach begin="0" end="4">
+								<div class="recom1" style="border: 1px solid lightgray;width: 33.3%;height: 50%;float: left;padding: 20px;">
 											<strong style="display: block;">(주) 이트리즈시스템</strong> 
 											<span style="display: block;">이트리즈 시스템 SI 웹개발자 </span>
 											 <span style="display: block;">(java/jsp/spring)신입 채용 </span>
 											 <div>
 											 <button type="button" class="img_main btn_scrap on" value="36473003"><span class="blind">스크랩</span> </button>
-											 	<img alt="스크랩임시사진" src="<c:url value='/peoplejob_upload/scrapstarwhite.PNG'/>" style="margin-top:40px;">
-											 	<img alt="스크랩임시사진" src="<c:url value='/peoplejob_upload/즉시지원.PNG'/>" style="float:right;margin-top:40px;margin-right:5px;">
-											 </div> 
-										</div>
-										</td>
-									<td class="recommend">
-										<div style="padding: 20px;">
-											<strong style="display: block;">(주) 이트리즈시스템</strong> 
-											<span style="display: block;">이트리즈 시스템 SI 웹개발자 </span>
-											 <span style="display: block;">(java/jsp/spring)신입 채용 </span>
-											 <div>
-											 <button type="button" class="img_main btn_scrap on" value="36473003"><span class="blind">스크랩</span> </button>
-											 	<img alt="스크랩임시사진" src="<c:url value='/peoplejob_upload/scrapstarwhite.PNG'/>" style="margin-top:40px;">
-											 	<img alt="스크랩임시사진" src="<c:url value='/peoplejob_upload/즉시지원.PNG'/>" style="float:right;margin-top:40px;margin-right:5px;">
-											 </div> 
-										</div>
-										</td>
-									<td>
-										<div style="padding: 20px;">
-											<strong style="display: block;">(주) 이트리즈시스템</strong> 
-											<span style="display: block;">이트리즈 시스템 SI 웹개발자 </span>
-											 <span style="display: block;">(java/jsp/spring)신입 채용 </span>
-											 <div>
-											 <button type="button" class="img_main btn_scrap on" value="36473003"><span class="blind">스크랩</span> </button>
-											 	<img alt="스크랩임시사진" src="<c:url value='/peoplejob_upload/scrapstarwhite.PNG'/>" style="margin-top:40px;">
-											 	<img alt="스크랩임시사진" src="<c:url value='/peoplejob_upload/즉시지원.PNG'/>" style="float:right;margin-top:40px;margin-right:5px;">
-											 </div> 
-										</div>
-										</td>
-								</tr>
-								<tr>
-									<td>
-										<div style="padding: 20px;">
-											<strong style="display: block;">(주) 이트리즈시스템</strong> 
-											<span style="display: block;">이트리즈 시스템 SI 웹개발자 </span>
-											 <span style="display: block;">(java/jsp/spring)신입 채용 </span>
-											 <div>
-											 <button type="button" class="img_main btn_scrap on" value="36473003"><span class="blind">스크랩</span> </button>
-											 	<img alt="스크랩임시사진" src="<c:url value='/peoplejob_upload/scrapstarwhite.PNG'/>" style="margin-top:40px;">
-											 	<img alt="스크랩임시사진" src="<c:url value='/peoplejob_upload/즉시지원.PNG'/>" style="float:right;margin-top:40px;margin-right:5px;">
-											 </div> 
-										</div>
-										</td>
-									<td>
-										<div style="padding: 20px;">
-											<strong style="display: block;">(주) 이트리즈시스템</strong> 
-											<span style="display: block;">이트리즈 시스템 SI 웹개발자 </span>
-											 <span style="display: block;">(java/jsp/spring)신입 채용 </span>
-											 <div>
-											 <button type="button" class="img_main btn_scrap on" value="36473003"><span class="blind">스크랩</span> </button>
-											 	<img alt="스크랩임시사진" src="<c:url value='/peoplejob_upload/scrapstarwhite.PNG'/>" style="margin-top:40px;">
-											 	<img alt="스크랩임시사진" src="<c:url value='/peoplejob_upload/즉시지원.PNG'/>" style="float:right;margin-top:40px;margin-right:5px;">
-											 </div> 
-										</div>
-										</td>
-									<td>
-										<div style="padding: 20px;">
-											<strong style="display: block;">(주) 이트리즈시스템</strong> 
-											<span style="display: block;">이트리즈 시스템 SI 웹개발자 </span>
-											 <span style="display: block;">(java/jsp/spring)신입 채용 </span>
-											 <div>
-											 <button type="button" class="img_main btn_scrap on" value="36473003"><span class="blind">스크랩</span> </button>
-											 	<img alt="스크랩임시사진" src="<c:url value='/peoplejob_upload/scrapstarwhite.PNG'/>" style="margin-top:40px;">
-											 	<img alt="스크랩임시사진" src="<c:url value='/peoplejob_upload/즉시지원.PNG'/>" style="float:right;margin-top:40px;margin-right:5px;">
-											 </div> 
-										</div>
-										</td>
-								</tr>
-							</table>
-							<%-- <c:forEach var="map" items="${list }">
-					 			<div class="col-sm-6 p-r-25 p-r-15-sr991" style="    margin-bottom: -38px;">
-							<!-- Item latest -->	
-							<div class="m-b-45">
-								<a href="blog-detail-01.html" class="wrap-pic-w hov1 trans-03">
-									<img src="<c:url value='/peoplejob_upload/${map["IMAGE"] }'/>" alt="IMG" class="imgsize">
-								</a>
- 
-	 							<div class="p-t-16" style="padding-top: 0px;">
-									<h5 class="p-b-5">
-										<a href="blog-detail-01.html" class="f1-m-3 cl2 hov-cl10 trans-03" style="font-size: 1.0em">
-											${map['JOBTITLE'] }
-										</a>
-									</h5>
-
-									<span class="cl8" style="">
-										<a href="#" class="f1-s-4 cl8 hov-cl10 trans-03">
-											by ${map['COMPANYNAME'] }
-										</a>
-
-										<span class="f1-s-3 m-rl-3">
-											-
-										</span>
-
-										<span class="f1-s-3">
-										~<fmt:formatDate value="${map['END_DATE'] }" pattern="yyyy-MM-dd"/> 
-											
-										</span>
-									</span>
+											 	<img alt="스크랩임시사진" src="<c:url value='/peoplejob_upload/scrapstarwhite.PNG'/>" style="margin-top:40px;cursor: pointer;"
+											 	onclick="scrap()">
+											 	<img alt="즉시지원버튼" src="<c:url value='/peoplejob_upload/즉시지원.PNG'/>" style="float:right;margin-top:40px;margin-right:5px;cursor: pointer;"
+											 	onclick="apply()">
+											 </div>  
 								</div>
-							</div>
-						</div>
-					 
-						</c:forEach>  
-						
-						<div class="col-sm-6 p-r-25 p-r-15-sr991">
-							<!-- Item latest -->	
-							<div class="m-b-45">
-								<a href="blog-detail-01.html" class="wrap-pic-w hov1 trans-03">
-									<img src="<c:url value='/resources/main/images/samsung.png'/>" alt="IMG" class="imgsize">
-								</a>
-
-								<div class="p-t-16">
-									<h5 class="p-b-5">
-										<a href="blog-detail-01.html" class="f1-m-3 cl2 hov-cl10 trans-03" style="font-size: 1.0em">
-											삼성전자 개발자 채용 
-										</a>
-									</h5>
-
-									<span class="cl8">
-										<a href="#" class="f1-s-4 cl8 hov-cl10 trans-03">
-											by SAMSUNG
-										</a>
-
-										<span class="f1-s-3 m-rl-3">
-											-
-										</span>
-
-										<span class="f1-s-3">
-											2019-07-01 ~ 2019-07-13
-										</span>
-									</span>
+							</c:forEach>
+								<div class="recom1" style="border: 1px solid lightgray;width: 33.3%;height: 50%;float: left;padding: 20px;">
+									<span style="font-weight: bold;font-size: 1.1em;"> 나에게 딱맞는</span><br>
+									<span style="color: #4876ef;font-weight: bold;font-size: 1.1em;">추천공고</span>
+									<span style="font-weight: bold;font-size: 1.1em;">를 확인하려면?</span><br>
+									<input type="button" class="form-control btn btn-register" value="로그인하기" style="font-size: 1.1em;margin-top: 12px;background: cornflowerblue;border-color: cornflowerblue;"
+									onclick="location.href='<c:url value='/login/login.do'/>'" >
 								</div>
-							</div>
-						</div>  
-
-						<div class="col-sm-6 p-r-25 p-r-15-sr991">
-							<!-- Item latest -->	
-							<div class="m-b-45">
-								<a href="blog-detail-01.html" class="wrap-pic-w hov1 trans-03">
-									<img src="<c:url value='/resources/main/images/naver.jpg'/>" alt="IMG" class="imgsize">
-								</a>
-
-									<h5 class="p-b-5">
-										<a href="blog-detail-01.html" class="f1-m-3 cl2 hov-cl10 trans-03">
-											2019 네이버 개발자 채용 
-										</a>
-									</h5>
-
-									<span class="cl8">
-										<a href="#" class="f1-s-4 cl8 hov-cl10 trans-03">
-											by NAVER
-										</a>
-
-										<span class="f1-s-3 m-rl-3">
-											-
-										</span>
-
-										<span class="f1-s-3">
-											2019-06-30 ~ 2019-07-15
-										</span>
-									</span>
-							</div>
-						</div>
-
-						<div class="col-sm-6 p-r-25 p-r-15-sr991">
-							<!-- Item latest -->	
-							<div class="m-b-45">
-								<a href="blog-detail-01.html" class="wrap-pic-w hov1 trans-03">
-									<img src="<c:url value='/resources/main/images/한화.png'/>" alt="IMG" class="imgsize">
-								</a>
-
-								<div class="p-t-16">
-									<h5 class="p-b-5">
-										<a href="blog-detail-01.html" class="f1-m-3 cl2 hov-cl10 trans-03">
-											한화 2019 공채 
-										</a>
-									</h5>
-
-									<span class="cl8">
-										<a href="#" class="f1-s-4 cl8 hov-cl10 trans-03">
-											by HanWha
-										</a>
-
-										<span class="f1-s-3 m-rl-3">
-											-
-										</span>
-
-										<span class="f1-s-3">
-											Feb 15
-										</span>
-									</span>
 								</div>
-							</div>
-						</div>
-
---%>
-
-
-
+								
 						</div>
 
 
@@ -768,50 +744,27 @@ img.imgsize {
 		<div style="border: 1px solid lightgray;
     width: 210px;
     float: right;
-    margin-right: 288px;
-    height: 366px;
-    display: inline;">
-    <!-- 	<table border="1" style="width:200px;"> 
-    		<tr>
-    			<td colspan="2">마감 임박 공채</td>
-    		</tr>
-    		<tr>
-    			<td>삼성전자</td>
-    			<td>~7.17</td>
-    		</tr> 
-    		<tr>
-    			<td>삼성전자</td>
-    			<td>~7.17</td>
-    		</tr>
-    		<tr>
-    			<td>삼성전자</td>
-    			<td>~7.17</td>
-    		</tr>
-    	</table> -->
+    /* margin-right: 288px; */
+    height: 338px;
+    display: inline;
+    float: left;">
+  
     	<div class="devRankingWrap devStarter" style="display: block;width:200px;">  
     	
- 		<!-- <div class="how2 how2-cl4 flex-s-c m-b-35">
-			<h3 class="f1-m-2 cl3 tab01-title">마감 임박 공채</h3>
-		</div> -->
-				
 						<div class="rankingColumn devRanking" id="ranking_carousel_1" style="width: 200px;margin-top: 0px;   /*  margin-top: -36px; */
    							 height: 364px; border: 1px solid white;"> 
 							<h3 class="blind">신입 랭킹</h3>
 							<div id="ranking_carousel" class="rankListWap">
 								<div class="carousel-pagination">
 								</div>
-								<ul class="carousel-wrapper" style="padding:0px">
 
 
 									<li class="carousel-slide on">  
-										<h4 class="hd_4" style="    font-size: 18px;
-    border-bottom: 1px solid lightgray;
-    width: 208px;    padding-bottom: 7px;">마감 임박 공채</h4>
+										<h4 class="hd_4" style="    font-size: 18px;border-bottom: 1px solid lightgray; width: 208px;    padding-bottom: 7px;">마감 임박 공채</h4>
 										<ul class="infoList endList">
 										
 										  <c:forEach var="map" items="${deadlineList }">
-											<li class="deadline" style="    margin-bottom: 8px;
-    font-size: 1.1em;">
+											<li class="deadline" style=" margin-bottom: 8px; font-size: 1.1em;">
 											<span class="titBx">
 											<a href="" class="devClick devHref" data-click-value="98" style="color:gray">
 											~<fmt:formatDate value="${map['END_DATE']}" pattern="MM-dd"/></a>
@@ -819,51 +772,6 @@ img.imgsize {
 													<span class="txBx" onclick="location.href='<c:url value='/company/jobopening_view.do?jobopening=${map["JOBOPENING"] }'/>'"> ${map['COMPANYNAME'] }</span></li>
 										</c:forEach>   
 										
-										<%--   <c:forEach var="map" items="${list }">
-										<li class="deadline"><span class="titBx"><a href="#" class="devClick devHref" data-click-value="98">
-											${map['JOBTITLE'] }</a></span> 
-													<span class="txBx"></span></li>
-										</c:forEach>  --%>
-										
-										
-											<%-- <li class="deadline"><span class="titBx"><a href="#"
-													class="devClick devHref" data-click-value="98"
-													target="_blank">㈜GS리테일</a></span> <span class="txBx">~16시</span></li>
-											<li class="deadline"><span class="titBx"><a href="#"
-													class="devClick devHref" data-click-value="98"
-													target="_blank">호텔신라</a></span> <span class="txBx">~17시</span></li>
-											<li class="deadline"><span class="titBx"><a href="#"
-													class="devClick devHref" data-click-value="98"
-													target="_blank">에스케이이노베이션</a></span> <span class="txBx">~24시</span>
-											</li>
-											<li class="deadline"><span class="titBx"><a href="#"
-													class="devClick devHref" data-click-value="98"
-													target="_blank">한국국제협력단</a></span> <span class="txBx">~15시</span>
-											</li>
-											<li class="deadline"><span class="titBx"><a href="#"
-													class="devClick devHref" data-click-value="98"
-													target="_blank">주식회사 캠시스</a></span> <span class="txBx">~07.08</span>
-											</li>
-											<li class="deadline"><span class="titBx"><a href="#"
-													class="devClick devHref" data-click-value="98"
-													target="_blank">대한무역투자진흥공사</a></span> <span class="txBx">~24시</span>
-											</li>
-											<li class="deadline"><span class="titBx"><a href="#"
-													class="devClick devHref" data-click-value="98"
-													target="_blank"> 한국건설기술연구원</a></span> <span class="txBx">~24시</span>
-											</li>
-											<li class="deadline"><span class="titBx"><a href="#"
-													class="devClick devHref" data-click-value="98"
-													target="_blank">(재)씨젠의료재단</a></span> <span class="txBx">~24시</span>
-											</li>
-											<li class="deadline"><span class="titBx"><a
-													href="<c:url value='https://www.naver.com'/>"
-													class="devClick devHref" data-click-value="98"
-													target="_blank">(재)전라북도생물산업진흥원</a></span> <span class="txBx">~18시</span>
-											</li>
-											<li class="deadline"><span class="titBx"><a href="#"
-													class="devClick devHref" data-click-value="98" target="">위본건설㈜</a></span>
-												<span class="txBx">~24시</span></li> --%>
 										</ul>
 									</li>
 
@@ -873,7 +781,7 @@ img.imgsize {
 						</div>
 					</div> 
     </div>
-						<div class="p-l-10 p-rl-0-sr991 p-b-20" style="width: 271px;float: right;margin-top: -369px;padding: 0px;">
+						<div class="p-l-10 p-rl-0-sr991 p-b-20" style="width: 271px;float: left; padding: 0px; margin-left: 15px;">
 							<!-- Video -->
 							<div class="notice" style="width: 285px; height: 156px;">
 							<div class="p-b-23">
@@ -888,7 +796,7 @@ img.imgsize {
 						<div class="devRankingWrap devStarter" style="display: block;">
 
 						<div class="rankingColumn devRanking" id="ranking_carousel_1" style="width: 258px;margin-top: -27px;  height:240px;">
-							<img alt="" src="<c:url value='/resources/main/images/getImage.png'/>" style="    margin-top: 22px;">
+							<img alt="" src="<c:url value='/resources/main/images/getImage.png'/>" style="">
 						</div>
 					</div>
 						</div> <!-- 여기까지 공지사항 -->
@@ -899,39 +807,181 @@ img.imgsize {
 					</div> --%>
 				</div>
  
+ <!-- 공채 롤링배너 --> 
+<div class="public" style="border: 1px solid lightgray;width: 1300px;height: 80px; margin-left: -100px;"> 
+
+		<img alt="이전공채" src="<c:url value="/resources/main/images/prev.PNG"/>" id="prev" style="float:left; margin-top: 20px;">
+	<div class="rolling_panel">
+		<ul>
+			<li>
+			<div name="publicblack"> 
+			<a href="<c:url value='/main/mainindex.do'/>">
+				<div class="publicImgBox" style="width: 105px;">
+					<img src="<c:url value='/resources/main/images/naver.jpg'/>" alt="네이버" class="publicimg">
+				</div>
+			</a>
+			</div>
+			<div id="mouseover_show" name="mouseover_show">
+			<a href="" style="text-decoration: none; text-align: center; color: white;">
+			<span name="publicname">네이버</span>
+			<span name="publicname">공채보기</span>
+			</a></div> 
+			</li>
+			
+			<li>
+			<div name="publicblack"> 
+			<a href="<c:url value='/main/mainindex.do'/>">
+				<div class="publicImgBox" style="width: 105px;">
+					<img src="<c:url value='/resources/main/images/한화.png'/>" alt="한화" class="publicimg">
+				</div>
+			</a>
+			</div>
+			<div id="mouseover_show" name="mouseover_show">
+			<a href="" style="text-decoration: none; text-align: center; color: white;">
+			<span name="publicname">한화</span>
+			<span name="publicname">공채보기</span>
+			</a></div> 
+			</li>
+				
+			<li>
+				<div name="publicblack"> 
+				<a href="<c:url value='/main/mainindex.do'/>">
+					<div class="publicImgBox" style="width: 105px;">
+						<img src="<c:url value='/resources/main/images/ezen.jpg'/>" alt="이젠" class="publicimg">
+					</div>
+				</a>
+				</div>
+				<div id="mouseover_show" name="mouseover_show">
+				<a href="" style="text-decoration: none; text-align: center; color: white;">
+				<span name="publicname">이젠</span>
+				<span name="publicname">공채보기</span>
+				</a></div> 
+			</li>
+			
+			<li>
+			<div name="publicblack"> 
+			<a href="<c:url value='/main/mainindex.do'/>">
+				<div class="publicImgBox" style="width: 105px;">
+					<img src="<c:url value='/resources/main/images/kaokaobank20190719144539376.png'/>" alt="한화" class="publicimg">
+				</div>
+			</a>
+			</div>
+			<div id="mouseover_show" name="mouseover_show">
+			<a href="" style="text-decoration: none; text-align: center; color: white;">
+			<span name="publicname">카카오뱅크</span>
+			<span name="publicname">공채보기</span>
+			</a></div> 
+			</li>
+			
+			<li>
+			<div name="publicblack"> 
+			<a href="<c:url value='/main/mainindex.do'/>">
+				<div class="publicImgBox" style="width: 105px;">
+					<img src="<c:url value='/resources/main/images/cj.jpg'/>" alt="cj" class="publicimg">
+				</div>
+			</a>
+			</div>
+			<div id="mouseover_show" name="mouseover_show">
+			<a href="" style="text-decoration: none; text-align: center; color: white;">
+			<span name="publicname">cj 제일제당</span>
+			<span name="publicname">공채보기</span>
+			</a></div> 
+			</li>
+				
+				<li>
+			<div name="publicblack"> 
+			<a href="<c:url value='/main/mainindex.do'/>">
+				<div class="publicImgBox" style="width: 105px;">
+					<img src="<c:url value='/resources/main/images/MegaMax.jpg'/>" alt="한화" class="publicimg">
+				</div>
+			</a>
+			</div>
+			<div id="mouseover_show" name="mouseover_show" style="margin-left:10px;">
+			<a href="" style="text-decoration: none; text-align: center; color: white;">
+			<span name="publicname">Megamax</span>
+			<span name="publicname">공채보기</span>
+			</a></div> 
+			</li>
+				
+			<li>
+			<div name="publicblack"> 
+			<a href="<c:url value='/main/mainindex.do'/>">
+				<div class="publicImgBox" style="width: 105px;">
+					<img src="<c:url value='/resources/main/images/idis.gif'/>" alt="한화" class="publicimg">
+				</div>
+			</a>
+			</div>
+			<div id="mouseover_show" name="mouseover_show">
+			<a href="" style="text-decoration: none; text-align: center; color: white;">
+			<span name="publicname">아이디스</span>
+			<span name="publicname">공채보기</span>
+			</a></div> 
+			</li>
+			
+			<li>
+				<div name="publicblack"> 
+				<a href="<c:url value='/main/mainindex.do'/>">
+					<div class="publicImgBox" style="width: 105px;">
+						<img src="<c:url value='/resources/main/images/cj.jpg'/>" alt="네이버" class="publicimg">
+					</div>
+				</a>
+				</div>
+				<div id="mouseover_show" name="mouseover_show">
+				<a href="" style="text-decoration: none; text-align: center; color: white;">
+				<span name="publicname">cj</span>
+				<span name="publicname">공채보기</span>
+				</a></div> 
+			</li>
+						
+			<li>
+				<div name="publicblack"> 
+				<a href="<c:url value='/main/mainindex.do'/>">
+					<div class="publicImgBox" style="width: 105px;">
+						<img src="<c:url value='/resources/main/images/naver.jpg'/>" alt="네이버" class="publicimg">
+					</div>
+				</a>
+				</div>
+				<div id="mouseover_show" name="mouseover_show">
+				<a href="" style="text-decoration: none; text-align: center; color: white;">
+				<span name="publicname">네이버</span>
+				<span name="publicname">공채보기</span>
+				</a></div> 
+			</li>
+			
+			
+		</ul>
+	</div>
+	<p class="btn_more">
+	<a href="" target="_blank" style="color: black;">공채정보<span>더보기 > </span></a>
+	</p>
+
+	<img alt="다음공채" src="<c:url value="/resources/main/images/right.PNG"/>" id="next" style="float:right;margin-top: 20px;cursor: pointer; margin-right: 10px;">
 </div> 
+<!-- 롤링배너 끝  -->
+
 </div>
-
-
+</div>
 
 				<!-- 복사 -->
 				<div class="row justify-content-center" style="width: 1300px;margin-left: 67px;">  
-						<%-- <div class="how2 how2-cl4 flex-s-c m-r-10 m-r-0-sr991">
-							<h3 class="f1-m-2 cl3 tab01-title" style="float: right">
-								채용정보</h3>
-							<h5>VIP</h5>
-							<h5 style="margin-left: 525px;">
-								
-							</h5>   
-						</div> --%>  
+						 
 						<div style="margin-left: -115px;width: 1280px;">
 						<h1>VVIP</h1>  <a href="<c:url value='/service/payment.do'/> " style="font-size:1.1em;color:black;"> >상품문의 </a>
 						</div>
 						
-						<div class="row p-t-35"
-							style="padding-top: 0px; width: 1300px; margin-left: -125px;">
-							<c:forEach var="map" items="${list }">
-							<div class="col-sm-6 p-r-25 p-r-15-sr991" id="vvipone">
+						<div class="row p-t-35" style="padding-top: 0px; width: 1300px; margin-left: -125px;">
+							<c:forEach var="map" items="${list }" begin="0" end="9">   
+							<div class="col-sm-6 p-r-25 p-r-15-sr991" id="vvipone"> 
 								<a href="<c:url value='/company/jobopening_view.do?jobopening=${map["JOBOPENING"] } ' />" class="f1-m-3 cl2 hov-cl10 trans-03" style="font-size: 1.0em">
 								<!-- Item latest -->
 								<div class="m-b-45"> 
-									<div style="width:270px;height:127px;">
+									<div style="width:270px;height:127px;"> 
 										<img src ="<c:url value='/peoplejob_upload/${map["IMAGE"] }'/>" alt="IMG" class="imgsize">
 									</div>
 									<div class="p-t-16"> 
 										<h5 class="p-b-5" style="font-size: 1.3em; margin-top: -39px;"> ${map['JOBTITLE'] } </h5>
 										<h5 class="p-b-5" style="font-size: 1.1em;display: inline; margin-right: 10px;"> ${map['COMPANYNAME'] } </h5>
-										<span class="cl8" id="Dday">   D-${map['DDAY'] } </span><br>     
+										<span class="cl8" id="Dday">   D-${map['DDAY']} </span><br>      
 											<img alt="스크랩임시사진" src="<c:url value='/peoplejob_upload/scrapstarwhite.PNG'/>" style="  margin-top: 3px;">
 											 <img alt="지원버튼사진" src="<c:url value='/peoplejob_upload/즉시지원.PNG'/>" style="float:right;"> 
 									</div> 
@@ -940,7 +990,7 @@ img.imgsize {
 							</div>
 							</c:forEach>
 							
-							<div class="col-sm-6 p-r-25 p-r-15-sr991" id="vvipone">
+							<div class="col-sm-6 p-r-25 p-r-15-sr991" id="vvipone"> 
 								<a href="blog-detail-01.html" class="f1-m-3 cl2 hov-cl10 trans-03" style="font-size: 1.0em">
 								<!-- Item latest -->
 								<div class="m-b-45"> 

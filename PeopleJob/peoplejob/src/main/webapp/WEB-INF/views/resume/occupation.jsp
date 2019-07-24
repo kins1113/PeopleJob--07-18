@@ -441,6 +441,7 @@ var type = 'worknet';
 
 //]]>
 </script>
+<div style="border: 1px solid gold; float: left; width: 23%; margin: 10px;">
 <h1>직종 찾기 <span></span></h1>
 <ul class="infobox mb15">
   <li>직종 : 최대 10개의 직종 선택이 가능합니다. 원하시는 직종을 선택하세요.</li>

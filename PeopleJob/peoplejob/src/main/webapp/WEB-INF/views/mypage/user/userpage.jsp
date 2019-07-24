@@ -12,7 +12,7 @@
  .dashboard{
  	    border: 1px solid lightgray;
  	    margin-top: 30px;
- 	    height: 170px;
+ 	    height: 160px;
  }
  
 .summary_wrap .dashboard .activity_list li {
@@ -35,18 +35,21 @@ a{
 .img{
 	position: relative;
     float: left;
-    margin-right: 34px;
+     margin-right: 34px; 
     text-align: center;
+    vertical-align: middle;
+   /*  margin-right: -7px; */
 }
 .text{
 	position: absolute;
-    top: 30%;
-    left: 25%;
-    font-weight: bold; 
+    top: 10%;
+    left: 20%;
+    /* font-weight: bold;  */
     font-size: 1.1em;
 }
 .doing {
     display: block;
+    font-size: 3em; 
 }
 
 span.sname {
@@ -62,6 +65,17 @@ ul.p-t-35 {
 
 li.how-bor3.p-rl-4 {
     font-size: 1.1em;
+}
+
+.p-table .btn {
+    border-radius: 25px;
+    margin-top: 10px;
+    font-size: 16px;
+    text-transform: uppercase;
+}
+.p-red .btn:hover { 
+    background: #fb787a;
+    border-color: #fb787a;
 }
 </style>
 <script type="text/javascript" src="<c:url value='/resources/main/js/jquery-3.4.1.min.js'/>"></script>
@@ -85,7 +99,7 @@ function company(){
 } 
 </script>
 	<!-- Content -->
-	<section class="bg0 p-b-140 p-t-10">
+	<section class="bg0 p-b-140 p-t-10"> 
 		<div class="container" style=" max-width: 1230px;">
 			<div class="row justify-content-center" style="width: 1250px;">
 				<div class="col-md-10 col-lg-8 p-b-30" style="float: right;">
@@ -95,11 +109,12 @@ function company(){
 						<div class="p-b-70">
 						
 							<div class="dashboard">
-            <ul class="activity_list">
+            <ul class="activity_list"> 
                    <li class="img">
                         <a href="#" onclick="" onmousedown="try{n_trackEvent('myhome', 'dashboard' , 'resume-manage', '');}catch(e){};">
                            <img src="<c:url value='/resources/main/images/circle.PNG'/>"></img>
                            <div class="text">
+                          <!--  <button type="button" class="btn btn-lg btn-primary" id="pay">신청하기</button>  -->
                            <span class="doing"><em> 0 </em> </span>
                             <span class="sname">지원현황</span> 
                            </div>

@@ -368,6 +368,8 @@ a.left-topbar-item:hover {
   -ms-transform: translateY(0%);
   -o-transform: translateY(0%);
   transform: translateY(0%);
+  
+  border-bottom: 2px solid darkseagreen;
 }
 
 .menu-desktop {

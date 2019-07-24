@@ -74,4 +74,14 @@ public class PeopleInfoServiceImpl implements PeopleInfoService {
 		return peopleinfoDao.selectTotalCountJobtype(map);
 	}
 
+	@Override
+	public List<ResumeVO> selectPeoplew(Map<String, Object> map) {
+		return peopleinfoDao.selectPeoplew(map);
+	}
+
+	@Override
+	public int selectTotalCountPeople(Map<String, Object> map) {
+		return peopleinfoDao.selectTotalCountPeople(map);
+	}
+
 }
