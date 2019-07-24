@@ -77,32 +77,126 @@ li.how-bor3.p-rl-4 {
     background: #fb787a;
     border-color: #fb787a;
 }
+
 </style>
 <script type="text/javascript" src="<c:url value='/resources/main/js/jquery-3.4.1.min.js'/>"></script>
 <script type="text/javascript">
+$(function(){
+	var author_code="${sessionScope.author_code}";
+	function jobopening(){
+		if(author_code==2){
+			alert('기업회원은 관리자의 승인을 받은 후 채용공고를 등록할 수 있습니다.');
+		}else if(author_code==3){
+			location.href="<c:url value='/company/my_jobopening_list.do?companycode1=${memberVo.companyCode}'/>";
+		}
+	} 
 
-var author_code="${sessionScope.author_code}";
-function jobopening(){
-	if(author_code==2){
-		alert('기업회원은 관리자의 승인을 받은 후 채용공고를 등록할 수 있습니다.');
-	}else if(author_code==3){
-		location.href="<c:url value='/company/my_jobopening_list.do?companycode1=${memberVo.companyCode}'/>";
-	}
-} 
+	function company(){
+		if(author_code==2){
+			alert('기업회원은 관리자의 승인을 받은 후 기업정보를 등록할 수 있습니다.');
+		}else if(author_code==3){
+			location.href="<c:url value='/login/c_update.do'/>";
+		}
+	} 
 
-function company(){
-	if(author_code==2){
-		alert('기업회원은 관리자의 승인을 받은 후 기업정보를 등록할 수 있습니다.');
-	}else if(author_code==3){
-		location.href="<c:url value='/login/c_update.do'/>";
-	}
-} 
+});
 </script>
 	<!-- Content -->
 	<section class="bg0 p-b-140 p-t-10"> 
-		<div class="container" style=" max-width: 1230px;">
+		<div class="container" style="max-width: 1285px;width: 1270px; margin: 0 auto;">
 			<div class="row justify-content-center" style="width: 1250px;">
-				<div class="col-md-10 col-lg-8 p-b-30" style="float: right;">
+			
+			<div style="border: 1px solid lightgray; width:200px;float: left;margin-top:29px;">
+			<div name="photo" style="height: 300px; border:1px solid lightgray;">
+				<img alt="회원이미지" src="<c:url value='/resources/main/images/people.PNG'/>" width="100%">
+				${sessionScope.memberName }<span>님</span>
+			</div>
+				<div class="p-l-10 p-rl-0-sr991 p-t-70" style="padding-top: 29px;float:left;">						
+						<!-- Category -->
+						<div class="p-b-60">
+							<div class="how2 how2-cl4 flex-s-c">
+								<h3 class="f1-m-2 cl3 tab01-title">
+									마이페이지
+								</h3>
+							</div>
+
+							<ul class="p-t-35">
+								<li class="how-bor3 p-rl-4">
+									<c:if test="${sessionScope.author_code==1 }" >
+									<a href="<c:url value='/resume/list.do'/>" class="dis-block f1-s-10 text-uppercase cl2 hov-cl10 trans-03 p-tb-13">
+										이력서 관리
+									</a>
+									</c:if>
+									<c:if test="${sessionScope.author_code==2 || sessionScope.author_code==3 }" > <!-- 나중에 3으로 바꿀것, 바꾼 후 2이면 못들어가게 막기 -->
+									<a href="#" class="dis-block f1-s-10 text-uppercase cl2 hov-cl10 trans-03 p-tb-13" id="jobopening" onclick="jobopening()">
+										채용공고 관리
+									</a>
+									</c:if>
+								</li>
+
+								<li class="how-bor3 p-rl-4">
+								<c:if test="${sessionScope.author_code==1 }" >
+									<a href="<c:url value='/scrap/scrap_list.do'/>" class="dis-block f1-s-10 text-uppercase cl2 hov-cl10 trans-03 p-tb-13">
+										스크랩 정보
+									</a>
+								</c:if>
+								</li>
+								
+								<li class="how-bor3 p-rl-4"> 
+								<c:if test="${sessionScope.author_code==2 || sessionScope.author_code==3}" >
+									<a href="" class="dis-block f1-s-10 text-uppercase cl2 hov-cl10 trans-03 p-tb-13">
+										스크랩 정보
+									</a>
+								</c:if>
+								</li>
+								
+
+								<li class="how-bor3 p-rl-4">
+									<c:if test="${sessionScope.author_code==1 }" >
+									<a href="#" class="dis-block f1-s-10 text-uppercase cl2 hov-cl10 trans-03 p-tb-13">
+										지원 현황
+									</a>
+									</c:if>
+									<c:if test="${sessionScope.author_code==2|| sessionScope.author_code==3 }" > <!-- 나중에 3으로 바꿀것, 바꾼 후 2이면 못들어가게 막기 -->
+									<a href="<c:url value='/mypage/corp/paymentDetail.do'/>" class="dis-block f1-s-10 text-uppercase cl2 hov-cl10 trans-03 p-tb-13">
+										결제 내역
+									</a>
+									</c:if>
+								</li>
+
+								<li class="how-bor3 p-rl-4">
+										<c:if test="${sessionScope.author_code==1 }" >
+									<a href="<c:url value='/login/person_update.do'/>" class="dis-block f1-s-10 text-uppercase cl2 hov-cl10 trans-03 p-tb-13">
+										내 정보 관리
+									</a>
+									</c:if>
+									<c:if test="${sessionScope.author_code==2|| sessionScope.author_code==3 }" >
+									<a href="#" class="dis-block f1-s-10 text-uppercase cl2 hov-cl10 trans-03 p-tb-13" onclick="company()">
+										기업정보 관리
+									</a>
+									</c:if>
+								</li>
+
+								<li class="how-bor3 p-rl-4">
+									<a href="<c:url value='/login/changePwd.do'/>" class="dis-block f1-s-10 text-uppercase cl2 hov-cl10 trans-03 p-tb-13">
+										비밀번호 변경
+									</a>
+								</li>
+								
+									<li class="how-bor3 p-rl-4">
+									<a href="<c:url value='/login/memberOut.do'/>" class="dis-block f1-s-10 text-uppercase cl2 hov-cl10 trans-03 p-tb-13">
+										회원 탈퇴
+									</a>
+									
+								</li>
+							</ul>
+						</div>
+
+					</div>
+				</div>
+				
+				
+				<div class="col-md-10 col-lg-8 p-b-30" style="float: left;">
 					<div class="p-r-10 p-r-0-sr991">
 						<!-- Blog Detail -->
 						
@@ -240,92 +334,7 @@ function company(){
 				</div>
 				
 				<!-- Sidebar -->
-					<div class="p-l-10 p-rl-0-sr991 p-t-70" style="padding-top: 29px;">						
-						<!-- Category -->
-						<div class="p-b-60">
-							<div class="how2 how2-cl4 flex-s-c">
-								<h3 class="f1-m-2 cl3 tab01-title">
-									마이페이지
-								</h3>
-							</div>
-
-							<ul class="p-t-35">
-								<li class="how-bor3 p-rl-4">
-									<c:if test="${sessionScope.author_code==1 }" >
-									<a href="<c:url value='/resume/list.do'/>" class="dis-block f1-s-10 text-uppercase cl2 hov-cl10 trans-03 p-tb-13">
-										이력서 관리
-									</a>
-									</c:if>
-									<c:if test="${sessionScope.author_code==2 || sessionScope.author_code==3 }" > <!-- 나중에 3으로 바꿀것, 바꾼 후 2이면 못들어가게 막기 -->
-									<a href="#" class="dis-block f1-s-10 text-uppercase cl2 hov-cl10 trans-03 p-tb-13" id="jobopening" onclick="jobopening()">
-										채용공고 관리
-									</a>
-									</c:if>
-								</li>
-
-								<li class="how-bor3 p-rl-4">
-								<c:if test="${sessionScope.author_code==1 }" >
-									<a href="<c:url value='/scrap/scrap_list.do'/>" class="dis-block f1-s-10 text-uppercase cl2 hov-cl10 trans-03 p-tb-13">
-										스크랩 정보
-									</a>
-								</c:if>
-								</li>
-								
-								<li class="how-bor3 p-rl-4"> 
-								<c:if test="${sessionScope.author_code==2 || sessionScope.author_code==3}" >
-									<a href="" class="dis-block f1-s-10 text-uppercase cl2 hov-cl10 trans-03 p-tb-13">
-										스크랩 정보
-									</a>
-								</c:if>
-								</li>
-								
-
-								<li class="how-bor3 p-rl-4">
-									<c:if test="${sessionScope.author_code==1 }" >
-									<a href="#" class="dis-block f1-s-10 text-uppercase cl2 hov-cl10 trans-03 p-tb-13">
-										지원 현황
-									</a>
-									</c:if>
-									<c:if test="${sessionScope.author_code==2|| sessionScope.author_code==3 }" > <!-- 나중에 3으로 바꿀것, 바꾼 후 2이면 못들어가게 막기 -->
-									<a href="<c:url value='/mypage/corp/paymentDetail.do'/>" class="dis-block f1-s-10 text-uppercase cl2 hov-cl10 trans-03 p-tb-13">
-										결제 내역
-									</a>
-									</c:if>
-								</li>
-
-								<li class="how-bor3 p-rl-4">
-										<c:if test="${sessionScope.author_code==1 }" >
-									<a href="<c:url value='/login/person_update.do'/>" class="dis-block f1-s-10 text-uppercase cl2 hov-cl10 trans-03 p-tb-13">
-										내 정보 관리
-									</a>
-									</c:if>
-									<c:if test="${sessionScope.author_code==2|| sessionScope.author_code==3 }" >
-									<a href="#" class="dis-block f1-s-10 text-uppercase cl2 hov-cl10 trans-03 p-tb-13" onclick="company()">
-										기업정보 관리
-									</a>
-									</c:if>
-								</li>
-
-								<li class="how-bor3 p-rl-4">
-									<a href="<c:url value='/login/changePwd.do'/>" class="dis-block f1-s-10 text-uppercase cl2 hov-cl10 trans-03 p-tb-13">
-										비밀번호 변경
-									</a>
-								</li>
-								
-									<li class="how-bor3 p-rl-4">
-									<a href="<c:url value='/login/memberOut.do'/>" class="dis-block f1-s-10 text-uppercase cl2 hov-cl10 trans-03 p-tb-13">
-										회원 탈퇴
-									</a>
-									
-								</li>
-							</ul>
-						</div>
-
-						
-
 					
-						
-					</div>
 			</div>
 		</div>
 	</section>
