@@ -82,7 +82,15 @@
         </tr>
         </thead>
         </table>
+        
         </div>
+        <div class="choice_wrap new mt20 mb10">
+  <div class="choice_inner">
+    <p class="total" id="total">
+      <strong>선택직종 :</strong> 
+    </p>
+  </div><!-- end choice_inner -->
+</div>
         </c:if>
         
 <%@include file="../main/inc/bottom.jsp" %>

@@ -24,9 +24,8 @@
 #layer div.category div.multyCheck span input{z-index:20 !important;}
 </style>
 </head>
-<div id="wrapper">
+<div id="wrapper" >
 <!--<script src="http://www.work.go.kr/js/framework/keis.import.js" type="text/javascript" charset="utf-8"></script>-->
-<script src="<c:url value='/resources/js/jquery-3.4.1.js'/>" type="text/javascript"></script>
 <script src="<c:url value='/resources/js/jquery-3.4.1.min.js'/>" type="text/javascript"></script>
 <script src="<c:url value='/resources/js/jquery.listen.js'/>" type="text/javascript"></script>
 <script src="<c:url value='/resources/js/keis.config.js'/>" type="text/javascript" charset="utf-8"></script>
@@ -47,6 +46,10 @@
 <script src="<c:url value='/resources/js/keis.util.js'/>" type="text/javascript"></script>
 <script src="<c:url value='/resources/js/keis.report.js'/>" type="text/javascript"></script>
 <script type="text/javascript">
+
+
+$(".multyCheck").prop("checked", false);
+$("#thirdJobDiv").prop("checked", false);
 if (document.domain.toString().indexOf("yesform.com") != -1) document.domain="yesform.com";
 
 var jobData = new keis.data(); //선택직종을 처리하기위한 커스텀 콜렉션
@@ -441,7 +444,8 @@ var type = 'worknet';
 
 //]]>
 </script>
-<div style="border: 1px solid gold; float: left; width: 23%; margin: 10px;">
+
+<div style="border: 1px solid gold; float: left; width: 20%; margin: 10px; height:414px;  overflow: auto;">
 <h1>직종 찾기 <span></span></h1>
 <ul class="infobox mb15">
   <li>직종 : 최대 10개의 직종 선택이 가능합니다. 원하시는 직종을 선택하세요.</li>
@@ -449,7 +453,7 @@ var type = 'worknet';
 </ul>
 
 <p class="apply_btn">
-  <a onclick="f_resultJob();return false;" href="#"></a>
+  <a onclick="f_resultJob();return false;" href="#"><img alt="적용하기" src="http://www.work.go.kr/images/common/btn/btn_apply04.gif"></a>
 </p>
 <div class="job_select_box">
   <div class="category first">
@@ -457,443 +461,102 @@ var type = 'worknet';
     <h3>1차 분류</h3>
     <div class="multyCheck">
 
-        <span><input name="firstname" title="경영·사무 추가" id="firstJobName0" onclick="f_checkJob(this,0);" type="checkbox" value="01">
-        <button name="mainJob" id="mainJob0" onclick="f_requestJobSubList('01', 'mainJob0', 'subJob')" type="button"><span>경영·사무</span></button></span>
-        <input name="firstname" id="firstJobName01" type="hidden" value="경영·사무">
-        <input id="mainJob0Nm" type="hidden" value="경영·사무">
+        <span><input name="firstJobName" title="관리자, 공학기술자(엔지니어) 추가" id="firstJobName0" onclick="f_checkJob(this,0);" type="checkbox" value="01">
+        <button name="mainJob" id="mainJob0" onclick="f_requestJobSubList('01', 'mainJob0', 'subJob')" type="button"><span>관리자, 공학기술자(엔지니어)</span></button></span>
+        <input name="firstJobName" id="firstJobName01" type="hidden" value="관리자, 공학기술자(엔지니어)">
+        <input id="mainJob0Nm" type="hidden" value="관리자, 공학기술자(엔지니어)">
 
-        <span><input name="firstname" title="영업·고객상담 추가" id="firstJobName1" onclick="f_checkJob(this,1);" type="checkbox" value="02">
+        <span><input name="firstJobName" title="경영·사무·금융·보험 추가" id="firstJobName1" onclick="f_checkJob(this,1);" type="checkbox" value="02">
         <button name="mainJob" id="mainJob1" onclick="f_requestJobSubList('02', 'mainJob1', 'subJob')" type="button"><span>경영·사무·금융·보험</span></button></span>
-        <input name="firstname" id="firstJobName02" type="hidden" value="영업·고객상담">
-        <input id="mainJob1Nm" type="hidden" value="영업·고객상담">
+        <input name="firstJobName" id="firstJobName02" type="hidden" value="경영·사무·금융·보험">
+        <input id="mainJob1Nm" type="hidden" value="경영·사무·금융·보험">
 
-        <span><input name="firstname" title="생산·제조 추가" id="firstJobName2" onclick="f_checkJob(this,2);" type="checkbox" value="03">
-        <button name="mainJob" id="mainJob2" onclick="f_requestJobSubList('03', 'mainJob2', 'subJob')" type="button"><span>생산·제조</span></button></span>
-        <input name="firstname" id="firstJobName03" type="hidden" value="생산·제조">
-        <input id="mainJob2Nm" type="hidden" value="생산·제조">
+        <span><input name="firstJobName" title="교육·연구·법률 추가" id="firstJobName2" onclick="f_checkJob(this,2);" type="checkbox" value="03">
+        <button name="mainJob" id="mainJob2" onclick="f_requestJobSubList('03', 'mainJob2', 'subJob')" type="button"><span>교육·연구·법률</span></button></span>
+        <input name="firstJobName" id="firstJobName03" type="hidden" value="교육·연구·법률">
+        <input id="mainJob2Nm" type="hidden" value="교육·연구·법률">
 
-        <span><input name="firstname" title="IT·인터넷 추가" id="firstJobName3" onclick="f_checkJob(this,3);" type="checkbox" value="04">
-        <button name="mainJob" id="mainJob3" onclick="f_requestJobSubList('04', 'mainJob3', 'subJob')" type="button"><span>IT·인터넷</span></button></span>
-        <input name="firstname" id="firstJobName04" type="hidden" value="IT·인터넷">
-        <input id="mainJob3Nm" type="hidden" value="IT·인터넷">
+        <span><input name="firstJobName" title="의료·보건·사회복지 추가" id="firstJobName3" onclick="f_checkJob(this,3);" type="checkbox" value="04">
+        <button name="mainJob" id="mainJob3" onclick="f_requestJobSubList('04', 'mainJob3', 'subJob')" type="button"><span>의료·보건·사회복지</span></button></span>
+        <input name="firstJobName" id="firstJobName04" type="hidden" value="의료·보건·사회복지">
+        <input id="mainJob3Nm" type="hidden" value="의료·보건·사회복지">
 
-        <span><input name="firstname" title="전문직 추가" id="firstJobName4" onclick="f_checkJob(this,4);" type="checkbox" value="05">
-        <button name="mainJob" id="mainJob4" onclick="f_requestJobSubList('05', 'mainJob4', 'subJob')" type="button"><span>전문직</span></button></span>
-        <input name="firstname" id="firstJobName05" type="hidden" value="전문직">
-        <input id="mainJob4Nm" type="hidden" value="전문직">
+        <span><input name="firstJobName" title="문화·예술·신문방송·디자인·캐드 추가" id="firstJobName4" onclick="f_checkJob(this,4);" type="checkbox" value="05">
+        <button name="mainJob" id="mainJob4" onclick="f_requestJobSubList('05', 'mainJob4', 'subJob')" type="button"><span>문화·예술·신문방송·디자인·캐드</span></button></span>
+        <input name="firstJobName" id="firstJobName05" type="hidden" value="문화·예술·신문방송·디자인·캐드">
+        <input id="mainJob4Nm" type="hidden" value="문화·예술·신문방송·디자인·캐드">
 
-        <span><input name="firstname" title="교육 추가" id="firstJobName5" onclick="f_checkJob(this,5);" type="checkbox" value="06">
-        <button name="mainJob" id="mainJob5" onclick="f_requestJobSubList('06', 'mainJob5', 'subJob')" type="button"><span>교육</span></button></span>
-        <input name="firstname" id="firstJobName06" type="hidden" value="교육">
-        <input id="mainJob5Nm" type="hidden" value="교육">
+        <span><input name="firstJobName" title="영업·판매·TM·고객상담 추가" id="firstJobName5" onclick="f_checkJob(this,5);" type="checkbox" value="06">
+        <button name="mainJob" id="mainJob5" onclick="f_requestJobSubList('06', 'mainJob5', 'subJob')" type="button"><span>영업·판매·TM·고객상담</span></button></span>
+        <input name="firstJobName" id="firstJobName06" type="hidden" value="영업·판매·TM·고객상담">
+        <input id="mainJob5Nm" type="hidden" value="영업·판매·TM·고객상담">
 
-        <span><input name="firstname" title="미디어 추가" id="firstJobName6" onclick="f_checkJob(this,6);" type="checkbox" value="07">
-        <button name="mainJob" id="mainJob6" onclick="f_requestJobSubList('07', 'mainJob6', 'subJob')" type="button"><span>미디어</span></button></span>
-        <input name="firstname" id="firstJobName07" type="hidden" value="미디어">
-        <input id="mainJob6Nm" type="hidden" value="미디어">
+        <span><input name="firstJobName" title="미용·여행·숙박·오락·스포츠·음식·경비청소 추가" id="firstJobName6" onclick="f_checkJob(this,6);" type="checkbox" value="07">
+        <button name="mainJob" id="mainJob6" onclick="f_requestJobSubList('07', 'mainJob6', 'subJob')" type="button"><span>미용·여행·숙박·오락·스포츠·음식·경비청소</span></button></span>
+        <input name="firstJobName" id="firstJobName07" type="hidden" value="미용·여행·숙박·오락·스포츠·음식·경비청소">
+        <input id="mainJob6Nm" type="hidden" value="미용·여행·숙박·오락·스포츠·음식·경비청소">
 
-        <span><input name="firstname" title="특수계층·공공 추가" id="firstJobName7" onclick="f_checkJob(this,7);" type="checkbox" value="08">
-        <button name="mainJob" id="mainJob7" onclick="f_requestJobSubList('08', 'mainJob7', 'subJob')" type="button"><span>특수계층·공공</span></button></span>
-        <input name="firstname" id="firstJobName08" type="hidden" value="특수계층·공공">
-        <input id="mainJob7Nm" type="hidden" value="특수계층·공공">
+        <span><input name="firstJobName" title="무역·물류·운전·운송 추가" id="firstJobName7" onclick="f_checkJob(this,7);" type="checkbox" value="08">
+        <button name="mainJob" id="mainJob7" onclick="f_requestJobSubList('08', 'mainJob7', 'subJob')" type="button"><span>무역·물류·운전·운송</span></button></span>
+        <input name="firstJobName" id="firstJobName08" type="hidden" value="무역·물류·운전·운송">
+        <input id="mainJob7Nm" type="hidden" value="무역·물류·운전·운송">
 
-        <span><input name="firstname" title="건설 추가" id="firstJobName8" onclick="f_checkJob(this,8);" type="checkbox" value="09">
-        <button name="mainJob" id="mainJob8" onclick="f_requestJobSubList('09', 'mainJob8', 'subJob')" type="button"><span>건설</span></button></span>
-        <input name="firstname" id="firstJobName09" type="hidden" value="건설">
-        <input id="mainJob8Nm" type="hidden" value="건설">
+        <span><input name="firstJobName" title="건설·건축·토목·환경·에너지·산업안전 추가" id="firstJobName8" onclick="f_checkJob(this,8);" type="checkbox" value="09">
+        <button name="mainJob" id="mainJob8" onclick="f_requestJobSubList('09', 'mainJob8', 'subJob')" type="button"><span>건설·건축·토목·환경·에너지·산업안전</span></button></span>
+        <input name="firstJobName" id="firstJobName09" type="hidden" value="건설·건축·토목·환경·에너지·산업안전">
+        <input id="mainJob8Nm" type="hidden" value="건설·건축·토목·환경·에너지·산업안전">
 
-        <span><input name="firstname" title="유통·무역 추가" id="firstJobName9" onclick="f_checkJob(this,9);" type="checkbox" value="10">
-        <button name="mainJob" id="mainJob9" onclick="f_requestJobSubList('10', 'mainJob9', 'subJob')" type="button"><span>유통·무역</span></button></span>
-        <input name="firstname" id="firstJobName10" type="hidden" value="유통·무역">
-        <input id="mainJob9Nm" type="hidden" value="유통·무역">
+        <span><input name="firstJobName" title="기계·금속·재료 추가" id="firstJobName9" onclick="f_checkJob(this,9);" type="checkbox" value="10">
+        <button name="mainJob" id="mainJob9" onclick="f_requestJobSubList('10', 'mainJob9', 'subJob')" type="button"><span>기계·금속·재료</span></button></span>
+        <input name="firstJobName" id="firstJobName10" type="hidden" value="기계·금속·재료">
+        <input id="mainJob9Nm" type="hidden" value="기계·금속·재료">
 
-        <span><input name="firstname" title="서비스 추가" id="firstJobName10" onclick="f_checkJob(this,10);" type="checkbox" value="11">
-        <button name="mainJob" id="mainJob10" onclick="f_requestJobSubList('11', 'mainJob10', 'subJob')" type="button"><span>서비스</span></button></span>
-        <input name="firstname" id="firstJobName11" type="hidden" value="서비스">
-        <input id="mainJob10Nm" type="hidden" value="서비스">
+        <span><input name="firstJobName" title="전기·전자 추가" id="firstJobName10" onclick="f_checkJob(this,10);" type="checkbox" value="11">
+        <button name="mainJob" id="mainJob10" onclick="f_requestJobSubList('11', 'mainJob10', 'subJob')" type="button"><span>전기·전자</span></button></span>
+        <input name="firstJobName" id="firstJobName11" type="hidden" value="전기·전자">
+        <input id="mainJob10Nm" type="hidden" value="전기·전자">
 
-        <span><input name="firstname" title="디자인 추가" id="firstJobName11" onclick="f_checkJob(this,11);" type="checkbox" value="12">
-        <button name="mainJob" id="mainJob11" onclick="f_requestJobSubList('12', 'mainJob11', 'subJob')" type="button"><span>디자인</span></button></span>
-        <input name="firstname" id="firstJobName12" type="hidden" value="디자인">
-        <input id="mainJob11Nm" type="hidden" value="디자인">
+        <span><input name="firstJobName" title="화학·섬유·식품 추가" id="firstJobName11" onclick="f_checkJob(this,11);" type="checkbox" value="12">
+        <button name="mainJob" id="mainJob11" onclick="f_requestJobSubList('12', 'mainJob11', 'subJob')" type="button"><span>화학·섬유·식품</span></button></span>
+        <input name="firstJobName" id="firstJobName12" type="hidden" value="화학·섬유·식품">
+        <input id="mainJob11Nm" type="hidden" value="화학·섬유·식품">
 
-        <span><input name="firstname" title="의료 추가" id="firstJobName12" onclick="f_checkJob(this,12);" type="checkbox" value="13">
-        <button name="mainJob" id="mainJob12" onclick="f_requestJobSubList('13', 'mainJob12', 'subJob')" type="button"><span>의료</span></button></span>
-        <input name="firstname" id="firstJobName13" type="hidden" value="의료">
-        <input id="mainJob12Nm" type="hidden" value="의료">
+        <span><input name="firstJobName" title="IT·정보통신·웹 추가" id="firstJobName12" onclick="f_checkJob(this,12);" type="checkbox" value="13">
+        <button name="mainJob" id="mainJob12" onclick="f_requestJobSubList('13', 'mainJob12', 'subJob')" type="button"><span>IT·정보통신·웹</span></button></span>
+        <input name="firstJobName" id="firstJobName13" type="hidden" value="IT·정보통신·웹">
+        <input id="mainJob12Nm" type="hidden" value="IT·정보통신·웹">
+
+        <span><input name="firstJobName" title="인쇄·목재·가구·종이·공예·상하수·재활용·농림어업·군인 추가" id="firstJobName13" onclick="f_checkJob(this,13);" type="checkbox" value="14">
+        <button name="mainJob" id="mainJob13" onclick="f_requestJobSubList('14', 'mainJob13', 'subJob')" type="button"><span>인쇄·목재·가구·종이·공예·상하수·재활용·농림어업·군인</span></button></span>
+        <input name="firstJobName" id="firstJobName14" type="hidden" value="인쇄·목재·가구·종이·공예·상하수·재활용·농림어업·군인">
+        <input id="mainJob13Nm" type="hidden" value="인쇄·목재·가구·종이·공예·상하수·재활용·농림어업·군인">
+
+        <span><input name="firstJobName" title="생산직·단순노무·경비·청소 추가" id="firstJobName14" onclick="f_checkJob(this,14);" type="checkbox" value="15">
+        <button name="mainJob" id="mainJob14" onclick="f_requestJobSubList('15', 'mainJob14', 'subJob')" type="button"><span>생산직·단순노무·경비·청소</span></button></span>
+        <input name="firstJobName" id="firstJobName15" type="hidden" value="생산직·단순노무·경비·청소">
+        <input id="mainJob14Nm" type="hidden" value="생산직·단순노무·경비·청소">
 
     </div>
     <!-- //변경없음 -->
   </div>
   <!-- 이미지 삭제 <img src="http://www.work.go.kr/images/common/next_step.gif" class="next" alt="다음단계"> -->
-    <div class="wrap_detail_panel depth2_division">
-        <div class="title_detail_box">
-            <strong>희망 직종</strong>
-            <span class="box_add_util">
-                <label for="exp-career"><input type="checkbox" name="" id="exp-career" title="이 직종 경력자만"> <span class="txt">이 직종 경력자만</span></label>
-                <div class="ico_tooltip">
-                    <span class="txt_tooltip">툴팁</span>
-                    <div class="lpop_tooltip_wrap">
-                        인재가 희망한 직종과 근무경력 직종이<br>
-                        동일한 인재만 검색합니다.
-                        <button class="btn_close_lpop" type="button">닫기</button>
-                    </div>
-                </div>
-            </span>
-        </div>
-        <div class="box_detail_panel">
-            <ul class="list_depth2_select" id="job-category-depth2">
-                                    <li>
-                        <label for="job-category-depth2-all">
-                            <input type="checkbox" name="" id="job-category-depth2-all" title="전체" data-depth="1"
-                                   data-mcode=""
-                                   data-mname=""
-                                   data-bcode=""
-                                   data-bname=""
-                                   data-code="all"
-                                   data-name="전체"
-                                   value="all"
-                                >
-                            <span class="txt " title="전체">전체</span>
-                            <span class="count all">(1)</span>
-                        </label>
-                    </li>
-                                    <li>
-                        <label for="job-category-depth2-501">
-                            <input type="checkbox" name="" id="job-category-depth2-501" title="경영분석·컨설턴트" data-depth="1"
-                                   data-mcode="5"
-                                   data-mname="전문직"
-                                   data-bcode="501"
-                                   data-bname="경영분석·컨설턴트"
-                                   data-code="501"
-                                   data-name="경영분석·컨설턴트"
-                                   value="501"
-                                checked>
-                            <span class="txt select" title="경영분석·컨설턴트">경영분석·컨설턴트</span>
-                            <span class="count 501">(0)</span>
-                        </label>
-                    </li>
-                                    <li>
-                        <label for="job-category-depth2-502">
-                            <input type="checkbox" name="" id="job-category-depth2-502" title="증권·투자·펀드·외환" data-depth="1"
-                                   data-mcode="5"
-                                   data-mname="전문직"
-                                   data-bcode="502"
-                                   data-bname="증권·투자·펀드·외환"
-                                   data-code="502"
-                                   data-name="증권·투자·펀드·외환"
-                                   value="502"
-                                >
-                            <span class="txt " title="증권·투자·펀드·외환">증권·투자·펀드·외환</span>
-                            <span class="count 502">(0)</span>
-                        </label>
-                    </li>
-                                    <li>
-                        <label for="job-category-depth2-504">
-                            <input type="checkbox" name="" id="job-category-depth2-504" title="헤드헌팅·노무·직업상담" data-depth="1"
-                                   data-mcode="5"
-                                   data-mname="전문직"
-                                   data-bcode="504"
-                                   data-bname="헤드헌팅·노무·직업상담"
-                                   data-code="504"
-                                   data-name="헤드헌팅·노무·직업상담"
-                                   value="504"
-                                >
-                            <span class="txt " title="헤드헌팅·노무·직업상담">헤드헌팅·노무·직업상담</span>
-                            <span class="count 504">(0)</span>
-                        </label>
-                    </li>
-                                    <li>
-                        <label for="job-category-depth2-505">
-                            <input type="checkbox" name="" id="job-category-depth2-505" title="설문·통계·리서치" data-depth="1"
-                                   data-mcode="5"
-                                   data-mname="전문직"
-                                   data-bcode="505"
-                                   data-bname="설문·통계·리서치"
-                                   data-code="505"
-                                   data-name="설문·통계·리서치"
-                                   value="505"
-                                checked>
-                            <span class="txt " title="설문·통계·리서치">설문·통계·리서치</span>
-                            <span class="count 505">(0)</span>
-                        </label>
-                    </li>
-                                    <li>
-                        <label for="job-category-depth2-509">
-                            <input type="checkbox" name="" id="job-category-depth2-509" title="외국어·번역·통역" data-depth="1"
-                                   data-mcode="5"
-                                   data-mname="전문직"
-                                   data-bcode="509"
-                                   data-bname="외국어·번역·통역"
-                                   data-code="509"
-                                   data-name="외국어·번역·통역"
-                                   value="509"
-                                checked>
-                            <span class="txt " title="외국어·번역·통역">외국어·번역·통역</span>
-                            <span class="count 509">(1)</span>
-                        </label>
-                    </li>
-                                    <li>
-                        <label for="job-category-depth2-510">
-                            <input type="checkbox" name="" id="job-category-depth2-510" title="법률·특허·상표" data-depth="1"
-                                   data-mcode="5"
-                                   data-mname="전문직"
-                                   data-bcode="510"
-                                   data-bname="법률·특허·상표"
-                                   data-code="510"
-                                   data-name="법률·특허·상표"
-                                   value="510"
-                                >
-                            <span class="txt " title="법률·특허·상표">법률·특허·상표</span>
-                            <span class="count 510">(0)</span>
-                        </label>
-                    </li>
-                                    <li>
-                        <label for="job-category-depth2-511">
-                            <input type="checkbox" name="" id="job-category-depth2-511" title="세무·회계·CPA" data-depth="1"
-                                   data-mcode="5"
-                                   data-mname="전문직"
-                                   data-bcode="511"
-                                   data-bname="세무·회계·CPA"
-                                   data-code="511"
-                                   data-name="세무·회계·CPA"
-                                   value="511"
-                                >
-                            <span class="txt " title="세무·회계·CPA">세무·회계·CPA</span>
-                            <span class="count 511">(0)</span>
-                        </label>
-                    </li>
-                                    <li>
-                        <label for="job-category-depth2-512">
-                            <input type="checkbox" name="" id="job-category-depth2-512" title="채권·보험·보상·심사" data-depth="1"
-                                   data-mcode="5"
-                                   data-mname="전문직"
-                                   data-bcode="512"
-                                   data-bname="채권·보험·보상·심사"
-                                   data-code="512"
-                                   data-name="채권·보험·보상·심사"
-                                   value="512"
-                                checked>
-                            <span class="txt " title="채권·보험·보상·심사">채권·보험·보상·심사</span>
-                            <span class="count 512">(0)</span>
-                        </label>
-                    </li>
-                                    <li>
-                        <label for="job-category-depth2-513">
-                            <input type="checkbox" name="" id="job-category-depth2-513" title="도서관사서" data-depth="1"
-                                   data-mcode="5"
-                                   data-mname="전문직"
-                                   data-bcode="513"
-                                   data-bname="도서관사서"
-                                   data-code="513"
-                                   data-name="도서관사서"
-                                   value="513"
-                                checked>
-                            <span class="txt " title="도서관사서">도서관사서</span>
-                            <span class="count 513">(0)</span>
-                        </label>
-                    </li>
-                                    <li>
-                        <label for="job-category-depth2-518">
-                            <input type="checkbox" name="" id="job-category-depth2-518" title="연구소·R&D" data-depth="1"
-                                   data-mcode="5"
-                                   data-mname="전문직"
-                                   data-bcode="518"
-                                   data-bname="연구소·R&D"
-                                   data-code="518"
-                                   data-name="연구소·R&D"
-                                   value="518"
-                                >
-                            <span class="txt " title="연구소·R&D">연구소·R&D</span>
-                            <span class="count 518">(0)</span>
-                        </label>
-                    </li>
-                                    <li>
-                        <label for="job-category-depth2-522">
-                            <input type="checkbox" name="" id="job-category-depth2-522" title="문화·예술·종교" data-depth="1"
-                                   data-mcode="5"
-                                   data-mname="전문직"
-                                   data-bcode="522"
-                                   data-bname="문화·예술·종교"
-                                   data-code="522"
-                                   data-name="문화·예술·종교"
-                                   value="522"
-                                checked>
-                            <span class="txt " title="문화·예술·종교">문화·예술·종교</span>
-                            <span class="count 522">(0)</span>
-                        </label>
-                    </li>
-                                    <li>
-                        <label for="job-category-depth2-523">
-                            <input type="checkbox" name="" id="job-category-depth2-523" title="특수직" data-depth="1"
-                                   data-mcode="5"
-                                   data-mname="전문직"
-                                   data-bcode="523"
-                                   data-bname="특수직"
-                                   data-code="523"
-                                   data-name="특수직"
-                                   value="523"
-                                >
-                            <span class="txt " title="특수직">특수직</span>
-                            <span class="count 523">(0)</span>
-                        </label>
-                    </li>
-                                    <li>
-                        <label for="job-category-depth2-524">
-                            <input type="checkbox" name="" id="job-category-depth2-524" title="임원·CEO" data-depth="1"
-                                   data-mcode="5"
-                                   data-mname="전문직"
-                                   data-bcode="524"
-                                   data-bname="임원·CEO"
-                                   data-code="524"
-                                   data-name="임원·CEO"
-                                   value="524"
-                                checked>
-                            <span class="txt " title="임원·CEO">임원·CEO</span>
-                            <span class="count 524">(0)</span>
-                        </label>
-                    </li>
-                            </ul>
-            <button class="btn_depth3_expand"><span>상세직종</span></button>
-            <ul class="list_depth3_select" id="job-category-depth3">
-                                    <li>
-                        <label for="job-category-depth3-50101">
-                            <input type="checkbox" name="" id="job-category-depth3-50101" title="컨설턴트" data-depth="2"
-                                   data-mcode="5"
-                                   data-mname="전문직"
-                                   data-bcode="501"
-                                   data-bname="경영분석·컨설턴트"
-                                   data-code="50101"
-                                   data-name="컨설턴트"
-                                   value="50101"
-                                >
-                            <span class="txt" title="컨설턴트">컨설턴트</span>
-                            <span class="count">(0)</span>
-                        </label>
-                    </li>
-                                    <li>
-                        <label for="job-category-depth3-50102">
-                            <input type="checkbox" name="" id="job-category-depth3-50102" title="금융컨설팅" data-depth="2"
-                                   data-mcode="5"
-                                   data-mname="전문직"
-                                   data-bcode="501"
-                                   data-bname="경영분석·컨설턴트"
-                                   data-code="50102"
-                                   data-name="금융컨설팅"
-                                   value="50102"
-                                >
-                            <span class="txt" title="금융컨설팅">금융컨설팅</span>
-                            <span class="count">(0)</span>
-                        </label>
-                    </li>
-                                    <li>
-                        <label for="job-category-depth3-50103">
-                            <input type="checkbox" name="" id="job-category-depth3-50103" title="경영컨설팅" data-depth="2"
-                                   data-mcode="5"
-                                   data-mname="전문직"
-                                   data-bcode="501"
-                                   data-bname="경영분석·컨설턴트"
-                                   data-code="50103"
-                                   data-name="경영컨설팅"
-                                   value="50103"
-                                >
-                            <span class="txt" title="경영컨설팅">경영컨설팅</span>
-                            <span class="count">(0)</span>
-                        </label>
-                    </li>
-                                    <li>
-                        <label for="job-category-depth3-50104">
-                            <input type="checkbox" name="" id="job-category-depth3-50104" title="창업컨설팅" data-depth="2"
-                                   data-mcode="5"
-                                   data-mname="전문직"
-                                   data-bcode="501"
-                                   data-bname="경영분석·컨설턴트"
-                                   data-code="50104"
-                                   data-name="창업컨설팅"
-                                   value="50104"
-                                >
-                            <span class="txt" title="창업컨설팅">창업컨설팅</span>
-                            <span class="count">(0)</span>
-                        </label>
-                    </li>
-                                    <li>
-                        <label for="job-category-depth3-50106">
-                            <input type="checkbox" name="" id="job-category-depth3-50106" title="IT컨설팅" data-depth="2"
-                                   data-mcode="5"
-                                   data-mname="전문직"
-                                   data-bcode="501"
-                                   data-bname="경영분석·컨설턴트"
-                                   data-code="50106"
-                                   data-name="IT컨설팅"
-                                   value="50106"
-                                >
-                            <span class="txt" title="IT컨설팅">IT컨설팅</span>
-                            <span class="count">(0)</span>
-                        </label>
-                    </li>
-                                    <li>
-                        <label for="job-category-depth3-50107">
-                            <input type="checkbox" name="" id="job-category-depth3-50107" title="경영분석" data-depth="2"
-                                   data-mcode="5"
-                                   data-mname="전문직"
-                                   data-bcode="501"
-                                   data-bname="경영분석·컨설턴트"
-                                   data-code="50107"
-                                   data-name="경영분석"
-                                   value="50107"
-                                >
-                            <span class="txt" title="경영분석">경영분석</span>
-                            <span class="count">(0)</span>
-                        </label>
-                    </li>
-                                    <li>
-                        <label for="job-category-depth3-50113">
-                            <input type="checkbox" name="" id="job-category-depth3-50113" title="부동산컨설팅" data-depth="2"
-                                   data-mcode="5"
-                                   data-mname="전문직"
-                                   data-bcode="501"
-                                   data-bname="경영분석·컨설턴트"
-                                   data-code="50113"
-                                   data-name="부동산컨설팅"
-                                   value="50113"
-                                >
-                            <span class="txt" title="부동산컨설팅">부동산컨설팅</span>
-                            <span class="count">(0)</span>
-                        </label>
-                    </li>
-                                    <li>
-                        <label for="job-category-depth3-50114">
-                            <input type="checkbox" name="" id="job-category-depth3-50114" title="이미지컨설팅" data-depth="2"
-                                   data-mcode="5"
-                                   data-mname="전문직"
-                                   data-bcode="501"
-                                   data-bname="경영분석·컨설턴트"
-                                   data-code="50114"
-                                   data-name="이미지컨설팅"
-                                   value="50114"
-                                >
-                            <span class="txt" title="이미지컨설팅">이미지컨설팅</span>
-                            <span class="count">(0)</span>
-                        </label>
-                    </li>
-                                    <li>
-                        <label for="job-category-depth3-50115">
-                            <input type="checkbox" name="" id="job-category-depth3-50115" title="HR컨설팅" data-depth="2"
-                                   data-mcode="5"
-                                   data-mname="전문직"
-                                   data-bcode="501"
-                                   data-bname="경영분석·컨설턴트"
-                                   data-code="50115"
-                                   data-name="HR컨설팅"
-                                   value="50115"
-                                >
-                            <span class="txt" title="HR컨설팅">HR컨설팅</span>
-                            <span class="count">(0)</span>
-                        </label>
-                    </li>
-                            </ul>
-        </div>
+  <div class="category">
+
+    <!-- 변경없음 -->
+    <h3>2차 분류</h3>
+    <div class="multyCheck" id="subJobDiv">
     </div>
+    <!-- //변경없음 -->
+  </div>
+
+  <!-- 이미지 삭제 <img src="http://www.work.go.kr/images/common/next_step.gif" class="next" alt="다음단계"> -->
+  <div class="category jobly">
+    <!-- 변경없음 -->
+    <h3>3차 분류</h3>
+    <div id="thirdJobDiv">
+    </div>
+    <!-- //변경없음 -->
+  </div>
 </div>
 <!--  class="choice_wrap new mt20 mb10" 변경& 그 외 변경 없음 -->
 <div class="choice_wrap new mt20 mb10">
@@ -908,5 +571,5 @@ var type = 'worknet';
    <button class="layer-close" onclick="javascript:f_popupClose();" type="button">닫기</button>
 </div>
 </div>
-</body></html>
+
     
