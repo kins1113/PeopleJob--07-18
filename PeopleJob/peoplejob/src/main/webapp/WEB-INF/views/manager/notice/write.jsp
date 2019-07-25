@@ -23,8 +23,9 @@
 
 							<div class="form-group">
 								<label for="notifycontent">공지사항 내용</label>
-								<textarea class="form-control" id="notifycontent" name="notifycontent" 
-									rows="10" cols="30"></textarea>
+								<c:import url="/manager/smarteditorTestjsp.do">
+							<c:param name="name" value="notifycontent"></c:param>
+						</c:import>
 							</div>
 							
 							<div>
@@ -36,8 +37,13 @@
 
 							<div class="form-footer pt-4 pt-5 mt-4 border-top">
 								<button type="submit" class="btn btn-primary btn-default">등록하기</button>
+								
+							<a  href="<c:url value='/manager/notice/list.do'/>"
+							class="btn btn-primary btn-default">목록</a>
 							</div>
 						</form>
+				
+						 
 					</div>
 				</div>
           </div>
@@ -46,6 +52,6 @@
           </div>
           </div>
           
-          
+         
           
 <%@include file="/WEB-INF/views/manager/inc/adminBottom.jsp"%>

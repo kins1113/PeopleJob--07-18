@@ -130,7 +130,7 @@
 	        <div class="list-group"> 
 	            <div class="list-group-item">
 	            <input type="checkbox" name="jobopening1" id="jobopening1" value="${vo.jobopening }" onclick="javascript_:s_it()">
-	               <img src="<c:url value='/peoplejob_upload/${vo.companyimage }'/>" 
+	               <img src="<c:url value='/jobopening_upload/${vo.companyimage }'/>" 
 							alt="공고이미지" width="50px" height="50px" style="float:right;"> 
 							<div style="width=100px;float:left;">
 							<c:forEach var="cvo" items="${clist }">

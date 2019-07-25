@@ -24,7 +24,7 @@
 				<tr>
 				<td rowspan="2">
 				<span  aria-hidden="true">
-					<img src="<c:url value='/peoplejob_upload/${vo.companyimage }'/>" 
+					<img src="<c:url value='/jobopening_upload/${vo.companyimage }'/>" 
 						alt="공고이미지" width="50px" height="50px"></span>
 				</td>
  				<td><span class="glyphicon glyphicon-text-size" aria-hidden="true">공고제목</span> <span>${vo.jobtitle}</span></td>

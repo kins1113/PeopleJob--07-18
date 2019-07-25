@@ -135,7 +135,7 @@ button {
 } */
  
  ul.main-menu {
-    border-bottom: 4px solid darkseagreen;
+    /* border-bottom: 4px solid darkseagreen; */
 }
 </style>
 <script type="text/javascript" src="<c:url value='/resources/main/js/jquery-3.4.1.min.js'/>"></script>
@@ -200,7 +200,7 @@ function company(){
 						</a>
 
 						<ul class="main-menu" style="width: 1274px; margin-left: -98px;">
-							<li class="main-menu-active">
+							<li class="mega-menu-item">
 								<a href="<c:url value='/company/jobopening_list.do'/>">채용정보</a>
 								<ul class="sub-menu">
 									<li><a href="<c:url value='/company/jobopening_list.do'/>">공채정보</a></li>

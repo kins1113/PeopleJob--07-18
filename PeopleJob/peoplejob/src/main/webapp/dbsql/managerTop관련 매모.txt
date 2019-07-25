@@ -1,0 +1,12 @@
+사용자 관리			-member
+서비스 관리	-상품관리	-service
+		-일반		-resume
+메일				-mail
+커뮤니티		-게시판		-board
+		-게시글		-post
+		-일반		-community
+결제 				-pay
+메니저				-manager
+팝업				-popup
+
+파람 이름 => showKey

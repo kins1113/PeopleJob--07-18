@@ -64,13 +64,13 @@ input.btn.btn-secondary.btn-default {margin-top: 4px;}
 				</div>
 				<div class="form-group serDiv">
 					<select class="custom-select my-1 mr-sm-2" name="searchCondition">
-						<option value="all">통합검색</option>
+						
 						<option value="memberid"
 							<c:if test="${param.searchCondition=='memberid' }">
 							selected="selected"
 							</c:if>>아이디
 						</option>
-						<option value="membername"
+						<option value="progress"
 							<c:if test="${param.searchCondition=='progress' }">
 							selected="selected"
 							</c:if>>결제상태

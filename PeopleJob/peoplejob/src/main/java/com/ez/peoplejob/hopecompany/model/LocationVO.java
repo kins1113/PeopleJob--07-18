@@ -4,6 +4,7 @@ public class LocationVO {
 	private int localCode; 
 	private String sido;      
 	private String gugun;
+	
 	public int getLocalCode() {
 		return localCode;
 	}
