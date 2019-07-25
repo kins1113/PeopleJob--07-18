@@ -7,6 +7,29 @@
 		select * from first
 	</select>
 	
+	<select id="selectSecond" resultType="secondOccupationVo" parameterType="int">
+		select * from second
+		where first_code=#{firstCode}	
+	</select>
+	
+	<select id="selectThird" resultType="thirdOccupationVo" parameterType="int">
+		select * from third
+		where second_code=#{secondCode}
+	</select>
+
+	<select id="selectLocation" resultType="LocationVO">
+		select sido, gugun from 
+		(
+			select local_code, sido, trunc(gugun/1000) as gugun from location
+		)
+		group by sido, gugun
+		order by gugun
+	</select>
+	
+	<select id="selectLocation2" parameterType="int" resultType="map">
+		select * from location2 
+		<![CDATA[where local_code2>=#{code}*1000 and local_code2<(#{code}+1)*1000]]>
+	</select>
 </mapper>
 
 
