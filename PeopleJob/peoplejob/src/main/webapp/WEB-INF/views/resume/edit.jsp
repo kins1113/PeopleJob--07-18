@@ -388,6 +388,9 @@ $(function () {
 	        <img src="<c:url value='/peoplejob_upload/${vo.picture }'/>" 
 							alt="${vo1.membername }" width="50">
         </div>
+        <label for="picture">이력서 사진</label>
+ <input type="file" id="gdsImg" name="file" />
+ <div class="select_img"><img src="" /></div>
 		</div>
 		<section id="registerds">
 	<div>        
