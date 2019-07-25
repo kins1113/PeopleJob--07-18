@@ -11,10 +11,17 @@
 	src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
 <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
 
-<script type="text/javascript"
-	src="<c:url value='/resources/main/js/jquery-3.4.1.min.js'/>"></script>
+<script type="text/javascript" src="<c:url value='/resources/main/js/jquery-3.4.1.min.js'/>"></script>
 <script type="text/javascript">
 $(function() {
+	
+	$('div[name=recomhover]').hover(function(){
+		$(this).css("border","2px solid cornflowerblue");
+	},function(){
+		$(this).css("border","1px solid lightgray");
+		
+	});
+	
     
 	
 	//공채 롤링배너
@@ -137,11 +144,11 @@ $(function() {
 <style type="text/css">
 #vvipone:HOVER {     
 
-	border: 2px solid blue; 
+	border: 2px solid cornflowerblue; 
 }
 
-.recommend:HOVER {
-	border: 2px solid blue; 
+#recom:HOVER {
+	border: 2px solid cornflowerblue; 
 }
 
 /* .col-sm-6.p-r-25.p-r-15-sr991 {
@@ -477,7 +484,7 @@ input[type="checkbox"] {
 /* 리스트 패딩 */
 .rankListWap .infoList {
 	font-size: 13px;
-	padding: 12px 14px 10px 16px;
+	padding: 5px 14px 10px 16px;
 }
 
 /* 더보기 */
@@ -517,7 +524,7 @@ a {
 }
 
 img.imgsize {
-    width: 270px;
+    width: 225px;
 }
 
 .col-sm-6.p-r-25.p-r-15-sr991 {
@@ -713,20 +720,45 @@ span[name=publicname]{
 
 						<div class="row p-t-35" style="padding: 0px; margin-left: 0px; width: 91%;">
 							<div class="recomtable">
-							<c:forEach begin="0" end="4">
-								<div class="recom1" style="border: 1px solid lightgray;width: 33.3%;height: 50%;float: left;padding: 20px;">
-											<strong style="display: block;">(주) 이트리즈시스템</strong> 
-											<span style="display: block;">이트리즈 시스템 SI 웹개발자 </span>
-											 <span style="display: block;">(java/jsp/spring)신입 채용 </span>
-											 <div>
+							
+								 
+							 <c:forEach var="map" items="${randomList}">  
+								 <div class="recom1" style="border: 1px solid lightgray;width: 33.3%;height: 50%;float: left;padding: 20px;" id="recom" name="recomhover">
+								 <a href="<c:url value='/company/jobopening_view.do?jobopening=${map["JOBOPENING"] } ' />" style="color:black; width: 199px;">
+											<strong style="display: block;font-size: 1.1em;">${map['COMPANYNAME'] }</strong> 
+											<span style="display: block;font-size: 1.0em;">${map['JOBTITLE'] }</span> 
+											 <span style="display: block;">(java/jsp/spring)신입 채용 </span> 
+								</a>
+											 <div class="applyrandom" style="margin-top: 93px;">
 											 <button type="button" class="img_main btn_scrap on" value="36473003"><span class="blind">스크랩</span> </button>
-											 	<img alt="스크랩임시사진" src="<c:url value='/peoplejob_upload/scrapstarwhite.PNG'/>" style="margin-top:40px;cursor: pointer;"
-											 	onclick="scrap()">
-											 	<img alt="즉시지원버튼" src="<c:url value='/peoplejob_upload/즉시지원.PNG'/>" style="float:right;margin-top:40px;margin-right:5px;cursor: pointer;"
-											 	onclick="apply()">
-											 </div>  
-								</div>
-							</c:forEach>
+											 	
+											 	<c:if test="${sessionScope.author_code==1 }">
+											 	<img alt="스크랩" src="<c:url value='/peoplejob_upload/scrapstarwhite.PNG'/>" 
+											 	style="cursor: pointer;" name="apply" title="scrap"
+											 	onclick="location.href='<c:url value='/scrap/insertscrap.do?jobopening=${map["JOBOPENING"]}&member_code=${memVo.memberCode }'/>' ">
+											 	</c:if>
+											 	<c:if test="${sessionScope.author_code!=1 }">
+											 	<img alt="스크랩" src="<c:url value='/peoplejob_upload/scrapstarwhite.PNG'/>" 
+											 	style="cursor: pointer;" name="apply" title="scrap" onclick="alert('개인회원 로그인을 해주세요'); ">
+											 	</c:if>
+											 	
+											 	<c:if test="${sessionScope.author_code==1 }">
+											 	<img alt="즉시지원" src="<c:url value='/peoplejob_upload/즉시지원.PNG'/>" 
+											 	style="float:right;\margin-right:0px;cursor: pointer;" name="apply"
+											 	onclick="location.href='<c:url value="/apply/insertapply.do?jobopening=${map['JOBOPENING']}"/>' "> 
+											 	</c:if>
+											 	
+											 	<c:if test="${sessionScope.author_code!=1 }">
+											 	<img alt="즉시지원" src="<c:url value='/peoplejob_upload/즉시지원.PNG'/>" 
+											 	style="float:right;margin-right:0px;cursor: pointer;" name="apply"
+											 	onclick="alert('개인회원 로그인을 해주세요'); "> 
+											 	</c:if>
+											 	
+											  <span style="float: right; color: dimgray; margin-right: 5px;">D${map['DDAY'] }</span>   
+											 </div> 
+								</div>  
+								
+							</c:forEach>  
 								<div class="recom1" style="border: 1px solid lightgray;width: 33.3%;height: 50%;float: left;padding: 20px;">
 									<span style="font-weight: bold;font-size: 1.1em;"> 나에게 딱맞는</span><br>
 									<span style="color: #4876ef;font-weight: bold;font-size: 1.1em;">추천공고</span>
@@ -734,7 +766,7 @@ span[name=publicname]{
 									<input type="button" class="form-control btn btn-register" value="로그인하기" style="font-size: 1.1em;margin-top: 12px;background: cornflowerblue;border-color: cornflowerblue;"
 									onclick="location.href='<c:url value='/login/login.do'/>'" >
 								</div>
-								</div>
+								</div> 
 								
 						</div>
 
@@ -760,7 +792,10 @@ span[name=publicname]{
 
 
 									<li class="carousel-slide on">  
-										<h4 class="hd_4" style="    font-size: 18px;border-bottom: 1px solid lightgray; width: 208px;    padding-bottom: 7px;">마감 임박 공채</h4>
+										<span class="hd_4" style="display:block;  font-size: 18px;border-bottom: 1px solid lightgray; width: 208px; padding:3px;">마감 임박 공채<img alt="마감 임박" src="<c:url value='/resources/main/images/clock.png'/>"
+										 style="width: 23px;float: right;margin-right: 2px;"></span>
+										
+									
 										<ul class="infoList endList">
 										
 										  <c:forEach var="map" items="${deadlineList }">
@@ -808,7 +843,7 @@ span[name=publicname]{
 				</div>
  
  <!-- 공채 롤링배너 --> 
-<div class="public" style="border: 1px solid lightgray;width: 1300px;height: 80px; margin-left: -100px;"> 
+<div class="public" style="border: 1px solid lightgray;width: 1300px;height: 80px; margin-left: -100px;">  
 
 		<img alt="이전공채" src="<c:url value="/resources/main/images/prev.PNG"/>" id="prev" style="float:left; margin-top: 20px;">
 	<div class="rolling_panel">
@@ -968,25 +1003,47 @@ span[name=publicname]{
 						<div style="margin-left: -115px;width: 1280px;">
 						<h1>VVIP</h1>  <a href="<c:url value='/service/payment.do'/> " style="font-size:1.1em;color:black;"> >상품문의 </a>
 						</div>
-						
 						<div class="row p-t-35" style="padding-top: 0px; width: 1300px; margin-left: -125px;">
 							<c:forEach var="map" items="${list }" begin="0" end="9">   
 							<div class="col-sm-6 p-r-25 p-r-15-sr991" id="vvipone"> 
-								<a href="<c:url value='/company/jobopening_view.do?jobopening=${map["JOBOPENING"] } ' />" class="f1-m-3 cl2 hov-cl10 trans-03" style="font-size: 1.0em">
+								 <a href="<c:url value='/company/jobopening_view.do?jobopening=${map["JOBOPENING"] } ' />" 
+								class="f1-m-3 cl2 hov-cl10 trans-03" style="font-size: 1.0em;text-decoration: none;color: darkslategray;float: left;"> 
+								
+								
 								<!-- Item latest -->
-								<div class="m-b-45"> 
-									<div style="width:270px;height:127px;"> 
+								<div class="m-b-45">   
+								<div class="imgclass">
+									<div style="width: 294px; text-align: center;"> 
 										<img src ="<c:url value='/peoplejob_upload/${map["IMAGE"] }'/>" alt="IMG" class="imgsize">
 									</div>
 									<div class="p-t-16"> 
-										<h5 class="p-b-5" style="font-size: 1.3em; margin-top: -39px;"> ${map['JOBTITLE'] } </h5>
-										<h5 class="p-b-5" style="font-size: 1.1em;display: inline; margin-right: 10px;"> ${map['COMPANYNAME'] } </h5>
-										<span class="cl8" id="Dday">   D-${map['DDAY']} </span><br>      
-											<img alt="스크랩임시사진" src="<c:url value='/peoplejob_upload/scrapstarwhite.PNG'/>" style="  margin-top: 3px;">
-											 <img alt="지원버튼사진" src="<c:url value='/peoplejob_upload/즉시지원.PNG'/>" style="float:right;"> 
+										<span class="p-b-5" style="font-size: 1.1em; display: block; margin-right: 10px;"> ${map['COMPANYNAME'] } </span>
+										<span class="p-b-5" style="font-size: 1.3em; display: block;"> ${map['JOBTITLE'] } </span>
+										</a>
+										</div> 
+										
+										<div class="scrapapply" style=" display: block; margin-top: 148px;" >
+										     <c:if test="${sessionScope.author_code==1 }">
+											<img alt="스크랩임시사진" src="<c:url value='/peoplejob_upload/scrapstarwhite.PNG'/>" 
+											style="  margin-top: 3px;cursor: pointer;" id="apply"
+											onclick="location.href='<c:url value='/scrap/insertscrap.do?jobopening=${map["JOBOPENING"]}&member_code=${memVo.memberCode }'/>' ">
+											 <img alt="지원버튼사진" src="<c:url value='/peoplejob_upload/즉시지원.PNG'/>" 
+											 style="float:right;cursor: pointer;" id="apply" onclick="location.href='<c:url value="/apply/insertapply.do?jobopening=${map['JOBOPENING']}"/>' "> 
+											 </c:if>
+										     <c:if test="${sessionScope.author_code!=1 }">
+											<img alt="스크랩임시사진" src="<c:url value='/peoplejob_upload/scrapstarwhite.PNG'/>" 
+											style="  margin-top: 3px;cursor: pointer;" id="apply"
+											onclick="alert('개인회원 로그인을 해주세요');">
+												<span class="cl8" id="Dday">   D-${map['DDAY']} </span>
+											 <img alt="지원버튼사진" src="<c:url value='/peoplejob_upload/즉시지원.PNG'/>" 
+											 style="float:right;cursor: pointer;" id="apply" onclick="alert('개인회원 로그인을 해주세요'); "> 
+											 </c:if>
+											  <span style="float: right; color: dimgray; margin-right: 5px;">D-${map['DDAY'] }</span>
+											 </div>
+											 
 									</div> 
 								</div>
-						</a> 
+						  <!-- 원래 </a> -->
 							</div>
 							</c:forEach>
 							
@@ -1126,14 +1183,7 @@ span[name=publicname]{
 
 				</div>
 				<div class="row justify-content-center" style="width: 1300px;margin-left: 67px;">  
-						<%-- <div class="how2 how2-cl4 flex-s-c m-r-10 m-r-0-sr991">
-							<h3 class="f1-m-2 cl3 tab01-title" style="float: right">
-								채용정보</h3>
-							<h5>VIP</h5>
-							<h5 style="margin-left: 525px;">
-								
-							</h5>   
-						</div> --%>  
+						
 						<div style="margin-left: -115px;width: 1280px;margin-top: 10px;">
 						<h1>VIP</h1>  <a href="<c:url value='/service/payment.do'/> " style="font-size:1.1em;color:black;"> >상품문의 </a>
 						</div>

@@ -260,7 +260,7 @@
 	<select id="deadlineimminentBymonth" resultType="map">
 		select * from 
 	(
-	 select j.end_date,c.companyname, j.jobtitle, J.JOBOPENING, sysdate-end_date as Dday
+	 select j.end_date,c.companyname, j.jobtitle, J.JOBOPENING,  trunc(sysdate-end_date-1) as Dday
 	 from jobopening j join company c
 	 on j.COMPANY_CODE = c.COMPANY_CODE
 	 where (c.MANNUM+c.womannum)>200
@@ -268,6 +268,21 @@
 	 )
  <![CDATA[where rownum<=10
  and (end_date-sysdate)<30 ]]>
+	</select>
+	
+	<select id="selectRandom" resultType="map">
+		select * from 
+	(
+	 select j.end_date,c.companyname, j.jobtitle, J.JOBOPENING, trunc(sysdate-end_date-1) as Dday
+	 from jobopening j join company c
+	 on j.COMPANY_CODE = c.COMPANY_CODE
+	 order by dbms_random.value
+	 )
+	 <![CDATA[where rownum<6 and end_date>sysdate ]]>
+	</select>
+	
+	<select id="selectAll">
+		select * from jobopening
 	</select>
 </mapper>
 

@@ -7,6 +7,8 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.ez.peoplejob.resume.model.ResumeVO;
+
 @Repository
 public class TableaplyDAOMybatis implements TableaplyDAO{
 	@Autowired SqlSessionTemplate sqlSession;
@@ -46,6 +48,22 @@ public class TableaplyDAOMybatis implements TableaplyDAO{
 	@Override
 	public int opencheckY(Map<String,Object> map) {
 		return sqlSession.update(namespace+"opencheckY",map);
+	}
+	@Override
+	public int cntresume(int MemberCode) {
+		return sqlSession.selectOne(namespace+"cntresume",MemberCode);
+	}
+	@Override
+	public ResumeVO selectresumebyid(int memberCode) {
+		return sqlSession.selectOne(namespace+"selectresumebyid",memberCode);
+	}
+	@Override
+	public List<ResumeVO> selectresumebyid2(int memberCode) {
+		return sqlSession.selectList(namespace+"selectresumebyid2",memberCode);
+	}
+	@Override
+	public TableaplyVO selectresumebyid3(Map<String, Object> map) {
+		return sqlSession.selectOne(namespace+"selectresumebyid3",map);
 	}
 	
 }
