@@ -22,12 +22,14 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 @Component
 public class FileUploadUtility {
-
+	
 	//파일 경로를 체크하기 위한 uploadPath division
 	public static final int PEOPLEJOB_UPLOAD=1;	//peoplejob_upload
 	public static final int POPUP_UPLOAD=2;		//popup_upload
 	public static final int LOGO_UPLOAD=3;		//logo_upload
 	public static final int POST_UPLOAD=4;		//post_upload
+	public static final int JOBOPENING_UPLOAD=5;		//jobopening_upload
+
 	
 	private Logger logger=LoggerFactory.getLogger(FileUploadUtility.class);
 	
@@ -120,6 +122,8 @@ public class FileUploadUtility {
 			}else if(uploadePathDi==POPUP_UPLOAD) {
 				result=props.getProperty("popupFile.uploda.path.test");
 			}else if(uploadePathDi==POST_UPLOAD) {
+				result=props.getProperty("postFile.upload.path.test");
+			}else if(uploadePathDi==JOBOPENING_UPLOAD) {
 				result=props.getProperty("postFile.upload.path.test");
 			}
 			//여기에 경로 추가해야함.
@@ -215,7 +219,6 @@ public class FileUploadUtility {
 		
 		return list;
 	}
-	
 }
 
 

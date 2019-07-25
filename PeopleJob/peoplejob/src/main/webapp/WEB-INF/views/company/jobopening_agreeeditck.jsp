@@ -61,18 +61,18 @@
 		<fieldset>
 		<!-- hidden 필드에 no 추가 -->
 		<input type="hidden" name="jobopening" value="${param.jobopening}">  
-		<input type="text" name="companyCode" value="${vo.companyCode}"> 
+		<input type="hidden" name="companyCode" value="${vo.companyCode}"> 
 		<legend>활성화 수정</legend>
 	        <div>            
 	        	<span class="sp">${param.jobopening }번 글의 활성화를 수정하시겠습니까?</span>                        
 	        </div>
 	        <div>           
-	            <label for="pwd">비밀번호</label>
-	            <input type="password" id="pwd" name="pwd" />   
+	            <label for="pwd" >비밀번호</label>
+	            <input type="password" id="pwd" name="pwd" class="form-control"/>   
 	        </div>
 	        <div class="center">
-	            <input type ="submit"  value="활성화수정" />
-	            <input type = "Button" value="글목록" 
+	            <input type ="submit"  value="활성화수정" class="btn btn-primary"/>
+	            <input type = "Button" value="글목록" class="btn btn-primary"
                 	OnClick
                ="location.href='<c:url value='/company/jobopening_list.do'/>'" />
 	        </div>

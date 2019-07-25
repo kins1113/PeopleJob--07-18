@@ -59,6 +59,25 @@
 	}
 </script>
 <style type="text/css">
+.where{
+	min-height: 600px; 
+}
+.where div input[type="checkbox"]{  
+	width:50px;
+	margin:0 auto;
+	float: right;
+}
+.where div label{ 
+	width:130px; 
+	margin:0 auto;  
+	height:30px;
+}
+.where fieldset{
+	min-width: 0;
+ 	 padding: 0;
+  	margin: 0;
+  	border: 1px solid black !important;
+}
 .divList {
     width: 900px;
     margin: 0 auto;
@@ -102,13 +121,13 @@
 	        <div class="list-group"> 
 	            <div class="list-group-item">
 	            	<input type="checkbox" name="jobopening1" id="jobopening1" value="${vo.jobopening }" onclick="javascript_:s_it()"> 
-	                 <img src="<c:url value='/peoplejob_upload/${vo.companyimage }'/>" 
+	                  <img src="<c:url value='/jobopening_upload/${vo.companyimage }'/>" 
 							alt="공고이미지" width="50px" height="50px" style="float:right;"> 
 							<div style="width=100px;float:left;">
 							<c:forEach var="cvo" items="${clist }">
 	                 <c:if test="${not loop_flag }">
-				        <c:if test="${vo.companyCode==cvo.companyCode}">
-			                <h1>${cvo.companyname}</h1>
+				        <c:if test="${vo.companyCode==cvo.companyCode}">   
+			                <div style="height:100px; width:120px;"><h2>${cvo.companyname}</h2></div>
 				            <c:set var="loop_flag" value="true" />
 				        </c:if>
 				    </c:if>
@@ -126,6 +145,7 @@
 	                | <small>조회수 : ${vo.hits }</small>
 	                <br>
 	                 <span class="label label-info">복리후생 : ${vo.welfare }</span>
+	                 <br>
 					<a href="<c:url value='/apply/insertapply.do?jobopening=${vo.jobopening}'/>"><input type="button" id="apply" name="apply"class="btn btn-primary" value="즉시지원"></a>
 					<a id="del2" href="<c:url value='/scrap/deletescrap2.do?jobopening=${vo.jobopening}&member_code=${mvo.memberCode }'/>"><img alt="스크랩" src="<c:url value='/peoplejob_upload/scrapstar.PNG'/>"></a>
 	            </div>

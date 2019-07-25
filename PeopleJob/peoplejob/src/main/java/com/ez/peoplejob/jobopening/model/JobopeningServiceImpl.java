@@ -6,6 +6,8 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.ez.peoplejob.member.model.CompanyVO;
+
 @Service
 public class JobopeningServiceImpl implements JobopeningService{
 
@@ -89,6 +91,9 @@ public class JobopeningServiceImpl implements JobopeningService{
 
 
 	@Override
+	public CompanyVO selectcompany(int companyCode) {
+		return jobopeningDao.selectcompany(companyCode);
+	}
 	public List<Map<String, Object>> selectRandom() {
 		return jobopeningDao.selectRandom();
 	}

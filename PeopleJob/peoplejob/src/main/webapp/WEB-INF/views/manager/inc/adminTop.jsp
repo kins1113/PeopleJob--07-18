@@ -285,7 +285,7 @@
                               Getting Started
                             </li> -->
 									<!-- ?showKey=pay -->
-									<li><a class="sidenav-item-link" href="#">
+									<li><a class="sidenav-item-link" href="${pageContext.request.contextPath}/manager/payment/list.do">
 											<span class="nav-text">통합 관리</span>
 									</a></li>
 

@@ -8,9 +8,10 @@
 
 <style type="text/css">
 .divForm {
-    width: 900px;
+    width: 1153px;
+    height: 110%;
     margin: 0 auto;
-    background: white;
+    background: #f2f4f7;
     padding: 13px;
 }
 #registerdiv {
@@ -37,10 +38,260 @@ select#hopepay {
 select#hopeworkdate {
     height: 35px;
 }
+section#registerds {
+    margin: 12px;
+    background: white;
+    padding: 20px;
+}
+h3 {
+    color: green;
+    font-weight: bold;
+}
+div#companycheck {
+    margin-left: 900px;
+}
+input[type="submit"] {
+    margin-left: 1653px;
+}
+legend{
+    font-weight: bold;
+    font-size: 30px;
+    margin-left: 10px;
+}
+
+button#certification {
+    margin-left: 10px;
+}
+button#langcertbt{
+    margin-left: 10px;
+}
+button#awardbt{
+    margin-left: 10px;
+}
 <style>
 
 </style>
 <script type="text/javascript">
+//1차 직종 가져오기 /manager/occupantion/firstList.do
+selectFirst();
+//1차 작종 클릭하면 2차직종 가져오기 
+$("#selectFirst").change(function(){
+	var firstCode=$(this).find("option:selected").val();
+	if(firstCode!=0){
+		selectSecond(firstCode);
+	}
+});
+
+//2차 직종 클릭하면 3차직종 가져오기
+$("#selectSecond").change(function(){
+	var secondCode=$(this).find("option:selected").val();
+	if(secondCode!=0){
+		selectThird(secondCode);
+	}
+});
+
+//지역정보를 가져오기 - 시도
+getLocation();
+
+//지역정보를 가져오는 
+$("#locationSiDo").change(function(){
+	var sidoCode=$(this).find("option:checked").val();
+	//값을 가져오는 메서드
+	getLocation2(sidoCode);
+});
+
+
+//1차 직종 가져오기
+function selectFirst(){
+$.ajax({
+	url:"<c:url value='/resume/occupation/firstList.do'/>",
+	type:"post",
+	success:function(res){
+			settingFirst(res);
+	},
+	error:function(xhr, status, error){
+		alert(status+":"+error);
+	}
+})
+}
+
+//1차직종 뿌리기
+//[{"firstCode":1,"firstname":"경영·사무"},{"firstCode":2,"firstname":"영업·고객상담"},{"firstCode":3,"firstname":"생산·제조"},
+//{"firstCode":4,"firstname":"IT·인터넷"},{"firstCode":5,"firstname":"전문직"},{"firstCode":6,"firstname":"교육"}
+function settingFirst(res){
+	$.each(res,function(idx,item){
+		if(idx==0){
+			var chEl=$("<option value='0'>1차 직종</option>")
+			var opEl=$("<option value='"+item.firstCode+"'></option>");
+			opEl.append(item.firstname);
+			$("#selectFirst").html(chEl);
+			$("#selectFirst").append(opEl); //최종으로 여기에 넣음
+		}else{
+			var opEl=$("<option value='"+item.firstCode+"'></option>");
+			opEl.append(item.firstname);
+			$("#selectFirst").append(opEl); //최종으로 여기에 넣음
+		}
+	})
+}
+
+//2차 직종가져오기 
+function selectSecond(firstCode){
+$.ajax({
+	url:"<c:url value='/resume/occupation/selectSecond.do'/>",
+	type:"post",
+	data:"firstCode="+firstCode,
+	success:function(res){
+		settingSecond(res);
+	},
+	error:function(xhr,status,error){
+		alert(status+":"+error);
+	}
+});
+}
+//[{"secondCode":101,"secondname":"기획·전략·경영","firstCode":1},
+//{"secondCode":102,"secondname":"총무·법무·사무","firstCode":1},.....	]
+//2차 직종 세팅하기 함수
+function settingSecond(res){
+$.each(res,function(idx,item){
+	if(idx==0){
+		//option태그 만들어서 
+		var opEl=$("<option value='"+item.secondCode+"'></option>")
+		//값을 넣고 
+		opEl.html(item.secondname);
+		//append
+		$("#selectSecond").html("<option value='0'>2차 직종</option>");
+		$("#selectSecond").append(opEl);
+	}else{
+		//option태그 만들어서 
+		var opEl=$("<option value='"+item.secondCode+"'></option>")
+		//값을 넣고 
+		opEl.append(item.secondname);
+		//append
+		$("#selectSecond").append(opEl);
+	}
+});
+var thirdEl=$("<option>3차 직종</option>");
+$("#selectThird").html(thirdEl);
+};
+
+//3차직종 가져오기 
+function selectThird(secondCode){
+$.ajax({
+	url:"<c:url value='/resume/occupation/selectThird.do'/>",
+	type:"post",
+	data:"secondCode="+secondCode,
+	success:function(res){
+		settingThird(res);
+	},
+	error:function(xhr,status,error){
+		alert(status+":"+error);
+	}
+});
+
+} 
+//3차 직종 뿌려주기 
+function settingThird(res){
+$.each(res,function(idx,item){
+	if(idx==0){
+		//option태그 만들어서 
+		var opEl=$("<option value='"+item.thirdCode+"'></option>")
+		//값을 넣고 
+		opEl.html(item.thirdname);
+		//append
+		$("#selectThird").html("<option value='0'>3차 직종</option>");
+		$("#selectThird").append(opEl);
+	}else{
+		//option태그 만들어서 
+		var opEl=$("<option value='"+item.thirdCode+"'></option>")
+		//값을 넣고 
+		opEl.append(item.thirdname);
+		//append
+		$("#selectThird").append(opEl);
+	}
+});
+}
+//지역정보를 가져오는 메서드 
+function getLocation(){
+	$.ajax({
+		url:"<c:url value='/resume/occupation/selectLocation.do'/>",
+		type:"post",
+		success:function(res){
+			settingLocation(res);
+		},
+		error:function(xht,status,error){
+			alert(status+":"+error);
+		}
+	});//ajax
+}
+//지역정보를 뿌려주는 메서드
+function settingLocation(res){
+	$.each(res, function(idx,item){
+		if(idx==0){
+			var chEl=$("<option value='0'>시/도</option>");
+			var opEl=$("<option value='"+item.gugun+"'></option>")
+			opEl.html(item.sido);
+			$("#locationSiDo").html(chEl);
+			$("#locationSiDo").append(opEl);
+		}else{
+			var opEl=$("<option value='"+item.gugun+"'></option>")
+			opEl.html(item.sido);
+			$("#locationSiDo").append(opEl);
+		}
+	});
+}
+
+//지역정보를 가져오는 메서드 - 구군
+function getLocation2(sidoCode){
+	$.ajax({
+		url:"<c:url value='/resume/occupation/selectLocation2.do'/>",
+		type:"post",
+	    dataType: "json",
+		data:"sidoCode="+sidoCode,
+		success:function(res){
+			settingLocation2(res);
+		},
+		error:function(xht,status,error){
+			alert(status+":"+error);
+		}
+	});//ajax
+}
+//지역정보를 뿌려주는 메서드 - 구군
+function settingLocation2(res){
+	$.each(res, function(idx,item){
+		if(idx==0){
+			var chEl=$("<option value='0'>구/군</option>");
+			var opEl=$("<option value='"+item["LOCAL_CODE2"]+"'></option>")
+			opEl.html(item["GUGUN"]);
+			$("#locationGugun").html(chEl);
+			$("#locationGugun").append(opEl);
+		}else{
+			//alert("세팅 item[LOCAL_CODE2]="+item["LOCAL_CODE2"]+", item[GUGUN]"+item["GUGUN"])
+			var opEl=$("<option value='"+item["LOCAL_CODE2"]+"'></option>")
+			opEl.html(item["GUGUN"]);
+			$("#locationGugun").append(opEl);
+		}
+		
+	});
+}
+$(function () {
+	$("#certificationtype").hide();
+	$("#certification").click(function () {
+		$("#certificationtype").toggle(500);
+	});
+	$("#award").hide();
+	$("#awardbt").click(function () {
+		$("#award").toggle(500);
+	});
+	$("#hopework").hide();
+	$("#hopeworkbt").click(function () {
+		$("#hopework").toggle(500);
+	});
+	$("#langcert").hide();
+	$("#langcertbt").click(function () {
+		$("#langcert").toggle(500);
+	});
+
+});
 </script>
 <article>
 <div id="registerdiv">
@@ -49,12 +300,14 @@ select#hopeworkdate {
 	action="<c:url value='/resume/register.do'/>" enctype="multipart/form-data">
 <fieldset>
 	<legend style="font-weight: bold">이력서등록</legend>
-	
+	<section id="registerds">
 	<div>        
-        <label for="resumeTitle">이력서 제목</label>
-        <input type="text" class="form-control" placeholder="이력서 제목을 입력하세요" name="resumeTitle" id="infobox"  style="ime-mode:active">
+        <h3 >이력서 제목</h3>
+        <input type="text" class="form-control" placeholder="이력서 제목을 입력하세요(최대 100자 입력)" name="resumeTitle" id="infobox"  style="ime-mode:active">
     </div>
+    </section>
     <hr>
+    <section id="registerds">
     <h3>기본정보</h3>
     <!-- hidden필드에 no 넣기 -->
     
@@ -65,7 +318,7 @@ select#hopeworkdate {
     <div>
     <!--이력서 사진  https://kuzuro.blogspot.com/2018/10/11.html-->
     <div class="inputArea">
- <label for="picture">이력서 정보</label>
+ <label for="picture">이력서 사진</label>
  <input type="file" id="gdsImg" name="file" />
  <div class="select_img"><img src="" /></div>
  
@@ -91,16 +344,7 @@ select#hopeworkdate {
     <div>        
         <label for="birth">생년월일</label>
         <input type="text" class="form-control"  name="birth" id="birth" value="${vo.birth}" style="ime-mode:active">
-    	<label class="radio-inline">
-  		<input type="radio" name="membergender" id="membergender" value="남" <c:if test="${vo.membergender=='남'}">            	
-            		checked="checked"
-            	</c:if>>남
-		</label>
-    	<label class="radio-inline">
-  		<input type="radio" name="membergender" id="membergender" value="여" <c:if test="${vo.membergender=='여'}">            	
-            		checked="checked"
-            	</c:if>>여
-		</label>
+    	
     </div>
   
    
@@ -114,8 +358,7 @@ select#hopeworkdate {
         <input type="text" class="form-control"  name="zipcode" id="zipcode" ReadOnly  
         	title="우편번호" class="width_80" value="${vo.zipcode}">
         
-        <button type="button" class="btn btn-success" value="우편번호 찾기" id="btnZipcode" 
-        title="새창열림">우편번호찾기</button>
+       
         <br />
         <span class="sp1">&nbsp;</span>
         <input type="text"  class="form-control" id="address" name="address" value="${vo.address }" ReadOnly title="주소"  class="width_350"><br />
@@ -125,17 +368,16 @@ select#hopeworkdate {
     <div>
         <label for="tel">핸드폰</label>&nbsp;
        
-        <input type="text"  class="form-control"   name="tel" id="tel" value="${vo.tel}" maxlength="4" title="휴대폰 번호"
+        <input type="text"  class="form-control"   name="tel" id="tel" value="${vo.tel}" maxlength="11" title="휴대폰 번호"
         	class="width_80">
     </div>
-    
+    </section>
+    <section id="registerds">
     <h3>학력사항</h3>
     <div>
         <label for="education">학력사항</label>&nbsp;
        
-       <label class="radio-inline">
-  		<input type="radio" name="graduatetype" id="graduatetype" value="학력무관"> 학력무관
-		</label>
+      
 		
        <label class="radio-inline">
   		<input type="radio" name="graduatetype" id="graduatetype" value="초등학교졸업"> 초등학교 졸업
@@ -189,12 +431,12 @@ select#hopeworkdate {
        </div>
        <div>
        <label>전공</label>
-  		<input type="text"  class="form-control" name="major" id="major" >
+  		<input type="text"  class="form-control" placeholder="전공을 입력하세요" name="major" id="major" >
        
        </div>
        <div>
        <label>학위</label>
-  		<input type="text"  class="form-control" name="degree" id="degree" >
+  		<input type="text"  class="form-control" placeholder="학위를 입력하세요" name="degree" id="degree" >
        
        </div>
        <div>
@@ -205,7 +447,8 @@ select#hopeworkdate {
         	<option value="중퇴">중퇴</option>
         </select>
        </div>	
-    
+    </section>
+    <section id="registerds">
     <h3>경력사항</h3>
     <div>
     <label for="workcheck">경력구분</label>&nbsp;
@@ -238,80 +481,73 @@ select#hopeworkdate {
     </div>	
     <div>
         <label for="jobgrade">직급</label>
-        <input type="text" class="form-control"  name="jobgrade" id="jobgrade" style="ime-mode:active">
+        <input type="text" class="form-control"  name="jobgrade" id="jobgrade" style="ime-mode:active" placeholder="직급을 입력하세요">
    </div>
-  <script>
-$(function () {
-	$("#certificationtype").hide();
-	$("#certification").click(function () {
-		$("#certificationtype").toggle(500);
-	});
-	$("#award").hide();
-	$("#awardbt").click(function () {
-		$("#award").toggle(500);
-	});
-	$("#hopework").hide();
-	$("#hopeworkbt").click(function () {
-		$("#hopework").toggle(500);
-	});
+   </section>
 
-});
-</script>
-   <button type="button" id="certification" class="btn btn-success" value="자격증/어학">자격증/어학</button>
-   <div id="certificationtype">
-   <h3>자격증/어학</h3>
-        <label for="certificationtype">항목선택</label>
-        <select class="form-control" name="certificationtype" id="certificationtype" >
-        	<option value="자격증/면허증">자격증/면허증</option>
-        	<option value="어학시험">어학시험</option>
-        </select>
+   <button type="button" id="certification" class="btn btn-success" value="자격증">자격증</button>
+   <section id="registerds">
+   <div id="certificationtype" name="certificationtype">
+   
+   <h3>자격증</h3>
+
         
-   <h5>자격증/면허증</h5>
+   <input class="form-control" name="certificationtype" id="certificationtype" value="자격증/면허증">
         <label for="lName">자격증명</label>
-        <input type="text" class="form-control"  name="lName" id="lName" style="ime-mode:active">
+        <input type="text" class="form-control"  name="lName" id="lName" placeholder="자격증명을 입력하세요" style="ime-mode:active">
     <div>    
         <label for="lInstitution">발행처/기관</label>
-        <input type="text" class="form-control"  name="lInstitution" id="lInstitution" style="ime-mode:active">
+        <input type="text" class="form-control"  name="lInstitution" placeholder="발행처/기관을 입력하세요" id="lInstitution" style="ime-mode:active">
     </div>
     <div>
     	<c:import url="resume_date3.jsp"/>
-    </div> 
+    </div>
+    </div>
+   </section>
+    
     &nbsp;
-    <div>	
-    <h5>어학시험</h5>  
+   <button type="button" id="langcertbt" class="btn btn-success" value="어학">어학</button>
+    <section id="registerds">
+    <div id="langcert">
+    <h3>어학시험</h3> 
+    <input class="form-control" name="certificationtype" id="certificationtype" value="어학시험">
+    <div> 
         <label for="language">언어</label>
-        <input type="text" class="form-control"  name="language" id="language" style="ime-mode:active">
+        <input type="text" class="form-control" placeholder="언어를 입력하세요" name="language" id="language" style="ime-mode:active">
     </div>
      <div>
         <label for="institute">발행처/기관</label>
-        <input type="text" class="form-control"  name="institute" id="institute" style="ime-mode:active">
+        <input type="text" class="form-control" placeholder="발행처/기관을 입력하세요" name="institute" id="institute" style="ime-mode:active">
      </div>
      <div>
         <label for="langlicencename">시험종류</label>
-        <input type="text" class="form-control"  name="langlicencename" id="langlicencename" style="ime-mode:active">
+        <input type="text" class="form-control" placeholder="시험종류를 입력하세요"  name="langlicencename" id="langlicencename" style="ime-mode:active">
      </div> 
      <div>
         <label for="langpoint">점수</label>
-        <input type="text" class="form-control"  name="langpoint" id="langpoint" style="ime-mode:active">
+        <input type="text" class="form-control" placeholder="점수를 입력하세요" name="langpoint" id="langpoint" style="ime-mode:active">
      </div>
      
      <div>
         <label for="langGrade">급수</label>
-        <input type="text" class="form-control"  name="langGrade" id="langGrade" style="ime-mode:active">
+        <input type="text" class="form-control" placeholder="급수를 입력하세요" name="langGrade" id="langGrade" style="ime-mode:active">
      </div>
      <div>
      	<c:import url="resume_date4.jsp"/>             
 	</div>
 	</div>
-     &nbsp;
-
+	</section>
    <button type="button" id="awardbt" class="btn btn-success" value="수상내역">수상내역</button>
+  
+   <section id="registerds">
     <div class="well" id="award">
-     <h5>수상내역</h5>
+     <h3>수상내역</h3>
       <label for="award">수상명</label>
         <input type="text" class="form-control"  name="award" id="award" style="ime-mode:active">
   </div>
+  </section>
      &nbsp;
+     <section id="registerds">
      <h3>자기소개서</h3>
       <div>	
     	<!-- <label for="introduce">자기소개서</label>
@@ -323,8 +559,10 @@ $(function () {
         
         
    </div>
+   </section>
       &nbsp;
       <button type="button" id="hopeworkbt" class="btn btn-success" value="희망근무">희망근무</button>
+      <section id="registerds">
 	 <div  id="hopework">
       <h3>희망근무 선택</h3>
       <div>
@@ -371,51 +609,63 @@ $(function () {
         </select>
        </div>
        
-       
        <h3>희망근무지역</h3>
        <div>
        
        <label for="시도">시도</label>
-        <input type="text" class="form-control"  name="sido" id="sido" style="ime-mode:active">
-       	
+       	<select class="form-control" name="sido" id="locationSiDo" style="ime-mode:active" >
+   			<option>시도</option>
+        	
+        </select>   
         </div>
        	<div>
        
        <label for="구군">구군</label>
-        <input type="text" class="form-control"  name="gugun" id="gugun" style="ime-mode:active">
-       	
+       <select class="form-control" name="gugun" id="locationGugun" style="ime-mode:active" >
+       	<option>구군</option>
+       </select>
+
         </div>
         
         <div>
         <%-- <c:import url="btype.jsp"/> --%>
         <label for="btypename1">업종1차</label>
-        
-        <input type="text" class="form-control"  name="btypename1" id="btypename1"   style="ime-mode:active">
+        <select name="btypename1" id="btypename1">
+        <option >업종1차</option>
+        </select>
         </div>
         <div>
         <label for="btypename2">업종2차</label>
         
-        <input type="text" class="form-control"  name="btypename2" id="btypename2"   style="ime-mode:active">
+        <select name="btypename2" id="btypename2">
+        <option >업종2차</option>
+        </select>
         </div>
         <div>
         <label for="btypename3">업종3차</label>
-        
-        <input type="text" class="form-control"  name="btypename3" id="btypename3"  style="ime-mode:active">
+         <select name="btypename3" id="btypename3">
+        <option >업종3차</option>
+        </select>
         </div>
         <div>
         <label for="firstname">직종1차</label>
-        <input type="text" class="form-control"  name="firstname" id="firstname" style="ime-mode:active">
+         <select name="firstname" id="selectFirst">
+        <option >직종1차</option>
+        </select>
      
         </div>
         <div>
         <label for="secondname">직종2차</label>
-        <input type="text" class="form-control"  name="secondname" id="secondname"  style="ime-mode:active">
-        	
+         <select name="secondname" id="selectSecond">
+        <option >직종2차</option>
+        </select>
+     	
         </div>
         <div>
         <label for="thirdname">직종3차</label>
-        <input type="text" class="form-control"  name="thirdname" id="thirdname"  style="ime-mode:active">
-        
+        <select name="thirdname" id="selectThird">
+        <option >직종3차</option>
+        </select>
         </div>
         <div>
         <label for="hopeworkdate">근무일시</label>
@@ -426,10 +676,14 @@ $(function () {
         </select>
         </div>
         </div>
+        </section>
+        
+        
    &nbsp;
-    <div>
+    <div id="companycheck">
     <label>기업 인사담당자의 입사제의 및 면접제의를 받으시겠어요?</label>
     <label class="radio-inline">
+    	
   		<input type="radio" name="opencheck" id="opencheck" value="Y">공개
 		</label>
 		
@@ -438,12 +692,16 @@ $(function () {
 	</label>
     </div>
     <br>
-    <input type="submit" value="이력서 저장"/>
+   
     
-</fieldset> 
-</form>
+    </fieldset>
+    </form>
+    
 </div>  
-</div>     
+     <input class="btn btn-success" type="submit" value="이력서 저장">
+</div> 
+  
 </article>
+
 <%@include file="../main/inc/bottom.jsp" %>
       

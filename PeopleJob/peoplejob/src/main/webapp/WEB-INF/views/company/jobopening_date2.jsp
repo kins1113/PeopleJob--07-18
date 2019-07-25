@@ -34,15 +34,15 @@
 </head>
 <body>
 <div class="form-group">
-                <div class="col-sm-offset-2 col-sm-10">
-                <label class="control-label">근무기간(date)</label>
+                <div >
+                <label>근무기간(date)</label>
                     <input id="workdate" name="workdate" class="form-control" type="text" value="${fn:substring(vo.workdate,0,10) }" readonly/>
                 </div>
             </div>
             
               <div class="form-group">
-                <div class="col-sm-offset-2 col-sm-10">
-                <label class="control-label">모집종료일(date) :</label> 
+                <div >
+                <label >모집종료일(date) :</label> 
                     <input id="end_date" name="endDate" class="form-control" type="text" value="${fn:substring(vo.endDate,0,10)}" readonly/>
                 </div>
             </div> 

@@ -44,7 +44,7 @@ input[name=searchKeyword]{width: 400px;margin-right: 3px;}
 		});
 		
 		//상세보기 누르면 searchDtDiv 보여주기
-		$("#searchDtDiv").hide();
+		//$("#searchDtDiv").hide();		주석 풀기
 		$("#postSearchDtCg").hide();
 		$("#postSearchDt").click(function(){
 			$("#searchDtDiv").show();
@@ -60,10 +60,57 @@ input[name=searchKeyword]{width: 400px;margin-right: 3px;}
 		
 		//1차 직종 가져오기 /manager/occupantion/firstList.do
 		selectFirst();
+		//1차 작종 클릭하면 2차직종 가져오기 
+		$("#selectFirst").change(function(){
+			var firstCode=$(this).find("option:selected").val();
+			if(firstCode!=0){
+				selectSecond(firstCode);
+			}
+		});
 		
+		//2차 직종 클릭하면 3차직종 가져오기
+		$("#selectSecond").change(function(){
+			var secondCode=$(this).find("option:selected").val();
+			if(secondCode!=0){
+				selectThird(secondCode);
+			}
+		});
 		
+		//날짜 옆에 버튼 누르면 값 세팅되기
+		$(".SDButton").click(function(){
+			var SDVal=$(this).val();
+			//input[name=endDay]의 값을 확인 있나없나
+		
+			var endDay;
+			if($("input[name=endDay]").val()==''){
+				//값이 없으면 오늘 날짜
+				endDay=getToday();
+			}else {
+				//값이 있으면 그 값
+				endDay=$("input[name=endDay]").val();
+			}
+			var type=getType(SDVal);
+			var trem=getTrem(SDVal);
+			var startDay=getStartDay(endDay,type,trem)
+			//alert("클릭 이벤트에서 startDay="+startDay+", endDay="+endDay+", type="+type+", trem="+trem);
+			startDay=fmtDay(startDay)
+			//alert("클릭 이벤트에서 포멧후 startDay="+startDay);
+			//세팅하기
+				setingDate(startDay, endDay)
+		})
+		
+		//지역정보를 가져오기 - 시도
+		getLocation();
+		
+		//지역정보를 가져오는 
+		$("#locationSiDo").change(function(){
+			var sidoCode=$(this).find("option:checked").val();
+			//값을 가져오는 메서드
+			getLocation2(sidoCode);
+		});
 	});
 	
+	//1차 직종 가져오기
 	function selectFirst(){
 		$.ajax({
 			url:"<c:url value='/manager/occupantion/firstList.do'/>",
@@ -77,15 +124,243 @@ input[name=searchKeyword]{width: 400px;margin-right: 3px;}
 		})
 	}
 	
+	//1차직종 뿌리기
 	//[{"firstCode":1,"firstname":"경영·사무"},{"firstCode":2,"firstname":"영업·고객상담"},{"firstCode":3,"firstname":"생산·제조"},
 	//{"firstCode":4,"firstname":"IT·인터넷"},{"firstCode":5,"firstname":"전문직"},{"firstCode":6,"firstname":"교육"}
 	function settingFirst(res){
 			$.each(res,function(idx,item){
-				//alert(idx+"인 것의 이름 = "+item.firstname+", 코드는 ="+item.firstCode);
-				var opEl=$("<option value="+item.firstCode+"></option>");
-				opEl.append(item.firstname);
-				$("#selectFirst").append(opEl); //최종으로 여기에 넣음
+				if(idx==0){
+					var chEl=$("<option value='0'>1차 직종</option>")
+					var opEl=$("<option value='"+item.firstCode+"'></option>");
+					opEl.append(item.firstname);
+					$("#selectFirst").html(chEl);
+					$("#selectFirst").append(opEl); //최종으로 여기에 넣음
+				}else{
+					var opEl=$("<option value='"+item.firstCode+"'></option>");
+					opEl.append(item.firstname);
+					$("#selectFirst").append(opEl); //최종으로 여기에 넣음
+				}
 			})
+	}
+	
+	//2차 직종가져오기 
+	function selectSecond(firstCode){
+		$.ajax({
+			url:"<c:url value='/manager/occupantion/selectSecond.do'/>",
+			type:"post",
+			data:"firstCode="+firstCode,
+			success:function(res){
+				settingSecond(res);
+			},
+			error:function(xhr,status,error){
+				alert(status+":"+error);
+			}
+		});
+	}
+	//[{"secondCode":101,"secondname":"기획·전략·경영","firstCode":1},
+		//{"secondCode":102,"secondname":"총무·법무·사무","firstCode":1},.....	]
+	//2차 직종 세팅하기 함수
+	function settingSecond(res){
+		$.each(res,function(idx,item){
+			if(idx==0){
+				//option태그 만들어서 
+				var opEl=$("<option value='"+item.secondCode+"'></option>")
+				//값을 넣고 
+				opEl.html(item.secondname);
+				//append
+				$("#selectSecond").html("<option value='0'>2차 직종</option>");
+				$("#selectSecond").append(opEl);
+			}else{
+				//option태그 만들어서 
+				var opEl=$("<option value='"+item.secondCode+"'></option>")
+				//값을 넣고 
+				opEl.append(item.secondname);
+				//append
+				$("#selectSecond").append(opEl);
+			}
+		});
+		var thirdEl=$("<option>3차 직종</option>");
+		$("#selectThird").html(thirdEl);
+	};
+	
+	 //3차직종 가져오기 
+	function selectThird(secondCode){
+		$.ajax({
+			url:"<c:url value='/manager/occupantion/selectThird.do'/>",
+			type:"post",
+			data:"secondCode="+secondCode,
+			success:function(res){
+				settingThird(res);
+			},
+			error:function(xhr,status,error){
+				alert(status+":"+error);
+			}
+		});
+		
+	} 
+	//3차 직종 뿌려주기 
+	function settingThird(res){
+		$.each(res,function(idx,item){
+			if(idx==0){
+				//option태그 만들어서 
+				var opEl=$("<option value='"+item.thirdCode+"'></option>")
+				//값을 넣고 
+				opEl.html(item.thirdname);
+				//append
+				$("#selectThird").html("<option value='0'>3차 직종</option>");
+				$("#selectThird").append(opEl);
+			}else{
+				//option태그 만들어서 
+				var opEl=$("<option value='"+item.thirdCode+"'></option>")
+				//값을 넣고 
+				opEl.append(item.thirdname);
+				//append
+				$("#selectThird").append(opEl);
+			}
+		});
+	}
+	//오늘날짜 구하는 메서드
+	function getToday(){
+		var nowday=new Date();
+		var day=nowday.getDate();
+		var month=nowday.getMonth()+1;
+		var year=nowday.getFullYear();
+		var today=year+"-"+AddZero(month,"m")+"-"+AddZero(day,"d");
+		
+		return today;
+	}
+	//오늘날짜 구하는 메서드
+	function fmtDay(pDay){
+		var day=pDay.getDate();
+		var month=pDay.getMonth()+1;
+		var year=pDay.getFullYear();
+		var today=year+"-"+AddZero(month,"m")+"-"+AddZero(day,"d");
+		return today;
+	}
+	//시작날짜 구하는 메서드
+	function getType(SDVal){
+		var type;
+		if(SDVal=="오늘"){type="d";
+		}else if(SDVal=="이번주"){type="d";
+		}else if(SDVal=="이번달"){type="d";
+		}else if(SDVal=="1주일"){type="d";
+		}else if(SDVal=="15일"){type="d";
+		}else if(SDVal=="1개월"){type="m";
+		}else if(SDVal=="3개월"){type="m";
+		}else if(SDVal=="9개월"){type="m";
+		}
+		return type;
+	}
+	//버튼에 맞는 텀 구하는 메서드
+	function getTrem(SDVal){
+		var trem;
+		if(SDVal=="오늘"){trem="1";
+		}else if(SDVal=="이번주"){trem="1";
+		}else if(SDVal=="이번달"){trem="1";
+		}else if(SDVal=="1주일"){trem="7";
+		}else if(SDVal=="15일"){trem="16";
+		}else if(SDVal=="1개월"){trem="1";
+		}else if(SDVal=="3개월"){trem="3";
+		}else if(SDVal=="9개월"){trem="9";
+		}
+		return trem;
+	}
+	 
+	//날이 10일 이하면 0앞에 붙이는 메서드
+	function AddZero(d, type){
+		if(type=="m"){
+			if(d<10){
+				d="0"+d;
+				return d;
+			}
+		}else if(type=="d"){
+			if(d<10){
+				d="0"+d;
+				return d;
+			}
+		}
+		return d; 
+	}
+	
+	function setingDate(startDay, endDay){
+		$("input[name=startDay]").val(startDay);
+		$("input[name=endDay]").val(endDay);
+	}
+	
+	function getStartDay(endDate,type, term){
+		var arr=endDate.split('-');
+		var date = new Date(arr[0],arr[1]-1,arr[2]); //(2019,6,8)
+		
+		if(type=='d'){
+			date.setDate(date.getDate()-term);
+		}else if(type='m'){
+			date.setMonth(date.getMonth()-term);
+		}
+		return date;
+	}	
+	
+	//지역정보를 가져오는 메서드 
+	function getLocation(){
+		$.ajax({
+			url:"<c:url value='/manager/occupantion/selectLocation.do'/>",
+			type:"post",
+			success:function(res){
+				settingLocation(res);
+			},
+			error:function(xht,status,error){
+				alert(status+":"+error);
+			}
+		});//ajax
+	}
+	//지역정보를 뿌려주는 메서드
+	function settingLocation(res){
+		$.each(res, function(idx,item){
+			if(idx==0){
+				var chEl=$("<option value='0'>시/도</option>");
+				var opEl=$("<option value='"+item.gugun+"'></option>")
+				opEl.html(item.sido);
+				$("#locationSiDo").html(chEl);
+				$("#locationSiDo").append(opEl);
+			}else{
+				var opEl=$("<option value='"+item.gugun+"'></option>")
+				opEl.html(item.sido);
+				$("#locationSiDo").append(opEl);
+			}
+		});
+	}
+	
+	//지역정보를 가져오는 메서드 - 구군
+	function getLocation2(sidoCode){
+		$.ajax({
+			url:"<c:url value='/manager/occupantion/selectLocation2.do'/>",
+			type:"post",
+		    dataType: "json",
+			data:"sidoCode="+sidoCode,
+			success:function(res){
+				settingLocation2(res);
+			},
+			error:function(xht,status,error){
+				alert(status+":"+error);
+			}
+		});//ajax
+	}
+	//지역정보를 뿌려주는 메서드 - 구군
+	function settingLocation2(res){
+		$.each(res, function(idx,item){
+			if(idx==0){
+				var chEl=$("<option value='0'>구/군</option>");
+				var opEl=$("<option value='"+item["LOCAL_CODE2"]+"'></option>")
+				opEl.html(item["GUGUN"]);
+				$("#locationGugun").html(chEl);
+				$("#locationGugun").append(opEl);
+			}else{
+				//alert("세팅 item[LOCAL_CODE2]="+item["LOCAL_CODE2"]+", item[GUGUN]"+item["GUGUN"])
+				var opEl=$("<option value='"+item["LOCAL_CODE2"]+"'></option>")
+				opEl.html(item["GUGUN"]);
+				$("#locationGugun").append(opEl);
+			}
+			
+		});
 	}
 	
 	//페이지 처리 함수
@@ -133,15 +408,6 @@ input[name=searchKeyword]{width: 400px;margin-right: 3px;}
 							<tr>
 								<th>등록일</th>
 								<td id="dateSearchShow" colspan="5">
-										<div class="incDate dateSearchShow" id="endDay">
-											 <c:import url="../../inc/date.jsp">
-												<c:param name="name" value="endDay"></c:param>
-												<c:param name="id" value="workdate2"></c:param>
-											</c:import> 				
-										</div>
-										<div class="dateSearchShow">
-											<br><b> ~ </b>
-										</div>
 										<div class="incDate dateSearchShow" id="startDay">
 											 <c:import url="../../inc/date.jsp">
 												<c:param name="name" value="startDay"></c:param>
@@ -149,14 +415,23 @@ input[name=searchKeyword]{width: 400px;margin-right: 3px;}
 											</c:import>				
 										</div>
 										<div class="dateSearchShow">
-											<input type="submit" class="btn btn-secondary btn-default" id="postSearch"value="오늘">
-											<input type="submit" class="btn btn-secondary btn-default" id="postSearch"value="이번주">
-											<input type="submit" class="btn btn-secondary btn-default" id="postSearch"value="이번달">
-											<input type="submit" class="btn btn-secondary btn-default" id="postSearch"value="1주일">
-											<input type="submit" class="btn btn-secondary btn-default" id="postSearch"value="15일">
-											<input type="submit" class="btn btn-secondary btn-default" id="postSearch"value="1개월">
-											<input type="submit" class="btn btn-secondary btn-default" id="postSearch"value="3개월">
-											<input type="submit" class="btn btn-secondary btn-default" id="postSearch"value="9개월">
+											<br><b> ~ </b>
+										</div>
+										<div class="incDate dateSearchShow" id="endDay">
+											 <c:import url="../../inc/date.jsp">
+												<c:param name="name" value="endDay"></c:param>
+												<c:param name="id" value="workdate2"></c:param>
+											</c:import> 				
+										</div>
+										<div class="dateSearchShow">
+											<input type="button" class="btn btn-secondary btn-default SDButton" value="오늘">
+											<input type="button" class="btn btn-secondary btn-default SDButton" value="이번주">
+											<input type="button" class="btn btn-secondary btn-default SDButton" value="이번달">
+											<input type="button" class="btn btn-secondary btn-default SDButton" value="1주일">
+											<input type="button" class="btn btn-secondary btn-default SDButton" value="15일">
+											<input type="button" class="btn btn-secondary btn-default SDButton" value="1개월">
+											<input type="button" class="btn btn-secondary btn-default SDButton" value="3개월">
+											<input type="button" class="btn btn-secondary btn-default SDButton" value="9개월">
 										</div>
 								</td>
 							</tr>
@@ -166,19 +441,19 @@ input[name=searchKeyword]{width: 400px;margin-right: 3px;}
 									<select class="custom-select my-1 FST" id="selectFirst">
 										<option>1차 직종</option>
 									</select>
-									<select class="custom-select my-1 mr-sm-2 FST">
+									<select class="custom-select my-1 mr-sm-2 FST" id="selectSecond">
 										<option>2차 직종</option>
 									</select>
-									<select class="custom-select my-1 mr-sm-2 FST">
+									<select class="custom-select my-1 mr-sm-2 FST" id="selectThird">
 										<option>3차 직종</option>
 									</select>
 								</td>
 								<th>지역</th>
 								<td>
-									<select class="custom-select my-1 mr-sm-2 FST">
+									<select class="custom-select my-1 mr-sm-2 FST" id="locationSiDo">
 										<option>시/도</option>
 									</select>
-									<select class="custom-select my-1 mr-sm-2 FST">
+									<select class="custom-select my-1 mr-sm-2 FST" id="locationGugun">
 										<option>구/군</option>
 									</select>
 								</td>

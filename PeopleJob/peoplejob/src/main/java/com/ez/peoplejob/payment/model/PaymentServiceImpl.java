@@ -72,23 +72,19 @@ public class PaymentServiceImpl implements PaymentService{
 	public int getCountByJobopening(int jobno) {
 		return paymentDao.getCountByJobopening(jobno);
 	}
-/*
+
 	@Override
-	public List<Map<String, Object>> selectAll(SearchVO searchVo) {
-		return paymentDao.selectAll(searchVo);
+	public List<Map<String, Object>> selectAll(Map<String, Object> map) {
+		return paymentDao.selectAll(map);
 	}
 
 	@Override
 	public int selectTotalCount(SearchVO searchVo) {
 		return paymentDao.selectTotalCount(searchVo);
 	}
-	*/
-
-	@Override
-	public List<PaymentVO> selectAll() {
-		return paymentDao.selectAll();
-	}
 	
+
+
 	
 
 	

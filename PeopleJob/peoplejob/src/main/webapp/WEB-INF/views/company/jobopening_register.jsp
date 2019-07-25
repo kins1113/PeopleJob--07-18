@@ -56,15 +56,15 @@
         <input type="hidden" name="companyCode" value="${mvo.companyCode }"> 
 
               <div class="form-group">
-                <div class="col-sm-offset-2 col-sm-10">
-                <label class="control-label">공고제목</label>
+                <div  >
+                <label  >공고제목</label>
                     <input id="jobtitle" name="jobtitle" class="form-control" type="text" />
                 </div>
             </div>
              
              <div class="form-group">
-                <div class="col-sm-offset-2 col-sm-10">
-                <label class="control-label">지역구분</label>
+                <div >
+                <label >지역구분</label>
                 	<select name="localcheck">
                 		<option value="서울특별시">서울</option>
                 		<option value="부산광역시">부산</option>
@@ -88,14 +88,14 @@
             </div>
              
             <div class="form-group">
-                <div class="col-sm-offset-2 col-sm-10">
-                <label class="control-label">역정보</label>
+                <div >
+                <label >역정보</label>
                     <input id="subwayinfo" name="subwayinfo" class="form-control" type="text" />
                 </div>
             </div>         
               <div class="form-group">
-                <div class="col-sm-offset-2 col-sm-10">
-                <label class="control-label">근무형태</label>
+                <div  >
+                <label  >근무형태</label>
                <select name="workform">
                 		<option value="평일">평일</option>
                 		<option value="주말">주말</option>
@@ -117,8 +117,8 @@
             </div>
              -->
              <div class="form-group">
-                <div class="col-sm-offset-2 col-sm-10">
-                <label class="control-label">근무요일</label>
+                <div  >
+                <label  >근무요일</label>
                     <select name="dayofweek">
                 		<option value="1일">1일</option>
                 		<option value="2일">2일</option>
@@ -132,15 +132,15 @@
             </div>
             
             <div class="form-group">
-                <div class="col-sm-offset-2 col-sm-10">
-                <label class="control-label">근무시간</label>
+                <div  >
+                <label  >근무시간</label>
                     <input id="worktime" name="worktime" class="form-control" type="text" />
                 </div>
             </div>
           
               <div class="form-group">
-                <div class="col-sm-offset-2 col-sm-10">
-                <label class="control-label">급여방식</label>
+                <div  >
+                <label  >급여방식</label>
                 	<select name="payway">
                 	<option value="월급">월급</option>
                 	<option value="연봉">연봉</option>
@@ -149,15 +149,15 @@
                 </div>
             </div>
              <div class="form-group">
-                <div class="col-sm-offset-2 col-sm-10">
-                <label class="control-label">급여</label>
+                <div  >
+                <label  >급여</label>
                     <input id="pay" name="pay" class="form-control" type="text" />
                 </div>
             </div>
             
             <div class="form-group">
-                <div class="col-sm-offset-2 col-sm-10">
-                <label class="control-label">근무방식</label>
+                <div  >
+                <label  >근무방식</label>
                     <select name="workway">
                         <option value="정규직(신입)">정규직(신입)</option>
                         <option value="정규직(경력)">정규직(경력)</option>
@@ -168,8 +168,8 @@
             </div>
               <!-- name="welfare" -->
                <div class="form-group">
-                <div class="col-sm-offset-2 col-sm-10">
-                <label class="control-label">복리후생</label>
+                <div  >
+                <label  >복리후생</label>
                 <br>  
                     <label><input type="checkbox" name="welfare1" id="welfare1" value="국민연금" onclick="javascript_:s_it()"/> 국민연금</label>
                     <label><input type="checkbox" name="welfare1" id="welfare1"value="건강보험" onclick="javascript_:s_it()"/> 건강보험</label>
@@ -185,8 +185,8 @@
                 </div>
             </div>
              <div class="form-group">
-                <div class="col-sm-offset-2 col-sm-10">
-                <label class="control-label">성별</label>
+                <div  >
+                <label  >성별</label>
                 	<select id="gender" name="gender">
                         <option value="남자">남자</option>
                         <option value="여자">여자</option>
@@ -195,8 +195,8 @@
                 </div>
             </div>
              <div class="form-group">
-                <div class="col-sm-offset-2 col-sm-10">
-                <label class="control-label">제한연령</label>
+                <div  >
+                <label  >제한연령</label>
                     <select id="agelimit" name="agelimit">
                         <option value="나이제한없음">나이제한없음</option>
                         <option value="30이하">30이하</option>
@@ -208,8 +208,8 @@
              </div>
 
             <div class="form-group">
-                <div class="col-sm-offset-2 col-sm-10">
-                <label class="control-label">학력조건</label> 
+                <div  >
+                <label  >학력조건</label> 
                     <select id="academicCondition" name="academicCondition">
                         <option value="고졸">고졸</option>
                         <option value="대졸(2,3년)">대졸(2,3년)</option>
@@ -222,8 +222,8 @@
             </div>
             
             <div class="form-group">
-                <div class="col-sm-offset-2 col-sm-10">
-                    <label class="control-label">경력사항</label> 
+                <div  >
+                    <label  >경력사항</label> 
                     <select id="career" name="career">
                         <option value="경력무관">경력무관</option>
                         <option value="1~3년">1~3년</option>
@@ -233,57 +233,57 @@
                 </div>
             </div>
             <div class="form-group">
-                <div class="col-sm-offset-2 col-sm-10">
-                    <label class="control-label">우대조건</label> 
+                <div  >
+                    <label  >우대조건</label> 
                     <input id="sweetener" name="sweetener" class="form-control" type="text" />
                 </div>
             </div>
             <div class="form-group">
-                <div class="col-sm-offset-2 col-sm-10">
-                    <label class="control-label">모집인원</label> 
+                <div  >
+                    <label  >모집인원</label> 
                     <input id="recruit" name="recruit" class="form-control" type="text" />
                 </div>
             </div>
             <div class="form-group">
-                <div class="col-sm-offset-2 col-sm-10">
-                    <label class="control-label">모집대상</label> 
+                <div  >
+                    <label  >모집대상</label> 
                     <input id="recruitment_target" name="recruitmentTarget" class="form-control" type="text" />
                 </div>
             </div>
             
             <div class="form-group">
-                <div class="col-sm-offset-2 col-sm-10">
-                    <label class="control-label">접수방법</label> 
+                <div  >
+                    <label  >접수방법</label> 
                     <input id="receiveway" name="receiveway" class="form-control" type="text" />
                 </div>
             </div>
             <div class="form-group">
-                <div class="col-sm-offset-2 col-sm-10">
-                    <label class="control-label">제출서류</label> 
+                <div  >
+                    <label  >제출서류</label> 
                     <input id="submit" name="submit" class="form-control" type="text" />
                 </div>
             </div>
             <div class="form-group">
-                <div class="col-sm-offset-2 col-sm-10">
-                    <label class="control-label">상세모집요강</label> 
+                <div  >
+                    <label  >상세모집요강</label> 
                     <input id="applicationhandbook" name="applicationhandbook" class="form-control" type="text" />
                 </div>
             </div>
             <div class="form-group">
-                <div class="col-sm-offset-2 col-sm-10">
-                    <label class="control-label">카테고리</label> 
+                <div  >
+                    <label  >카테고리</label> 
                     <input id="category" name="category" class="form-control" type="text" />
                 </div>
             </div>
             <div class="form-group">
-                <div class="col-sm-offset-2 col-sm-10">
-                    <label class="control-label">공고 이미지</label> 
+                <div  >
+                    <label  >공고 이미지</label> 
                     <input id="companyimageurl" name="companyimageurl" class="form-control" type="file" />
                 </div>
             </div>
             <div class="form-group">
-                <div class="col-sm-offset-2 col-sm-10">
-                    <label class="control-label">활성화여부</label> 
+                <div  >
+                    <label  >활성화여부</label> 
                     <input id="adminagree" name="adminagree"  type="radio" value="Y" checked/>Y
                     <input id="adminagree" name="adminagree"  type="radio" value="N"/>N 
                 </div>
