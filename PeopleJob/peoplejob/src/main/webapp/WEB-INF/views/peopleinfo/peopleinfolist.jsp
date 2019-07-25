@@ -1,22 +1,45 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@include file="../main/inc/top.jsp" %>
+<style>
+.divForm {
+    width: 1000px;
+    margin: 0 auto;
+    background: white;
+    padding: 13px;
+}
+#peopleinfo {
+    background: #f2f4f7;
+}
+.where{
+	border:1px solid;
+}
+</style>
+<div id="peopleinfo">
+<div class="divForm">
 	<form name="frmSearch" method="post" 
    		action='<c:url value="/peopleinfo/peopleinfolist.do"/>'>
    		<!-- 현재 페이지 hidden에 넣기 -->  
    		<input type="hidden" name='currentPage' value="1" >
+   		<input type="hidden" name='resumeCode' value="${vo.resumeCode}" >
+   		<div id="whereall" style="margin-left: -209px;
+    padding: 23px;">
    		<div id="where" class="where">
 			<c:import url="peopleinfowhere.jsp"/>
 		</div> 
-        
-
-        <div>
-        <c:if test="${empty list }">	 
+		
+        <c:import url="../resume/occupation.jsp"/>
+		</div>
+        <c:if test="${empty list }" >	 
+        <div style="margin: 0 auto; min-height: 630px;position: relative;bottom: 0;width: 446px;">
+	 	<table class="table table-hover"style="position: relative;
+    bottom: -59px;">
 	 	<tr>
 	 		<td colspan="5" class="align_center">데이터가 존재하지 않습니다.</td>
 	 	</tr>
+	 	</table>
+		</div>
 		</c:if>
-		
             <div class="divPage">
 	<!-- 이전블럭으로 이동하기 -->
 	<c:if test="${pagingInfo.firstPage>1 }">	
@@ -44,9 +67,12 @@
 		</a>
 	</c:if>
 </div>
-   		</form> 
-   		<div class="talent_list">
-    <table>
+   		</form>
+   		 <c:if test="${!empty list }">
+   		<div class="talent_list" style="margin: 0 auto; min-height: 630px;position: relative;bottom: 0;width: 446px;">
+				    
+    <table class="table table-hover" style="position: relative;
+    bottom: -59px;">
         <caption>인재검색 리스트</caption>
         <colgroup>
             <col width="46">
@@ -60,13 +86,24 @@
             <th scope="col" class="name" >이름</th>
             <th scope="col" class="contents">이력서 요약</th>
             <th scope="col" class="update" id="date_type">등록일</th>
-            <td id="peoplelist" >${vo.membername}<br>(${vo.membergender}|${vo.age})</td>
-            <td id="peoplelist" >경력${vo.term}&nbps;${vo.resumeTitle}<br>
+            <td id="peoplelist" >${vo1.membername}<br>(${vo1.membergender}|${vo15.age})</td>
+            <td id="peoplelist" >경력${vo15.term}&nbsp;${vo.resumeTitle}<br>
             ${vo.schoolname}|${vo.hopepay}|${vo.sido}</td>
             <td id="peoplelist" >${vo.resumeRegdate}</td>
             
         </tr>
         </thead>
         </table>
+        
         </div>
+        <div class="choice_wrap new mt20 mb10">
+  <div class="choice_inner">
+    <p class="total" id="total">
+      <strong>선택직종 :</strong> 
+    </p>
+  </div><!-- end choice_inner -->
+</div>
+        </c:if>
+      </div> 
+      </div> 
 <%@include file="../main/inc/bottom.jsp" %>

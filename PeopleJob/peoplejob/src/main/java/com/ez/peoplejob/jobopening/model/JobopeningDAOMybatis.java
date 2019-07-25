@@ -77,6 +77,9 @@ public class JobopeningDAOMybatis implements JobopeningDAO{
 	public CompanyVO selectcompany(int companyCode) {
 		return sqlSession.selectOne(namespace+"selectcompany",companyCode);
 	}
+	public List<Map<String, Object>> selectRandom() {
+		return sqlSession.selectList(namespace+"selectRandom");
+	}
 
 
 	         

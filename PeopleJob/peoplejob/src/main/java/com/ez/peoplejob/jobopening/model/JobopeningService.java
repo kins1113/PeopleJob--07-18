@@ -23,5 +23,5 @@ public interface JobopeningService {
 	CompanyVO selectcompany(int companyCode);
 	
 	List<Map<String, Object>> deadlineimminentBymonth();
-	
+	List<Map<String, Object>> selectRandom();
 }

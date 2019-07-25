@@ -54,7 +54,7 @@ padding: 5px;
 			  location.href="<c:url value='/login/login.do'/>";
 		  }else{ //로그인을 했을 때  
 			  if(${sessionScope.author_code!=3}){
-				  if(${sessionScope.author_code==2}){
+				  if(${sessionScope.author_code==2}){ 
 				 	 alert('기업회원 승인을 받은 후 서비스 이용가능합니다.');
 					   
 				  }else if(${sessionScope.author_code==1}){
@@ -74,16 +74,6 @@ padding: 5px;
 	  });//pay1
   
  
-	  /* var cnt=0;
-	  $(".check").change(function(){
-		  if($(".check").is(":checked")){
-			  cnt++;
-		  }else {
-			  cnt--;
-		  }
-	  	$('#chklength').text(cnt);
-	  }); */
-	  
 	  $("#frmList").submit(function(){ 
 		  if($('input[type=checkbox]:checked').length<1){
 				alert('결제할 채용공고를 먼저 선택하세요');
@@ -197,7 +187,8 @@ padding: 5px;
     margin-top: 10px;
     margin-bottom: -25px;">
 	PEOPLEJOB 첫 페이지 메인 상단에 노출되는 로고/배너 광고 상품입니다.<br>
-	업계 최대 로고사이즈 및 다양한 옵션으로 최상의 주목도 및 노출 효과를 보장합니다.
+	업계 최대 로고사이즈 및 다양한 옵션으로 최상의 주목도 및 노출 효과를 보장합니다.<br>
+	* 결제취소는 결제일로부터 하루동안만 가능합니다.
 </div>
     <div class="row" style="    margin-top: 50px;">
         <div class="col-12 col-md-6 col-lg-3">
@@ -291,7 +282,7 @@ padding: 5px;
         <!-- 결제하기 버튼 누르면  -->
         <button value="▼" id="showList" style="display: none;"></button>
         <button value="▲"></button>
-        <div class="card-body" id="cardBoduPostList" style="min-height: 300px; display: none; background-color: #26323824; "> 
+        <div class="card-body" id="cardBoduPostList" style="min-height: 300px; display: none; background-color: #ffffff; "> 
         <span id="hideList" style="cursor: pointer;font-size:1.5em;" >채용공고 리스트 목록 닫기 ▲</span>
 	<table class="table table-bordered" style="margin-top: 15px; ">
 		<thead>

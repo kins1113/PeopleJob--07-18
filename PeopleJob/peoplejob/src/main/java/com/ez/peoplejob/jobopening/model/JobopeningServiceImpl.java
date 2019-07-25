@@ -94,6 +94,9 @@ public class JobopeningServiceImpl implements JobopeningService{
 	public CompanyVO selectcompany(int companyCode) {
 		return jobopeningDao.selectcompany(companyCode);
 	}
+	public List<Map<String, Object>> selectRandom() {
+		return jobopeningDao.selectRandom();
+	}
 
 
 

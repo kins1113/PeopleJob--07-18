@@ -16,12 +16,22 @@ form {
 
 button.btn.btn-success {
     margin: 3px;
+  
+}
+  .center {
+    margin-left: 46%;
 }
 div#detail {
     background: #f2f4f7;
     
 }
-
+a {
+    color: black;
+    text-decoration: none;
+}
+.navbar-dark .navbar-nav .nav-link {
+    color: black;
+}
 section.redetail {
     margin: 5px;
     background: white;
@@ -39,6 +49,42 @@ div#imgDiv {
 }
 p.lead.mb-7 {
     margin: 2px;
+    font-family: serif;
+}
+
+div#memberinfo {
+   border: 1px solid lightgray;
+    width: 800px;
+    margin-left: 197px;
+    padding: 21px;
+}
+.resume-content {
+    border: 1px solid lightgray;
+    padding: 51px;
+   width: 400px;
+}
+div#hopeworkinfo {
+    border: 1px solid lightgray;
+    padding: 20px;
+}
+.certiinfo {
+    border: 1px solid lightgray;
+        padding: 17px;
+}
+h2.mb-5 {
+    font-weight: bold;
+}
+span.glyphicon.glyphicon-star {
+    padding-bottom: 18px;
+}
+span.glyphicon.glyphicon-globe {
+    margin-left: 42px;
+}
+span.glyphicon.glyphicon-user {
+    margin-bottom: 22px;
+}
+span.glyphicon.glyphicon-briefcase {
+    margin-bottom: 26px;
 }
 </style>
 <script type="text/javascript">
@@ -63,6 +109,7 @@ $(window).scroll(function( ){  //스크롤이 움직일때마다 이벤트 발�
 
 <body id="page-top">
 <div id="detail">
+
 	<form name="frm1" method="post" 
 	action="<c:url value='/resume/resumedetail.do'/>" enctype="multipart/form-data">
   <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top" id="sideNav">
@@ -98,7 +145,11 @@ $(window).scroll(function( ){  //스크롤이 움직일때마다 이벤트 발�
       </ul>
     </div>
   </nav>
-
+<div class="center2" >
+		<button type="button" class="btn btn-success"><a href="<c:url value='/resume/edit.do?resumeCode=${param.resumeCode}'/>">수정</a></button> 
+		<button type="button" class="btn btn-success"><a href="<c:url value='/resume/delete.do?resumeCode=${param.resumeCode}'/>">삭제</a></button> 
+		<button type="button" class="btn btn-success"><a href="<c:url value='/resume/list.do'/>">목록</a></button>
+		</div>
   <div class="container-fluid p-0" id="section1">
 
     <section class="resume-section p-3 p-lg-5 d-flex align-items-center redetail" id="about">
@@ -112,18 +163,22 @@ $(window).scroll(function( ){  //스크롤이 움직일때마다 이벤트 발�
 							alt="${vo1.membername }" width="50">
         </div>
 						&nbsp;&nbsp;
-        	<span class="glyphicon glyphicon-user" aria-hidden="true">이름:${vo1.membername}&nbsp;&nbsp;
-        	<span class="glyphicon glyphicon-gift" aria-hidden="true">생년월일:<span>${vo1.birth}</span>&nbsp;&nbsp;
-        	<span class="glyphicon glyphicon-gift" aria-hidden="true">성별:<span>${vo1.membergender}</span>
+		<div id="memberinfo">				
+        	<br><br><span class="glyphicon glyphicon-user" aria-hidden="true">이름:${vo1.membername}</span>&nbsp;&nbsp;
+        	&nbsp;&nbsp;<br>
  				
-        <div class="subheading mb-5"><span class="glyphicon glyphicon-globe" aria-hidden="true">우편번호:<span>${vo1.zipcode}</span>&nbsp;&nbsp;
-        <span class="glyphicon glyphicon-globe" aria-hidden="true"><span>${vo1.address}</span>&nbsp;<span>${vo1.addressdetail}</span><br><br>
-        <span class="glyphicon glyphicon-phone" aria-hidden="true"><span>${vo1.tel}</span><br><br>
-          <span class="glyphicon glyphicon-envelope" aria-hidden="true"><a href="mailto:${vo1.email}">${vo1.email}</a>
+        <div class="subheading mb-5">
+        <span class="glyphicon glyphicon-gift" aria-hidden="true"></span>생년월일:<span>${vo1.birth}</span>
+        &nbsp;&nbsp;
+        	<span class="glyphicon glyphicon-gift" aria-hidden="true"></span>성별:<span>${vo1.membergender}</span>
+        <span class="glyphicon glyphicon-globe" aria-hidden="true"></span><span>(${vo1.zipcode})</span>&nbsp;<span>${vo1.address}</span>&nbsp;<span>${vo1.addressdetail}</span><br><br>
+        <span class="glyphicon glyphicon-phone" aria-hidden="true"></span><span>${vo1.tel}</span><br><br>
+          <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span><a href="mailto:${vo1.email}">${vo1.email}</a>
         </div>
         
-        <span>${vo.introduce}</span>
+        <span class="glyphicon glyphicon-user" aria-hidden="true"></span>자기소개:<span>${vo.introduce}</span>
         
+      </div>
       </div>
     </section>
 
@@ -137,8 +192,8 @@ $(window).scroll(function( ){  //스크롤이 움직일때마다 이벤트 발�
           <div class="resume-content">
             <h3 class="mb-0">경력구분: <span>${vo4.workcheck}</span></h3><br><br>
             <div class="subheading mb-3"><span class="glyphicon glyphicon-briefcase" aria-hidden="true">회사명</span> <span>${vo4.companyname}</span></div><br>
-            		<span class="glyphicon glyphicon-briefcase" aria-hidden="true">근무기간:${vo4.workterm}</span>
-            		~<span>${vo4.workterm2}</span>&nbsp;&nbsp;
+            		<span class="glyphicon glyphicon-briefcase" aria-hidden="true">근무기간:${vo4.workterm}~${vo4.workterm2}</span>
+            		&nbsp;&nbsp;<br>
             		<span class="glyphicon glyphicon-briefcase" aria-hidden="true">${vo4.workcondition}</span>&nbsp;&nbsp;
             		<span class="glyphicon glyphicon-briefcase" aria-hidden="true">직종:${vo4.chargework}</span>&nbsp;&nbsp;
             		<span class="glyphicon glyphicon-briefcase" aria-hidden="true">직급:${vo4.jobgrade}</span>
@@ -224,12 +279,12 @@ $(window).scroll(function( ){  //스크롤이 움직일때마다 이벤트 발�
       <div class="w-100">
         <h2 class="mb-5">자격증/어학</h2>
 
-        <div class="subheading mb-3">
+        <div class="certiinfo">
         <span class="glyphicon glyphicon-credit-card" aria-hidden="true"></span> <span>${vo5.certificationtype}</span>
-			</div>
 				
  		 <ul class="list-inline dev-icons">
 		<c:if test="${vo5.certificationtype=='자격증/면허증'}">           	
+			
           <li class="list-inline-item">
             <i class="fab fa-html5"> </i><label for="lName">자격증명</label>
  				<span class="glyphicon glyphicon-credit-card" aria-hidden="true"></span> <span>${vo6.lName}</span>
@@ -279,6 +334,7 @@ $(window).scroll(function( ){  //스크롤이 움직일때마다 이벤트 발�
             </c:if>
         </ul>
       </div>
+      </div>
     </section>
 
     <hr class="m-0">
@@ -286,7 +342,8 @@ $(window).scroll(function( ){  //스크롤이 움직일때마다 이벤트 발�
     <section class="resume-section p-3 p-lg-5 d-flex align-items-center redetail" id="interests">
       <div class="w-100">
         <h2 class="mb-5">희망근무</h2>
-       	 <span class="glyphicon glyphicon-star" aria-hidden="true">근무형태:<span>${vo2.hopeworkform}</span><br><br>
+        <div id="hopeworkinfo">
+       	 <span class="glyphicon glyphicon-star" aria-hidden="true">근무형태:</span><span>${vo2.hopeworkform}</span><br><br>
        	 <span class="glyphicon glyphicon-star" aria-hidden="true">희망연봉:</span> <span>${vo2.hopepay}</span><br><br>
        	 <span class="glyphicon glyphicon-star" aria-hidden="true">(희망근무지역)시도:</span> <span>${vo7.sido}</span><br><br>
        	 <span class="glyphicon glyphicon-star" aria-hidden="true">(희망근무지역)구군:</span> <span>${vo8.gugun}</span><br><br>
@@ -297,6 +354,8 @@ $(window).scroll(function( ){  //스크롤이 움직일때마다 이벤트 발�
  		<span class="glyphicon glyphicon-star" aria-hidden="true">직종2차:</span> <span>${vo13.secondname}</span><br><br>
  		<span class="glyphicon glyphicon-star" aria-hidden="true">직종3차:</span> <span>${vo14.thirdname}</span><br><br>
  		<span class="glyphicon glyphicon-star" aria-hidden="true">근무일시:</span> <span>${vo2.hopeworkdate}</span><br>
+      
+      </div>
       </div>
     </section>
 
@@ -334,19 +393,24 @@ $(window).scroll(function( ){  //스크롤이 움직일때마다 이벤트 발�
             Place - James Buchanan High School - Hackathon 2005</li> -->
         </ul>
       </div>
+    </section>
+    
       <div>
 			<label>기업 인사담당자의 입사제의 및 면접제의를 받으시겠어요?</label>
 			<span class="glyphicon glyphicon-info-sign" aria-hidden="true">공개설정</span> <span>${vo.opencheck}</span>
 		</div>
+		
 		</div>
+      </form>
+		
 	<div class="center">
-		<button type="button" class="btn btn-success"><a href="<c:url value='/resume/edit.do?resumeCode=${param.resumeCode}'/>">수정</a> 
-		<button type="button" class="btn btn-success"><a href="<c:url value='/resume/delete.do?resumeCode=${param.resumeCode}'/>">삭제</a> 
-		<button type="button" class="btn btn-success"><a href="<c:url value='/resume/list.do'/>">목록</a>
+		<button type="button" class="btn btn-success"><a href="<c:url value='/resume/edit.do?resumeCode=${param.resumeCode}'/>">수정</a></button> 
+		<button type="button" class="btn btn-success"><a href="<c:url value='/resume/delete.do?resumeCode=${param.resumeCode}'/>">삭제</a></button> 
+		<button type="button" class="btn btn-success"><a href="<c:url value='/resume/list.do'/>">목록</a></button>
 		</div>
-    </section>
   </div>
-	</form>
+  
+	
 
   <!-- Bootstrap core JavaScript -->
   <script src="<c:url value='resources/js/bootstrap.bundle.min.js'/>"></script>

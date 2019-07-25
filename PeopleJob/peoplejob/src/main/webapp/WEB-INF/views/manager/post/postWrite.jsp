@@ -117,7 +117,8 @@
 				<div>
 					<input type="submit" class="btn btn-primary btn-default" value="등록">
 					<input type="reset" class="btn btn-secondary btn-default" value="취소">
-					<input type="button" class="btn btn-secondary btn-default"id="goPostList" value="목록으로"> 
+					<a id="btpopupList" href="<c:url value='/manager/popup/popupList.do'/>"
+						class="mb-1 btn btn-outline-success">목록으로</a>
 				</div>
 
 		</div>

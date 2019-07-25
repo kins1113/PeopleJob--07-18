@@ -135,7 +135,7 @@ button {
 } */
  
  ul.main-menu {
-    border-bottom: 4px solid darkseagreen;
+    /* border-bottom: 4px solid darkseagreen; */
 }
 </style>
 <script type="text/javascript" src="<c:url value='/resources/main/js/jquery-3.4.1.min.js'/>"></script>
@@ -147,7 +147,7 @@ function jobopening(){
 		alert('기업회원은 관리자의 승인을 받은 후 채용공고를 등록할 수 있습니다.');
 	}else if(author_code==3){
 		
-		location.href="<c:url value='/company/my_jobopening_list.do?companycode1=${memberVo.companyCode}'/>";  
+		location.href="<c:url value='/company/my_jobopening_list.do?companycode1=${session.companyCode}'/>";  
 	}
 }  
 
@@ -200,9 +200,10 @@ function company(){
 						</a>
 
 						<ul class="main-menu" style="width: 1274px; margin-left: -98px;">
-							<li class="main-menu-active">
+							<li class="mega-menu-item">
 								<a href="<c:url value='/company/jobopening_list.do'/>">채용정보</a>
 								<ul class="sub-menu">
+									<li><a href="<c:url value='/company/jobopening_list.do'/>">공채정보</a></li>
 									<li><a href="<c:url value='/company/jobopening_list.do'/>">직종별</a></li>
 									<li><a href="<c:url value='/company/jobopening_list.do'/>">지역별</a></li>
 									<li><a href="<c:url value='/company/jobopening_list.do'/>">업무별</a></li>
@@ -260,11 +261,11 @@ function company(){
 							</li>
 
 							<li>
-								<a href="#">게시판</a>
+								<a href="">게시판</a>
 								<ul class="sub-menu">
 									<li><a href="">자유게시판</a></li>
 									<li><a href="">QnA</a></li>
-									<li><a href="">공지사항</a></li>
+									<li><a href="<c:url value='/notice/list.do'/>">공지사항</a></li>
 								</ul>
 							</li>
 							

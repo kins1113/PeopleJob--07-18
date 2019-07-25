@@ -18,4 +18,6 @@ public interface PeopleInfoService {
 	int selectTotalCountSido(Map<String, Object> map);
 	int selectTotalCountBtype(Map<String, Object> map);
 	int selectTotalCountJobtype(Map<String, Object> map);
+	List<ResumeVO>selectPeoplew(Map<String, Object>map);
+	int selectTotalCountPeople(Map<String, Object> map);
 }

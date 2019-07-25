@@ -29,6 +29,7 @@ public class FileUploadUtility {
 	public static final int LOGO_UPLOAD=3;		//logo_upload
 	public static final int POST_UPLOAD=4;		//post_upload
 	public static final int JOBOPENING_UPLOAD=5;		//jobopening_upload
+
 	
 	private Logger logger=LoggerFactory.getLogger(FileUploadUtility.class);
 	

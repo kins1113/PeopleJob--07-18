@@ -23,17 +23,61 @@ $("div").data("name")==="제주";
 $("div").data("name")==="세종";
 $("div").data("name")==="전국";
 
+$("#career-years").prop("checked", false);
+
+$("#graduatecheck").prop("checked", false);
+$("#basic-search-location").prop("checked", false);
+
+ // 사용자 ID를 갖고 온다.
+    var career-years = $("#career-years").val();
+    var age = $("#age").val();
+    var male01 = $("#male01").val();
+    var female01 = $("#female01").val();
+    var graduatecheck = $("#graduatecheck").val();
+    var sido = $("#sido").val();
+ 
+    // name이 같은 체크박스의 값들을 배열에 담는다.
+    var checkboxValues = [];
+    $("input[name='term']:checked").each(function(i) {
+        checkboxValues.push($(this).val());
+    });
+     
+    // 사용자 ID(문자열)와 체크박스 값들(배열)을 name/value 형태로 담는다.
+    var allData = { "career-years": career-years,"age":age,"male01":male01,"female01":female01,"graduatecheck":graduatecheck,"sido":sido, "checkArray": checkboxValues };
+     
+    $.ajax({
+        url:"<c:url value='/peopleinfo/peopleinfolist.do'/>",
+        type:'GET',
+        data: allData,
+        success:function(data){
+            $("#total").append("career-years").append("age").append("male01").append("female01").append("graduatecheck").append("sido");
+        },
+        error:function(jqXHR, textStatus, errorThrown){
+            alert("에러 발생~~");
+        }
+    });
+ 
 </script>
 <style type="text/css">
 .divSearch {
     width: 700px;
     margin: 0 auto;
-}	 
+}	
+input.btn.btn-primary {
+    position: absolute;
+    bottom: 307px;
+    right: 265px;
+} 
+
 </style>
-<div class="divSearch"> 
 	<!-- 페이징 처리에도 사용 -->
    
-		
+<div class="divSearch"> 
+		<div style="border: 1px solid gold;
+    float: left;
+    width: 20%;
+    margin: 10px;
+    height: 414px;">
 		 <label>경력</label><br>
 <label><input type="checkbox" id="workcheck" name="workcheck" value="경력">경력</label>
 <label><input type="checkbox" id="workcheck" name="workcheck" value="신입">신입</label><br>
@@ -45,13 +89,22 @@ $("div").data("name")==="전국";
                 <li><label class="frm_chkbox01" for="career-years05"><input type="checkbox" id="career-years" name="term" title="10~15년" value="10,16"><span>10~15년</span></label></li>
                 <li><label class="frm_chkbox01" for="career-years06"><input type="checkbox" id="career-years" name="term" title="15년 이상" value="15,"><span>15년 <em class="ico_over">이상</em></span></label></li>
             </ul>
-             <div class="wrap_detail_panel age_interval" id="gender-age">
-        <div class="title_detail_box"><strong>성별·나이</strong></div>
-        <div class="box_detail_panel">
-            <strong class="title_basic_sub">성별</strong>
-            <label class="form_sp frm_chk02" for="male01"><input type="checkbox" id="male01" value="male"><span>남</span></label><label class="form_sp frm_chk02" for="female01"><input type="checkbox" id="female01" value="female"><span>여</span></label>
+            </div>
+        <div class="box_detail_panel" style="border: 1px solid gold;
+    float: left;
+    width: 20%;
+    margin: 10px;
+    height: 414px;">
+        <strong>성별</strong>
+            <strong class="title_basic_sub">나이</strong><br>
+            <label class="form_sp frm_chk02" for="male01">
+            <span>남</span></label>
+            <input type="checkbox" id="male01" value="male">
+            <label class="form_sp frm_chk02" for="female01">
+            <span>여</span></label>
+            <input type="checkbox" id="female01" value="female">
             <ul class="wrap_list_value column_two">
-                <li><label class="frm_chkbox01" for="age-interval01"><input type="checkbox" id="age" name="age" value=",20"><span>20세 <em class="ico_under">이하</em></span></span></label></li>
+                <li><label class="frm_chkbox01" for="age-interval01"><input type="checkbox" id="age" name="age" value=",20"><span>20세 <em class="ico_under">이하</em></span></label></li>
                 <li><label class="frm_chkbox01" for="age-interval02"><input type="checkbox" id="age" name="age" value="21,30"><span>21~30세</span></label></li>
                 <li><label class="frm_chkbox01" for="age-interval03"><input type="checkbox" id="age" name="age" value="31,35"><span>31~35세</span></label></li>
                 <li><label class="frm_chkbox01" for="age-interval04"><input type="checkbox" id="age" name="age" value="36,40"><span>36~40세</span></label></li>
@@ -59,9 +112,9 @@ $("div").data("name")==="전국";
                 <li><label class="frm_chkbox01" for="age-interval06"><input type="checkbox" id="age" name="age" value="51,"><span>51세 <em class="ico_over">이상</em></span></label></li>
             </ul>
             </div>
-               <div class="wrap_detail_panel edu_last" id="basic-search-edu-part">
-        <div class="title_detail_box"><strong>최종학력</strong></div>
-        <div class="box_detail_panel">
+        <div class="box_detail_panel" style="border: 1px solid gold; float: left; width: 20%; margin: 10px; height:414px;">
+        
+        <strong>최종학력</strong>
             <ul class="wrap_list_value">
                                     <li><label class="frm_chkbox01" for="basic-search-final-edu0"><input type="checkbox" id="graduatecheck" value="대학교졸업(4년)" ><span>대학교 4년 </span></label></li>
                                     <li><label class="frm_chkbox01" for="basic-search-final-edu1"><input type="checkbox" id="graduatecheck" value="대학졸업(2,3년)" ><span>대학교 2,3년 </span></label></li>
@@ -72,18 +125,15 @@ $("div").data("name")==="전국";
                                     <li><label class="frm_chkbox01" for="basic-search-final-edu3"><input type="checkbox" id="graduatecheck" value="초등학교졸업" ><span>초등학교 졸업 </span></label></li>
                                     <li><label class="frm_chkbox01" for="basic-search-final-edu3"><input type="checkbox" id="graduatecheck" value="학력무관" ><span>학력무관</span></label></li>
                             </ul>
-            <div class="box_option_check">
-        
-                <label class="type_block" for="basic-search-edu-status">
-                    <input type="checkbox" id="basic-search-edu-status" >
-                    <span>재학·휴학·수료·중퇴·자퇴 제외</span>
-                </label>
-            </div>
+            
         </div>
-    </div>
-    <div class="wrap_detail_panel area_domestic">
-        <div class="title_detail_box"><strong>희망 근무지역</strong></div>
-        <div class="box_detail_panel">
+    <div class="wrap_detail_panel area_domestic" style="border: 1px solid gold;
+    float: left;
+    margin: 10px;
+    overflow: auto;
+    width: 20%;
+    height: 414px;">
+        <strong>희망 근무지역</strong>
             <ul class="wrap_list_value" id="basic-search-location">
                                     <li>
                         <label class="frm_chkbox01" for="area-domestic-101000">
@@ -197,8 +247,8 @@ $("div").data("name")==="전국";
                             </ul>
         </div>
     </div>
-    </div>
-		<c:import url="../resume/occupation.jsp"/>
-		</div>
+ 
+	<div>
 		<input type="submit" class="btn btn-primary" value="검색">	
+    </div>
 		
