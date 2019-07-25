@@ -12,17 +12,12 @@
 	href="<c:url value='/resources/css/jquery-ui.min.css'/>">
 <script type="text/javascript" 
 	src="<c:url value='/resources/js/jquery-ui.min.js'/>">
+	
 </script>
     <script type="text/javascript">
     $(document).ready(function($){
-		$('.workdate1').datepicker({
-			dateFormat:"yy-mm-dd",
-			changeYear:true,
-			dayNamesMin:["일","월","화","수","목","금","토"],
-			monthNames:["1월","2월","3월","4월","5월","6월",
-					"7월","8월","9월","10월","11월","12월"]
-		});
-		$('#workdate2').datepicker({
+		
+		$('#paystartDate').datepicker({
 			dateFormat:"yy-mm-dd",
 			changeYear:true,
 			dayNamesMin:["일","월","화","수","목","금","토"],
@@ -33,7 +28,8 @@
     </script>
 </head>
 <body>
-        <input id="${param.id }" name="${param.name}" class="form-control workdate1" type="text" readonly style="font-size: 1.1em;"/>
+                    <input id="paystartDate" name="paystartDate" class="form-control" type="text" readonly/>
+            
 </body>
 </html>
     

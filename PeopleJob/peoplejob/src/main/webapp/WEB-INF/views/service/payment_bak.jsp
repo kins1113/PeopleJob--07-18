@@ -29,31 +29,7 @@ padding: 5px;
   
   <script type="text/javascript">
   $(function(){
-	  
 	 
-	  //div service에 색 추가
-	  var $addClass;
-	  $("div[name=divcolor]").addClass(function(index, currentClass){
-		  console.log(index);
-		  console.log(currentClass);
-		 
-		  if(index==0){
-			  $addClass="p-red";
-			  
-		  }else if(index==1){
-			  $addClass="p-green";
-		  }else if(index==2){
-			  $addClass="p-blue";
-		  }else if(index==3){
-			  $addClass="p-violet";
-		  }
-		  
-		  return $addClass;
-	  });
-	  
-	  
-			
-		
 	  $('#cardBoduPostList').hide();
 	
 
@@ -85,27 +61,16 @@ padding: 5px;
 	  $('.check').click(check);
 	  
 	  
-	  $('#servicePrice').text(length*$('inpu
-	  e=content]:eq(3)').val());
-	  
+		  
 	  $('button[name=pay]').click(function(){
 		  $('#Info').hide();
-		  var length=  $('.check:checked').length;
-		
-		  if($(this).attr("title")==1){
+		  
+		  if($(this).attr("title","vvip")){
+			  $('span[name="vvip관"]').show();
 			  $('#serviceName').text("vvip채용관");
-			  $('#serviceContent').text($('input[name=content]:eq(3)').val());
-			 
+		  }else if($(this).attr("title","vip")){
+			  $('span[name="vip 채용관"]').show();
 			  
-		  }else if($(this).attr("title")==2){
-			  $('#serviceName').text("vip채용관");
-			  $('#serviceContent').text($('input[name=content]:eq(2)').val());
-		  }else if($(this).attr("title")==3){
-			  $('#serviceName').text("Premium 채용관");
-			  $('#serviceContent').text($('input[name=content]:eq(1)').val());
-		  }else if($(this).attr("title")==4){
-			  $('#serviceName').text("Grand 채용관");
-			  $('#serviceContent').text($('input[name=content]:eq(0)').val());
 		  }
 		
 		  
@@ -121,7 +86,7 @@ padding: 5px;
 		  $("#serviceTerm").html("0일");
 		  $("#servicePrice").html("0원");
 		  
-		  if(${sessionScope.memberid==null}){     
+		  if(${sessionScope.memberid==null}){    
 			  alert('로그인을 해주세요');
 			  location.href="<c:url value='/login/login.do'/>";
 		  }else{ //로그인을 했을 때  
@@ -136,8 +101,7 @@ padding: 5px;
 				$('#cardBoduPostList').hide();
 			  	$('#cardBoduPostList').show();
 			  	$("#selectPeriod").val("2일").prop("selected", true);
-			  	$("#servicePrice").html("0원");
-			  	$("#chklength").html("0개");
+			  	$("#servicePrice").html("${serviceVo1.servicePrice}"+"원");
 			  
 			  }else if(${sessionScope.author_code==3 && fn:length(list)<1}){   
 				  alert('등록된 채용공고가 없습니다. 채용공고를 먼저 등록해주세요');
@@ -267,35 +231,98 @@ padding: 5px;
 	* 결제취소는 결제일로부터 하루동안만 가능합니다.
 </div>
     <div class="row" style="    margin-top: 50px;">
-    
-    <c:forEach var="serviceVo" items="${serviceList}">
         <div class="col-12 col-md-6 col-lg-3">
-            <div class="card text-center p-table" id="divcolor" name="divcolor">
-          <%--   <span id="serviceCode">${serviceVo.serviceCode }</span> --%>
-            <input type="Text" id="serviceCode1" name="serviceCode1" value="${serviceVo.serviceCode }">
+            <div class="card text-center p-table p-red">
                 <div class="card-header">
-                    <h3 class="p-name p-name">${serviceVo.serviceName }</h3>
-                    <h4 class="p-price">${serviceVo.servicePrice }원</h4>
-                    <small class="text-muted">1일당 가격</small>
-                    <input type="text" name="content" value="">
+                    <h3 class="p-name p-name">VVIP</h3>
+                    <h4 class="p-price">1,000,000원 </h4>
+                    <small class="text-muted">매월</small>
                 </div>
                 <div class="card-body">
 
                     <ul class="list-unstyled"> 
-                        <li>메인 채용정보 ${serviceVo.serviceName }</li>
-                        <li>노출위치 :  ${serviceVo.serviceName }</li>
+                        <li>메인 채용정보 VVIP</li>
+                        <li>노출위치 : VVIP채용관</li>
                         <li>부가서비스 : 채용관 상단고정</li>
-                        <li>PC웹:  ${serviceVo.serviceContent }</li>
-                        <li>모바일 :  ${serviceVo.serviceName }</li>
+                        <li>PC웹: VVIP채용관</li>
+                        <li>모바일 : 모바일 홈 VVIP</li>
                         <li>매월1일</li>
                     </ul>
-                    <button type="button" class="btn btn-lg btn-primary" id="pay" title="${serviceVo.serviceCode }" name="pay">신청하기</button>
+                    <button type="button" class="btn btn-lg btn-primary" id="pay" title="vvip" name="pay">신청하기</button>
                 </div>
             </div>
         </div>
-	</c:forEach>
-	
-        <!-- 신청하기 버튼 누르면  -->
+
+        <div class="col-12 col-md-6 col-lg-3">
+            <div class="card text-center p-table p-green">
+                <div class="card-header">
+                    <h3 class="p-name p-name">VIP</h3>
+                    <h4 class="p-price">700,000원 </h4>
+                    <small class="text-muted">매월</small> 
+                </div>
+                <div class="card-body">
+
+                    <ul class="list-unstyled">
+                        <li>메인 채용정보 VVIP</li>
+                        <li>노출위치 : VVIP채용관</li>
+                        <li>부가서비스 : 채용관 상단고정</li>
+                        <li>PC웹: VVIP채용관</li>
+                        <li>모바일 : 모바일 홈 VVIP</li>
+                        <li>매월1일</li>
+                    </ul>
+                    <button type="button" class="btn btn-lg btn-primary" id="pay" title="vip" name="pay">신청하기</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12 col-md-6 col-lg-3">
+            <div class="card text-center p-table p-blue">
+                <div class="card-header">
+                     <h3 class="p-name p-name">Premium</h3>
+                    <h4 class="p-price">500,000원 </h4>
+                    <small class="text-muted">매월</small>
+                </div>
+                <div class="card-body">
+
+                   <ul class="list-unstyled">
+                        <li>메인 채용정보 VVIP</li>
+                        <li>노출위치 : VVIP채용관</li>
+                        <li>부가서비스 : 채용관 상단고정</li>
+                        <li>PC웹: VVIP채용관</li>
+                        <li>모바일 : 모바일 홈 VVIP</li> 
+                        <li>매월1일</li>
+                    </ul>
+                    <button type="button" class="btn btn-lg btn-primary" id="pay" title="premium" name="pay">신청하기</button>
+                </div>
+            </div>
+        </div> 
+
+        <div class="col-12 col-md-6 col-lg-3">
+            <div class="card text-center p-table p-violet">
+                <div class="card-header">
+                     <h3 class="p-name p-name">Grand</h3>
+                    <h4 class="p-price">300,000원 </h4>
+                    <small class="text-muted">매월</small>
+                </div>
+                <div class="card-body">
+
+                   <ul class="list-unstyled">
+                        <li>메인 채용정보 VVIP</li>
+                        <li>노출위치 : VVIP채용관</li>
+                        <li>부가서비스 : 채용관 상단고정</li>
+                        <li>PC웹: VVIP채용관</li>
+                        <li>모바일 : 모바일 홈 VVIP</li>
+                        <li>매월1일</li>
+                    </ul>
+                    <button type="button" class="btn btn-lg btn-primary" id="pay" title="grand" name="pay">신청하기</button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 결제하기 버튼 누르면  -->
+        
+     
+        
         
         <div class="card-body" id="cardBoduPostList" style="min-height: 300px; display: none; background-color: #ffffff; "> 
         <span id="hideList" style="cursor: pointer;font-size:1.5em;" >채용공고 리스트 목록 닫기 ▲</span>
