@@ -85,6 +85,9 @@
 	<select id="selectresumebyid2" parameterType="int" resultType="resumeVo">
 		select * from resume where member_code=#{memberCode}
 	</select>
+	<select id="selectresumebyid3" parameterType="map" resultType="tableaplyVO">
+		select * from apply where member_code=#{memberCode} and jobopening=#{jobopening}
+	</select>
 </mapper>
 
 

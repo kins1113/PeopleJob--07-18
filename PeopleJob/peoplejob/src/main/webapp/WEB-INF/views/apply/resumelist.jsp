@@ -5,16 +5,24 @@
 	function pageFunc(curPage){
 		document.frmSearch.currentPage.value=curPage;
 		document.frmSearch.submit();
-	}
-	var test1=document.getElementById('resumeCode');
+	} 
 	function cancel(){
 		self.close();
 	}
 	$(document).ready(function(){ 
 		$("#choice").click(function(){
-			if($("#resumeCode").is(':checked')){
-				alert("hi");
-				
+			if($("input[name=resumeCode]").is(':checked')){   
+				/* var test1=$("input[name=resumeCode]").prop(':checked').val(); */
+				/* var test1=$("input[name=resumeCode]").attr('checked',true).val();  */ 
+				var test1 = $(":input:radio[name=resumeCode]:checked").val();
+
+				if(confirm("해당이력서로 지원하시겠습니까?")){  
+					opener.location.href="<c:url value='/apply/insertapply.do?jobopening="+${param.jobopening}+
+							"&resumeCode="+test1+"'/>";
+					self.close();
+				}else{
+					event.preventDefault();
+				}
 			}else{ 
 				alert("이력서를 선택해주세요");
 			}
@@ -39,6 +47,8 @@ button.btn.btn-success {
 <div id="divlist">
 <div class="divList" style="min-height: 630px"> 
 	  <input type="hidden" name="resumeCode" value="${param.resumeCode }"/>
+	  <input type="hidden" name="jobopening" value="${param.jobopening }"/>
+	  <input type="hidden" name="resumeCode" value="${param.jobopening }"/>
 <table class="table"
 	 	summary="이력서 현황에 관한 표로써, 이력서제목, 이력서 공개 설정, 내 이력서 열람 기업에 대한 정보를 제공합니다.">
 	<h3>이력서리스트</h3>

@@ -83,29 +83,73 @@
 		--%> 
     </form>
          </div>
-
-        <div>
-        <c:if test="${empty list }">	 
+         <table class="table"
+	 	summary="이력서 현황에 관한 표로써, 이력서제목, 이력서 공개 설정, 내 이력서 열람 기업에 대한 정보를 제공합니다.">
+	   
+	    <th scope="col"> 체크</th>
+	    <th scope="col">공고명</th>
+	    <th scope="col">열람상태</th>
+	    <th scope="col">지원일</th>
+	    <th scope="col">회사이름</th>
+	    <th scope="col">이력서</th>
+	    <tbody> 
+	    <c:if test="${empty list }">	 
 	 	<tr>
-	 		<td colspan="5" class="align_center">데이터가 존재하지 않습니다.</td>
+	 		<td colspan="6" class="align_center">데이터가 존재하지 않습니다.</td>
 	 	</tr>
-		</c:if>
-		<c:if test="${!empty list }">
-			<c:forEach var="vo" items="${list }"> 
-			<input type="checkbox" name="applyCode1" id="applyCode1" value="${vo.applyCode }" onclick="javascript_:s_it()">
-	        <div class="list-group"> 
-	            <div class="list-group-item">
-	                <p class="list-group-item-text">
-	                 	<small>지원번호 : ${vo.applyCode}</small>
-	                 	<small>지원일 : ${fn:substring(vo.applydate,0,10) }</small>
-	                | <small>열람여부 : ${vo.oepncheck }</small>
-	                | <small>지원한 채용공고 : <a href="<c:url value='/company/jobopening_view.do?jobopening=${vo.jobopening}'/>">${vo.jobopening }</a></small>
-	                | <small>이력서 : <a href="<c:url value='/resume/resumedetail.do?resumeCode=${vo.resumeCode }'/>">${vo.resumeCode }</a></small>
-	            </div> 
-	        </div>
-	        </c:forEach>
-		</c:if>
-		</div>
+		</c:if> 
+		 <c:if test="${!empty list }">
+		<c:forEach var="vo" items="${list }">					
+	  <!-- 반복문 시작  -->	  	
+					<tr>
+					<!-- 제목이 긴 경우 30글자만 보여주기 -->
+					<td><input type="checkbox" name="applyCode1" id="applyCode1"value="${vo.applyCode }" onclick="javascript_:s_it()"></td>
+					<td>
+					<a href="<c:url value='/company/jobopening_view.do?jobopening=${vo.jobopening}'/>">
+					<c:set var="loop_flag2" value="false" />
+					<c:forEach var="jvo" items="${list4 }">
+	                 <c:if test="${not loop_flag2 }"> 
+				        <c:if test="${jvo.jobopening==vo.jobopening}">
+			                ${jvo.jobtitle }
+				            <c:set var="loop_flag2" value="true" />
+				        </c:if>
+				    </c:if> 
+				    </c:forEach>
+					</a></td>
+	    			<td>
+	    			<c:if test="${vo.opencheck=='Y'}">
+	    			읽음 
+	    			</c:if>
+	    			<c:if test="${vo.opencheck=='N'}">
+	    			안읽음
+	    			</c:if>
+	    			
+	    			</td>
+	   				<td><fmt:formatDate value="${vo.applydate}" pattern="yyyy-MM-dd"/></td>
+	    			<td> 
+	           		<c:set var="loop_flag" value="false" /> 
+					<c:forEach var="mvo" items="${list4 }">
+				        <c:if test="${vo.jobopening==mvo.jobopening}">
+					             <c:forEach var="cvo" items="${list5 }">
+				                	<c:if test="${not loop_flag }">
+					               		<c:if test="${mvo.companyCode==cvo.companyCode }">
+					               			${cvo.companyname }
+								            <c:set var="loop_flag" value="true" />
+					               		</c:if>
+					        		</c:if>
+					               </c:forEach>
+					    </c:if>
+				    </c:forEach>
+					</td>
+					<td><a href="<c:url value='/resume/resumedetail.do?resumeCode=${resumeCode }'/>"><input type="button" id="detail" class="btn btn-primary" name="detail" value="자세히보기"></a></td>
+				</tr>
+	    	</c:forEach>
+	</c:if>
+  <!--반복처리 끝  -->	
+	
+	  </tbody>
+</table>	
+
         <div class="pull-left">
             <div class="divPage">
 	<!-- 이전블럭으로 이동하기 -->

@@ -61,5 +61,9 @@ public class TableaplyDAOMybatis implements TableaplyDAO{
 	public List<ResumeVO> selectresumebyid2(int memberCode) {
 		return sqlSession.selectList(namespace+"selectresumebyid2",memberCode);
 	}
+	@Override
+	public TableaplyVO selectresumebyid3(Map<String, Object> map) {
+		return sqlSession.selectOne(namespace+"selectresumebyid3",map);
+	}
 	
 }

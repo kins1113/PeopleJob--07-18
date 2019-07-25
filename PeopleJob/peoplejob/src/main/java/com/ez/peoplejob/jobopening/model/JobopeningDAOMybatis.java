@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.ez.peoplejob.common.SearchVO;
+import com.ez.peoplejob.member.model.CompanyVO;
 import com.ez.peoplejob.member.model.MemberVO;
 
 @Repository
@@ -70,6 +71,11 @@ public class JobopeningDAOMybatis implements JobopeningDAO{
 	@Override
 	public List<Map<String, Object>> deadlineimminentBymonth() {
 		return sqlSession.selectList(namespace+"deadlineimminentBymonth");
+	}
+
+	@Override
+	public CompanyVO selectcompany(int companyCode) {
+		return sqlSession.selectOne(namespace+"selectcompany",companyCode);
 	}
 
 
