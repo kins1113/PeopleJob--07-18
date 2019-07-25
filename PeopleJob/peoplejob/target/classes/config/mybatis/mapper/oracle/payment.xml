@@ -57,25 +57,60 @@
 	set progress='결제완료'
 	where payment_code=#{paymentCode}
 	</update>
-	
-	<select id="selectPayment" resultType="paymentVo">
-		select payment_code,paymentway,progress,discount,paydate, s.servicename, m.memberid
-		from payment p join service s
-		on p.service_code = s.service_code
-		join member m
-		on p.member_code = m.member_code
+
+
+	<select id="selectPayment" parameterType="map" resultType="map" >
+	select* from
+	(
+		select A.*, rownum as RNUM from 
+		(
+			select payment_code,paymentway,progress,discount,paydate, s.servicename, m.memberid
+				from payment p join service s
+				on p.service_code = s.service_code
+				join member m
+				on p.member_code = m.member_code
+				<where>
+							<if test="searchVo.searchCondition!= null and searchVo.searchCondition!=''
+								and searchVo.searchKeyword!= null and searchVo.searchKeyword!=''">
+							
+							<if test='searchVo.searchCondition=="all"'>
+									progress like  '%' || #{searchVo.searchKeyword}  || '%' or
+									memberid like  '%' || #{searchVo.searchKeyword} || '%' 
+							</if>
+							<if test='searchVo.searchCondition=="memberid"'>
+									 memberid like  '%' || #{searchVo.searchKeyword} || '%'
+							</if>
+
+							<if test='searchVo.searchCondition=="progress"'>
+									 progress like  '%' || #{searchVo.searchKeyword} || '%'
+							</if>
+
+							
+							<if test="startDay!=null and startDay !='' and endDay!=null and endDay != ''">
+								 <![CDATA[ or paydate >= #{startDay} and paydate <to_date(#{endDay})+1]]>
+							</if>
+					</if>				
+					
+					<if test="searchVo.searchCondition== null or searchVo.searchCondition==''
+								or searchVo.searchKeyword== null or searchVo.searchKeyword==''">
+						<if test="startDay!=null and startDay !='' and endDay!=null and endDay != ''">
+							 <![CDATA[paydate >= #{startDay} and paydate <to_date(#{endDay})+1]]>
+						</if>	
+					</if>
+				</where>
+
+			) A
+		)
+	<![CDATA[where RNUM>#{searchVo.firstRecordIndex}  
+		and RNUM<=#{searchVo.firstRecordIndex} + #{searchVo.recordCountPerPage}]]> 
 	</select>
 	
-	<!--  
-	<select id="selectPayment" parameterType="searchVo" resultType="map" >
-	select payment_code,paymentway,progress,discount,paydate, s.servicename, m.memberid
-		from payment p join service s
-		on p.service_code = s.service_code
-		join member m
-		on p.member_code = m.member_code
-	
-	</select>
-	-->
+	 <select id="selectTotalCount" parameterType="searchVo" resultType="int">
+	 select count(*) from payment
+	 <if test="searchKeyword != null and searchKeyword !=''">
+	 	where ${searchCondition} like '%' || #{searchKeyword} || '%'
+	 </if>
+	 </select>
 	
 </mapper>
 

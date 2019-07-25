@@ -74,7 +74,8 @@ public class NoticeController {
 	public String list(@ModelAttribute SearchVO searchVo, Model model) {
 		//1
 		
-		logger.info("공지 글 목록 파라미터 searchVo={}" ,searchVo);
+		logger.info("목록 파라미터 searchVo={}" ,searchVo);
+	
 		
 		
 		//2
