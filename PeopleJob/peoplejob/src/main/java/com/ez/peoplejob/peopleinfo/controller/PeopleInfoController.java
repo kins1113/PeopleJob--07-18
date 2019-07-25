@@ -36,7 +36,7 @@ public class PeopleInfoController {
 	
 	@RequestMapping("/peopleinfolist.do")
 	public String peopleinfolist(
-		 HttpSession session,@RequestParam(value="checkArray[]") List<ResumeVO> arrayParams,
+		 HttpSession session,
 			@ModelAttribute SearchVO searchVo,Model model,@RequestParam(required = false) String[] term,@RequestParam(required = false) String[] age,
 			@RequestParam(required = false) String[] graduatetype,@RequestParam(required = false) String[] sido,@RequestParam(required = false) String[] btypename1 ,
 			@RequestParam(required = false) String[] btypename2,@RequestParam(required = false) String[] btypename3,@RequestParam(required = false) String[] firstname,

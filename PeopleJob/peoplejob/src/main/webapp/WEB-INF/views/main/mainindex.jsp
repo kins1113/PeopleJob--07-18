@@ -484,7 +484,7 @@ input[type="checkbox"] {
 /* 리스트 패딩 */
 .rankListWap .infoList {
 	font-size: 13px;
-	padding: 12px 14px 10px 16px;
+	padding: 5px 14px 10px 16px;
 }
 
 /* 더보기 */
@@ -792,8 +792,9 @@ span[name=publicname]{
 
 
 									<li class="carousel-slide on">  
-										<h4 class="hd_4" style="    font-size: 18px;border-bottom: 1px solid lightgray; width: 208px;    padding-bottom: 7px;">마감 임박 공채</h4>
-										<img alt="마감 임박" src="<c:url value='/resources/main/images/clock.png'/>">
+										<span class="hd_4" style="display:block;  font-size: 18px;border-bottom: 1px solid lightgray; width: 208px; padding:3px;">마감 임박 공채<img alt="마감 임박" src="<c:url value='/resources/main/images/clock.png'/>"
+										 style="width: 23px;float: right;margin-right: 2px;"></span>
+										
 									
 										<ul class="infoList endList">
 										

@@ -452,9 +452,7 @@ var type = 'worknet';
   <li>‘체크박스’를 클릭하면 직종이 선택되고, 명칭별 검색에 직종명을 입력하면 다른 직종을 입력할 수 있습니다.</li>
 </ul>
 
-<p class="apply_btn">
-  <a onclick="f_resultJob();return false;" href="#"><img alt="적용하기" src="http://www.work.go.kr/images/common/btn/btn_apply04.gif"></a>
-</p>
+
 <div class="job_select_box">
   <div class="category first">
     <!-- 변경없음 -->

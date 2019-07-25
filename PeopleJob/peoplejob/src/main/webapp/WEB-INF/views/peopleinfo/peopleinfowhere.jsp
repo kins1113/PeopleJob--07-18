@@ -68,6 +68,7 @@ input.btn.btn-primary {
     bottom: 307px;
     right: 265px;
 } 
+
 </style>
 	<!-- 페이징 처리에도 사용 -->
    
@@ -89,15 +90,19 @@ input.btn.btn-primary {
                 <li><label class="frm_chkbox01" for="career-years06"><input type="checkbox" id="career-years" name="term" title="15년 이상" value="15,"><span>15년 <em class="ico_over">이상</em></span></label></li>
             </ul>
             </div>
-            <div>
         <div class="box_detail_panel" style="border: 1px solid gold;
     float: left;
     width: 20%;
     margin: 10px;
     height: 414px;">
         <strong>성별</strong>
-            <strong class="title_basic_sub">나이</strong>
-            <label class="form_sp frm_chk02" for="male01"><input type="checkbox" id="male01" value="male"><span>남</span></label><label class="form_sp frm_chk02" for="female01"><input type="checkbox" id="female01" value="female"><span>여</span></label>
+            <strong class="title_basic_sub">나이</strong><br>
+            <label class="form_sp frm_chk02" for="male01">
+            <span>남</span></label>
+            <input type="checkbox" id="male01" value="male">
+            <label class="form_sp frm_chk02" for="female01">
+            <span>여</span></label>
+            <input type="checkbox" id="female01" value="female">
             <ul class="wrap_list_value column_two">
                 <li><label class="frm_chkbox01" for="age-interval01"><input type="checkbox" id="age" name="age" value=",20"><span>20세 <em class="ico_under">이하</em></span></label></li>
                 <li><label class="frm_chkbox01" for="age-interval02"><input type="checkbox" id="age" name="age" value="21,30"><span>21~30세</span></label></li>
@@ -107,10 +112,9 @@ input.btn.btn-primary {
                 <li><label class="frm_chkbox01" for="age-interval06"><input type="checkbox" id="age" name="age" value="51,"><span>51세 <em class="ico_over">이상</em></span></label></li>
             </ul>
             </div>
-            </div>
-               <div class="wrap_detail_panel edu_last" id="basic-search-edu-part">
-        <div class="box_detail_panel" style="border: 1px solid gold; float: left; width: 20%; margin: 10px;">
-        <div class="title_detail_box"><strong>최종학력</strong></div>
+        <div class="box_detail_panel" style="border: 1px solid gold; float: left; width: 20%; margin: 10px; height:414px;">
+        
+        <strong>최종학력</strong>
             <ul class="wrap_list_value">
                                     <li><label class="frm_chkbox01" for="basic-search-final-edu0"><input type="checkbox" id="graduatecheck" value="대학교졸업(4년)" ><span>대학교 4년 </span></label></li>
                                     <li><label class="frm_chkbox01" for="basic-search-final-edu1"><input type="checkbox" id="graduatecheck" value="대학졸업(2,3년)" ><span>대학교 2,3년 </span></label></li>
@@ -123,15 +127,13 @@ input.btn.btn-primary {
                             </ul>
             
         </div>
-    </div>
     <div class="wrap_detail_panel area_domestic" style="border: 1px solid gold;
     float: left;
     margin: 10px;
     overflow: auto;
     width: 20%;
-    height: 412px;">
-        <div class="title_detail_box"><strong>희망 근무지역</strong></div>
-        <div class="box_detail_panel">
+    height: 414px;">
+        <strong>희망 근무지역</strong>
             <ul class="wrap_list_value" id="basic-search-location">
                                     <li>
                         <label class="frm_chkbox01" for="area-domestic-101000">
@@ -246,7 +248,7 @@ input.btn.btn-primary {
         </div>
     </div>
  
-
+	<div>
 		<input type="submit" class="btn btn-primary" value="검색">	
     </div>
 		
