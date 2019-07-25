@@ -20,9 +20,20 @@
 button.btn.btn-success {
     float: right;
 }
-</style>
+.table {
+    width: 100%;
+    max-width: 100%;
+    margin-bottom: 27px;
+    margin-top: 67px;
+}
+h3, .h3 {
+    font-size: 24px;
+    font-family: serif;
+    font-weight: bold;
+}
+</style>    
 <div id="divlist">
-<div class="divList" style="min-height: 630px">
+<div class="divList" style="min-height: 871px;">
 	  <input type="hidden" name="resumeCode" value="${param.resumeCode }"/>
 <table class="table"
 	 	summary="이력서 현황에 관한 표로써, 이력서제목, 이력서 공개 설정, 내 이력서 열람 기업에 대한 정보를 제공합니다.">
