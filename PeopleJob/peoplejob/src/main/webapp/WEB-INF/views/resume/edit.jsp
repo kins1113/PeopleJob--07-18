@@ -12,6 +12,293 @@
     background: #f2f4f7;
 }
 </style>
+
+<style type="text/css">
+.divForm {
+    width: 1153px;
+    height: 110%;
+    margin: 0 auto;
+    background: #f2f4f7;
+    padding: 13px;
+}
+#registerdiv {
+    background: #f2f4f7;
+}
+select#schoollocal {
+    height: 35px;
+}
+select#graduatecheck {
+    height: 35px;
+}
+select#workcondition {
+    height: 35px;
+}
+select#certificationtype {
+    height: 35px;
+}
+select#hopeworkform {
+    height: 35px;
+}
+select#hopepay {
+    height: 35px;
+}
+select#hopeworkdate {
+    height: 35px;
+}
+section#registerds {
+    margin: 12px;
+    background: white;
+    padding: 20px;
+}
+h3 {
+    color: green;
+    font-weight: bold;
+}
+div#companycheck {
+    margin-left: 900px;
+}
+input[type="submit"] {
+    margin-left: 1653px;
+}
+legend{
+    font-weight: bold;
+    font-size: 30px;
+    margin-left: 10px;
+}
+
+button#certification {
+    margin-left: 10px;
+}
+button#langcertbt{
+    margin-left: 10px;
+}
+button#awardbt{
+    margin-left: 10px;
+}
+<style>
+
+</style>
+<script type="text/javascript">
+//1차 직종 가져오기 /manager/occupantion/firstList.do
+selectFirst();
+//1차 작종 클릭하면 2차직종 가져오기 
+$("#selectFirst").change(function(){
+	var firstCode=$(this).find("option:selected").val();
+	if(firstCode!=0){
+		selectSecond(firstCode);
+	}
+});
+
+//2차 직종 클릭하면 3차직종 가져오기
+$("#selectSecond").change(function(){
+	var secondCode=$(this).find("option:selected").val();
+	if(secondCode!=0){
+		selectThird(secondCode);
+	}
+});
+
+//지역정보를 가져오기 - 시도
+getLocation();
+
+//지역정보를 가져오는 
+$("#locationSiDo").change(function(){
+	var sidoCode=$(this).find("option:checked").val();
+	//값을 가져오는 메서드
+	getLocation2(sidoCode);
+});
+
+
+//1차 직종 가져오기
+function selectFirst(){
+$.ajax({
+	url:"<c:url value='/resume/occupation/firstList.do'/>",
+	type:"post",
+	success:function(res){
+			settingFirst(res);
+	},
+	error:function(xhr, status, error){
+		alert(status+":"+error);
+	}
+})
+}
+
+//1차직종 뿌리기
+//[{"firstCode":1,"firstname":"경영·사무"},{"firstCode":2,"firstname":"영업·고객상담"},{"firstCode":3,"firstname":"생산·제조"},
+//{"firstCode":4,"firstname":"IT·인터넷"},{"firstCode":5,"firstname":"전문직"},{"firstCode":6,"firstname":"교육"}
+function settingFirst(res){
+	$.each(res,function(idx,item){
+		if(idx==0){
+			var chEl=$("<option value='0'>1차 직종</option>")
+			var opEl=$("<option value='"+item.firstCode+"'></option>");
+			opEl.append(item.firstname);
+			$("#selectFirst").html(chEl);
+			$("#selectFirst").append(opEl); //최종으로 여기에 넣음
+		}else{
+			var opEl=$("<option value='"+item.firstCode+"'></option>");
+			opEl.append(item.firstname);
+			$("#selectFirst").append(opEl); //최종으로 여기에 넣음
+		}
+	})
+}
+
+//2차 직종가져오기 
+function selectSecond(firstCode){
+$.ajax({
+	url:"<c:url value='/resume/occupation/selectSecond.do'/>",
+	type:"post",
+	data:"firstCode="+firstCode,
+	success:function(res){
+		settingSecond(res);
+	},
+	error:function(xhr,status,error){
+		alert(status+":"+error);
+	}
+});
+}
+//[{"secondCode":101,"secondname":"기획·전략·경영","firstCode":1},
+//{"secondCode":102,"secondname":"총무·법무·사무","firstCode":1},.....	]
+//2차 직종 세팅하기 함수
+function settingSecond(res){
+$.each(res,function(idx,item){
+	if(idx==0){
+		//option태그 만들어서 
+		var opEl=$("<option value='"+item.secondCode+"'></option>")
+		//값을 넣고 
+		opEl.html(item.secondname);
+		//append
+		$("#selectSecond").html("<option value='0'>2차 직종</option>");
+		$("#selectSecond").append(opEl);
+	}else{
+		//option태그 만들어서 
+		var opEl=$("<option value='"+item.secondCode+"'></option>")
+		//값을 넣고 
+		opEl.append(item.secondname);
+		//append
+		$("#selectSecond").append(opEl);
+	}
+});
+var thirdEl=$("<option>3차 직종</option>");
+$("#selectThird").html(thirdEl);
+};
+
+//3차직종 가져오기 
+function selectThird(secondCode){
+$.ajax({
+	url:"<c:url value='/resume/occupation/selectThird.do'/>",
+	type:"post",
+	data:"secondCode="+secondCode,
+	success:function(res){
+		settingThird(res);
+	},
+	error:function(xhr,status,error){
+		alert(status+":"+error);
+	}
+});
+
+} 
+//3차 직종 뿌려주기 
+function settingThird(res){
+$.each(res,function(idx,item){
+	if(idx==0){
+		//option태그 만들어서 
+		var opEl=$("<option value='"+item.thirdCode+"'></option>")
+		//값을 넣고 
+		opEl.html(item.thirdname);
+		//append
+		$("#selectThird").html("<option value='0'>3차 직종</option>");
+		$("#selectThird").append(opEl);
+	}else{
+		//option태그 만들어서 
+		var opEl=$("<option value='"+item.thirdCode+"'></option>")
+		//값을 넣고 
+		opEl.append(item.thirdname);
+		//append
+		$("#selectThird").append(opEl);
+	}
+});
+}
+//지역정보를 가져오는 메서드 
+function getLocation(){
+	$.ajax({
+		url:"<c:url value='/resume/occupation/selectLocation.do'/>",
+		type:"post",
+		success:function(res){
+			settingLocation(res);
+		},
+		error:function(xht,status,error){
+			alert(status+":"+error);
+		}
+	});//ajax
+}
+//지역정보를 뿌려주는 메서드
+function settingLocation(res){
+	$.each(res, function(idx,item){
+		if(idx==0){
+			var chEl=$("<option value='0'>시/도</option>");
+			var opEl=$("<option value='"+item.gugun+"'></option>")
+			opEl.html(item.sido);
+			$("#locationSiDo").html(chEl);
+			$("#locationSiDo").append(opEl);
+		}else{
+			var opEl=$("<option value='"+item.gugun+"'></option>")
+			opEl.html(item.sido);
+			$("#locationSiDo").append(opEl);
+		}
+	});
+}
+
+//지역정보를 가져오는 메서드 - 구군
+function getLocation2(sidoCode){
+	$.ajax({
+		url:"<c:url value='/resume/occupation/selectLocation2.do'/>",
+		type:"post",
+	    dataType: "json",
+		data:"sidoCode="+sidoCode,
+		success:function(res){
+			settingLocation2(res);
+		},
+		error:function(xht,status,error){
+			alert(status+":"+error);
+		}
+	});//ajax
+}
+//지역정보를 뿌려주는 메서드 - 구군
+function settingLocation2(res){
+	$.each(res, function(idx,item){
+		if(idx==0){
+			var chEl=$("<option value='0'>구/군</option>");
+			var opEl=$("<option value='"+item["LOCAL_CODE2"]+"'></option>")
+			opEl.html(item["GUGUN"]);
+			$("#locationGugun").html(chEl);
+			$("#locationGugun").append(opEl);
+		}else{
+			//alert("세팅 item[LOCAL_CODE2]="+item["LOCAL_CODE2"]+", item[GUGUN]"+item["GUGUN"])
+			var opEl=$("<option value='"+item["LOCAL_CODE2"]+"'></option>")
+			opEl.html(item["GUGUN"]);
+			$("#locationGugun").append(opEl);
+		}
+		
+	});
+}
+$(function () {
+	$("#certificationtype").hide();
+	$("#certification").click(function () {
+		$("#certificationtype").toggle(500);
+	});
+	$("#award").hide();
+	$("#awardbt").click(function () {
+		$("#award").toggle(500);
+	});
+	$("#hopework").hide();
+	$("#hopeworkbt").click(function () {
+		$("#hopework").toggle(500);
+	});
+	$("#langcert").hide();
+	$("#langcertbt").click(function () {
+		$("#langcert").toggle(500);
+	});
+
+});
     <script type="text/javascript">
 	$(document).ready(function(){
 		$('form[name=frm2]').submit(function(){
@@ -27,6 +314,45 @@
 		});
 		
 	});
+</script>
+<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
+<script>
+	//본 예제에서는 도로명 주소 표기 방식에 대한 법령에 따라, 내려오는 데이터를 조합하여 올바른 주소를 구성하는 방법을 설명합니다.
+	function execDaumPostcode() {
+		new daum.Postcode({
+			oncomplete : function(data) {
+				// 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+
+				// 도로명 주소의 노출 규칙에 따라 주소를 조합한다.
+				// 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+				var fullRoadAddr = data.roadAddress; // 도로명 주소 변수
+				var extraRoadAddr = ''; // 도로명 조합형 주소 변수
+
+				// 법정동명이 있을 경우 추가한다. (법정리는 제외)
+				// 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
+				if (data.bname !== '' && /[동|로|가]$/g.test(data.bname)) {
+					extraRoadAddr += data.bname;
+				}
+				// 건물명이 있고, 공동주택일 경우 추가한다.
+				if (data.buildingName !== '' && data.apartment === 'Y') {
+					extraRoadAddr += (extraRoadAddr !== '' ? ', '
+							+ data.buildingName : data.buildingName);
+				}
+				// 도로명, 지번 조합형 주소가 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
+				if (extraRoadAddr !== '') {
+					extraRoadAddr = ' (' + extraRoadAddr + ')';
+				}
+				// 도로명, 지번 주소의 유무에 따라 해당 조합형 주소를 추가한다.
+				if (fullRoadAddr !== '') {
+					fullRoadAddr += extraRoadAddr;
+				}
+
+				// 우편번호와 주소 정보를 해당 필드에 넣는다.
+				document.getElementById('zipcode').value = data.zonecode; //5자리 새우편번호 사용
+				document.getElementById('address').value = fullRoadAddr;
+			}
+		}).open();
+	}
 </script>
 <article>
 <div id="editdiv">
@@ -60,16 +386,7 @@
     <div>        
         <label for="birth">생년월일</label>
         <input type="text" class="form-control"  name="birth" id="infobox" value="${vo1.birth}" style="ime-mode:active">
-    	<label class="radio-inline">
-  		<input type="radio" name="membergender" id="infobox" value="남" <c:if test="${vo1.membergender=='남'}">            	
-            		checked="checked"
-            	</c:if>>남
-		</label>
-    	<label class="radio-inline">
-  		<input type="radio" name="membergender" id="infobox" value="여" <c:if test="${vo1.membergender=='여'}">            	
-            		checked="checked"
-            	</c:if>>여
-		</label>
+    	
     </div>
     
    
@@ -80,14 +397,16 @@
     
     <div>
         <label for="address">주소</label>
-        <input type="text" class="form-control"  name="zipcode" id="infobox" ReadOnly  
+        <input type="text" class="form-control"  name="zipcode" id="zipcode" ReadOnly  
         	title="우편번호" class="width_80" value="${vo1.zipcode}">
         
-        <button type="button" class="btn btn-success" value="우편번호 찾기" id="btnZipcode" 
-        title="새창열림">우편번호찾기</button>
+       <div class="row">
+		<input type="button" value="우편번호 찾기" class="btn btn-register"
+	onclick="execDaumPostcode()">
+									</div>
         <br />
         <span class="sp1">&nbsp;</span>
-        <input type="text"  class="form-control" id="infobox" name="address" value="${vo1.address }" ReadOnly title="주소"  class="width_350"><br />
+        <input type="text"  class="form-control" id="address" name="address" value="${vo1.address }" ReadOnly title="주소"  class="width_350"><br />
         <span class="sp1">&nbsp;</span>
         <input type="text"  class="form-control" id="infobox" name="addressdetail" value="${vo1.addressdetail }" title="상세주소"  class="width_350">
     </div>
@@ -102,11 +421,7 @@
     <div>
         <label for="education">학력사항</label>&nbsp;
        
-       <label class="radio-inline">
-  		<input type="radio" name="graduatetype" id="graduatetype" value="학력무관" <c:if test="${vo3.graduatetype=='학력무관'}">            	
-            		checked="checked"
-            	</c:if>> 학력무관
-		</label>
+       
        <label class="radio-inline">
   		<input type="radio" name="graduatetype" id="graduatetype" value="초등학교졸업" <c:if test="${vo3.graduatetype=='초등학교졸업'}">            	
             		checked="checked"
@@ -516,15 +831,19 @@
     <div>
     <label>기업 인사담당자의 입사제의 및 면접제의를 받으시겠어요?</label>
     <label class="radio-inline">
-  		<input type="radio" name="opencheck" id="opencheck" value="${vo.opencheck}">공개
+  		<input type="radio" name="opencheck" id="opencheck" value="${vo.opencheck}" <c:if test="${vo.opencheck=='Y'}">            	
+            		checked="checked"
+            	</c:if>>공개
 		</label>
 		
 		<label class="radio-inline">
-  		<input type="radio" name="opencheck" id="opencheck" value="${vo.opencheck}">비공개
+  		<input type="radio" name="opencheck" id="opencheck" value="${vo.opencheck}" <c:if test="${vo.opencheck=='N'}">            	
+            		checked="checked"
+            	</c:if>>비공개
 	</label>
     </div>
     <br>
-    <input type="submit" value="이력서 수정"/>
+    <input class="btn btn-success" type="submit" value="이력서 수정">
 </fieldset> 
 </form>
 </div> 
