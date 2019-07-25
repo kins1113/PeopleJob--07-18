@@ -3,7 +3,6 @@ package com.ez.peoplejob.hopecompany.model;
 public class LocationVO {
 	private int localCode; 
 	private String sido;      
-	private String gugun;
 	private int localCode2;
 	
 	
@@ -25,19 +24,10 @@ public class LocationVO {
 	public void setSido(String sido) {
 		this.sido = sido;
 	}
-	public String getGugun() {
-		return gugun;
-	}
-	public void setGugun(String gugun) {
-		this.gugun = gugun;
-	}
-	
 	@Override
 	public String toString() {
-		return "LocationVO [localCode=" + localCode + ", sido=" + sido + ", gugun=" + gugun + ", localCode2="
-				+ localCode2 + "]";
+		return "LocationVO [localCode=" + localCode + ", sido=" + sido + ", localCode2=" + localCode2 + "]";
 	}
-	
 	
 	
 }

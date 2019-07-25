@@ -59,8 +59,9 @@
 	</update>
 	
 	<select id="selectUsageY" resultType="popupVo">
-		select * from popup
-		where usage='Y' and end_day > sysdate
+		SELECT * FROM POPUP
+		where usage='Y' 
+		<![CDATA[and end_day>sysdate and start_day <sysdate]]>
 	</select>
 </mapper>
 

@@ -30,6 +30,19 @@
 		select * from location2 
 		<![CDATA[where local_code2>=#{code}*1000 and local_code2<(#{code}+1)*1000]]>
 	</select>
+	<select id="selectBtype1" resultType="map">
+		select * from btype1
+	</select>
+	
+	<select id="selectBtype2" resultType="map" parameterType="int">
+		select * from btype2
+		where btype_code1=#{code}
+	</select>	
+
+	<select id="selectBtype3" resultType="map" parameterType="int">
+		select * from btype3
+		where btype_code2=#{code}
+	</select>		
 </mapper>
 
 
