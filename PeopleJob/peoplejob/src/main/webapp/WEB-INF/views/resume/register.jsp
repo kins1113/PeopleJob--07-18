@@ -8,9 +8,10 @@
 
 <style type="text/css">
 .divForm {
-    width: 1000px;
+    width: 1153px;
+    height: 110%;
     margin: 0 auto;
-    background: white;
+    background: #f2f4f7;
     padding: 13px;
 }
 #registerdiv {
@@ -37,17 +38,259 @@ select#hopepay {
 select#hopeworkdate {
     height: 35px;
 }
+section#registerds {
+    margin: 12px;
+    background: white;
+    padding: 20px;
+}
+h3 {
+    color: green;
+    font-weight: bold;
+}
+div#companycheck {
+    margin-left: 900px;
+}
+input[type="submit"] {
+    margin-left: 1653px;
+}
+legend{
+    font-weight: bold;
+    font-size: 30px;
+    margin-left: 10px;
+}
+
+button#certification {
+    margin-left: 10px;
+}
+button#langcertbt{
+    margin-left: 10px;
+}
+button#awardbt{
+    margin-left: 10px;
+}
 <style>
 
 </style>
 <script type="text/javascript">
-jQuery('#selectBox').change(function() {
-	var state = jQuery('#selectBox option:selected').val();
-	if ( state == 'option2' ) {
-		jQuery('.layer').show();
-	} else {
-		jQuery('.layer').hide();
+//1차 직종 가져오기 /manager/occupantion/firstList.do
+selectFirst();
+//1차 작종 클릭하면 2차직종 가져오기 
+$("#selectFirst").change(function(){
+	var firstCode=$(this).find("option:selected").val();
+	if(firstCode!=0){
+		selectSecond(firstCode);
 	}
+});
+
+//2차 직종 클릭하면 3차직종 가져오기
+$("#selectSecond").change(function(){
+	var secondCode=$(this).find("option:selected").val();
+	if(secondCode!=0){
+		selectThird(secondCode);
+	}
+});
+
+//지역정보를 가져오기 - 시도
+getLocation();
+
+//지역정보를 가져오는 
+$("#locationSiDo").change(function(){
+	var sidoCode=$(this).find("option:checked").val();
+	//값을 가져오는 메서드
+	getLocation2(sidoCode);
+});
+
+
+//1차 직종 가져오기
+function selectFirst(){
+$.ajax({
+	url:"<c:url value='/resume/occupation/firstList.do'/>",
+	type:"post",
+	success:function(res){
+			settingFirst(res);
+	},
+	error:function(xhr, status, error){
+		alert(status+":"+error);
+	}
+})
+}
+
+//1차직종 뿌리기
+//[{"firstCode":1,"firstname":"경영·사무"},{"firstCode":2,"firstname":"영업·고객상담"},{"firstCode":3,"firstname":"생산·제조"},
+//{"firstCode":4,"firstname":"IT·인터넷"},{"firstCode":5,"firstname":"전문직"},{"firstCode":6,"firstname":"교육"}
+function settingFirst(res){
+	$.each(res,function(idx,item){
+		if(idx==0){
+			var chEl=$("<option value='0'>1차 직종</option>")
+			var opEl=$("<option value='"+item.firstCode+"'></option>");
+			opEl.append(item.firstname);
+			$("#selectFirst").html(chEl);
+			$("#selectFirst").append(opEl); //최종으로 여기에 넣음
+		}else{
+			var opEl=$("<option value='"+item.firstCode+"'></option>");
+			opEl.append(item.firstname);
+			$("#selectFirst").append(opEl); //최종으로 여기에 넣음
+		}
+	})
+}
+
+//2차 직종가져오기 
+function selectSecond(firstCode){
+$.ajax({
+	url:"<c:url value='/resume/occupation/selectSecond.do'/>",
+	type:"post",
+	data:"firstCode="+firstCode,
+	success:function(res){
+		settingSecond(res);
+	},
+	error:function(xhr,status,error){
+		alert(status+":"+error);
+	}
+});
+}
+//[{"secondCode":101,"secondname":"기획·전략·경영","firstCode":1},
+//{"secondCode":102,"secondname":"총무·법무·사무","firstCode":1},.....	]
+//2차 직종 세팅하기 함수
+function settingSecond(res){
+$.each(res,function(idx,item){
+	if(idx==0){
+		//option태그 만들어서 
+		var opEl=$("<option value='"+item.secondCode+"'></option>")
+		//값을 넣고 
+		opEl.html(item.secondname);
+		//append
+		$("#selectSecond").html("<option value='0'>2차 직종</option>");
+		$("#selectSecond").append(opEl);
+	}else{
+		//option태그 만들어서 
+		var opEl=$("<option value='"+item.secondCode+"'></option>")
+		//값을 넣고 
+		opEl.append(item.secondname);
+		//append
+		$("#selectSecond").append(opEl);
+	}
+});
+var thirdEl=$("<option>3차 직종</option>");
+$("#selectThird").html(thirdEl);
+};
+
+//3차직종 가져오기 
+function selectThird(secondCode){
+$.ajax({
+	url:"<c:url value='/resume/occupation/selectThird.do'/>",
+	type:"post",
+	data:"secondCode="+secondCode,
+	success:function(res){
+		settingThird(res);
+	},
+	error:function(xhr,status,error){
+		alert(status+":"+error);
+	}
+});
+
+} 
+//3차 직종 뿌려주기 
+function settingThird(res){
+$.each(res,function(idx,item){
+	if(idx==0){
+		//option태그 만들어서 
+		var opEl=$("<option value='"+item.thirdCode+"'></option>")
+		//값을 넣고 
+		opEl.html(item.thirdname);
+		//append
+		$("#selectThird").html("<option value='0'>3차 직종</option>");
+		$("#selectThird").append(opEl);
+	}else{
+		//option태그 만들어서 
+		var opEl=$("<option value='"+item.thirdCode+"'></option>")
+		//값을 넣고 
+		opEl.append(item.thirdname);
+		//append
+		$("#selectThird").append(opEl);
+	}
+});
+}
+//지역정보를 가져오는 메서드 
+function getLocation(){
+	$.ajax({
+		url:"<c:url value='/resume/occupation/selectLocation.do'/>",
+		type:"post",
+		success:function(res){
+			settingLocation(res);
+		},
+		error:function(xht,status,error){
+			alert(status+":"+error);
+		}
+	});//ajax
+}
+//지역정보를 뿌려주는 메서드
+function settingLocation(res){
+	$.each(res, function(idx,item){
+		if(idx==0){
+			var chEl=$("<option value='0'>시/도</option>");
+			var opEl=$("<option value='"+item.gugun+"'></option>")
+			opEl.html(item.sido);
+			$("#locationSiDo").html(chEl);
+			$("#locationSiDo").append(opEl);
+		}else{
+			var opEl=$("<option value='"+item.gugun+"'></option>")
+			opEl.html(item.sido);
+			$("#locationSiDo").append(opEl);
+		}
+	});
+}
+
+//지역정보를 가져오는 메서드 - 구군
+function getLocation2(sidoCode){
+	$.ajax({
+		url:"<c:url value='/resume/occupation/selectLocation2.do'/>",
+		type:"post",
+	    dataType: "json",
+		data:"sidoCode="+sidoCode,
+		success:function(res){
+			settingLocation2(res);
+		},
+		error:function(xht,status,error){
+			alert(status+":"+error);
+		}
+	});//ajax
+}
+//지역정보를 뿌려주는 메서드 - 구군
+function settingLocation2(res){
+	$.each(res, function(idx,item){
+		if(idx==0){
+			var chEl=$("<option value='0'>구/군</option>");
+			var opEl=$("<option value='"+item["LOCAL_CODE2"]+"'></option>")
+			opEl.html(item["GUGUN"]);
+			$("#locationGugun").html(chEl);
+			$("#locationGugun").append(opEl);
+		}else{
+			//alert("세팅 item[LOCAL_CODE2]="+item["LOCAL_CODE2"]+", item[GUGUN]"+item["GUGUN"])
+			var opEl=$("<option value='"+item["LOCAL_CODE2"]+"'></option>")
+			opEl.html(item["GUGUN"]);
+			$("#locationGugun").append(opEl);
+		}
+		
+	});
+}
+$(function () {
+	$("#certificationtype").hide();
+	$("#certification").click(function () {
+		$("#certificationtype").toggle(500);
+	});
+	$("#award").hide();
+	$("#awardbt").click(function () {
+		$("#award").toggle(500);
+	});
+	$("#hopework").hide();
+	$("#hopeworkbt").click(function () {
+		$("#hopework").toggle(500);
+	});
+	$("#langcert").hide();
+	$("#langcertbt").click(function () {
+		$("#langcert").toggle(500);
+	});
+
 });
 </script>
 <article>
@@ -59,7 +302,7 @@ jQuery('#selectBox').change(function() {
 	<legend style="font-weight: bold">이력서등록</legend>
 	<section id="registerds">
 	<div>        
-        <label for="resumeTitle">이력서 제목</label>
+        <h3 >이력서 제목</h3>
         <input type="text" class="form-control" placeholder="이력서 제목을 입력하세요(최대 100자 입력)" name="resumeTitle" id="infobox"  style="ime-mode:active">
     </div>
     </section>
@@ -241,35 +484,15 @@ jQuery('#selectBox').change(function() {
         <input type="text" class="form-control"  name="jobgrade" id="jobgrade" style="ime-mode:active" placeholder="직급을 입력하세요">
    </div>
    </section>
-  <script>
-$(function () {
-	$("#certificationtype").hide();
-	$("#certification").click(function () {
-		$("#certificationtype").toggle(500);
-	});
-	$("#award").hide();
-	$("#awardbt").click(function () {
-		$("#award").toggle(500);
-	});
-	$("#hopework").hide();
-	$("#hopeworkbt").click(function () {
-		$("#hopework").toggle(500);
-	});
 
-});
-</script>
-   <button type="button" id="certification" class="btn btn-success" value="자격증/어학">자격증/어학</button>
+   <button type="button" id="certification" class="btn btn-success" value="자격증">자격증</button>
    <section id="registerds">
-   <div id="certificationtype">
+   <div id="certificationtype" name="certificationtype">
    
-   <h3>자격증/어학</h3>
-        <label for="certificationtype">항목선택</label>
-        <select class="form-control" name="certificationtype" id="certificationtype" >
-        	<option value="자격증/면허증">자격증/면허증</option>
-        	<option value="어학시험">어학시험</option>
-        </select>
+   <h3>자격증</h3>
+
         
-   <h5>자격증/면허증</h5>
+   <input class="form-control" name="certificationtype" id="certificationtype" value="자격증/면허증">
         <label for="lName">자격증명</label>
         <input type="text" class="form-control"  name="lName" id="lName" placeholder="자격증명을 입력하세요" style="ime-mode:active">
     <div>    
@@ -279,11 +502,16 @@ $(function () {
     <div>
     	<c:import url="resume_date3.jsp"/>
     </div>
-    </section> 
+    </div>
+   </section>
+    
     &nbsp;
+   <button type="button" id="langcertbt" class="btn btn-success" value="어학">어학</button>
     <section id="registerds">
-    <div>	
-    <h5>어학시험</h5>  
+    <div id="langcert">
+    <h3>어학시험</h3> 
+    <input class="form-control" name="certificationtype" id="certificationtype" value="어학시험">
+    <div> 
         <label for="language">언어</label>
         <input type="text" class="form-control" placeholder="언어를 입력하세요" name="language" id="language" style="ime-mode:active">
     </div>
@@ -307,17 +535,19 @@ $(function () {
      <div>
      	<c:import url="resume_date4.jsp"/>             
 	</div>
+	</div>
 	</section>
-	
-     &nbsp;
-
    <button type="button" id="awardbt" class="btn btn-success" value="수상내역">수상내역</button>
+  
+   <section id="registerds">
     <div class="well" id="award">
-     <h5>수상내역</h5>
+     <h3>수상내역</h3>
       <label for="award">수상명</label>
         <input type="text" class="form-control"  name="award" id="award" style="ime-mode:active">
   </div>
+  </section>
      &nbsp;
+     <section id="registerds">
      <h3>자기소개서</h3>
       <div>	
     	<!-- <label for="introduce">자기소개서</label>
@@ -329,8 +559,10 @@ $(function () {
         
         
    </div>
+   </section>
       &nbsp;
       <button type="button" id="hopeworkbt" class="btn btn-success" value="희망근무">희망근무</button>
+      <section id="registerds">
 	 <div  id="hopework">
       <h3>희망근무 선택</h3>
       <div>
@@ -377,100 +609,20 @@ $(function () {
         </select>
        </div>
        
-       
        <h3>희망근무지역</h3>
        <div>
        
        <label for="시도">시도</label>
-       	<select class="form-control" name="sido" id="sido" style="ime-mode:active" >
-        	<option data-value="101000" value="서울">서울</option>
-        	<option data-value="102000" value="경기">경기</option>
-        	<option data-value="103000" value="광주">광주</option>
-        	<option data-value="104000" value="대구">대구</option>
-        	<option data-value="105000" value="대전">대전</option>
-        	<option data-value="106000" value="부산">부산</option>
-        	<option data-value="107000" value="울산">울산</option>
-        	<option data-value="108000" value="인천">인천</option>
-        	<option data-value="109000" value="강원">강원</option>
-        	<option data-value="110000" value="경남">경남</option>
-        	<option data-value="111000" value="경북">경북</option>
-        	<option data-value="112000" value="전남">전남</option>
-        	<option data-value="113000" value="전북">전북</option>
-        	<option data-value="114000" value="충북">충북</option>
-        	<option data-value="115000" value="충남">충남</option>
-        	<option data-value="116000" value="제주">제주</option>
-        	<option data-value="118000" value="세종">세종</option>
+       	<select class="form-control" name="sido" id="locationSiDo" style="ime-mode:active" >
+   			<option>시도</option>
         	
         </select>   
         </div>
        	<div>
        
        <label for="구군">구군</label>
-       <select class="form-control" name="gugun" id="gugun" style="ime-mode:active" >
-       <option data-value="101000" id="seoul" value="서울전체">서울전체</option>
-       <option data-value="101010" id="seoul" value="강남구">강남구</option>
-       <option data-value="101020" id="seoul" value="강동구">강동구</option>
-       <option data-value="101030" id="seoul"  value="강북구">강북구</option>
-       <option data-value="101040"  id="seoul"value="강서구">강서구</option>
-       <option data-value="101050" id="seoul"value="관악구">관악구</option>
-       <option data-value="101060" id="seoul"value="광진구">광진구</option>
-       <option data-value="101070" id="seoul"value="구로구">구로구</option>
-       <option data-value="101080" id="seoul"value="금천구">금천구</option>
-       <option data-value="101090" id="seoul"value="노원구">노원구</option>
-       <option data-value="101100" id="seoul"value="도봉구">도봉구</option>
-       <option data-value="101110" id="seoul"value="동대문구">동대문구</option>
-       <option data-value="101120" id="seoul"value="동작구">동작구</option>
-       <option data-value="101130" id="seoul"value="마포구">마포구</option>
-       <option data-value="101140" id="seoul"value="서대문구">서대문구</option>
-       <option data-value="101150" id="seoul"value="서초구">서초구</option>
-       <option data-value="101160" id="seoul"value="성동구">성동구</option>
-       <option data-value="101170" id="seoul"value="성북구">성북구</option>
-       <option data-value="101180" id="seoul"value="송파구">송파구</option>
-       <option data-value="101190" id="seoul"value="양천구">양천구</option>
-       <option data-value="101200" id="seoul"value="영등포구">영등포구</option>
-       <option data-value="101210" id="seoul"value="용산구">용산구</option>
-       <option data-value="101220" id="seoul"value="은평구">은평구</option>
-       <option data-value="101220" id="seoul"value="종로구">종로구</option>
-       <option data-value="101240" id="seoul"value="중구">중구</option>
-       <option data-value="101250" id="seoul"value="중랑구">중랑구</option>
-       <option data-value="102000" id="gyeonggi"value="경기전체">경기전체</option>
-       <option data-value="102010" id="gyeonggi"value="가평군">가평군</option>
-       <option data-value="102020" id="gyeonggi"value="고양시">고양시</option>
-       <option data-value="102030" id="gyeonggi"value="고양시 덕양구">고양시 덕양구</option>
-       <option data-value="102040" id="gyeonggi"value="고양시 일산동구">고양시 일산동구</option>
-       <option data-value="102050" id="gyeonggi"value="고양시 일산서구">고양시 일산서구</option>
-       <option data-value="102060" id="gyeonggi"value="과천시">과천시</option>
-       <option data-value="102070" id="gyeonggi"value="광명시">광명시</option>
-       <option data-value="102080" id="gyeonggi"value="광주시">광주시</option>
-       <option data-value="102090" id="gyeonggi"value="구리시">구리시</option>
-       <option data-value="102100" id="gyeonggi"value="군포시">군포시</option>
-       <option data-value="102110" id="gyeonggi"value="김포시">김포시</option>
-       <option data-value="102120" id="gyeonggi"value="남양주시">남양주시</option>
-       <option data-value="102130" id="gyeonggi"value="동두천시">동두천시</option>
-       <option data-value="102140" id="gyeonggi"value="부천시">부천시</option>
-       <option data-value="102150" id="gyeonggi"value="부천시 소사구">부천시 소사구</option>
-       <option data-value="102160" id="gyeonggi"value="부천시 오정구">부천시 오정구</option>
-       <option data-value="102170" id="gyeonggi"value="부천시 원미구">부천시 원미구</option>
-       <option data-value="102180" id="gyeonggi"value="성남시">성남시</option>
-       <option data-value="102190" id="gyeonggi"value="성남시 분당구">성남시 분당구</option>
-       <option data-value="102190" id="gyeonggi"value="성남시 수정구">성남시 수정구</option>
-       <option data-value="102190" id="gyeonggi"value="성남시 중원구">성남시 중원구</option>
-       <option data-value="102190" id="gyeonggi"value="수원시">수원시</option>
-       <option data-value="102190" id="gyeonggi"value="수원시 권선구">수원시 권선구</option>
-       <option data-value="102190" id="gyeonggi"value="수원시 영통구">수원시 영통구</option>
-       <option data-value="102190" id="gyeonggi"value="수원시 장안구">수원시 장안구</option>
-       <option data-value="102190" id="gyeonggi"value="수원시 팔달구">수원시 팔달구</option>
-       <option data-value="102190" id="gyeonggi"value="시흥시">시흥시</option>
-       <option data-value="102190" id="gyeonggi"value="안산시">안산시</option>
-       <option data-value="102190" id="gyeonggi"value="안산시 단원구">안산시 단원구</option>
-       <option data-value="102190" id="gyeonggi"value="안산시 상록구">안산시 상록구</option>
-       <option data-value="102190" id="gyeonggi"value="안성시">안성시</option>
-       <option data-value="102190" id="gyeonggi"value="안양시">안양시</option>
-       <option data-value="102190" id="gyeonggi"value="안양시 동안구">안양시 동안구</option>
-       <option data-value="102190" id="gyeonggi"value="안양시 만안구">안양시 만안구</option>
-       <option data-value="102190" id="gyeonggi"value="양주시">양주시</option>
-       <option data-value="102190" id="gyeonggi"value="양평군">양평군</option>
-       <option data-value="102190" id="gyeonggi"value="여주시">여주시</option>
+       <select class="form-control" name="gugun" id="locationGugun" style="ime-mode:active" >
+       	<option>구군</option>
        </select>
 
         </div>
@@ -479,40 +631,40 @@ $(function () {
         <%-- <c:import url="btype.jsp"/> --%>
         <label for="btypename1">업종1차</label>
         <select name="btypename1" id="btypename1">
-        <option ></option>
+        <option >업종1차</option>
         </select>
         </div>
         <div>
         <label for="btypename2">업종2차</label>
         
         <select name="btypename2" id="btypename2">
-        <option ></option>
+        <option >업종2차</option>
         </select>
         </div>
         <div>
         <label for="btypename3">업종3차</label>
          <select name="btypename3" id="btypename3">
-        <option ></option>
+        <option >업종3차</option>
         </select>
         </div>
         <div>
         <label for="firstname">직종1차</label>
-         <select name="firstname" id="firstname">
-        <option ></option>
+         <select name="firstname" id="selectFirst">
+        <option >직종1차</option>
         </select>
      
         </div>
         <div>
         <label for="secondname">직종2차</label>
-         <select name="secondname" id="secondname">
-        <option ></option>
+         <select name="secondname" id="selectSecond">
+        <option >직종2차</option>
         </select>
      	
         </div>
         <div>
         <label for="thirdname">직종3차</label>
-        <select name="thirdname" id="thirdname">
-        <option ></option>
+        <select name="thirdname" id="selectThird">
+        <option >직종3차</option>
         </select>
         </div>
         <div>
@@ -524,9 +676,11 @@ $(function () {
         </select>
         </div>
         </div>
-        </div>
+        </section>
+        
+        
    &nbsp;
-    <div>
+    <div id="companycheck">
     <label>기업 인사담당자의 입사제의 및 면접제의를 받으시겠어요?</label>
     <label class="radio-inline">
     	
@@ -538,12 +692,16 @@ $(function () {
 	</label>
     </div>
     <br>
-    <input type="submit" value="이력서 저장"/>
+   
     
-</fieldset> 
-</form>
+    </fieldset>
+    </form>
+    
 </div>  
-</div>     
+     <input class="btn btn-success" type="submit" value="이력서 저장">
+</div> 
+  
 </article>
+
 <%@include file="../main/inc/bottom.jsp" %>
       

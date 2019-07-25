@@ -18,12 +18,12 @@
 	</select>
 
 	<select id="selectLocation" resultType="LocationVO">
-		select sido, gugun from 
+		select sido, local_code2 from 
 		(
-			select local_code, sido, trunc(gugun/1000) as gugun from location
+			select local_code, sido, trunc(local_code2/1000) as local_code2 from location
 		)
-		group by sido, gugun
-		order by gugun
+		group by sido, local_code2
+		order by local_code2
 	</select>
 	
 	<select id="selectLocation2" parameterType="int" resultType="map">

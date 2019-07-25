@@ -9,10 +9,12 @@
 </script>
 <style type="text/css">
 .divList {
-    width: 900px;
     margin: 0 auto;
-    padding: 10px;
     background: white;
+   min-height: 871px;
+    width: 1164px;
+    padding: 28px;
+
 }
 #divlist {
     background: #f2f4f7;
@@ -31,6 +33,7 @@ h3, .h3 {
     font-family: serif;
     font-weight: bold;
 }
+
 </style>    
 <div id="divlist">
 <div class="divList" style="min-height: 871px;">
