@@ -98,11 +98,11 @@ public class PeopleInfoController {
 		}
 		logger.info("resumelist.size={}",resumelist.size());
 		int totalRecord=0;
-		/*
-		 * totalRecord=peopleinfoService.selectTotalCountPeople(map);
-		 * 
-		 * logger.info("전체 레코드 개수 조회 결과, totalRecord={}",totalRecord);
-		 */
+		
+		/* totalRecord=peopleinfoService.selectTotalCountPeople(map); */
+		 
+		 logger.info("전체 레코드 개수 조회 결과, totalRecord={}",totalRecord);
+		
 		
 		//5]PaginationInfo에 totalRecord값셋팅
 		pagingInfo.setTotalRecord(totalRecord);

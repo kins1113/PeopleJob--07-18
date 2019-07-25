@@ -21,7 +21,7 @@
     background: #f2f4f7;
     padding: 13px;
 }
-#registerdiv {
+#editdiv {
     background: #f2f4f7;
 }
 select#schoollocal {
@@ -74,6 +74,18 @@ button#langcertbt{
 }
 button#awardbt{
     margin-left: 10px;
+}
+input.btn.btn-register {
+    margin-left: 10px;
+}
+select#infobox {
+    height: 33px;
+}
+select#locationSiDo {
+    height: 30px;
+}
+select#locationGugun {
+    height: 30px;
 }
 <style>
 
@@ -299,6 +311,7 @@ $(function () {
 	});
 
 });
+</script>
     <script type="text/javascript">
 	$(document).ready(function(){
 		$('form[name=frm2]').submit(function(){
@@ -371,10 +384,17 @@ $(function () {
 		<input type="hidden" name="desiredWorkCode" value="${vo2.desiredWorkCode}">
 		<div>
 		<!--이력서 사진 https://kuzuro.blogspot.com/2018/10/11.html  -->
-		<img src="..." alt="..." class="img-thumbnail">
+		 <div id="imgDiv">
+	        <img src="<c:url value='/peoplejob_upload/${vo.picture }'/>" 
+							alt="${vo1.membername }" width="50">
+        </div>
+        <label for="picture">이력서 사진</label>
+ <input type="file" id="gdsImg" name="file" />
+ <div class="select_img"><img src="" /></div>
 		</div>
+		<section id="registerds">
 	<div>        
-        <label for="resumeTitle">이력서 제목</label>
+        <h3>이력서 제목</h3>
         <input type="text" class="form-control" placeholder="이력서 제목을 입력하세요" name="resumeTitle" id="infobox" value="${vo.resumeTitle }"  style="ime-mode:active">
     </div>
     <hr>
@@ -401,7 +421,7 @@ $(function () {
         	title="우편번호" class="width_80" value="${vo1.zipcode}">
         
        <div class="row">
-		<input type="button" value="우편번호 찾기" class="btn btn-register"
+		&nbsp;<input type="button" value="우편번호 찾기" class="btn btn-register"
 	onclick="execDaumPostcode()">
 									</div>
         <br />
@@ -416,7 +436,8 @@ $(function () {
         <input type="text"  class="form-control"   name="tel" id="infobox" value="${vo1.tel}" maxlength="12" title="휴대폰 번호"
         	class="width_80">
     </div>
-    
+    </section>
+    <section id="registerds">
     <h3>학력사항</h3>
     <div>
         <label for="education">학력사항</label>&nbsp;
@@ -520,8 +541,18 @@ $(function () {
         </select>   
        </div>
        <div>
+       <label>전공</label>
+  		<input type="text"  class="form-control"  name="major" id="major"value="${vo3.major }" >
+       
+       </div>
+       <div>
+       <label>학위</label>
+  		<input type="text"  class="form-control"  name="degree" id="degree"value="${vo3.degree }" >
+       
+       </div>
+       <div>
 		 <label for="graduate">졸업년도</label>&nbsp;
-		 <input type="text" class="form-control" name="graduate" value="${vo3.graduate }"id="datepicker1">
+		 <c:import url="resume_date2.jsp"/>
          <select class="form-control" name="graduatecheck" id="infobox" >
         	<option value="졸업여부" <c:if test="${vo3.graduatecheck=='졸업여부'}">            	
             		selected="selected"
@@ -533,8 +564,9 @@ $(function () {
             		selected="selected"
             	</c:if>>중퇴</option>
         </select>
-       </div>	
-    
+       </div>
+       </section>	
+    <section id="registerds">
     <h3>경력사항</h3>
     <div>
     <label for="workcheck">경력구분</label>&nbsp;
@@ -559,7 +591,7 @@ $(function () {
     <div>
         <label for="workterm">근무기간</label>
 		<input type="text" class="form-control" name="workterm" value="${vo4.workterm }" id="infobox">~ 
-  		<input type="text" class="form-control" name="workterm" value="${vo4.workterm }" id="infobox">
+  		<input type="text" class="form-control" name="workterm2" value="${vo4.workterm2 }" id="infobox">
   		&nbsp;
 		<select class="form-control" name="workcondition" id="infobox" >
         	<option value="재직중" <c:if test="${vo4.workcondition=='재직중'}">            	
@@ -578,24 +610,16 @@ $(function () {
         <label for="jobgrade">직급</label>
         <input type="text" class="form-control"  name="jobgrade" id="infobox" value="${vo4.jobgrade }" style="ime-mode:active">
    </div>
-  
+  </section>
    
 
-
-    <h3>자격증/어학</h3>	
-   <div>
-        <label for="certificationtype">항목선택</label>
-        <select class="form-control" name="certificationtype" id="certificationtype" >
-        	<option value="자격증/면허증" <c:if test="${vo5.certificationtype=='자격증/면허증'}">            	
-            		selected="selected"
-            	</c:if>>자격증/면허증</option>
-        	<option value="어학시험" <c:if test="${vo5.certificationtype=='어학시험'}">            	
-            		selected="selected"
-            	</c:if>>어학시험</option>
-        </select>
-   </div>&nbsp;&nbsp;
-     <c:if test="${vo5.certificationtype=='자격증/면허증'}">
-   <h5>자격증/면허증</h5>
+<button type="button" id="certification" class="btn btn-success" value="자격증">자격증</button>
+   
+   &nbsp;&nbsp;
+   <section id="registerds">
+   <div id="certificationtype">
+     
+   <h3>자격증/면허증</h3>
      <div>
         <label for="lName">자격증명</label>
         <input type="text" class="form-control"  name="lName" id="lName" value="${vo6.lName}" style="ime-mode:active">
@@ -605,13 +629,17 @@ $(function () {
         <input type="text" class="form-control"  name="lInstitution" id="lInstitution" value="${vo6.lInstitution }" style="ime-mode:active">
     </div>
     <div>
-        <label for="lGetdate">취득일</label>
-        <input type="text" class="form-control"  name="lGetdate" id="lGetdate" value="${vo6.lGetdate }" style="ime-mode:active">
+    	<c:import url="resume_date3.jsp"/>
     </div> 
-    </c:if>
+   
+    </div>
+    </section>
     &nbsp;
-    <c:if test="${vo5.certificationtype=='어학시험'}">
-    <h5>어학시험</h5>  
+    <button type="button" id="langcertbt" class="btn btn-success" value="어학">어학</button>
+    <section id="registerds">
+    <div id="langcert">
+    
+    <h3>어학시험</h3>  
     <div>	
         <label for="language">언어</label>
         <input type="text" class="form-control"  name="language" id="language" value="${vo5.language }" style="ime-mode:active">
@@ -633,31 +661,42 @@ $(function () {
         <label for="langGrade">급수</label>
         <input type="text" class="form-control"  name="langGrade" id="langGrade" value="${vo5.langGrade }" style="ime-mode:active">
      </div>
-     <div>             
-        <label for="langGetdate">취득일</label>
-        <input type="text" class="form-control"  name="langGetdate" id="langGetdate" value="${vo5.langGetdate }" style="ime-mode:active">
+     <div>
+     	<c:import url="resume_date4.jsp"/>             
+	</div>
+    
      </div>
-     </c:if>
-	
+	</section>
 
      &nbsp;
      
-  
+  	 <section id="registerds">
+    <div class="well" id="award">
      <c:if test="${!empty vo.award}">
-     <h5>수상내역</h5>
+     <h3>수상내역</h3>
       <label for="award">수상명</label>
         <input type="text" class="form-control"  name="award" id="award" value="${vo.award }" style="ime-mode:active">
         </c:if>
+        </div>
+        </section>
      &nbsp;
- 
+ <section id="registerds">
      <h3>자기소개서</h3>
       <div>	
-    	<label for="introduce">자기소개서</label>
-        <textarea class="form-control" rows="3" value="${vo.introduce }"></textarea>
-      </div>
-  
+    	<!-- <label for="introduce">자기소개서</label>
+        <textarea class="form-control" rows="3"></textarea> -->
+        
+        <c:import url="/main/smarteditorTestjsp.do">
+			<c:param name="name" value="${vo.introduce }"></c:param>
+		</c:import>
+        
+        
+   </div>
+   </section>
       &nbsp;
-
+	 <button type="button" id="hopeworkbt" class="btn btn-success" value="희망근무">희망근무</button>
+       <section id="registerds">
+	 <div  id="hopework">
       <h3>희망근무 선택</h3>
       <div>	
     	<label for="hopeworkform">근무형태</label>
@@ -769,49 +808,64 @@ $(function () {
        
        
        <h3>희망근무지역</h3>
-       <div>
+        <div>
        
        <label for="시도">시도</label>
-        <input type="text" class="form-control"  name="sido" id="sido" value="${vo7.sido }" style="ime-mode:active">
-       	
+       	<select class="form-control" name="sido" id="locationSiDo" style="ime-mode:active" >
+   			<option value="${vo7.sido }">시도</option>
+        	
+        </select>   
         </div>
        	<div>
        
        <label for="구군">구군</label>
-        <input type="text" class="form-control"  name="gugun" id="gugun" value="${vo8.gugun }" style="ime-mode:active">
-       	
+       <select class="form-control" name="gugun" id="locationGugun" style="ime-mode:active" >
+       	<option value="${vo8.gugun }">구군</option>
+       </select>
+
         </div>
-        
+       
         <div>
-        <label for="jobtype">업종1차</label>
-        
-        <input type="text" class="form-control"  name="btypename1" id="btypename1" value="${vo9.btypename1 }" style="ime-mode:active">
+        <%-- <c:import url="btype.jsp"/> --%>
+        <label for="btypename1">업종1차</label>
+        <select name="btypename1" id="btypename1" >
+        <option value="${vo9.btypename1 }" >업종1차</option>
+        </select>
         </div>
         <div>
-        <label for="jobtype">업종2차</label>
+        <label for="btypename2">업종2차</label>
         
-        <input type="text" class="form-control"  name="btypename2" id="btypename2" value="${vo10.btypename2 }" style="ime-mode:active">
+        <select name="btypename2" id="btypename2" >
+        <option value="${vo10.btypename2 }" >업종2차</option>
+        </select>
         </div>
         <div>
-        <label for="jobtype">업종3차</label>
-        
-        <input type="text" class="form-control"  name="btypename3" id="btypename3" value="${vo11.btypename3 }" style="ime-mode:active">
+        <label for="btypename3">업종3차</label>
+         <select name="btypename3" id="btypename3">
+        <option value="${vo11.btypename3 }">업종3차</option>
+        </select>
         </div>
         <div>
         <label for="firstname">직종1차</label>
-        <input type="text" class="form-control"  name="firstname" id="firstname" value="${vo12.firstname }" style="ime-mode:active">
+         <select name="firstname" id="selectFirst">
+        <option value="${vo12.firstname }">직종1차</option>
+        </select>
      
         </div>
         <div>
         <label for="secondname">직종2차</label>
-        <input type="text" class="form-control"  name="secondname" id="secondname" value="${vo13.secondname }" style="ime-mode:active">
-        	
+         <select name="secondname" id="selectSecond">
+        <option value="${vo13.secondname }">직종2차</option>
+        </select>
+     	
         </div>
         <div>
         <label for="thirdname">직종3차</label>
-        <input type="text" class="form-control"  name="thirdname" id="thirdname" value="${vo14.thirdname }" style="ime-mode:active">
-        
+        <select name="thirdname" id="selectThird">
+        <option value="${vo14.thirdname }" >직종3차</option>
+        </select>
         </div>
+        
         <div>
         <label for="hopeworkdate">근무일시</label>
         <select class="form-control" name="hopeworkdate" id="hopeworkdate" >
@@ -826,9 +880,11 @@ $(function () {
             	</c:if>>자율근무제</option>
         </select>
         </div>
+        </div>
+        </section>
  
    &nbsp;
-    <div>
+    <div id="companycheck">
     <label>기업 인사담당자의 입사제의 및 면접제의를 받으시겠어요?</label>
     <label class="radio-inline">
   		<input type="radio" name="opencheck" id="opencheck" value="${vo.opencheck}" <c:if test="${vo.opencheck=='Y'}">            	
@@ -843,10 +899,10 @@ $(function () {
 	</label>
     </div>
     <br>
-    <input class="btn btn-success" type="submit" value="이력서 수정">
 </fieldset> 
 </form>
 </div> 
+    <input class="btn btn-success" type="submit" value="이력서 수정">
 </div>      
 </article>
 <%@include file="../main/inc/bottom.jsp" %>
