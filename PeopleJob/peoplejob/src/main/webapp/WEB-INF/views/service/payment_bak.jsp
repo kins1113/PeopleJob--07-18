@@ -333,8 +333,8 @@ padding: 5px;
 				<th scope="col">번호</th>
 				<th scope="col">채용공고 제목</th>
 				<th scope="col">채용기간</th>
-				<th scope="col">시작날짜</th>
-				<th scope="col">사용기간</th>
+			<!-- 	<th scope="col">시작날짜</th>
+				<th scope="col">사용기간</th> -->
 				
 			</tr>
 		</thead>
@@ -350,15 +350,15 @@ padding: 5px;
 				
 				<br>
 			
-		 <c:forEach var="serviceVo" items="${serviceList }">
+		<%--  <c:forEach var="serviceVo" items="${serviceList }">
         	<span style="font-size:1.5em;margin-top: 10px;" id="Info">
 					 <span name="${serviceVo.serviceName }" style="display: none;">**${serviceVo.serviceName }은 1일당</span>
 					<span name="${serviceVo.serviceName }" style="display: none;" id="paymentPrice">${serviceVo.servicePrice }원입니다.</span>  <br>
 			</span> 
-        </c:forEach>
+        </c:forEach> --%>
 				
 				<c:forEach var="jobopeningVo" items="${list }">
-				<form id="frmList" method="post" name="frmList"> 
+				<form id="frmList" method="post" name="frmList">  
 				
 						<input type="hidden" value="${memberVo.memberCode }" name="memberCode">
 						<input type="hidden" value="${serviceVo1.serviceCode }" name="serviceCode">
@@ -372,9 +372,9 @@ padding: 5px;
 						<td align="center">
 						${fn:substring(jobopeningVo.workdate,0,10) }
 						 ~ 	${fn:substring(jobopeningVo.endDate,0,10) } </td>  
-						<td align="center">
+						<%-- <td align="center">
 						 <c:import url="../inc/date.jsp"/> 
-						<%--  <c:param name="paystartDate" value=""></c:param> --%>
+						 <c:param name="paystartDate" value=""></c:param>
 						
 						 <input type="text" name="paystartDate" id="paystartDate">
 						</td>
@@ -384,7 +384,7 @@ padding: 5px;
 									<option value="${i }">${i}일 </option> 
 								</c:forEach>
 						</select>
-						</td>
+						</td> --%>
  					</tr> 
 				  <c:set var="idx" value="${idx+1 }"/> 
 				  <c:set var="no" value="${no+1 }"/> 
@@ -395,7 +395,7 @@ padding: 5px;
 	</table>
 	<br>
 	
-	   
+<!-- 	   
 	<span style="font-size: 1.5em;">견적서</span>
 		<table class="table table-bordered" style="margin-top: 15px; " id="priceList">
 		<thead>
@@ -416,7 +416,7 @@ padding: 5px;
 			</tr>
 		</tbody>
 		</table>
-		
+		 -->
 	<!-- checkbox 확인 : <span id="multiPrint"></span><br> -->
 	<!-- <span>checkbox 개수: <span id="chklength"></span></span> <br> -->
 	

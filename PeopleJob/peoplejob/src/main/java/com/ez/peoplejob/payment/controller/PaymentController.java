@@ -65,7 +65,7 @@ public class PaymentController {
 		
 	}
 	
-	@RequestMapping("/service/payment.do")
+	@RequestMapping("/service/payment_bak.do")
 	public String importInfo(HttpSession session, Model model) {
 		String membername=(String) session.getAttribute("memberName");
 		String memberId=(String)session.getAttribute("memberid");
@@ -96,7 +96,7 @@ public class PaymentController {
 			model.addAttribute("list",list);
 			
 		}
-			return "service/payment";
+			return "service/payment_bak";
 		
 	}
 	

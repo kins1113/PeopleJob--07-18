@@ -235,7 +235,7 @@ div#cardBoduPostList {
 			<!-- 반복 끝 -->
 		</tbody>
 	</table>
-			<a href="<c:url value='/service/payment.do'/>" style="float: right; font-size: 1.3em; color: steelblue;">채용광고 및 배너 광고 신청 문의</a>
+			<a href="<c:url value='/service/payment_bak.do'/>" style="float: right; font-size: 1.3em; color: steelblue;">채용광고 및 배너 광고 신청 문의</a>
 
 </div>
 

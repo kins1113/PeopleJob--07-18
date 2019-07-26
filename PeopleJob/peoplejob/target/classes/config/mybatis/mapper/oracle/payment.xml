@@ -16,7 +16,7 @@
 		select payment_seq.nextval from dual
 	</selectKey>
 	insert into payment
-	values(#{paymentCode},'카드','결제완료',0,sysdate,sysdate+100,#{serviceCode},#{memberCode},#{jobopening})
+	values(#{paymentCode},'카드','결제완료',0,sysdate,sysdate+100,#{serviceCode},#{memberCode},#{jobopening},0)
 	</insert>
 	
 	<select id="getpaymentJobCount" resultType="int" parameterType="int">
@@ -64,7 +64,7 @@
 	(
 		select A.*, rownum as RNUM from 
 		(
-			select payment_code,paymentway,progress,discount,paydate, s.servicename, m.memberid
+			select payment_code,paymentway,progress,period,paydate, s.servicename, m.memberid
 				from payment p join service s
 				on p.service_code = s.service_code
 				join member m

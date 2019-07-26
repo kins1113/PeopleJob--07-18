@@ -48,7 +48,7 @@ $(function() {
        });
        
        //각각 li 마우스 이벤트
-       $li.mouseover(function(){
+   /*     $li.mouseover(function(){
     	   $(this).find( 'div[name=publicblack]').hide();
            $(this).find('div[name=mouseover_show]').show();
        });
@@ -56,7 +56,7 @@ $(function() {
        $li.mouseout(function(){
     	   $(this).find('div[name=publicblack]').show();
            $(this).find('div[name=mouseover_show]').hide();
-       });
+       }); */
 
        // 이전 이벤트
        $("#prev").on("click", prev);
@@ -714,14 +714,13 @@ span[name=publicname]{
 								추천공고 </h3>
 							<h5></h5>
 							<h5 style="margin-left: 510px;">
-								<a href="<c:url value='/service/payment.do'/> ">  </a>
+								<a href="<c:url value='/service/payment_bak.do'/> ">  </a>
 							</h5>
-						</div>
+						</div> 
 
 						<div class="row p-t-35" style="padding: 0px; margin-left: 0px; width: 91%;">
 							<div class="recomtable">
 							
-								 
 							 <c:forEach var="map" items="${randomList}">  
 								 <div class="recom1" style="border: 1px solid lightgray;width: 33.3%;height: 50%;float: left;padding: 20px;" id="recom" name="recomhover">
 								 <a href="<c:url value='/company/jobopening_view.do?jobopening=${map["JOBOPENING"] } ' />" style="color:black; width: 199px;">
@@ -759,6 +758,7 @@ span[name=publicname]{
 								</div>  
 								
 							</c:forEach>  
+							
 								<div class="recom1" style="border: 1px solid lightgray;width: 33.3%;height: 50%;float: left;padding: 20px;">
 									<span style="font-weight: bold;font-size: 1.1em;"> 나에게 딱맞는</span><br>
 									<span style="color: #4876ef;font-weight: bold;font-size: 1.1em;">추천공고</span>
@@ -1001,7 +1001,7 @@ span[name=publicname]{
 				<div class="row justify-content-center" style="width: 1300px;margin-left: 67px;">  
 						 
 						<div style="margin-left: -115px;width: 1280px;">
-						<h1>VVIP</h1>  <a href="<c:url value='/service/payment.do'/> " style="font-size:1.1em;color:black;"> >상품문의 </a>
+						<h1>VVIP</h1>  <a href="<c:url value='/service/payment_bak.do'/> " style="font-size:1.1em;color:black;"> >상품문의 </a>
 						</div>
 						<div class="row p-t-35" style="padding-top: 0px; width: 1300px; margin-left: -125px;">
 							<c:forEach var="map" items="${list }" begin="0" end="9">   

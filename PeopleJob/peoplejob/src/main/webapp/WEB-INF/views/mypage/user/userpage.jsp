@@ -205,7 +205,7 @@ $(function(){
 							<div class="dashboard">
             <ul class="activity_list"> 
                    <li class="img">
-                        <a href="#" onclick="" onmousedown="try{n_trackEvent('myhome', 'dashboard' , 'resume-manage', '');}catch(e){};">
+                        <a href=""<c:url value='/apply/apply_list.do'/>" onclick="" onmousedown="try{n_trackEvent('myhome', 'dashboard' , 'resume-manage', '');}catch(e){};">
                            <img src="<c:url value='/resources/main/images/circle.PNG'/>"></img>
                            <div class="text">
                           <!--  <button type="button" class="btn btn-lg btn-primary" id="pay">신청하기</button>  -->
@@ -273,19 +273,15 @@ $(function(){
 							<table class="table table-bordered" style="margin-top: 15px; " id="priceList">
 		<thead>
 			<tr> 
-				<th scope="col">서비스명</th>
-				<th scope="col">기간</th>
-				<th scope="col">세부내용</th>
-				<th scope="col">결제금액</th>
+				<th scope="col" colspan="4">이력서 리스트 완성 시 띄우기</th>
+				
 			</tr>
 		</thead>
 		<tbody>
 		
 			<tr>
-				<td id="servicName">채용광고 vvip관</td>
-				<td id="serviceTerm" name="serviceTerm">0주</td>
-				<td id="serviceContent">vvip관 내용</td>
-				<td id="servicePrice" name="servicePrice">0 원</td>
+				<td id="servicName" colspan="4">이력서 리스트 완성 시 띄우기</td>
+				
 			</tr>
 		</tbody>
 		</table>
