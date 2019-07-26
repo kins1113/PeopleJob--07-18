@@ -102,13 +102,13 @@
 			
 	        <div class="list-group"> 
 	            <div class="list-group-item">
-	                <img src="<c:url value='/jobopening_upload/${vo.companyimage }'/>" 
+	                <img src="<c:url value='/jobopening_upload/${vo.companyimage }'/>"  
 							alt="공고이미지" width="50px" height="50px" style="float:right;"> 
 							<div style="width=100px;float:left;">
 							<c:forEach var="cvo" items="${clist }">
 	                 <c:if test="${not loop_flag }">
 				        <c:if test="${vo.companyCode==cvo.companyCode}">   
-			                <div class="cname"style="height:100px; width:120px;"><h2>${cvo.companyname}</h2></div>
+			                <div class="cname"style="height:100px; width:120px;text-align: center;"><h2>${cvo.companyname}</h2></div>
 				            <c:set var="loop_flag" value="true" />
 				        </c:if>
 				    </c:if>

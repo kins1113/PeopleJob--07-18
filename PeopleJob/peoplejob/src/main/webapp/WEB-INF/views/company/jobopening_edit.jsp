@@ -361,7 +361,23 @@
             <div class="form-group">
                 <div >
                     <label >접수방법 :</label> 
-                    <input id="receiveway" name="receiveway" class="form-control" type="text" value="${vo.receiveway }"/>
+                    <select id="receiveway" name="receiveway">
+                        <option value="즉시지원"
+                        <c:if test="${vo.receiveway=='즉시지원'}">
+                        selected
+                        </c:if>
+                        >즉시지원</option>
+                        <option value="이메일지원"
+                        <c:if test="${vo.receiveway=='이메일지원'}">
+                        selected
+                        </c:if>
+                        >이메일</option>
+                        <option value="홈페이지지원"
+                        <c:if test="${vo.receiveway=='홈페이지지원'}">
+                        selected
+                        </c:if>
+                        >이메일</option>
+                    </select>
                 </div>
             </div>
             <div class="form-group">
@@ -398,14 +414,14 @@
             </div>
             <div class="form-group">
                 <div >
-                    <label >활성화여부</label> 
+                     <label  >활성화여부(회원들에게 보여줄지 말지를 결정)</label> 
                     <input id="adminagree" name="adminagree"  type="radio" value="Y"
                     
                     <c:if test="${vo.adminagree=='Y' }">checked</c:if>
-                    />Y
+                    />활성화
                     <input id="adminagree" name="adminagree"  type="radio" value="N"
                      <c:if test="${vo.adminagree=='N' }">checked</c:if>
-                    />N 
+                    />비활성화
                 </div>
             </div>
             <div class="form-group">

@@ -219,7 +219,8 @@ public class JobopeningController {
 		MemberVO mvo=memberService.selectByUserid(id);
 		CompanyVO cvo=companyService.selectcompany(vo.getCompanyCode());
 		logger.info("로그인한 회원 정보 mvo={}",mvo);
-		logger.info("자세히보기 변수 vo=",vo);
+		logger.info("자세히보기 변수 vo={}",vo);
+		logger.info("해당기업정보 cvo={}",cvo);
 		model.addAttribute("vo", vo);
 		model.addAttribute("mvo", mvo);
 		model.addAttribute("cvo", cvo);
