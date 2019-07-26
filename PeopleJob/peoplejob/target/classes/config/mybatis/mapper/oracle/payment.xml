@@ -46,6 +46,7 @@
 	from vvipmain v join companyJobOpen c
 	on c.COMPANY_CODE = v.COMPANY_CODE
 	where service_code=#{serviceCode}
+	order by dbms_random.value
 	</select>
 	
 	<select id="getCountByJobopening" resultType="int" parameterType="int">

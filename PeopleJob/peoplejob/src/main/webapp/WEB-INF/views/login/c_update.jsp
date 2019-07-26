@@ -7,6 +7,28 @@
     margin: 30px 30px;
     border: 1px solid lightgray;
 }
+
+input[type=text], input[type=password]{
+    height: 60px;
+	font-size: 16px;
+}
+
+.title{
+	margin-top: 22px;
+    text-align: center;
+    display: block;
+       font-size: 30px;
+    color: green;
+    font-weight: bold;
+}
+
+.labeltitle{
+    float: left;
+    font-size: 16px;
+    vertical-align: middle;
+    line-height: 62px;
+    margin-right: 12px;
+}
 </style>
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 <script>
@@ -103,26 +125,39 @@ $(function() {
 });
 </script>
 
-<div class="container">
-    	<div class="row">
-			<div class="col-md-6 col-md-offset-3">
-				<div class="panel panel-login">
-<div class="panel-body">
+<div class="container" style="background-color: #f5f6f8; min-width: 100%;">
+<div>
+    	<div class="row" style="background-color: #f5f6f8;">
+			<div class="col-md-6 col-md-offset-3" style="margin:0 auto;">
+			<span class="title">기업 정보 관리</span>
+				<div class="panel panel-login" style="    margin: 0 auto;
+    margin-top: 15px;
+    margin-bottom: 30px;
+    width: 707px;
+">
+	<div class="panel-body">
 						<div class="row">
 							<div class="col-lg-12">
 								<form action="<c:url value='/login/c_update.do'/> " 
 								method="post" role="form" style="display: block;" name="updateC" enctype="multipart/form-data">
 									<input type="hidden" name="companyCode" id="companyCode" value="${companyVo.companyCode }">
 									<div class="form-group" style="float: left; margin-right:30px;" >
+									<label for="memberid" class="labeltitle" style="  float: left;
+									    font-size: 16px;
+									    vertical-align: middle;
+									    line-height: 62px;
+									    margin-right: 12px;">아이디</label>
 										<input type="text" name="memberid" id="memberid" tabindex="1" placeholder="아이디 *" 
 										class="form-control infobox" style="width:250px" title="아이디" value="${memberVo.memberid }" readonly>
 									</div>
-										<div class="form-group" style="float: left; margin-right:30px;" >
+									<div class="form-group" style="float: left; margin-right:30px;" >
+									<label for="pwd" class="labeltitle">비밀번호</label>
 										<input type="password" name="pwd" id="pwd" tabindex="1" placeholder="비밀번호 *" 
 										class="form-control infobox" style="width:250px" title="비밀번호">
 									</div>
 									
-									<div class="form-group">
+									<div class="form-group" style="margin-right:30px;" >
+									<label for="membername" class="labeltitle">대표자명</label>
 										<input type="text" name="membername" id="membername" tabindex="1" class="form-control infobox" 
 										title="대표자명" style="width: 250px" value="${memberVo.membername }" readonly>
 									</div>
@@ -223,6 +258,8 @@ $(function() {
 					</div>
 					</div>
 					</div>
-					</div>
-					</div>
+			</div>
+					
+		</div>
+</div>
 <%@include file="../main/inc/bottom.jsp" %>

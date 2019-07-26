@@ -65,7 +65,7 @@ public class PaymentController {
 		
 	}
 	
-	@RequestMapping("/service/payment_bak.do")
+	@RequestMapping("/service/payment.do")
 	public String importInfo(HttpSession session, Model model) {
 		String membername=(String) session.getAttribute("memberName");
 		String memberId=(String)session.getAttribute("memberid");
@@ -83,9 +83,9 @@ public class PaymentController {
 			List<JobopeningVO> list=jobService.selectJobopeningBycomcode(memberVo.getCompanyCode());
 			logger.info("company_code로 조회한 채용공고 list.size={}",list.size());
 			ServiceVO serviceVo1=serviceService.selectServiceByCode(1);
-			logger.info("serviceCode로 service={}",serviceVo1+"\n");
+			logger.info("serviceCode로 service={}",serviceVo1);
 			List<ServiceVO> serviceList=serviceService.selectAll();
-			logger.info("serviceList.size={}",serviceList.size());
+			logger.info("serviceList.size={}",serviceList.size()+"\n");
 			
 			
 			model.addAttribute("serviceVo1",serviceVo1);
@@ -96,7 +96,7 @@ public class PaymentController {
 			model.addAttribute("list",list);
 			
 		}
-			return "service/payment_bak";
+			return "service/payment";
 		
 	}
 	
@@ -185,7 +185,7 @@ public class PaymentController {
 		}
 		logger.info("payment 등록 결과 cnt={}",cnt);
 		
-		return "main/mainindex";
+		return "mypage/corp/paymentDetail";
 	}
 	
 	@RequestMapping("/manager/payment/list.do")

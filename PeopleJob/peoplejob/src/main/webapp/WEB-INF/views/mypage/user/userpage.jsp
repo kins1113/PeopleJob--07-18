@@ -128,7 +128,7 @@ $(function(){
 									</a>
 									</c:if>
 									<c:if test="${sessionScope.author_code==2 || sessionScope.author_code==3 }" > <!-- 나중에 3으로 바꿀것, 바꾼 후 2이면 못들어가게 막기 -->
-									<a href="#" class="dis-block f1-s-10 text-uppercase cl2 hov-cl10 trans-03 p-tb-13" id="jobopening" onclick="jobopening()">
+									<a href="<c:url value='/company/my_jobopening_list.do?companycode1=${sessionScope.companyCode}'/>" class="dis-block f1-s-10 text-uppercase cl2 hov-cl10 trans-03 p-tb-13" id="jobopening" onclick="jobopening()">
 										채용공고 관리
 									</a>
 									</c:if>
@@ -153,7 +153,7 @@ $(function(){
 
 								<li class="how-bor3 p-rl-4">
 									<c:if test="${sessionScope.author_code==1 }" >
-									<a href="#" class="dis-block f1-s-10 text-uppercase cl2 hov-cl10 trans-03 p-tb-13">
+									<a href="<c:url value='/apply/apply_list.do'/>" class="dis-block f1-s-10 text-uppercase cl2 hov-cl10 trans-03 p-tb-13">
 										지원 현황
 									</a>
 									</c:if>
@@ -200,12 +200,21 @@ $(function(){
 					<div class="p-r-10 p-r-0-sr991">
 						<!-- Blog Detail -->
 						
-						<div class="p-b-70">
+						<div class="p-b-70">  
 						
 							<div class="dashboard">
             <ul class="activity_list"> 
                    <li class="img">
-                        <a href=""<c:url value='/apply/apply_list.do'/>" onclick="" onmousedown="try{n_trackEvent('myhome', 'dashboard' , 'resume-manage', '');}catch(e){};">
+                   <c:if test="${sessionScope.author_code==1 }">
+                        <a href="<c:url value='/apply/apply_list.do'/>" onclick="" onmousedown="try{n_trackEvent('myhome', 'dashboard' , 'resume-manage', '');}catch(e){};">
+                     </c:if>
+                   <c:if test="${sessionScope.author_code==2 }">
+                        <a href="" onclick="alert('관리자의 승인을 받은 기업회원만 이용가능합니다.')" onmousedown="try{n_trackEvent('myhome', 'dashboard' , 'resume-manage', '');}catch(e){};">
+                     </c:if>
+                   <c:if test="${sessionScope.author_code==3 }">
+                        <a href="<c:url value='/apply/Capply_list.do'/>" onclick="" onmousedown="try{n_trackEvent('myhome', 'dashboard' , 'resume-manage', '');}catch(e){};">
+                     </c:if>
+                      
                            <img src="<c:url value='/resources/main/images/circle.PNG'/>"></img>
                            <div class="text">
                           <!--  <button type="button" class="btn btn-lg btn-primary" id="pay">신청하기</button>  -->
@@ -230,7 +239,12 @@ $(function(){
                     </li> 
                     
                     <li class="img">
+                    <c:if test="${sessionScope.author_code==2 || sessionScope.author_code==3 }">
                         <a href="<c:url value='/mypage/corp/paymentDetail.do'/>" onmousedown="try{n_trackEvent('myhome', 'dashboard' , 'resume-manage', '');}catch(e){};">
+                    </c:if>
+                    <c:if test="${sessionScope.author_code==1}">
+                        <a href="" onmousedown="try{n_trackEvent('myhome', 'dashboard' , 'resume-manage', '');}catch(e){};">
+                    </c:if>
                            <img src="<c:url value='/resources/main/images/circle.PNG'/>"></img>
                            <div class="text">
                            <c:if test="${sessionScope.author_code==2 || sessionScope.author_code==3 }">
@@ -246,7 +260,15 @@ $(function(){
                     </li> 
                     
                     <li class="img">
+                      <c:if test="${sessionScope.author_code==1 }">
                         <a href="<c:url value='/resume/list.do'/>" onclick="" onmousedown="try{n_trackEvent('myhome', 'dashboard' , 'resume-manage', '');}catch(e){};">
+                      </c:if>
+                      <c:if test="${sessionScope.author_code==2 }">
+                        <a href="" onclick="alert('관리자의 승인을 받은 기업회원만 이용가능합니다.')" onmousedown="try{n_trackEvent('myhome', 'dashboard' , 'resume-manage', '');}catch(e){};">
+                      </c:if>
+                      <c:if test="${sessionScope.author_code==3 }">
+                        <a href="<c:url value='/company/my_jobopening_list.do?companycode1=${sessionScope.companyCode}'/>" onclick="" onmousedown="try{n_trackEvent('myhome', 'dashboard' , 'resume-manage', '');}catch(e){};">
+                      </c:if>
                            <img src="<c:url value='/resources/main/images/circle.PNG'/>"></img>
                            <div class="text">
                            <c:if test="${sessionScope.author_code==1}">

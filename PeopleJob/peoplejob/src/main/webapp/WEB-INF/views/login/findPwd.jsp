@@ -28,8 +28,8 @@ $(function() {
 
 });
 </script>
-
-<div class="container" style="min-height: 550px;padding:8px;">
+<body style="background-color: #f5f6f8;">
+<div class="container" style="min-height: 629px; padding:8px;">
     	<div class="row">
 			<div class="col-md-6 col-md-offset-3">
 				<div class="panel panel-login">
@@ -81,5 +81,6 @@ $(function() {
 				</div>
 			</div>
 		</div>
-	</div>    
+	</div> 
+</body>   
 	<%@include file="../main/inc/bottom.jsp" %>                     

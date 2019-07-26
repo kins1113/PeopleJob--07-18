@@ -1,5 +1,7 @@
 package com.ez.peoplejob.login.controller;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -10,10 +12,14 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.ez.peoplejob.common.PaginationInfo;
+import com.ez.peoplejob.common.SearchVO;
+import com.ez.peoplejob.common.WebUtility;
 import com.ez.peoplejob.jobopening.model.JobopeningService;
 import com.ez.peoplejob.jobopening.model.JobopeningVO;
 import com.ez.peoplejob.member.model.CompanyVO;
@@ -22,6 +28,8 @@ import com.ez.peoplejob.member.model.MemberVO;
 import com.ez.peoplejob.payment.model.PaymentService;
 import com.ez.peoplejob.scrap.model.ScrapService;
 import com.ez.peoplejob.scrap.model.ScrapVO;
+import com.ez.peoplejob.tableaply.model.TableaplyService;
+import com.ez.peoplejob.tableaply.model.TableaplyVO;
 import com.fasterxml.jackson.databind.JsonNode;
 
 @Controller
@@ -32,13 +40,14 @@ private Logger logger=LoggerFactory.getLogger(LoginController.class);
 	@Autowired private PaymentService paymentService;
 	@Autowired private ScrapService scrapService;
 	@Autowired private JobopeningService jobService;
+	@Autowired private TableaplyService applyService;
 	
 	private kakao_restapi kakao_restapi = new kakao_restapi();
 	
 	
 	
 	@RequestMapping("/mypage/user/userpage.do")
-	public String mypage(HttpSession session, Model model) {
+	public String mypage(HttpSession session, Model model, @ModelAttribute SearchVO searchVo) {
 		String memberid=(String)session.getAttribute("memberid");
 		MemberVO memberVo=memberService.selectByUserid(memberid);
 		logger.info("마이페이지 화면 보!!여!!주!!기!! memberVo={}",memberVo);
@@ -51,7 +60,49 @@ private Logger logger=LoggerFactory.getLogger(LoginController.class);
 		List<JobopeningVO> joblist=jobService.selectJobopeningBycomcode(memberVo.getCompanyCode());
 		logger.info("채용공고 리스트 joblist.size={}",joblist.size());
 		
-		
+		//개인회원 지원현황
+		/*
+		//1]PaginationInfo 객체 생성
+				PaginationInfo pagingInfo=new PaginationInfo();
+				pagingInfo.setBlockSize(WebUtility.BLOCK_SIZE);
+				pagingInfo.setRecordCountPerPage(WebUtility.RECORD_COUNT_PER_PAGE);
+				pagingInfo.setCurrentPage(searchVo.getCurrentPage());
+				
+				//2]SearchVo에 페이징 관련 변수 세팅
+				searchVo.setRecordCountPerPage(WebUtility.RECORD_COUNT_PER_PAGE);
+				searchVo.setFirstRecordIndex(pagingInfo.getFirstRecordIndex());
+				logger.info("셋팅 후 serchVo={}",searchVo);
+				
+				Map<String, Object> map = new HashMap<String, Object>();
+				logger.info("searchVo.getFirstRecordIndex()={},getRecordCountPerPage={}",searchVo.getFirstRecordIndex(),searchVo.getRecordCountPerPage());
+				map.put("firstRecordIndex", searchVo.getFirstRecordIndex());
+				map.put("recordCountPerPage", searchVo.getRecordCountPerPage());
+				map.put("memberCode",memberVo.getMemberCode());
+				logger.info("map={}",map);
+				List<TableaplyVO> userapplylist=applyService.selectapply(map);
+				logger.info("개인회원 지원현황 조회결과{}",list);
+				int totalRecord=0;
+				totalRecord=applyService.selectapplyCount(map);
+				logger.info("전체 레코드 개수 조회 결과, totalRecord={}",totalRecord);
+				
+				List<JobopeningVO> list4=new ArrayList<JobopeningVO>() ;
+				List<CompanyVO> list5=new ArrayList<CompanyVO>() ;
+				int jobopening[]=new int[list.size()];
+				int company[]=new int[list.size()];
+				for(int i=0;i<list.size();i++) {
+					jobopening[i]=list.get(i).getJobopening();
+					list4.add(jobService.selectJobOpenByNo(jobopening[i]));
+					company[i]=list4.get(i).getCompanyCode();
+					list5.add(jobService.selectcompany(company[i]));
+				}
+				
+				//5]PaginationInfo에 totalRecord값셋팅
+				pagingInfo.setTotalRecord(totalRecord);
+				//3
+				model.addAttribute("pagingInfo", pagingInfo);
+				model.addAttribute("userapplylist",userapplylist);
+				
+		*/
 		model.addAttribute("memberVo",memberVo);
 		model.addAttribute("list",list);
 		model.addAttribute("scraplist",scraplist);

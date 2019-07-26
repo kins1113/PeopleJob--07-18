@@ -123,7 +123,7 @@ $(function() {
 									</div>
 									<div class="form-group">
 									<div class="row">
-										<span id="availableId" style="color: gray;">예) 19950812</span>
+										<span id="availableId" style="color: gray; margin-left: 14px; margin-top: -10px;">예) 19950812</span>
 									</div>
 									</div>
 									<div class="form-group">

@@ -195,11 +195,11 @@ function company(){
 				<div class="main-nav"> 
 					<!-- Menu desktop -->
 					<nav class="menu-desktop">
-						<a class="logo-stick" href="<c:url value='/main/mainindex.do'/>">
+						<a class="logo-stick" href="<c:url value='/main/mainindex.do'/>" style="display: none;">
 							<img src="<c:url value='/resources/main/images/peoplejob_logo.JPG'/>" alt="LOGO">
 						</a>
 
-						<ul class="main-menu" style="width: 1274px; margin-left: -98px;">
+						<ul class="main-menu" style="width: 1274px; margin-left: -115px;margin-right: -65px;">
 							<li class="mega-menu-item">
 								<a href="<c:url value='/company/jobopening_list.do'/>">채용정보</a>
 								<ul class="sub-menu" style="left:-60px;">

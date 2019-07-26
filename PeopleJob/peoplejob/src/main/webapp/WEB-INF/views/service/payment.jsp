@@ -85,8 +85,8 @@ padding: 5px;
 	  $('.check').click(check);
 	  
 	  
-	  $('#servicePrice').text(length*$('inpu
-	  e=content]:eq(3)').val());
+	  /* checkbox 개수 * 날짜* 1일당 가격  */
+	  $('#servicePrice').text(length*$('input[name=content]:eq(3)').val());
 	  
 	  $('button[name=pay]').click(function(){
 		  $('#Info').hide();
@@ -368,7 +368,6 @@ padding: 5px;
 	</table>
 	<br>
 	
-	   
 	<span style="font-size: 1.5em;">견적서</span>
 		<table class="table table-bordered" style="margin-top: 15px; " id="priceList">
 		<thead>

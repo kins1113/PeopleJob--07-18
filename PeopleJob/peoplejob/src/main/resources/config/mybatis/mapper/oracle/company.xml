@@ -278,7 +278,7 @@
 	 on j.COMPANY_CODE = c.COMPANY_CODE
 	 order by dbms_random.value
 	 )
-	 <![CDATA[where rownum<6 and end_date>sysdate ]]>
+	 <![CDATA[where rownum<=6 and end_date>sysdate ]]>
 	</select>
 	
 	

@@ -16,8 +16,6 @@
 	select 
 	service_code, servicename,serviceprice,servicecontent,serviceday 
 	from service 
-	order by service_code desc
-	
 	</select>
 	
 	<delete id="deleteService" parameterType="int">

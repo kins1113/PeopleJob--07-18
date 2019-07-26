@@ -16,6 +16,7 @@ import com.ez.peoplejob.jobopening.model.JobopeningService;
 import com.ez.peoplejob.member.model.MemberService;
 import com.ez.peoplejob.member.model.MemberVO;
 import com.ez.peoplejob.payment.model.PaymentService;
+import com.ez.peoplejob.tableaply.model.TableaplyService;
 
 @Controller
 public class MainController {
