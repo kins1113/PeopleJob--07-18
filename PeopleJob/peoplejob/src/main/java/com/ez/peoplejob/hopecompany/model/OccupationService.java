@@ -10,4 +10,7 @@ public interface OccupationService {
 	List<ThirdOccupationVO> selectThird(int secondCode);
 	List<LocationVO> selectLocation();
 	List<Map<String, Object>> selectLocation2(int sidoCode);
+	List<Map<String, Object>> selectBtype1();
+	List<Map<String, Object>> selectBtype2(int btypeCode1);
+	List<Map<String, Object>> selectBtype3(int btypeCode2);
 }

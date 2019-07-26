@@ -6,7 +6,7 @@ public class PaymentVO {
 	private int paymentCode;	// 결제 코드
 	private String paymentway;   // 결제수단
 	private String progress;     // 진행상황
-	private int discount;     // 할인금액
+	private int period;     // 할인금액
 	private Timestamp paydate;    // 결제일
 	private Timestamp payendDate;  // 종료일
 	private int serviceCode;   //서비스 코드
@@ -14,6 +14,7 @@ public class PaymentVO {
 	
 	//추가
 	private int jobopening;  //채용공고 코드
+	private String paystartDate;
 	
 	public int getPaymentCode() {
 		return paymentCode;
@@ -33,11 +34,19 @@ public class PaymentVO {
 	public void setProgress(String progress) {
 		this.progress = progress;
 	}
-	public int getDiscount() {
-		return discount;
+	
+	
+	public int getPeriod() {
+		return period;
 	}
-	public void setDiscount(int discount) {
-		this.discount = discount;
+	public void setPeriod(int period) {
+		this.period = period;
+	}
+	public String getPaystartDate() {
+		return paystartDate;
+	}
+	public void setPaystartDate(String paystartDate) {
+		this.paystartDate = paystartDate;
 	}
 	public Timestamp getPaydate() {
 		return paydate;
@@ -74,9 +83,11 @@ public class PaymentVO {
 	@Override
 	public String toString() {
 		return "PaymentVO [paymentCode=" + paymentCode + ", paymentway=" + paymentway + ", progress=" + progress
-				+ ", discount=" + discount + ", paydate=" + paydate + ", payendDate=" + payendDate + ", serviceCode="
-				+ serviceCode + ", memberCode=" + memberCode + ", jobopening=" + jobopening + "]";
+				+ ", period=" + period + ", paydate=" + paydate + ", payendDate=" + payendDate + ", serviceCode="
+				+ serviceCode + ", memberCode=" + memberCode + ", jobopening=" + jobopening + ", paystartDate="
+				+ paystartDate + "]";
 	}
+	
 	
 	
 	

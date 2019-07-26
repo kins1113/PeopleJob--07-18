@@ -230,6 +230,7 @@
                         <option value="4~6년">4~6년</option>
                         <option value="7~9년">7~9년</option>
                     </select>
+
                 </div>
             </div>
             <div class="form-group">
@@ -254,7 +255,11 @@
             <div class="form-group">
                 <div  >
                     <label  >접수방법</label> 
-                    <input id="receiveway" name="receiveway" class="form-control" type="text" />
+                    <select id="receiveway" name="receiveway">
+                        <option value="즉시지원">즉시지원</option>
+                        <option value="이메일지원">이메일지원</option>
+                        <option value="홈페이지지원">홈페이지지원</option>
+                    </select>
                 </div>
             </div>
             <div class="form-group">
@@ -283,9 +288,9 @@
             </div>
             <div class="form-group">
                 <div  >
-                    <label  >활성화여부</label> 
-                    <input id="adminagree" name="adminagree"  type="radio" value="Y" checked/>Y
-                    <input id="adminagree" name="adminagree"  type="radio" value="N"/>N 
+                    <label  >활성화여부(회원들에게 보여줄지 말지를 결정)</label> 
+                    <input id="adminagree" name="adminagree"  type="radio" value="Y" checked/>활성화
+                    <input id="adminagree" name="adminagree"  type="radio" value="N"/>비활성화
                 </div>
             </div>
             <div class="form-group">

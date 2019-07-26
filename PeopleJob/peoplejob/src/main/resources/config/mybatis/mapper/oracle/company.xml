@@ -281,9 +281,7 @@
 	 <![CDATA[where rownum<6 and end_date>sysdate ]]>
 	</select>
 	
-	<select id="selectAll">
-		select * from jobopening
-	</select>
+	
 </mapper>
 
 

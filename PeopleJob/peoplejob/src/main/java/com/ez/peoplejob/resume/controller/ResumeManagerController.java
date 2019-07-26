@@ -17,4 +17,10 @@ public class ResumeManagerController {
 		
 		return "manager/resume/resumeList";
 	}
+	
+	@RequestMapping("/resumeAdd.do")
+	public String resumeAdd_get() {
+		logger.info("이력서 추가 화면 보여주기");
+		return "manager/resume/resumeAdd";
+	}
 }

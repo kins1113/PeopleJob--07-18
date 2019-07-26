@@ -15,7 +15,7 @@
 </script>
     <script type="text/javascript">
     $(document).ready(function($){
-		$('#workdate1').datepicker({
+		$('.workdate1').datepicker({
 			dateFormat:"yy-mm-dd",
 			changeYear:true,
 			dayNamesMin:["일","월","화","수","목","금","토"],
@@ -33,7 +33,7 @@
     </script>
 </head>
 <body>
-        <input id="${param.id }" name="${param.name}" class="form-control" type="text" readonly/>
+        <input id="${param.id }" name="${param.name}" class="form-control workdate1" type="text" readonly style="font-size: 1.1em;"/>
 </body>
 </html>
     

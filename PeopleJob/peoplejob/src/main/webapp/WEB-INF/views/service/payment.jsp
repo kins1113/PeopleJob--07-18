@@ -1,8 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     <%@include file="../main/inc/top.jsp" %>
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.8.18/themes/base/jquery-ui.css" type="text/css" />  
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
 <link rel="stylesheet" type="text/css" href="<c:url value='/resources/main/css/payment.css'/>" />
+
 <style type="text/css">
 table.table.table-bordered {
     font-size: 1.5em;
@@ -24,23 +26,90 @@ padding: 5px;
   <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" ></script>
   <!-- iamport.payment.js -->
   <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
+  
   <script type="text/javascript">
   $(function(){
 	  
+	 
+	  //div service에 색 추가
+	  var $addClass;
+	  $("div[name=divcolor]").addClass(function(index, currentClass){
+		  console.log(index);
+		  console.log(currentClass);
+		 
+		  if(index==0){
+			  $addClass="p-red";
+			  
+		  }else if(index==1){
+			  $addClass="p-green";
+		  }else if(index==2){
+			  $addClass="p-blue";
+		  }else if(index==3){
+			  $addClass="p-violet";
+		  }
+		  
+		  return $addClass;
+	  });
+	  
+	  
+			
+		
+	  $('#cardBoduPostList').hide();
+	
+
+	 $("select[name=selectPrice]").change(function(){
+			var str="";
+		 $("#selectPeriod option:selected").each(function(){
+			str=$(this).text();			
+		 });
+			
+			 
+			 //$("#servicePrice").html("${serviceVo1.servicePrice}");
+		 
+	 	});
+	 
+	 
 	  $('#hideList').click(function(){
 			$('#cardBoduPostList').hide();
+			$("#selectPeriod").val("2일").prop("selected", true);
+			 $("#serviceTerm").html("0일");
+			 $("#servicePrice").html("0원");
 	  });
 	  
 	  function check(){
 		var length=  $('.check:checked').length;
-		$('#chklength').text(length);
+		$('#chklength').text(length+"개");
 	  }
 	  check();
 	  
 	  $('.check').click(check);
 	  
-		  
+	  
+	  $('#servicePrice').text(length*$('inpu
+	  e=content]:eq(3)').val());
+	  
 	  $('button[name=pay]').click(function(){
+		  $('#Info').hide();
+		  var length=  $('.check:checked').length;
+		
+		  if($(this).attr("title")==1){
+			  $('#serviceName').text("vvip채용관");
+			  $('#serviceContent').text($('input[name=content]:eq(3)').val());
+			 
+			  
+		  }else if($(this).attr("title")==2){
+			  $('#serviceName').text("vip채용관");
+			  $('#serviceContent').text($('input[name=content]:eq(2)').val());
+		  }else if($(this).attr("title")==3){
+			  $('#serviceName').text("Premium 채용관");
+			  $('#serviceContent').text($('input[name=content]:eq(1)').val());
+		  }else if($(this).attr("title")==4){
+			  $('#serviceName').text("Grand 채용관");
+			  $('#serviceContent').text($('input[name=content]:eq(0)').val());
+		  }
+		
+		  
+		 
 		  $('input[type=checkbox]:checked').each(function(){
 				  $(this).prop("checked",false);
 		  });
@@ -48,8 +117,11 @@ padding: 5px;
 		  
 		  
 		  $('#cardBoduPostList').hide();
+		  $("#selectPeriod").val("2일").prop("selected", true);
+		  $("#serviceTerm").html("0일");
+		  $("#servicePrice").html("0원");
 		  
-		  if(${sessionScope.memberid==null}){   
+		  if(${sessionScope.memberid==null}){     
 			  alert('로그인을 해주세요');
 			  location.href="<c:url value='/login/login.do'/>";
 		  }else{ //로그인을 했을 때  
@@ -59,10 +131,13 @@ padding: 5px;
 					   
 				  }else if(${sessionScope.author_code==1}){
 				 	 alert('기업회원만 이용가능한 상품입니다.');
-				  }     
+				  }      
 			  }else if(${sessionScope.author_code==3 && fn:length(list)>=1}){ //승인받은 기업회원 일 때 
-				  $('#cardBoduPostList').hide();
+				$('#cardBoduPostList').hide();
 			  	$('#cardBoduPostList').show();
+			  	$("#selectPeriod").val("2일").prop("selected", true);
+			  	$("#servicePrice").html("0원");
+			  	$("#chklength").html("0개");
 			  
 			  }else if(${sessionScope.author_code==3 && fn:length(list)<1}){   
 				  alert('등록된 채용공고가 없습니다. 채용공고를 먼저 등록해주세요');
@@ -70,7 +145,7 @@ padding: 5px;
 			  }
 		  }//로그인해서 아이디 있을 때
 		  
-		 
+		  
 	  });//pay1
   
  
@@ -165,9 +240,10 @@ padding: 5px;
 
 			if($(this).is(":checked")){
 				$(".check").prop("checked","checked");
-				
+				$('#chklength').text(${fn:length(list)}+"개");
 			}else{
 				$(".check").prop("checked",false);  
+				$('#chklength').text("0개");
 			}
 	});
 	  
@@ -183,7 +259,7 @@ padding: 5px;
 </script> 
 <div class="container" style="margin-top: 30px; margin-bottom: 30px;min-height: 629px; ">
 
-<div class="info" style="font-size: 1.7em;
+<div class="" style="font-size: 1.7em;
     margin-top: 10px;
     margin-bottom: -25px;">
 	PEOPLEJOB 첫 페이지 메인 상단에 노출되는 로고/배너 광고 상품입니다.<br>
@@ -191,97 +267,36 @@ padding: 5px;
 	* 결제취소는 결제일로부터 하루동안만 가능합니다.
 </div>
     <div class="row" style="    margin-top: 50px;">
+    
+    <c:forEach var="serviceVo" items="${serviceList}">
         <div class="col-12 col-md-6 col-lg-3">
-            <div class="card text-center p-table p-red">
+            <div class="card text-center p-table" id="divcolor" name="divcolor">
+          <%--   <span id="serviceCode">${serviceVo.serviceCode }</span> --%>
+            <input type="Text" id="serviceCode1" name="serviceCode1" value="${serviceVo.serviceCode }">
                 <div class="card-header">
-                    <h3 class="p-name p-name">VVIP</h3>
-                    <h4 class="p-price">1,000,000원 </h4>
-                    <small class="text-muted">매월</small>
+                    <h3 class="p-name p-name">${serviceVo.serviceName }</h3>
+                    <h4 class="p-price">${serviceVo.servicePrice }원</h4>
+                    <small class="text-muted">1일당 가격</small>
+                    <input type="text" name="content" value="">
                 </div>
                 <div class="card-body">
 
                     <ul class="list-unstyled"> 
-                        <li>메인 채용정보 VVIP</li>
-                        <li>노출위치 : VVIP채용관</li>
+                        <li>메인 채용정보 ${serviceVo.serviceName }</li>
+                        <li>노출위치 :  ${serviceVo.serviceName }</li>
                         <li>부가서비스 : 채용관 상단고정</li>
-                        <li>PC웹: VVIP채용관</li>
-                        <li>모바일 : 모바일 홈 VVIP</li>
+                        <li>PC웹:  ${serviceVo.serviceContent }</li>
+                        <li>모바일 :  ${serviceVo.serviceName }</li>
                         <li>매월1일</li>
                     </ul>
-                    <button type="button" class="btn btn-lg btn-primary" id="pay" title="vvip" name="pay">신청하기</button>
+                    <button type="button" class="btn btn-lg btn-primary" id="pay" title="${serviceVo.serviceCode }" name="pay">신청하기</button>
                 </div>
             </div>
         </div>
-
-        <div class="col-12 col-md-6 col-lg-3">
-            <div class="card text-center p-table p-green">
-                <div class="card-header">
-                    <h3 class="p-name p-name">VIP</h3>
-                    <h4 class="p-price">700,000원 </h4>
-                    <small class="text-muted">매월</small> 
-                </div>
-                <div class="card-body">
-
-                    <ul class="list-unstyled">
-                        <li>메인 채용정보 VVIP</li>
-                        <li>노출위치 : VVIP채용관</li>
-                        <li>부가서비스 : 채용관 상단고정</li>
-                        <li>PC웹: VVIP채용관</li>
-                        <li>모바일 : 모바일 홈 VVIP</li>
-                        <li>매월1일</li>
-                    </ul>
-                    <button type="button" class="btn btn-lg btn-primary" id="pay" title="vip" name="pay">신청하기</button>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-12 col-md-6 col-lg-3">
-            <div class="card text-center p-table p-blue">
-                <div class="card-header">
-                     <h3 class="p-name p-name">Premium</h3>
-                    <h4 class="p-price">500,000원 </h4>
-                    <small class="text-muted">매월</small>
-                </div>
-                <div class="card-body">
-
-                   <ul class="list-unstyled">
-                        <li>메인 채용정보 VVIP</li>
-                        <li>노출위치 : VVIP채용관</li>
-                        <li>부가서비스 : 채용관 상단고정</li>
-                        <li>PC웹: VVIP채용관</li>
-                        <li>모바일 : 모바일 홈 VVIP</li>
-                        <li>매월1일</li>
-                    </ul>
-                    <button type="button" class="btn btn-lg btn-primary" id="pay" title="premium" name="pay">신청하기</button>
-                </div>
-            </div>
-        </div> 
-
-        <div class="col-12 col-md-6 col-lg-3">
-            <div class="card text-center p-table p-violet">
-                <div class="card-header">
-                     <h3 class="p-name p-name">Grand</h3>
-                    <h4 class="p-price">300,000원 </h4>
-                    <small class="text-muted">매월</small>
-                </div>
-                <div class="card-body">
-
-                   <ul class="list-unstyled">
-                        <li>메인 채용정보 VVIP</li>
-                        <li>노출위치 : VVIP채용관</li>
-                        <li>부가서비스 : 채용관 상단고정</li>
-                        <li>PC웹: VVIP채용관</li>
-                        <li>모바일 : 모바일 홈 VVIP</li>
-                        <li>매월1일</li>
-                    </ul>
-                    <button type="button" class="btn btn-lg btn-primary" id="pay" title="grand" name="pay">신청하기</button>
-                </div>
-            </div>
-        </div>
+	</c:forEach>
+	
+        <!-- 신청하기 버튼 누르면  -->
         
-        <!-- 결제하기 버튼 누르면  -->
-        <button value="▼" id="showList" style="display: none;"></button>
-        <button value="▲"></button>
         <div class="card-body" id="cardBoduPostList" style="min-height: 300px; display: none; background-color: #ffffff; "> 
         <span id="hideList" style="cursor: pointer;font-size:1.5em;" >채용공고 리스트 목록 닫기 ▲</span>
 	<table class="table table-bordered" style="margin-top: 15px; ">
@@ -291,6 +306,8 @@ padding: 5px;
 				<th scope="col">번호</th>
 				<th scope="col">채용공고 제목</th>
 				<th scope="col">채용기간</th>
+				<th scope="col">시작날짜</th>
+				<th scope="col">사용기간</th>
 				
 			</tr>
 		</thead>
@@ -304,8 +321,17 @@ padding: 5px;
 			<c:set var="idx" value="0"/>
 			<c:set var="no" value="1"/>
 				
+				<br>
+			
+		 <c:forEach var="serviceVo" items="${serviceList }">
+        	<span style="font-size:1.5em;margin-top: 10px;" id="Info">
+					 <span name="${serviceVo.serviceName }" style="display: none;">**${serviceVo.serviceName }은 1일당</span>
+					<span name="${serviceVo.serviceName }" style="display: none;" id="paymentPrice">${serviceVo.servicePrice }원입니다.</span>  <br>
+			</span> 
+        </c:forEach>
+				
 				<c:forEach var="jobopeningVo" items="${list }">
-				<form id="frmList" method="post" name="frmList">
+				<form id="frmList" method="post" name="frmList"> 
 				
 						<input type="hidden" value="${memberVo.memberCode }" name="memberCode">
 						<input type="hidden" value="${serviceVo1.serviceCode }" name="serviceCode">
@@ -319,7 +345,19 @@ padding: 5px;
 						<td align="center">
 						${fn:substring(jobopeningVo.workdate,0,10) }
 						 ~ 	${fn:substring(jobopeningVo.endDate,0,10) } </td>  
+						<td align="center">
+						 <c:import url="../inc/date.jsp"/> 
+						<%--  <c:param name="paystartDate" value=""></c:param> --%>
 						
+						 <input type="text" name="paystartDate" id="paystartDate">
+						</td>
+						<td align="center">
+							<select name="selectPeriod" style="" id="selectPeriod">
+								<c:forEach var="i" begin="2" end="30">
+									<option value="${i }">${i}일 </option> 
+								</c:forEach>
+						</select>
+						</td>
  					</tr> 
 				  <c:set var="idx" value="${idx+1 }"/> 
 				  <c:set var="no" value="${no+1 }"/> 
@@ -328,6 +366,30 @@ padding: 5px;
 			<!-- 반복 끝 -->
 		</tbody>
 	</table>
+	<br>
+	
+	   
+	<span style="font-size: 1.5em;">견적서</span>
+		<table class="table table-bordered" style="margin-top: 15px; " id="priceList">
+		<thead>
+			<tr> 
+				<th scope="col">서비스명</th>
+				<th scope="col">결제할 채용공고 개수</th>
+				<th scope="col">세부내용</th>
+				<th scope="col">결제금액</th>
+			</tr>
+		</thead>
+		<tbody>
+		
+			<tr>
+				<td id="serviceName"></td>
+				<td id="chklength">0개</td>
+				<td id="serviceContent"></td>
+				<td id="servicePrice" name="servicePrice" style="color: orangered;">0 원</td>
+			</tr>
+		</tbody>
+		</table>
+		
 	<!-- checkbox 확인 : <span id="multiPrint"></span><br> -->
 	<!-- <span>checkbox 개수: <span id="chklength"></span></span> <br> -->
 	

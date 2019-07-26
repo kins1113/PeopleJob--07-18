@@ -13,6 +13,12 @@ public class TableaplyVO extends SearchVO{
 	private int memberCode;
 	private int jobopening;
 	private int resumeCode;
+
+	
+	
+	
+	
+
 	public int getApplyCode() {
 		return applyCode;
 	}
@@ -55,15 +61,18 @@ public class TableaplyVO extends SearchVO{
 	public void setJobopening(int jobopening) {
 		this.jobopening = jobopening;
 	}
+
 	public int getResumeCode() {
 		return resumeCode;
 	}
 	public void setResumeCode(int resumeCode) {
 		this.resumeCode = resumeCode;
 	}
+
 	@Override
 	public String toString() {
 		return "TableaplyVO [applyCode=" + applyCode + ", applydate=" + applydate + ", applylist=" + applylist
+
 				+ ", applycondition=" + applycondition + ", opencheck=" + opencheck + ", memberCode=" + memberCode
 				+ ", jobopening=" + jobopening + ", resumeCode=" + resumeCode + "]";
 	}

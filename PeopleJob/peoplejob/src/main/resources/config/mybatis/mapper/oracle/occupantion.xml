@@ -18,18 +18,31 @@
 	</select>
 
 	<select id="selectLocation" resultType="LocationVO">
-		select sido, gugun from 
+		select sido, local_code2 from 
 		(
-			select local_code, sido, trunc(gugun/1000) as gugun from location
+			select local_code, sido, trunc(local_code2/1000) as local_code2 from location
 		)
-		group by sido, gugun
-		order by gugun
+		group by sido, local_code2
+		order by local_code2
 	</select>
 	
 	<select id="selectLocation2" parameterType="int" resultType="map">
 		select * from location2 
 		<![CDATA[where local_code2>=#{code}*1000 and local_code2<(#{code}+1)*1000]]>
 	</select>
+	<select id="selectBtype1" resultType="map">
+		select * from btype1
+	</select>
+	
+	<select id="selectBtype2" resultType="map" parameterType="int">
+		select * from btype2
+		where btype_code1=#{code}
+	</select>	
+
+	<select id="selectBtype3" resultType="map" parameterType="int">
+		select * from btype3
+		where btype_code2=#{code}
+	</select>		
 </mapper>
 
 

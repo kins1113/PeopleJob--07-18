@@ -202,7 +202,7 @@ function company(){
 						<ul class="main-menu" style="width: 1274px; margin-left: -98px;">
 							<li class="mega-menu-item">
 								<a href="<c:url value='/company/jobopening_list.do'/>">채용정보</a>
-								<ul class="sub-menu">
+								<ul class="sub-menu" style="left:-60px;">
 									<li><a href="<c:url value='/company/jobopening_list.do'/>">공채정보</a></li>
 									<li><a href="<c:url value='/company/jobopening_list.do'/>">직종별</a></li>
 									<li><a href="<c:url value='/company/jobopening_list.do'/>">지역별</a></li>

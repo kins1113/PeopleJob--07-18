@@ -62,30 +62,6 @@ public class PaymentController {
 		
 		return "service/payment";
 		
-		/*
-		List<JobopeningVO> list=jobService.selectJobopeningBycomcode(memberVo.getCompanyCode());
-		logger.info("company_code로 조회한 채용공고 list.size={}",list.size());
-		
-		if(list.size()<1) {
-			model.addAttribute("msg","등록된 채용공고가 없습니다.");
-			model.addAttribute("url","/service/payment.do");
-			
-			return "common/message";
-		}else {
-			PaymentVO paymentVo=new PaymentVO();
-			paymentVo.setMemberCode(memberVo.getMemberCode());
-			paymentVo.setPaymentway("카드");
-			paymentVo.setProgress("결제완료");
-			paymentVo.setJobopening(jobopening);
-			
-			//int cnt=paymentService.insertPayService1(paymentVo);
-			int cnt=0;
-			logger.info("결제완료 cnt={}",cnt);
-			
-			return "redirect:/mypage/user/userpage.do";
-		}
-		*/
-		
 		
 	}
 	
@@ -108,8 +84,13 @@ public class PaymentController {
 			logger.info("company_code로 조회한 채용공고 list.size={}",list.size());
 			ServiceVO serviceVo1=serviceService.selectServiceByCode(1);
 			logger.info("serviceCode로 service={}",serviceVo1+"\n");
+			List<ServiceVO> serviceList=serviceService.selectAll();
+			logger.info("serviceList.size={}",serviceList.size());
+			
 			
 			model.addAttribute("serviceVo1",serviceVo1);
+			
+			model.addAttribute("serviceList",serviceList);
 			model.addAttribute("memberVo",memberVo);
 			model.addAttribute("companyVo",companyVo);
 			model.addAttribute("list",list);

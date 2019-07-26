@@ -176,8 +176,8 @@ div#cardBoduPostList {
 	<table class="table table-bordered">
 		<thead>
 			<tr> 
-				<th scope="col">번호</th>
-				<th scope="col">상품명</th>
+				<!-- <th scope="col">번호</th> -->
+				<th scope="col">상품명</th> 
 				<th scope="col">구매자 이름</th>
 				<th scope="col">할부 기간</th>
 				<th scope="col">결제 수단</th>
