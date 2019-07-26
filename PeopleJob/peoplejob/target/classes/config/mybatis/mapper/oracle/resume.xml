@@ -58,7 +58,7 @@
 			select resume_seq.nextval from dual
 		</selectKey>
 		insert into resume
-		values(#{resumeCode},#{resumeTitle},sysdate,#{introduce},#{award},#{langlicenceCode},106,#{dvCode},101,#{desiredWorkCode},#{opencheck},#{memberCode},#{picture})
+		values(#{resumeCode},#{resumeTitle},sysdate,#{introduce},#{award},#{langlicenceCode},#{licenceCode},#{dvCode},#{academicCode},#{desiredWorkCode},#{opencheck},#{memberCode},#{picture})
 	</insert>
 	
 	<insert id="insertLangcertification" parameterType="resumeVo">
@@ -90,8 +90,7 @@
 		select education_seq.nextval from dual
 		</selectKey>
 		insert into education
-		select #{academicCode},#{schoolname},#{major},#{degree},#{graduatecheck},#{schoollocal},#{graduatetype},#{graduate2},#{graduate} from education
-		where graduatetype=#{graduatetype} 
+		values( #{academicCode},#{schoolname},#{major},#{degree},#{graduatecheck},#{schoollocal},#{graduatetype},#{graduate2},#{graduate}) 
 	</insert>
 	
 	<insert id="insertHopeWorking" parameterType="resumeVo">
@@ -99,21 +98,20 @@
 		select hope_working_seq.nextval from dual
 		</selectKey>
 		insert into hope_working
-		select #{hopeworkCode},#{hopeworkdate},#{hopepay},#{hopeworkform},#{localCode},#{btypeCode3},#{thirdCode} from hope_working
-		where  hopeworkform=#{hopeworkform} 
+		values (#{hopeworkCode},#{hopeworkdate},#{hopepay},#{hopeworkform},#{localCode},#{btypeCode3},#{thirdCode})
 		
 	</insert>
 	
 	
 	
 	
-	<insert id="insertBtype1" parameterType="resumeVo">
+	<!-- <insert id="insertBtype1" parameterType="resumeVo">
 		<selectKey order="BEFORE" keyProperty="btypeCode1" resultType="int">
 		select btype1_seq.nextval from dual
 		</selectKey>
 		insert into btype1
 		select #{btypeCode1},#{btypename1} from btype1
-		where btypename1=#{btypename1} and btype_code1=#{btypeCode1}
+		where  btype_code1=#{btypeCode1}
 		
 	</insert>
 	
@@ -123,7 +121,7 @@
 		</selectKey>
 		insert into btype2
 		select #{btypeCode2},#{btypename2},#{btypeCode1} from btype2
-		where btypename2=#{btypename2} and btype_code2=#{btypeCode2}
+		where btype_code2=#{btypeCode2}
 		
 	</insert>
 	
@@ -133,7 +131,7 @@
 		</selectKey>
 		insert into btype3
 		select #{btypeCode3},#{btypename3},#{btypeCode2} from btype3
-		where btypename3=#{btypename3} and btype_code3=#{btypeCode3}
+		where  btype_code3=#{btypeCode3}
 		
 	</insert>
 	
@@ -142,8 +140,8 @@
 		select location_seq.nextval from dual
 		</selectKey>
 		insert into location
-		select #{localCode},#{sido},#{localCode2} from location
-		where sido=#{sido} and local_code=#{localCode}
+		select localCode,sido,localCode2 from location
+		where  local_code=#{localCode}
 		
 	</insert>
 	<insert id="insertLocation2" parameterType="resumeVo">
@@ -151,8 +149,8 @@
 		select location2_seq.nextval from dual
 		</selectKey>
 		insert into location2
-		select #{localCode2},#{gugun} from location2
-		where gugun=#{gugun} and local_code2=#{localCode2}
+		select localCode2,gugun from location2
+		where  local_code2=#{localCode2}
 		
 	</insert>
 	
@@ -162,7 +160,7 @@
 		</selectKey>
 		insert into third
 		select #{thirdCode},#{thirdname},#{secondCode} from third
-		where thirdname=#{thirdname} and third_code=#{thirdCode}
+		where  third_code=#{thirdCode}
 		
 	</insert> 
 	<insert id="insertSecond" parameterType="resumeVo">
@@ -171,7 +169,7 @@
 		</selectKey>
 		insert into second
 		select #{secondCode},#{secondname},#{firstCode} from second
-		where secondname=#{secondname} and second_code=#{secondCode}
+		where  second_code=#{secondCode}
 		
 	</insert> 
 	<insert id="insertFirst" parameterType="resumeVo">
@@ -181,9 +179,9 @@
 		
 		insert into first
 		select #{firstCode},#{firstname} from first
-		where firstname=#{firstname} and first_code=#{firstCode}
+		where  first_code=#{firstCode}
 		
-	</insert> 
+	</insert>  -->
 	<select id="selectSearch" parameterType="searchVo" resultType="resumeVo">
 		select *
 		from
@@ -217,7 +215,7 @@
 	
 	<update id="updateResume" parameterType="resumeVo">
 	update resume
-	set resume_code=#{resumeCode},resumetitle=#{resumetitle},introduce=#{introduce},award=#{award},langlicence_code=#{langlicenceCode},licence_code=#{licenceCode},dv_code=#{dvCode},academic_code=#{academicCode},desiredwork_code=#{desiredWorkCode},opencheck=#{opencheck},picture=#{picture}
+	set resume_code=#{resumeCode},resumetitle=#{resumeTitle},introduce=#{introduce},award=#{award},langlicence_code=#{langlicenceCode},licence_code=#{licenceCode},dv_code=#{dvCode},academic_code=#{academicCode},desiredwork_code=#{desiredWorkCode},opencheck=#{opencheck},picture=#{picture}
 	
 	where resume_code=#{resumeCode}
 	</update>

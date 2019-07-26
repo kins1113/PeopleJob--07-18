@@ -4,6 +4,7 @@
   
 		
 <script>
+$(document).ready(function (){
 $("div").data("name")==="서울";
 $("div").data("name")==="부산";
 $("div").data("name")==="경기";
@@ -56,7 +57,7 @@ $("#basic-search-location").prop("checked", false);
             alert("에러 발생~~");
         }
     });
- 
+});
 </script>
 <style type="text/css">
 .divSearch {

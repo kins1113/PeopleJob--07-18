@@ -8,8 +8,8 @@
 
 <style type="text/css">
 .divForm {
-    width: 1153px;
-    height: 110%;
+   width: 1279px;
+    height: 120%;
     margin: 0 auto;
     background: #f2f4f7;
     padding: 13px;
@@ -50,9 +50,7 @@ h3 {
 div#companycheck {
     margin-left: 900px;
 }
-input[type="submit"] {
-    margin-left: 1653px;
-}
+
 legend{
     font-weight: bold;
     font-size: 30px;
@@ -68,148 +66,168 @@ button#langcertbt{
 button#awardbt{
     margin-left: 10px;
 }
+input[type="submit"] {
+    margin-left: 1014px;
+}
 <style>
 
 </style>
 <script type="text/javascript">
-//1차 직종 가져오기 /manager/occupantion/firstList.do
-selectFirst();
-//1차 작종 클릭하면 2차직종 가져오기 
-$("#selectFirst").change(function(){
-	var firstCode=$(this).find("option:selected").val();
-	if(firstCode!=0){
-		selectSecond(firstCode);
-	}
+$(document).ready(function (){
+	
+	//1차 직종 가져오기 /manager/occupantion/firstList.do
+	selectFirst();
+	//1차 직종 클릭하면 2차직종 가져오기 
+	$("#selectFirst").change(function(){
+		var firstCode=$(this).find("option:selected").val();
+		if(firstCode!=0){
+			selectSecond(firstCode);
+		}
+	});
+	
+	//2차 직종 클릭하면 3차직종 가져오기
+	$("#selectSecond").change(function(){
+		var secondCode=$(this).find("option:selected").val();
+		if(secondCode!=0){
+			selectThird(secondCode);
+		}
+	});
+	
+	
+	//지역정보를 가져오기 - 시도
+	getLocation();
+	
+	//지역정보를 가져오는 
+	$("#locationSiDo").change(function(){
+		var sidoCode=$(this).find("option:checked").val();
+		//값을 가져오는 메서드
+		getLocation2(sidoCode);
+	});
+	
+	//1차 업종 가져오기
+	getBtype1();
+	//1차업종 change 2차 업종 가져오기
+	$("#selectBtype1").change(function(){
+		var bytpeCode1=$(this).find("option:checked").val();
+		getBtype2(bytpeCode1);
+	});
+	//2차업종 change 3차 업종 가져오기
+	$("#selectBtype2").change(function(){
+		var bytpeCode3=$(this).find("option:checked").val();
+		getBtype3(bytpeCode3);
+	});
 });
-
-//2차 직종 클릭하면 3차직종 가져오기
-$("#selectSecond").change(function(){
-	var secondCode=$(this).find("option:selected").val();
-	if(secondCode!=0){
-		selectThird(secondCode);
-	}
-});
-
-//지역정보를 가져오기 - 시도
-getLocation();
-
-//지역정보를 가져오는 
-$("#locationSiDo").change(function(){
-	var sidoCode=$(this).find("option:checked").val();
-	//값을 가져오는 메서드
-	getLocation2(sidoCode);
-});
-
 
 //1차 직종 가져오기
 function selectFirst(){
-$.ajax({
-	url:"<c:url value='/resume/occupation/firstList.do'/>",
-	type:"post",
-	success:function(res){
-			settingFirst(res);
-	},
-	error:function(xhr, status, error){
-		alert(status+":"+error);
-	}
-})
-}
-
-//1차직종 뿌리기
-//[{"firstCode":1,"firstname":"경영·사무"},{"firstCode":2,"firstname":"영업·고객상담"},{"firstCode":3,"firstname":"생산·제조"},
-//{"firstCode":4,"firstname":"IT·인터넷"},{"firstCode":5,"firstname":"전문직"},{"firstCode":6,"firstname":"교육"}
-function settingFirst(res){
-	$.each(res,function(idx,item){
-		if(idx==0){
-			var chEl=$("<option value='0'>1차 직종</option>")
-			var opEl=$("<option value='"+item.firstCode+"'></option>");
-			opEl.append(item.firstname);
-			$("#selectFirst").html(chEl);
-			$("#selectFirst").append(opEl); //최종으로 여기에 넣음
-		}else{
-			var opEl=$("<option value='"+item.firstCode+"'></option>");
-			opEl.append(item.firstname);
-			$("#selectFirst").append(opEl); //최종으로 여기에 넣음
+	$.ajax({
+		url:"<c:url value='/resume/occupation/firstList.do'/>",
+		type:"post",
+		success:function(res){
+				settingFirst(res);
+		},
+		error:function(xhr, status, error){
+			alert(status+":"+error);
 		}
 	})
 }
 
+//1차 직종 뿌리기
+//[{"firstCode":1,"firstname":"경영·사무"},{"firstCode":2,"firstname":"영업·고객상담"},{"firstCode":3,"firstname":"생산·제조"},
+//{"firstCode":4,"firstname":"IT·인터넷"},{"firstCode":5,"firstname":"전문직"},{"firstCode":6,"firstname":"교육"}
+function settingFirst(res){
+		$.each(res,function(idx,item){
+			if(idx==0){
+				var chEl=$("<option value='0'>1차 직종</option>")
+				var opEl=$("<option value='"+item.firstCode+"'></option>");
+				opEl.append(item.firstname);
+				$("#selectFirst").html(chEl);
+				$("#selectFirst").append(opEl); //최종으로 여기에 넣음
+			}else{
+				var opEl=$("<option value='"+item.firstCode+"'></option>");
+				opEl.append(item.firstname);
+				$("#selectFirst").append(opEl); //최종으로 여기에 넣음
+			}
+		})
+}
+
 //2차 직종가져오기 
 function selectSecond(firstCode){
-$.ajax({
-	url:"<c:url value='/resume/occupation/selectSecond.do'/>",
-	type:"post",
-	data:"firstCode="+firstCode,
-	success:function(res){
-		settingSecond(res);
-	},
-	error:function(xhr,status,error){
-		alert(status+":"+error);
-	}
-});
+	$.ajax({
+		url:"<c:url value='/resume/occupation/selectSecond.do'/>",
+		type:"post",
+		data:"firstCode="+firstCode,
+		success:function(res){
+			settingSecond(res);
+		},
+		error:function(xhr,status,error){
+			alert(status+":"+error);
+		}
+	});
 }
 //[{"secondCode":101,"secondname":"기획·전략·경영","firstCode":1},
-//{"secondCode":102,"secondname":"총무·법무·사무","firstCode":1},.....	]
+	//{"secondCode":102,"secondname":"총무·법무·사무","firstCode":1},.....	]
 //2차 직종 세팅하기 함수
 function settingSecond(res){
-$.each(res,function(idx,item){
-	if(idx==0){
-		//option태그 만들어서 
-		var opEl=$("<option value='"+item.secondCode+"'></option>")
-		//값을 넣고 
-		opEl.html(item.secondname);
-		//append
-		$("#selectSecond").html("<option value='0'>2차 직종</option>");
-		$("#selectSecond").append(opEl);
-	}else{
-		//option태그 만들어서 
-		var opEl=$("<option value='"+item.secondCode+"'></option>")
-		//값을 넣고 
-		opEl.append(item.secondname);
-		//append
-		$("#selectSecond").append(opEl);
-	}
-});
-var thirdEl=$("<option>3차 직종</option>");
-$("#selectThird").html(thirdEl);
+	$.each(res,function(idx,item){
+		if(idx==0){
+			//option태그 만들어서 
+			var opEl=$("<option value='"+item.secondCode+"'></option>")
+			//값을 넣고 
+			opEl.html(item.secondname);
+			//append
+			$("#selectSecond").html("<option value='0'>2차 직종</option>");
+			$("#selectSecond").append(opEl);
+		}else{
+			//option태그 만들어서 
+			var opEl=$("<option value='"+item.secondCode+"'></option>")
+			//값을 넣고 
+			opEl.append(item.secondname);
+			//append
+			$("#selectSecond").append(opEl);
+		}
+	});
+	var thirdEl=$("<option>3차 직종</option><option>먼저 2차 직종을 선택하세요</option>");
+	$("#selectThird").html(thirdEl);
 };
 
-//3차직종 가져오기 
+ //3차직종 가져오기 
 function selectThird(secondCode){
-$.ajax({
-	url:"<c:url value='/resume/occupation/selectThird.do'/>",
-	type:"post",
-	data:"secondCode="+secondCode,
-	success:function(res){
-		settingThird(res);
-	},
-	error:function(xhr,status,error){
-		alert(status+":"+error);
-	}
-});
-
+	$.ajax({
+		url:"<c:url value='/resume/occupation/selectThird.do'/>",
+		type:"post",
+		data:"secondCode="+secondCode,
+		success:function(res){
+			settingThird(res);
+		},
+		error:function(xhr,status,error){
+			alert(status+":"+error);
+		}
+	});
+	
 } 
 //3차 직종 뿌려주기 
 function settingThird(res){
-$.each(res,function(idx,item){
-	if(idx==0){
-		//option태그 만들어서 
-		var opEl=$("<option value='"+item.thirdCode+"'></option>")
-		//값을 넣고 
-		opEl.html(item.thirdname);
-		//append
-		$("#selectThird").html("<option value='0'>3차 직종</option>");
-		$("#selectThird").append(opEl);
-	}else{
-		//option태그 만들어서 
-		var opEl=$("<option value='"+item.thirdCode+"'></option>")
-		//값을 넣고 
-		opEl.append(item.thirdname);
-		//append
-		$("#selectThird").append(opEl);
-	}
-});
+	$.each(res,function(idx,item){
+		if(idx==0){
+			//option태그 만들어서 
+			var opEl=$("<option value='"+item.thirdCode+"'></option>")
+			//값을 넣고 
+			opEl.html(item.thirdname);
+			//append
+			$("#selectThird").html("<option value='0'>3차 직종</option>");
+			$("#selectThird").append(opEl);
+		}else{
+			//option태그 만들어서 
+			var opEl=$("<option value='"+item.thirdCode+"'></option>")
+			//값을 넣고 
+			opEl.append(item.thirdname);
+			//append
+			$("#selectThird").append(opEl);
+		}
+	});
 }
+
 //지역정보를 가져오는 메서드 
 function getLocation(){
 	$.ajax({
@@ -228,12 +246,12 @@ function settingLocation(res){
 	$.each(res, function(idx,item){
 		if(idx==0){
 			var chEl=$("<option value='0'>시/도</option>");
-			var opEl=$("<option value='"+item.gugun+"'></option>")
+			var opEl=$("<option value='"+item.localCode2+"'></option>")
 			opEl.html(item.sido);
 			$("#locationSiDo").html(chEl);
 			$("#locationSiDo").append(opEl);
 		}else{
-			var opEl=$("<option value='"+item.gugun+"'></option>")
+			var opEl=$("<option value='"+item.localCode2+"'></option>")
 			opEl.html(item.sido);
 			$("#locationSiDo").append(opEl);
 		}
@@ -273,6 +291,103 @@ function settingLocation2(res){
 		
 	});
 }
+
+//1차 업종가져오기
+function getBtype1(){
+	$.ajax({
+		url:"<c:url value='/resume/occupation/selectBtype1.do'/>",
+		type:"post",
+		success:function(res){
+				settingBtype1(res);
+		},
+		error:function(xhr, status, error){
+			alert(status+":"+error);
+		}
+	})
+}
+
+//1차 업종 뿌리기
+function settingBtype1(res){
+	$.each(res,function(idx,item){
+		if(idx==0){
+			var chEl=$("<option value='0'>1차 업종</option>")
+			var opEl=$("<option value='"+item["BTYPE_CODE1"]+"'></option>");
+			opEl.append(item['BTYPENAME1']);
+			$("#selectBtype1").html(chEl);
+			$("#selectBtype1").append(opEl);
+		}else{
+			var opEl=$("<option value='"+item["BTYPE_CODE1"]+"'></option>");
+			opEl.append(item['BTYPENAME1']);
+			$("#selectBtype1").append(opEl); //최종으로 여기에 넣음
+		}
+	})
+}
+//2차 업종 가져오기
+function getBtype2(btypeCode1){
+	$.ajax({
+		url:"<c:url value='/resume/occupation/selectBtype2.do'/>",
+		type:"post",
+		data:"btypeCode1="+btypeCode1,
+		success:function(res){
+				settingBtype2(res);
+		},
+		error:function(xhr, status, error){
+			alert(status+":"+error);
+		}
+	})
+}
+//2차 업종 뿌리기
+function settingBtype2(res){
+	$.each(res,function(idx,item){
+		if(idx==0){
+			var chEl=$("<option value='0'>2차 업종</option>")
+			var opEl=$("<option value='"+item["BTYPE_CODE2"]+"'></option>");
+			opEl.append(item['BTYPENAME2']);
+			$("#selectBtype2").html(chEl);
+			$("#selectBtype2").append(opEl); 
+		}else{
+			var opEl=$("<option value='"+item["BTYPE_CODE2"]+"'></option>");
+			opEl.append(item['BTYPENAME2']);
+			$("#selectBtype2").append(opEl); 
+		}
+	})
+	var chEl=$("<option value='0'>3차 업종</option><option>먼저 2차 업종을 선택하세요</option>")
+	$("#selectBtype3").html(chEl);
+}
+//2차 업종 가져오기
+function getBtype3(btypeCode2){
+	$.ajax({
+		url:"<c:url value='/resume/occupation/selectBtype3.do'/>",
+		type:"post",
+		data:"btypeCode2="+btypeCode2,
+		success:function(res){
+				settingBtype3(res);
+		},
+		error:function(xhr, status, error){
+			alert(status+":"+error);
+		}
+	})
+}
+//3차 업종 뿌리기
+function settingBtype3(res){
+	$.each(res,function(idx,item){
+		if(idx==0){
+			var chEl=$("<option value='0'>3차 업종</option>")
+			var opEl=$("<option value='"+item["BTYPE_CODE3"]+"'></option>");
+			opEl.append(item['BTYPENAME3']);
+			$("#selectBtype3").html(chEl);
+			$("#selectBtype3").append(opEl); 
+		}else{
+			var opEl=$("<option value='"+item["BTYPE_CODE3"]+"'></option>");
+			opEl.append(item['BTYPENAME3']);
+			$("#selectBtype3").append(opEl); 
+		}
+	})
+}
+
+
+
+
 $(function () {
 	$("#certificationtype").hide();
 	$("#certification").click(function () {
@@ -283,9 +398,12 @@ $(function () {
 		$("#award").toggle(500);
 	});
 	$("#hopework").hide();
+
 	$("#hopeworkbt").click(function () {
-		$("#hopework").toggle(500);
+	$("#hopework").toggle(500);
+	
 	});
+	
 	$("#langcert").hide();
 	$("#langcertbt").click(function () {
 		$("#langcert").toggle(500);
@@ -494,7 +612,8 @@ $(function () {
         
    <input class="form-control" name="certificationtype" id="certificationtype" value="자격증/면허증">
         <label for="lName">자격증명</label>
-        <input type="text" class="form-control"  name="lName" id="lName" placeholder="자격증명을 입력하세요" style="ime-mode:active">
+        licenceCode
+        <input type="text" class="form-control"  name="licenceCode" id="lName" placeholder="자격증명을 입력하세요" style="ime-mode:active">
     <div>    
         <label for="lInstitution">발행처/기관</label>
         <input type="text" class="form-control"  name="lInstitution" placeholder="발행처/기관을 입력하세요" id="lInstitution" style="ime-mode:active">
@@ -611,61 +730,57 @@ $(function () {
        
        <h3>희망근무지역</h3>
        <div>
-       
-       <label for="시도">시도</label>
-       	<select class="form-control" name="sido" id="locationSiDo" style="ime-mode:active" >
-   			<option>시도</option>
-        	
-        </select>   
-        </div>
-       	<div>
-       
-       <label for="구군">구군</label>
-       <select class="form-control" name="gugun" id="locationGugun" style="ime-mode:active" >
-       	<option>구군</option>
-       </select>
-
+       <table>
+      <tr>
+				<th>지역</th>
+								<td>
+									<select class="custom-select my-1 mr-sm-2 FST" name="localCode" id="locationSiDo">
+										<option>시/도</option>
+									</select>
+									<select class="custom-select my-1 mr-sm-2 FST" name="localCode2" id="locationGugun">
+										<option>구/군</option>
+										<option>먼저 시/도를 선택하세요</option>
+									</select>
+								</td>
+								</tr>
+					</table>
         </div>
         
         <div>
         <%-- <c:import url="btype.jsp"/> --%>
-        <label for="btypename1">업종1차</label>
-        <select name="btypename1" id="btypename1">
-        <option >업종1차</option>
-        </select>
-        </div>
-        <div>
-        <label for="btypename2">업종2차</label>
-        
-        <select name="btypename2" id="btypename2">
-        <option >업종2차</option>
-        </select>
-        </div>
-        <div>
-        <label for="btypename3">업종3차</label>
-         <select name="btypename3" id="btypename3">
-        <option >업종3차</option>
-        </select>
-        </div>
-        <div>
-        <label for="firstname">직종1차</label>
-         <select name="firstname" id="selectFirst">
-        <option >직종1차</option>
-        </select>
-     
-        </div>
-        <div>
-        <label for="secondname">직종2차</label>
-         <select name="secondname" id="selectSecond">
-        <option >직종2차</option>
-        </select>
-     	
-        </div>
-        <div>
-        <label for="thirdname">직종3차</label>
-        <select name="thirdname" id="selectThird">
-        <option >직종3차</option>
-        </select>
+        <table>
+       <tr>
+								<th>직종</th>
+								<td colspan="1">
+									<select class="custom-select my-1 FST" name="firstCode" id="selectFirst">
+										<option>1차 직종</option>
+									</select>
+									<select class="custom-select my-1 mr-sm-2 FST" name="secondCode" id="selectSecond">
+										<option>2차 직종</option>
+										<option>먼저 1차 직종을 선택하세요</option>
+									</select>
+									<select class="custom-select my-1 mr-sm-2 FST" name="thirdCode" id="selectThird">
+										<option>3차 직종</option>
+										<option>먼저 2차 직종을 선택하세요</option>
+									</select>
+								</td>
+								<th>업종</th>
+								<td colspan="2">
+									<select class="custom-select my-1 FST" name="btypeCode1" id="selectBtype1">
+										<option>1차 업종</option>
+									</select>
+									<select class="custom-select my-1 mr-sm-2 FST" name="btypeCode2" id="selectBtype2">
+										<option>2차 업종</option>
+										<option>먼저 1차 업종을 선택하세요</option>
+									</select>
+									<select class="custom-select my-1 mr-sm-2 FST" name="btypeCode3" id="selectBtype3">
+										<option>3차 업종</option>
+										<option>먼저 2차 업종을 선택하세요</option>
+									</select>
+								</td>
+							</tr>
+							</table>
+							
         </div>
         <div>
         <label for="hopeworkdate">근무일시</label>
@@ -695,10 +810,10 @@ $(function () {
    
     
     </fieldset>
+     <input class="btn btn-success" type="submit" value="이력서 저장">
     </form>
     
 </div>  
-     <input class="btn btn-success" type="submit" value="이력서 저장">
 </div> 
   
 </article>
