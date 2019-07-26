@@ -61,7 +61,6 @@ public class ResumeController {
 				
 			
 		logger.info("이력서 등록화면 보여주기 매개변수 vo={}",resumeVo);
-		
 		int cnt=resumeService.insertResume(resumeVo);
 		
 		logger.info("이력서 등록 결과 cnt ={}",cnt);

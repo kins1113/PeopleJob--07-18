@@ -20,14 +20,6 @@ public class ResumeServiceImpl implements ResumeService{
 		cnt=resumeDao.insertCertificate(vo);
 		cnt=resumeDao.insertCareer(vo);
 		cnt=resumeDao.insertEducation(vo);
-		cnt=resumeDao.insertLocation2(vo);
-		cnt=resumeDao.insertLocation(vo);
-		cnt=resumeDao.insertBtype1(vo);
-		cnt=resumeDao.insertBtype2(vo);
-		cnt=resumeDao.insertBtype3(vo);
-		cnt=resumeDao.insertFirst(vo);
-		cnt=resumeDao.insertSecond(vo);
-		cnt=resumeDao.insertThird(vo);
 		cnt=resumeDao.insertHopeWorking(vo);
 		cnt=resumeDao.insertResume(vo);
 		

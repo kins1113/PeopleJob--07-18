@@ -72,4 +72,33 @@ public class OccupantionMainController {
 		logger.info("ajax - 지역정보2 가져가기 결과 list.size={}",list.size());
 		return list;
 	}
+	@RequestMapping("/selectBtype1.do")
+	@ResponseBody
+	public List<Map<String,Object>> selectBtype1(){
+		logger.info("ajax - 1차 업종 가져가기 ");
+		
+		List<Map<String, Object>> list= occupationService.selectBtype1();
+		logger.info("ajax - 1차 업종 가져가기 결과 list.size={}",list.size());
+		return list;
+	}
+	
+	@RequestMapping("/selectBtype2.do")
+	@ResponseBody
+	public List<Map<String,Object>> selectBtype2(@RequestParam(defaultValue = "0")int btypeCode1){
+		logger.info("ajax - 2차 업종 가져가기 파라미터 btypeCode1={}",btypeCode1);
+		
+		List<Map<String, Object>> list= occupationService.selectBtype2(btypeCode1);
+		logger.info("ajax - 2차 업종 가져가기  결과 list.size={}",list.size());
+		return list;
+	}
+	
+	@RequestMapping("/selectBtype3.do")
+	@ResponseBody
+	public List<Map<String,Object>> selectBtype3(@RequestParam(defaultValue = "0")int btypeCode2){
+		logger.info("ajax - 3차 업종 가져가기  파라미터 btypeCode2={}",btypeCode2);
+		
+		List<Map<String, Object>> list= occupationService.selectBtype3(btypeCode2);
+		logger.info("ajax - 3차 업종 가져가기  결과 list.size={}",list.size());
+		return list;
+	}
 }
