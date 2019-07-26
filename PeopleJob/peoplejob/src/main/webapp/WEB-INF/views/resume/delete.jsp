@@ -15,6 +15,18 @@
 		
 	});
 </script>
+<style>
+form {
+    margin-left: 700px;
+    margin-top: 300px;
+    border: 1px solid gray;
+    padding: 30px;
+    width: 500px;
+}
+.divForm {
+    min-height: 630px;
+}
+</style>
 </head>
 <body>
 <div class="divForm">
@@ -30,8 +42,8 @@
 	        </div>
 	        
 	        <div class="center">
-	            <input type ="submit"  value="삭제" />
-	            <input type = "Button" value="이력서목록" 
+	            <input class="btn btn-success" type ="submit"  value="삭제" />
+	            <input class="btn btn-success" type = "Button" value="이력서목록" 
                 	OnClick
                ="location.href='<c:url value='/resume/list.do'/>'" />
 	        </div>

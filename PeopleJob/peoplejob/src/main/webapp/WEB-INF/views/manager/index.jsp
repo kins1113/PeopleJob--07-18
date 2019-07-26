@@ -12,7 +12,7 @@
 	<c:set var="top" value="${popupVo.top }"/>
 	<c:set var="popupImg" value="${popupVo.popupImg}"/>
 
-
+</c:forEach>
 <script type="text/javascript">
 $(function(){
 	var count = ${fn:length(popupList)}
@@ -24,7 +24,6 @@ $(function(){
 	}
 })
 </script>
-</c:forEach>
           
           <!-- 여기가 top이였음 -->
 

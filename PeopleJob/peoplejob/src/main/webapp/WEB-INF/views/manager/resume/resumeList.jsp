@@ -21,10 +21,10 @@ div#searchGrDiv{margin-right: 26%;}
 input[name=searchKeyword]{width: 400px;margin-right: 3px;}
 #searchDtDiv table th{width: 70px;padding: 5px;border: 1px solid silver;}
 #searchDtDiv table tr{border-bottom: 0.1px solid #dbdce0eb;}
-#searchDtDiv table tr:nth-last-of-type(2) td:nth-last-of-type(1) {width: 27%}
+/* #searchDtDiv table tr:nth-last-of-type(2) td:nth-last-of-type(1) {width: 27%}
 #searchDtDiv table tr:nth-last-of-type(2) td:nth-last-of-type(2) {width: 12%}
 #searchDtDiv table tr:nth-last-of-type(2) td:nth-last-of-type(3) {width: 42%}
-#searchDtDiv table tr:nth-last-of-type(3) td{width: 32%}
+#searchDtDiv table tr:nth-last-of-type(3) td{width: 32%} */
 #searchDtDiv table {border: 2px solid #4c84ff9e;width:100%;}
 #dateSearchShow input{height: 33px;padding: 0 9px 0 5px;font-size: 13px;}
 .dateSearchShow{float: left;margin-left: 5px;}
@@ -60,7 +60,7 @@ input[name=searchKeyword]{width: 400px;margin-right: 3px;}
 		
 		//1차 직종 가져오기 /manager/occupantion/firstList.do
 		selectFirst();
-		//1차 작종 클릭하면 2차직종 가져오기 
+		//1차 직종 클릭하면 2차직종 가져오기 
 		$("#selectFirst").change(function(){
 			var firstCode=$(this).find("option:selected").val();
 			if(firstCode!=0){
@@ -89,6 +89,7 @@ input[name=searchKeyword]{width: 400px;margin-right: 3px;}
 				//값이 있으면 그 값
 				endDay=$("input[name=endDay]").val();
 			}
+			
 			var type=getType(SDVal);
 			var trem=getTrem(SDVal);
 			var startDay=getStartDay(endDay,type,trem)
@@ -108,6 +109,19 @@ input[name=searchKeyword]{width: 400px;margin-right: 3px;}
 			//값을 가져오는 메서드
 			getLocation2(sidoCode);
 		});
+		
+		//1차 업종 가져오기
+		getBtype1();
+		//1차업종 change 2차 업종 가져오기
+		$("#selectBtype1").change(function(){
+			var bytpeCode1=$(this).find("option:checked").val();
+			getBtype2(bytpeCode1);
+		});
+		//2차업종 change 3차 업종 가져오기
+		$("#selectBtype2").change(function(){
+			var bytpeCode3=$(this).find("option:checked").val();
+			getBtype3(bytpeCode3);
+		});
 	});
 	
 	//1차 직종 가져오기
@@ -124,7 +138,7 @@ input[name=searchKeyword]{width: 400px;margin-right: 3px;}
 		})
 	}
 	
-	//1차직종 뿌리기
+	//1차 직종 뿌리기
 	//[{"firstCode":1,"firstname":"경영·사무"},{"firstCode":2,"firstname":"영업·고객상담"},{"firstCode":3,"firstname":"생산·제조"},
 	//{"firstCode":4,"firstname":"IT·인터넷"},{"firstCode":5,"firstname":"전문직"},{"firstCode":6,"firstname":"교육"}
 	function settingFirst(res){
@@ -179,7 +193,7 @@ input[name=searchKeyword]{width: 400px;margin-right: 3px;}
 				$("#selectSecond").append(opEl);
 			}
 		});
-		var thirdEl=$("<option>3차 직종</option>");
+		var thirdEl=$("<option>3차 직종</option><option>먼저 2차 직종을 선택하세요</option>");
 		$("#selectThird").html(thirdEl);
 	};
 	
@@ -241,8 +255,8 @@ input[name=searchKeyword]{width: 400px;margin-right: 3px;}
 	function getType(SDVal){
 		var type;
 		if(SDVal=="오늘"){type="d";
-		}else if(SDVal=="이번주"){type="d";
-		}else if(SDVal=="이번달"){type="d";
+		}else if(SDVal=="이번주"){type="day";
+		}else if(SDVal=="이번달"){type="month";
 		}else if(SDVal=="1주일"){type="d";
 		}else if(SDVal=="15일"){type="d";
 		}else if(SDVal=="1개월"){type="m";
@@ -264,6 +278,10 @@ input[name=searchKeyword]{width: 400px;margin-right: 3px;}
 		}else if(SDVal=="9개월"){trem="9";
 		}
 		return trem;
+	}
+	//이번주 이번달 구하는 메서드
+	function getDayMonth(day,type){
+		
 	}
 	 
 	//날이 10일 이하면 0앞에 붙이는 메서드
@@ -290,14 +308,27 @@ input[name=searchKeyword]{width: 400px;margin-right: 3px;}
 	function getStartDay(endDate,type, term){
 		var arr=endDate.split('-');
 		var date = new Date(arr[0],arr[1]-1,arr[2]); //(2019,6,8)
-		
-		if(type=='d'){
+		if(type=="day"){
+			getMonday(date);
+		}else if(type=="month"){
+			//alert("date.getFullYear()="+date.getFullYear()+", date.getMonth()+1="+date.getMonth()+1);
+			date= new Date(date.getFullYear(),date.getMonth(),1);
+		}else if(type=="d"){
 			date.setDate(date.getDate()-term);
-		}else if(type='m'){
+		}else if(type="m"){
 			date.setMonth(date.getMonth()-term);
 		}
+		//alert("getStartDay에서 결과값 date="+date);
 		return date;
 	}	
+	
+	//이번주 월요일을 가져오는 메서드 
+	function getMonday(endDay){
+		 var day = endDay.getDay() || 7;  
+		    if( day !== 1 ) 
+		    	endDay.setHours(-24 * (day - 1)); 
+		    return endDay;
+	}
 	
 	//지역정보를 가져오는 메서드 
 	function getLocation(){
@@ -317,12 +348,12 @@ input[name=searchKeyword]{width: 400px;margin-right: 3px;}
 		$.each(res, function(idx,item){
 			if(idx==0){
 				var chEl=$("<option value='0'>시/도</option>");
-				var opEl=$("<option value='"+item.gugun+"'></option>")
+				var opEl=$("<option value='"+item.localCode2+"'></option>")
 				opEl.html(item.sido);
 				$("#locationSiDo").html(chEl);
 				$("#locationSiDo").append(opEl);
 			}else{
-				var opEl=$("<option value='"+item.gugun+"'></option>")
+				var opEl=$("<option value='"+item.localCode2+"'></option>")
 				opEl.html(item.sido);
 				$("#locationSiDo").append(opEl);
 			}
@@ -362,6 +393,101 @@ input[name=searchKeyword]{width: 400px;margin-right: 3px;}
 			
 		});
 	}
+	
+	//1차 업종가져오기
+	function getBtype1(){
+		$.ajax({
+			url:"<c:url value='/manager/occupantion/selectBtype1.do'/>",
+			type:"post",
+			success:function(res){
+ 				settingBtype1(res);
+			},
+			error:function(xhr, status, error){
+				alert(status+":"+error);
+			}
+		})
+	}
+	
+	//1차 업종 뿌리기
+	function settingBtype1(res){
+		$.each(res,function(idx,item){
+			if(idx==0){
+				var chEl=$("<option value='0'>1차 업종</option>")
+				var opEl=$("<option value='"+item["BTYPE_CODE1"]+"'></option>");
+				opEl.append(item['BTYPENAME1']);
+				$("#selectBtype1").html(chEl);
+				$("#selectBtype1").append(opEl);
+			}else{
+				var opEl=$("<option value='"+item["BTYPE_CODE1"]+"'></option>");
+				opEl.append(item['BTYPENAME1']);
+				$("#selectBtype1").append(opEl); //최종으로 여기에 넣음
+			}
+		})
+	}
+	//2차 업종 가져오기
+	function getBtype2(btypeCode1){
+		$.ajax({
+			url:"<c:url value='/manager/occupantion/selectBtype2.do'/>",
+			type:"post",
+			data:"btypeCode1="+btypeCode1,
+			success:function(res){
+ 				settingBtype2(res);
+			},
+			error:function(xhr, status, error){
+				alert(status+":"+error);
+			}
+		})
+	}
+	//2차 업종 뿌리기
+	function settingBtype2(res){
+		$.each(res,function(idx,item){
+			if(idx==0){
+				var chEl=$("<option value='0'>2차 업종</option>")
+				var opEl=$("<option value='"+item["BTYPE_CODE2"]+"'></option>");
+				opEl.append(item['BTYPENAME2']);
+				$("#selectBtype2").html(chEl);
+				$("#selectBtype2").append(opEl); 
+			}else{
+				var opEl=$("<option value='"+item["BTYPE_CODE2"]+"'></option>");
+				opEl.append(item['BTYPENAME2']);
+				$("#selectBtype2").append(opEl); 
+			}
+		})
+		var chEl=$("<option value='0'>3차 업종</option><option>먼저 2차 업종을 선택하세요</option>")
+		$("#selectBtype3").html(chEl);
+	}
+	//2차 업종 가져오기
+	function getBtype3(btypeCode2){
+		$.ajax({
+			url:"<c:url value='/manager/occupantion/selectBtype3.do'/>",
+			type:"post",
+			data:"btypeCode2="+btypeCode2,
+			success:function(res){
+ 				settingBtype3(res);
+			},
+			error:function(xhr, status, error){
+				alert(status+":"+error);
+			}
+		})
+	}
+	//3차 업종 뿌리기
+	function settingBtype3(res){
+		$.each(res,function(idx,item){
+			if(idx==0){
+				var chEl=$("<option value='0'>3차 업종</option>")
+				var opEl=$("<option value='"+item["BTYPE_CODE3"]+"'></option>");
+				opEl.append(item['BTYPENAME3']);
+				$("#selectBtype3").html(chEl);
+				$("#selectBtype3").append(opEl); 
+			}else{
+				var opEl=$("<option value='"+item["BTYPE_CODE3"]+"'></option>");
+				opEl.append(item['BTYPENAME3']);
+				$("#selectBtype3").append(opEl); 
+			}
+		})
+	}
+	
+	//메서드추가
 	
 	//페이지 처리 함수
 	function pageFunc(curPage){
@@ -407,7 +533,7 @@ input[name=searchKeyword]{width: 400px;margin-right: 3px;}
 						<table>
 							<tr>
 								<th>등록일</th>
-								<td id="dateSearchShow" colspan="5">
+								<td id="dateSearchShow" colspan="4">
 										<div class="incDate dateSearchShow" id="startDay">
 											 <c:import url="../../inc/date.jsp">
 												<c:param name="name" value="startDay"></c:param>
@@ -437,17 +563,35 @@ input[name=searchKeyword]{width: 400px;margin-right: 3px;}
 							</tr>
 							<tr>
 								<th>직종</th>
-								<td colspan="3">
+								<td colspan="1">
 									<select class="custom-select my-1 FST" id="selectFirst">
 										<option>1차 직종</option>
 									</select>
 									<select class="custom-select my-1 mr-sm-2 FST" id="selectSecond">
 										<option>2차 직종</option>
+										<option>먼저 1차 직종을 선택하세요</option>
 									</select>
 									<select class="custom-select my-1 mr-sm-2 FST" id="selectThird">
 										<option>3차 직종</option>
+										<option>먼저 2차 직종을 선택하세요</option>
 									</select>
 								</td>
+								<th>업종</th>
+								<td colspan="2">
+									<select class="custom-select my-1 FST" id="selectBtype1">
+										<option>1차 업종</option>
+									</select>
+									<select class="custom-select my-1 mr-sm-2 FST" id="selectBtype2">
+										<option>2차 업종</option>
+										<option>먼저 1차 업종을 선택하세요</option>
+									</select>
+									<select class="custom-select my-1 mr-sm-2 FST" id="selectBtype3">
+										<option>3차 업종</option>
+										<option>먼저 2차 업종을 선택하세요</option>
+									</select>
+								</td>
+							</tr>
+							<tr>
 								<th>지역</th>
 								<td>
 									<select class="custom-select my-1 mr-sm-2 FST" id="locationSiDo">
@@ -455,12 +599,45 @@ input[name=searchKeyword]{width: 400px;margin-right: 3px;}
 									</select>
 									<select class="custom-select my-1 mr-sm-2 FST" id="locationGugun">
 										<option>구/군</option>
+										<option>먼저 시/도를 선택하세요</option>
 									</select>
+								</td>
+								
+								<th>연령</th>
+								<td colspan="2">
+									<label class="control control-checkbox checkbox-primary genderShow">
+											<input type="checkbox" name="memberGender" id="memberGenderM" />
+											<div class="control-indicator float"></div>20대
+									</label>
+									<label class="control control-checkbox checkbox-primary genderShow">
+											<input type="checkbox" name="memberGender" id="memberGenderM" />
+											<div class="control-indicator float"></div>30대
+									</label>
+									<label class="control control-checkbox checkbox-primary genderShow">
+											<input type="checkbox" name="memberGender" id="memberGenderM" />
+											<div class="control-indicator float"></div>40대
+									</label>
+									<label class="control control-checkbox checkbox-primary genderShow">
+											<input type="checkbox" name="memberGender" id="memberGenderM" />
+											<div class="control-indicator float"></div>50이상
+									</label>
 								</td>
 							</tr>
 							<tr>
-								<th>경력</th>
+							<th>성별</th>
 								<td>
+									<label class="control control-checkbox checkbox-primary genderShow">
+										<input type="checkbox" name="memberGender" id="memberGenderG" />
+										<div class="control-indicator float"></div>여자
+									</label>
+									<label class="control control-checkbox checkbox-primary genderShow">
+											<input type="checkbox" name="memberGender" id="memberGenderM" />
+											<div class="control-indicator float"></div>남자
+									</label>
+								</td>
+								
+								<th>경력</th>
+								<td colspan="2">
 									<label class="control control-checkbox checkbox-primary genderShow">
 											<input type="checkbox" name="memberGender" id="memberGenderM" />
 											<div class="control-indicator float"></div>신입
@@ -482,40 +659,10 @@ input[name=searchKeyword]{width: 400px;margin-right: 3px;}
 											<div class="control-indicator float"></div>10년이상
 									</label>
 								</td>
-								<th>성별</th>
-								<td>
-									<label class="control control-checkbox checkbox-primary genderShow">
-										<input type="checkbox" name="memberGender" id="memberGenderG" />
-										<div class="control-indicator float"></div>여자
-									</label>
-									<label class="control control-checkbox checkbox-primary genderShow">
-											<input type="checkbox" name="memberGender" id="memberGenderM" />
-											<div class="control-indicator float"></div>남자
-									</label>
-								</td>
-								<th>연령</th>
-								<td>
-									<label class="control control-checkbox checkbox-primary genderShow">
-											<input type="checkbox" name="memberGender" id="memberGenderM" />
-											<div class="control-indicator float"></div>20대
-									</label>
-									<label class="control control-checkbox checkbox-primary genderShow">
-											<input type="checkbox" name="memberGender" id="memberGenderM" />
-											<div class="control-indicator float"></div>30대
-									</label>
-									<label class="control control-checkbox checkbox-primary genderShow">
-											<input type="checkbox" name="memberGender" id="memberGenderM" />
-											<div class="control-indicator float"></div>40대
-									</label>
-									<label class="control control-checkbox checkbox-primary genderShow">
-											<input type="checkbox" name="memberGender" id="memberGenderM" />
-											<div class="control-indicator float"></div>50이상
-									</label>
-								</td>
 							</tr>
 							<tr>
 								<th>최종학력</th>
-								<td colspan="5">
+								<td colspan="4">
 									<label class="control control-checkbox checkbox-primary genderShow labelFont">
 											<input type="checkbox" name="memberGender" id="memberGenderM" />
 											<div class="control-indicator float"></div>학력무관
@@ -583,16 +730,8 @@ input[name=searchKeyword]{width: 400px;margin-right: 3px;}
 								<option value="address,addressdetail"
 									<c:if test="${param.searchCondition=='address,addressdetail' }">
 									selected="selected"
-								</c:if>>주소
+								</c:if>>이력서
 								</option>
-								<option value="tel"
-									<c:if test="${param.key=='tel' }">
-									selected="selected"
-								</c:if>>번호</option>
-								<option value="email"
-									<c:if test="${param.key=='email' }">
-									selected="selected"
-								</c:if>>메일</option>
 							</select>
 						</div>
 					</div>

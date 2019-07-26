@@ -35,6 +35,21 @@ public class OccupationServiceImpl implements OccupationService{
 	public List<Map<String, Object>> selectLocation2(int sidoCode) {
 		return occupantionDao.selectLocation2(sidoCode);
 	}
+
+	@Override
+	public List<Map<String, Object>> selectBtype1() {
+		return occupantionDao.selectBtype1();
+	}
+
+	@Override
+	public List<Map<String, Object>> selectBtype2(int btypeCode1) {
+		return occupantionDao.selectBtype2(btypeCode1);
+	}
+
+	@Override
+	public List<Map<String, Object>> selectBtype3(int btypeCode2) {
+		return occupantionDao.selectBtype3(btypeCode2);
+	}
 	
 	
 }
