@@ -100,6 +100,15 @@ form[name=serviceRegister]{
 width: 400px;
 }
 </style>
+<script type="text/javascript">
+function closeWin() {
+	if(confirm("수정하시겠습니까?")){
+		$("form[name=serviceEdit]").submit();
+		
+	}
+
+}
+</script>
 
 <div class="content-wrapper">
 	<div class="content">
@@ -107,7 +116,7 @@ width: 400px;
 			<div class="col-lg-6">
 				<div class="card card-default">
 					<div class="card-header card-header-border-bottom">
-						<form name="serviceRegister" method="post" action="<c:url value='/service/register.do'/>">
+						<form name="serviceEdit" method="post" action="<c:url value='/manager/service/edit.do'/>">
 							<div class="form-group">
 								<label for="serviceName">서비스명</label> <input type="text" 
 									class="form-control" id="serviceName" name="serviceName" /> <label
@@ -118,7 +127,7 @@ width: 400px;
 									class="form-control" id="serviceContent" name="serviceContent" />
 								<label for="serviceDay">서비스일</label> <input type="text"
 									class="form-control" id="serviceDay" name="serviceDay" /> <br>
-								<button type="submit" class="btn btn-primary btn-default">등록하기</button>
+								<button onclick="closeWin()" type="button" class="btn btn-primary btn-default">수정</button>
 
 							</div>
 							

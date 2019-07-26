@@ -130,23 +130,22 @@ public class PopupController {
 	@ResponseBody
 	public int deleteMulti(@RequestParam int[] popupCodeArr, HttpServletRequest request) {
 		logger.info("선택 삭제 파라미터 popupCodeArr.length={}",popupCodeArr.length);
+		String[] fileNames=new String[popupCodeArr.length];
 		for(int i=0;i<popupCodeArr.length;i++) {
 			logger.info("{}번째 popupCode= {}",i,popupCodeArr[i]);
+			int popupCode=popupCodeArr[i];
+			PopupVO popupVo=popupService.selectByPopupCode(popupCode);
+			fileNames[i]=popupVo.getPopupImg();
 		}
 		
 		int re=popupService.deleteMultiByPopupCode(popupCodeArr);
 		logger.info("다중 삭제 처리결과 re={}",re);
 		if(re>0) {
-			for(int i=0; i<popupCodeArr.length;i++) {
-				int popupCode=popupCodeArr[i];
-				logger.info("for문 안에서 {}번째 popupCode= {}",i,popupCodeArr[i]);
-				PopupVO popupVo=popupService.selectByPopupCode(popupCode);
-				//파일 삭제
-				String fileName="";
-				logger.info("nullpoint 나는 곳 바로 위 popupVo= {}",popupVo);
-				if(popupVo.getPopupImg()!=null && !popupVo.getPopupImg().isEmpty()) {
-					fileName=popupVo.getPopupImg();
-				}
+			//파일 삭제
+			String fileName="";
+			logger.info("nullpoint 나는 곳 바로 위 fileNames.length= {}",fileNames.length);
+			for(int j=0 ;j< fileNames.length;j++) {
+				fileName=fileNames[j];
 				if(fileName!=null && !fileName.isEmpty()) {
 					String path=fileUploadUtil.getUploadPath(request,FileUploadUtility.POPUP_UPLOAD);
 					File delFile=new File(path,fileName);
@@ -237,6 +236,16 @@ public class PopupController {
 		logger.info("팝업창 띄우기");
 		
 		return "inc/popupFrame";
+	}
+	
+	@RequestMapping("/popupOpenList.do")
+	@ResponseBody
+	public List<PopupVO> popupOpneList(){
+		logger.info("ajax - 팝업 여는 리스트 ");
+		
+		List<PopupVO>list=popupService.selectUsageY();
+		logger.info("ajax - 팝업 여는 리스트  결과 list.size={}",list.size());
+		return list;
 	}
 	
 	

@@ -17,6 +17,19 @@
 		});
 		
 	});
+	
+	function serviceAdd(){
+		window.open('<c:url value="/manager/service/register.do"/>',
+				'serviceAdd',"'status=no, height=500, width=500, left='300', top='30");
+		
+	}
+	
+	function serviceEdit(serviceCode){
+		window.open('<c:url value="/manager/service/edit.do?serviceCode='+serviceCode+'"/>',
+				'serviceEdit',"'status=no, height=500, width=500, left='300', top='30");
+		
+	}
+	
 </script>
 
 
@@ -49,6 +62,9 @@
 												id="serviceContent">서비스 내용</a></th>
 											<th scope="col"><a href="#" class="fileterCode"
 												id="serviceDay">서비스일</a></th>
+											<th scope="col"><a href="#" class="fileterCode"
+												id="edit">기능</a></th>
+												
 
 										</tr>
 									</thead>
@@ -73,6 +89,8 @@
 															<td>${vo.servicePrice }</td>
 															<td>${vo.serviceContent }</td>
 															<td>${vo.serviceDay }</td>
+															<td>
+															<button type="button" onclick="serviceEdit(${vo.serviceCode })" class="mb-1 btn btn-danger">수정</button></td>
 													</tr>
 												</c:forEach>
 											</c:if>
@@ -85,6 +103,9 @@
 									<div class="card-body">
 								<button type="button" class="mb-1 btn btn-danger"
 									id="btDelMulti">선택한 상품 삭제</button>
+									
+									<button type="button" onclick="serviceAdd()" 
+									class="mb-1 btn btn-danger">서비스등록</button>
 				
 									</div>
 </form>

@@ -16,5 +16,12 @@ public class JobopeningManagerController {
 		
 		return "manager/jobopening/jobopeningList";
 	}
+	
+	@RequestMapping("/jobopeningAdd.do")
+	public String jobopeningAdd_get() {
+		logger.info("체용공고 추가 보여주기 ");
+		
+		return "manager/jobopening/jobopeningAdd";
+	}
 
 }

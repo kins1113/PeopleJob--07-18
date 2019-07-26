@@ -10,8 +10,7 @@ form {
     width: 1277px;
     margin: 0 auto;
     border:1px;
- 
-    margin-left: 17.2%;
+ 	margin-left: 22.2%;
 }
 
 button.btn.btn-success {
@@ -43,9 +42,10 @@ img{
 
 }
 div#imgDiv {
-    width: 150px;
-    height: 170px;
+    width: 288px;
+    height: 312px;
     float: left;
+    margin-top: 20px;
 }
 p.lead.mb-7 {
     margin: 2px;
@@ -55,13 +55,13 @@ p.lead.mb-7 {
 div#memberinfo {
    border: 1px solid lightgray;
     width: 800px;
-    margin-left: 197px;
+    margin-left: 319px;
     padding: 21px;
 }
 .resume-content {
     border: 1px solid lightgray;
     padding: 51px;
-   width: 400px;
+      width: 100%;
 }
 div#hopeworkinfo {
     border: 1px solid lightgray;
@@ -85,6 +85,16 @@ span.glyphicon.glyphicon-user {
 }
 span.glyphicon.glyphicon-briefcase {
     margin-bottom: 26px;
+}
+h1.mb-0 {
+    padding-bottom: 39px;
+}
+p.lead.mb-7 {
+    padding-bottom: 22px;
+}
+.center2 {
+    margin-left: 1086px;
+    margin-top: -16px;
 }
 </style>
 <script type="text/javascript">
@@ -198,10 +208,10 @@ $(window).scroll(function( ){  //스크롤이 움직일때마다 이벤트 발�
             		<span class="glyphicon glyphicon-briefcase" aria-hidden="true">직종:${vo4.chargework}</span>&nbsp;&nbsp;
             		<span class="glyphicon glyphicon-briefcase" aria-hidden="true">직급:${vo4.jobgrade}</span>
           </div>
+        </div>
           <div class="resume-date text-md-right">
             <span class="text-primary">이력서 등록일:${vo.resumeRegdate}</span>
           </div>
-        </div>
 
        <!--  <div class="resume-item d-flex flex-column flex-md-row justify-content-between mb-5">
           <div class="resume-content">

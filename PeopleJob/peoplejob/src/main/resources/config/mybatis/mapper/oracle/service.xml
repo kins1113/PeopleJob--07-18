@@ -26,7 +26,13 @@
 	</delete>
 	
 	<select id="selectServiceByCode" resultType="serviceVo"> 
-		select * from service where service_code=#{serviceCode}
+		select * from service where service_Code=#{serviceCode}
 	</select>
+	
+	<update id="updateService" parameterType="serviceVo">
+	update service set servicename=#{serviceName},
+	serviceprice=#{servicePrice},servicecontent=#{serviceContent},serviceday=#{serviceDay}
+	where service_Code=#{serviceCode}
+	</update>
 </mapper>
 	 

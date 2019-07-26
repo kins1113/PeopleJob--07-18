@@ -35,5 +35,10 @@ public class ServiceServiceImpl implements ServiceService  {
 	public ServiceVO selectServiceByCode(int serviceCode) {
 		return serviceDao.selectServiceByCode(serviceCode);
 	}
+	@Override
+	public int updateService(ServiceVO vo) {
+		return serviceDao.updateService(vo);
+	}
+
 	
 }

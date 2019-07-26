@@ -1,5 +1,6 @@
 package com.ez.peoplejob.payment.controller;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -35,8 +36,8 @@ import com.ez.peoplejob.service.model.ServiceVO;
 
 public class PaymentController {
 	private Logger logger=LoggerFactory.getLogger(LoginController.class);
-	@Autowired private PaymentService paymentService;
 	@Autowired private MemberService memberService;
+	@Autowired private PaymentService paymentService;
 	@Autowired private JobopeningService jobService;
 	@Autowired private ServiceService serviceService;
 	
@@ -61,30 +62,6 @@ public class PaymentController {
 		
 		return "service/payment";
 		
-		/*
-		List<JobopeningVO> list=jobService.selectJobopeningBycomcode(memberVo.getCompanyCode());
-		logger.info("company_code로 조회한 채용공고 list.size={}",list.size());
-		
-		if(list.size()<1) {
-			model.addAttribute("msg","등록된 채용공고가 없습니다.");
-			model.addAttribute("url","/service/payment.do");
-			
-			return "common/message";
-		}else {
-			PaymentVO paymentVo=new PaymentVO();
-			paymentVo.setMemberCode(memberVo.getMemberCode());
-			paymentVo.setPaymentway("카드");
-			paymentVo.setProgress("결제완료");
-			paymentVo.setJobopening(jobopening);
-			
-			//int cnt=paymentService.insertPayService1(paymentVo);
-			int cnt=0;
-			logger.info("결제완료 cnt={}",cnt);
-			
-			return "redirect:/mypage/user/userpage.do";
-		}
-		*/
-		
 		
 	}
 	
@@ -107,8 +84,13 @@ public class PaymentController {
 			logger.info("company_code로 조회한 채용공고 list.size={}",list.size());
 			ServiceVO serviceVo1=serviceService.selectServiceByCode(1);
 			logger.info("serviceCode로 service={}",serviceVo1+"\n");
+			List<ServiceVO> serviceList=serviceService.selectAll();
+			logger.info("serviceList.size={}",serviceList.size());
+			
 			
 			model.addAttribute("serviceVo1",serviceVo1);
+			
+			model.addAttribute("serviceList",serviceList);
 			model.addAttribute("memberVo",memberVo);
 			model.addAttribute("companyVo",companyVo);
 			model.addAttribute("list",list);
@@ -205,13 +187,17 @@ public class PaymentController {
 		
 		return "main/mainindex";
 	}
-	/*
+	
 	@RequestMapping("/manager/payment/list.do")
-	public String list(@ModelAttribute SearchVO searchVo, Model model) {
+	public String list(@ModelAttribute SearchVO searchVo, 
+			@RequestParam(required = false) String startDay,
+			@RequestParam(required = false) String endDay,
+			Model model
+			) {
 		//1
 		
 		logger.info("결제 목록 파라미터 searchVo={}" ,searchVo);
-		
+		logger.info("결제 목록 파라미터 startDay={}, endDay={}" ,startDay,endDay);
 		
 		//2
 		//[1] PaginationInfo 객체 생성
@@ -226,9 +212,16 @@ public class PaymentController {
 		searchVo.setBlockSize(WebUtility.BLOCK_SIZE);
 		logger.info("셋팅 후 searchVo={}", searchVo);
 		
+		
+		Map<String, Object> map=new HashMap<String, Object>();
+		
+		map.put("searchVo", searchVo);
+		map.put("startDay", startDay);
+		map.put("endDay", endDay);
+		
 		//[3] 조회처리
-		List<Map<String, Object>> list=paymentService.selectAll(searchVo);
-		logger.info("공지 글 목록 결과, list.size={}",list.size());
+		List<Map<String, Object>> list=paymentService.selectAll(map);
+		logger.info("결제 목록 결과, list.size={}",list.size());
 		
 		//[4] 전체 레코드 개수 조회
 		int totalRecord=0;
@@ -244,9 +237,9 @@ public class PaymentController {
 		
 		return "manager/payment/list";
 	}
-	*/
-		
 	
+		
+	/*
 	@RequestMapping("manager/payment/list.do")
 	public String list(Model model) {
 		
@@ -257,4 +250,5 @@ public class PaymentController {
 		
 		return "manager/payment/list";
 	}
+	*/
 }

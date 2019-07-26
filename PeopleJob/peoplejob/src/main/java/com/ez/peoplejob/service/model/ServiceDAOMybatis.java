@@ -30,5 +30,9 @@ public class ServiceDAOMybatis implements ServiceDAO {
 	public ServiceVO selectServiceByCode(int serviceCode) {
 		return sqlSession.selectOne(namespace+"selectServiceByCode",serviceCode);
 	}
+	@Override
+	public int updateService(ServiceVO vo) {
+		return sqlSession.update(namespace+"updateService", vo);
+	}
 
 }

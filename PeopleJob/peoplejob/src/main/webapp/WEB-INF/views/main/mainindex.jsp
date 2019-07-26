@@ -987,7 +987,7 @@ span[name=publicname]{
 		</ul>
 	</div>
 	<p class="btn_more">
-	<a href="" target="_blank" style="color: black;">공채정보<span>더보기 > </span></a>
+	<a href="<c:url value='/company/jobopening_list.do'/>" target="_blank" style="color: black;">공채정보<span>더보기 > </span></a>
 	</p>
 
 	<img alt="다음공채" src="<c:url value="/resources/main/images/right.PNG"/>" id="next" style="float:right;margin-top: 20px;cursor: pointer; margin-right: 10px;">

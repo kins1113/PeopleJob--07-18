@@ -4,15 +4,17 @@ import java.util.List;
 import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.ez.peoplejob.common.SearchVO;
-import com.ez.peoplejob.service.model.ServiceVO;
+import com.ez.peoplejob.login.controller.LoginController;
 
 @Repository
 public class PaymentDAOMybatis implements PaymentDAO{
-
+	private Logger logger=LoggerFactory.getLogger(LoginController.class);
 	private String namespace="config.mybatis.mapper.oracle.payment.";
 	@Autowired private SqlSessionTemplate sqlSession;
 
@@ -45,24 +47,19 @@ public class PaymentDAOMybatis implements PaymentDAO{
 	public int getCountByJobopening(int jobno) {
 		return sqlSession.selectOne(namespace+"getCountByJobopening",jobno);
 	}
-	/*
+
 	@Override
-	public List<Map<String, Object>> selectAll(SearchVO searchVo) {
+	public List<Map<String, Object>> selectAll(Map<String, Object> map) {
 		List<Map<String, Object>>list
-		=sqlSession.selectList(namespace+"selectSearch",searchVo);
+		=sqlSession.selectList(namespace+"selectPayment",map);
+		logger.info("서비스에서 list={}",list.size());
 		return list;
 	}
 	@Override
 	public int selectTotalCount(SearchVO searchVo) {
 		return sqlSession.selectOne(namespace+"selectTotalCount",searchVo);
 	}
-	*/
-	@Override
-	public List<PaymentVO> selectAll() {
-		List<PaymentVO> list
-		=sqlSession.selectList(namespace+"selectPayment");
-		
-		return list;
-	}
+	
+
 	
 }

@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -51,9 +52,9 @@ public class ServiceController {
 	}
 	
 	  @RequestMapping("/manager/service/list.do")
-	  public String list(Model model) {
+	  public String list(@ModelAttribute ServiceVO vo, Model model ) {
 		  //1
-		 
+		  logger.info("서비스 목록 파라미터 vo={}",vo);
 		  	
 		  //2
 		 List<ServiceVO> list=serviceService.selectAll();
@@ -83,5 +84,43 @@ public class ServiceController {
 			
 			return "common/message";
 	  }
+	  
+		@RequestMapping(value="/manager/service/edit.do", method=RequestMethod.GET)
+		public String serviceEdit_get(@RequestParam(defaultValue = "0",required = false) int serviceCode, 
+				ModelMap model) {
+			logger.info("수정화면, 파라미터 serviceCode={}", serviceCode);
+			
+			if(serviceCode==0) {
+				model.addAttribute("msg", "잘못된 url입니다.");
+				model.addAttribute("url", "/manager/service/list.do");
+				return "common/message";
+			}
+			
+			ServiceVO serviceVo=serviceService.selectServiceByCode(serviceCode);
+			logger.info("수정화면 조회 결과, vo={}", serviceVo);
+			
+			model.addAttribute("vo", serviceVo);
+			return "manager/service/edit";
+		}
+		
+		@RequestMapping(value="/manager/service/edit.do", method=RequestMethod.POST)
+		public String serviceEdit_post(@ModelAttribute ServiceVO serviceVo, Model model) {
+			logger.info("서비스 수정 처리, 파라미터 serviceVo={}", serviceVo);
+			
+			String msg="", url="/manager/service/edit.do?serviceCode="+serviceVo.getServiceCode();
+				int cnt=serviceService.updateService(serviceVo);
+				
+				if(cnt>0) {
+					msg="서비스 수정되었습니다.";
+					url="/manager/service/list.do";
+				}else {
+					msg="서비스 수정 실패.";
+				}
+		
+			model.addAttribute("msg", msg);
+			model.addAttribute("url", url);
+			
+			return "common/message";
+		}
 	 
 }

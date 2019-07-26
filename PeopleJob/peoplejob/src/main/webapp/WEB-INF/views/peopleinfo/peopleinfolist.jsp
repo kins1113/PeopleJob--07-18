@@ -11,9 +11,7 @@
 #peopleinfo {
     background: #f2f4f7;
 }
-.where{
-	border:1px solid;
-}
+
 </style>
 <div id="peopleinfo">
 <div class="divForm">

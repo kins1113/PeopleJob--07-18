@@ -21,7 +21,7 @@
 	href="https://cdn.materialdesignicons.com/3.0.39/css/materialdesignicons.min.css"
 	rel="stylesheet" />
 
-<!-- PLUGINS CSS STYLE -->
+<!-- PLUGINS CSS STYLE -->	
 <link
 	href="${pageContext.request.contextPath}/resources/admin/assets/plugins/toastr/toastr.min.css"
 	rel="stylesheet" />
@@ -176,7 +176,13 @@
 										href="${pageContext.request.contextPath }/manager/resume/resumeList.do?showKey=resume"> <span class="nav-text">이력서	관리</span>
 									</a></li>
 								<li><a class="sidenav-item-link"
+										href="${pageContext.request.contextPath }/manager/resume/resumeAdd.do?showKey=resume"> <span class="nav-text">이력서	등록</span>
+									</a></li>
+								<li><a class="sidenav-item-link"
 										href="${pageContext.request.contextPath }/manager/jobopening/jobopeningList.do?showKey=resume"> <span class="nav-text">채용공고 관리</span>
+									</a></li>
+								<li><a class="sidenav-item-link"
+										href="${pageContext.request.contextPath }/manager/jobopening/jobopeningAdd.do?showKey=resume"> <span class="nav-text">채용공고 등록</span>
 									</a></li>
 						<!-- 			<ul class="collapse" id="icons">
 											<div class="sub-menu">
@@ -285,7 +291,7 @@
                               Getting Started
                             </li> -->
 									<!-- ?showKey=pay -->
-									<li><a class="sidenav-item-link" href="#">
+									<li><a class="sidenav-item-link" href="${pageContext.request.contextPath}/manager/payment/list.do">
 											<span class="nav-text">통합 관리</span>
 									</a></li>
 
