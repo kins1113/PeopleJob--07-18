@@ -100,6 +100,15 @@ form[name=serviceRegister]{
 width: 400px;
 }
 </style>
+<script type="text/javascript">
+function closeWin() {
+	if(confirm("등록하시겠습니까?")){
+		$("form[name=serviceRegister]").submit();
+		window.close();
+	}
+	opener.parent.location.reload();
+}
+</script>
 
 <div class="content-wrapper">
 	<div class="content">
@@ -118,7 +127,7 @@ width: 400px;
 									class="form-control" id="serviceContent" name="serviceContent" />
 								<label for="serviceDay">서비스일</label> <input type="text"
 									class="form-control" id="serviceDay" name="serviceDay" /> <br>
-								<button type="submit" class="btn btn-primary btn-default">등록하기</button>
+								<button type="button" onclick="closeWin()" class="btn btn-primary btn-default">등록하기</button>
 
 							</div>
 							

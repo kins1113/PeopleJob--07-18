@@ -104,9 +104,9 @@ width: 400px;
 function closeWin() {
 	if(confirm("수정하시겠습니까?")){
 		$("form[name=serviceEdit]").submit();
-		
+		window.close();
 	}
-
+	opener.parent.location.reload();
 }
 </script>
 
@@ -118,15 +118,17 @@ function closeWin() {
 					<div class="card-header card-header-border-bottom">
 						<form name="serviceEdit" method="post" action="<c:url value='/manager/service/edit.do'/>">
 							<div class="form-group">
+							<!-- hidden필드에 serviceCode 넣기 -->
+							<input type="hidden" name="serviceCode" value="${vo.serviceCode}" />
 								<label for="serviceName">서비스명</label> <input type="text" 
-									class="form-control" id="serviceName" name="serviceName" /> <label
+									class="form-control" id="serviceName" name="serviceName" value="${vo.serviceName}"/> <label
 									for="servicePrice">가격</label> <input type="text"
-									class="form-control" id="servicePrice" name="servicePrice" /> <label
+									class="form-control" id="servicePrice" name="servicePrice" value="${vo.servicePrice}"/> <label
 									for="serviceContent">서비스내용</label>
 									<input type="text"
-									class="form-control" id="serviceContent" name="serviceContent" />
+									class="form-control" id="serviceContent" name="serviceContent" value="${vo.serviceContent}"/>
 								<label for="serviceDay">서비스일</label> <input type="text"
-									class="form-control" id="serviceDay" name="serviceDay" /> <br>
+									class="form-control" id="serviceDay" name="serviceDay" value="${vo.serviceDay}"/> <br>
 								<button onclick="closeWin()" type="button" class="btn btn-primary btn-default">수정</button>
 
 							</div>

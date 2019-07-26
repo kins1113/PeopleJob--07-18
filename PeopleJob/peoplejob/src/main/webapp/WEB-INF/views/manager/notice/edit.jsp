@@ -45,8 +45,9 @@
 
         <div class="form-group">  
         	<label for="notifycontent">내용</label>        
- 			<textarea class="form-control" id="notifycontent" name="notifycontent" rows="10" cols="30">${vo.notifycontent}</textarea>
-        </div>
+ 										<c:import url="/manager/smarteditorTestjsp.do">
+							<c:param name="name" value="notifycontent"></c:param>
+						</c:import>
      
             <button class="btn btn-primary btn-default" type = "submit">수정</button>
             <button class="btn btn-primary btn-default" onclick="location.href='list.do' ">목록</button>      

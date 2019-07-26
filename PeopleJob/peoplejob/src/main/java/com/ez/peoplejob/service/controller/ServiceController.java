@@ -39,7 +39,7 @@ public class ServiceController {
 		String msg="", url="";
 		if(cnt>0) {
 			msg="상품등록 완료";
-			url="/manager/service/register.do";
+			url="/manager/service/list.do";
 			
 		}else {
 			msg="상품등록 실패";

@@ -2,7 +2,6 @@
     pageEncoding="UTF-8"%>
 <%@include file="/WEB-INF/views/manager/inc/adminTop.jsp"%>
 
-
 <style type="text/css">
 a{color: black;}
 #pageDiv {width: 30%;}
@@ -36,6 +35,10 @@ input[name=searchKeyword]{width: 400px;margin-right: 3px;}
 </style>
 <script type="text/javascript">
 	$(document).ready(function (){
+		$("#btJopopeningAdd").click(function(){
+			location.href="<c:url value='/manager/jobopening/jobopeningAdd.do?showKey=resume'/>";
+		})
+		
 		//맨위에 체크박스 누르면 전체 선택
 		$("#memberCkAll").click(function(){
 			$("input[name=memberCk]").prop("checked",this.checked)
@@ -772,7 +775,7 @@ input[name=searchKeyword]{width: 400px;margin-right: 3px;}
 				</div>
 				<div align="right" class="form-group serDiv" id="btGroup">
 					<input type="button" class="btn btn-secondary btn-default" id="btMultMail" value="선택 삭제">
-					<input type="button"class="btn btn-secondary btn-default" id="" value="채용공고 등록"> 
+					<input type="button"class="btn btn-secondary btn-default" id="btJopopeningAdd" value="채용공고 등록"> 
 				</div>
 				<div class="form-group" id='pageSize'>
 					<select class="custom-select my-1 mr-sm-2" name="recordCountPerPage">
