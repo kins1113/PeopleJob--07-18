@@ -35,6 +35,10 @@ input[name=searchKeyword]{width: 400px;margin-right: 3px;}
 </style>
 <script type="text/javascript">
 	$(document).ready(function (){
+		$("#btResumeAdd").click(function(){
+			location.href="<c:url value='/manager/resume/resumeAdd.do?showKey=resume'/>";
+		})
+		
 		//맨위에 체크박스 누르면 전체 선택
 		$("#memberCkAll").click(function(){
 			$("input[name=memberCk]").prop("checked",this.checked)
@@ -738,7 +742,7 @@ input[name=searchKeyword]{width: 400px;margin-right: 3px;}
 				</div>
 				<div align="right" class="form-group serDiv" id="btGroup">
 					<input type="button" class="btn btn-secondary btn-default" id="btMultMail" value="선택 삭제">
-					<input type="button"class="btn btn-secondary btn-default" id="" value="이력서 등록"> 
+					<input type="button"class="btn btn-secondary btn-default" id="btResumeAdd" value="이력서 등록"> 
 				</div>
 				<div class="form-group" id='pageSize'>
 					<select class="custom-select my-1 mr-sm-2" name="recordCountPerPage">
