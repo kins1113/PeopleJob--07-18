@@ -65,5 +65,9 @@ public class TableaplyServiceImpl implements TableaplyService{
 	public TableaplyVO selectresumebyid3(Map<String, Object> map) {
 		return tableaplyDao.selectresumebyid3(map);
 	}
+	@Override
+	public int applyCnt(int jobopening) {
+		return tableaplyDao.applyCnt(jobopening);
+	}
 
 }
