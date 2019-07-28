@@ -8,7 +8,7 @@ import com.ez.peoplejob.jobopening.model.JobopeningVO;
 
 public interface PaymentService {
 	
-	int insertPayment(List<JobopeningVO> list,int serviceCode, int memberCode);
+	int insertPayment(PaymentVO paymentVO);
 	
 	List<Map<String, Object>> selectPaymentById(String memberid);
 	int cancelPay(int paymentCode);

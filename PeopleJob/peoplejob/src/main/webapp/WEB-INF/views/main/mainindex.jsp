@@ -644,7 +644,7 @@ span[name=publicname]{
 
 	<!-- Banner -->
 	<div class="container" style="max-width: 150%;"> <!-- 원래105% -->
-	<div class="colortop">
+	  <div class="colortop">
 	<div class="divisionColor" style="background: "> 
 		<div class="flex-c-c" style="margin-top: 10px;width: 1300px;">
 			<a href="#"> <img class="max-w-full"

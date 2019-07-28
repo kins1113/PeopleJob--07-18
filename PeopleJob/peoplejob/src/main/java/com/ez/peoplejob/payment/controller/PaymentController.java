@@ -27,6 +27,7 @@ import com.ez.peoplejob.login.controller.LoginController;
 import com.ez.peoplejob.member.model.CompanyVO;
 import com.ez.peoplejob.member.model.MemberService;
 import com.ez.peoplejob.member.model.MemberVO;
+import com.ez.peoplejob.payment.model.PaymentListVO;
 import com.ez.peoplejob.payment.model.PaymentService;
 import com.ez.peoplejob.payment.model.PaymentVO;
 import com.ez.peoplejob.service.model.ServiceService;
@@ -71,8 +72,9 @@ public class PaymentController {
 		String memberId=(String)session.getAttribute("memberid");
 		logger.info("결제내역 확인을 위한 정보 보내주기, membername={}",membername);
 		
-		/*List<Map<String , Object>> list=memberService.selectPayInfo(membername);
-		model.addAttribute("lsit",list); */
+		List<ServiceVO> serviceList=serviceService.selectAll();
+		logger.info("serviceList.size={}",serviceList.size());
+		model.addAttribute("serviceList",serviceList);
 		
 		if(memberId!=null && !memberId.isEmpty()) {
 			MemberVO memberVo=memberService.selectByUserid(memberId);
@@ -84,13 +86,12 @@ public class PaymentController {
 			logger.info("company_code로 조회한 채용공고 list.size={}",list.size());
 			ServiceVO serviceVo1=serviceService.selectServiceByCode(1);
 			logger.info("serviceCode로 service={}",serviceVo1);
-			List<ServiceVO> serviceList=serviceService.selectAll();
-			logger.info("serviceList.size={}",serviceList.size()+"\n");
+			
 			
 			
 			model.addAttribute("serviceVo1",serviceVo1);
 			
-			model.addAttribute("serviceList",serviceList);
+			
 			model.addAttribute("memberVo",memberVo);
 			model.addAttribute("companyVo",companyVo);
 			model.addAttribute("list",list);
@@ -141,18 +142,17 @@ public class PaymentController {
 	
 	@RequestMapping(value="/service/ajaxpayList.do", method = RequestMethod.POST)
 	@ResponseBody
-	public Boolean ajaxpayList(@ModelAttribute JobopeningListVO job,@RequestParam int memberCode, @RequestParam int serviceCode) {
-		logger.info("결제할 공고 리스트 파라미터, jobopeningListVo={}",job);
-		logger.info("결제할 공고 리스트 파라미터 memberCode={}, serviceCode={}",memberCode, serviceCode);
+	public Boolean ajaxpayList(@ModelAttribute PaymentListVO vo) {
+		logger.info("결제할 공고 리스트 파라미터, paymentListVo={}",vo);
 		
-		List<JobopeningVO> list=job.getJobItems();
+		List<PaymentVO> list=vo.getPayItems();
 		
 		int count=0;
 		for(int i=0;i<list.size();i++) {
-			JobopeningVO jobvo=list.get(i);
-			logger.info("{} : jobNo={}",i, jobvo.getJobopening());
+			PaymentVO paymentVo=list.get(i);
+			logger.info("{} : paymentVo={}",i, paymentVo);
 			
-			count+=paymentService.getCountByJobopening(jobvo.getJobopening());
+			count+=paymentService.getCountByJobopening(paymentVo.getJobopening());
 		}
 		logger.info("이미 결제한 상품인지 count={}",count);
 		
@@ -169,22 +169,22 @@ public class PaymentController {
 	}
 	
 	@RequestMapping(value="/service/paysuccess.do", method = RequestMethod.POST)
-	public String paysuccess(@ModelAttribute JobopeningListVO job, @RequestParam int memberCode, @RequestParam int serviceCode ) {
-		logger.info("결제 성공, jobopeningListVo={}",job);
-		logger.info("결제 성공 memberCode={}, serviceCode={}",memberCode, serviceCode);
-		
-		List<JobopeningVO> list=job.getJobItems();
+	public String paysuccess(@ModelAttribute PaymentListVO vo) {
+		List<PaymentVO> list=vo.getPayItems();
+		logger.info("파라미터 vo={}",vo);
 		
 		int cnt=0;
 		for(int i=0;i<list.size();i++) {
-			JobopeningVO jobvo=list.get(i);
-			logger.info("{}번째 : jobNo={}",i, jobvo.getJobopening());
+			PaymentVO paymentVo=list.get(i);
+			logger.info("i번째={}, paymentVo={}",i, paymentVo);
 			
-			cnt=paymentService.insertPayment(list, serviceCode, memberCode);
+			if(paymentVo.getJobopening()!=0) {
+				cnt+=paymentService.insertPayment(paymentVo);
+			}
 			
 		}
-		logger.info("payment 등록 결과 cnt={}",cnt);
 		
+		logger.info("payment 등록 cnt={}",cnt+"\n");
 		return "mypage/corp/paymentDetail";
 	}
 	

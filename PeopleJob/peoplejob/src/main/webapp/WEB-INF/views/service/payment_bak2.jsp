@@ -85,14 +85,12 @@ padding: 5px;
 	  $('button[name=pay]').click(function(){
 		  $('#Info').hide();
 		  $("#selectPeriod").val("2").prop("selected", true);
-		  $('.selectclass').find('option:first').attr('selected', 'selected');
 		  
 		  var scode=$(this).parents("div[name=divcolor]").find("input[name=serviceCode1]").val();
 		  var eachprice=$(this).parents("div[name=divcolor]").find("input[name=price]").val();
 		  $('#serviceName').text($(this).parents("div[name=divcolor]").find("input[name=name]").val());
 		  $('input[name=serviceCode]').attr('value',scode);
 		  $('#servicePrice').text(eachprice+"원");
-		  
 		  
 		  /* checkbox 체크될때마다 체크개수, 가격 변동 */
 		  function check(){
@@ -106,20 +104,9 @@ padding: 5px;
 			  
 			  /* 현재 체크박스 체크시 변경되지만 체크박스 해제시 그대로남아있음 */
 			  var length=  $('.check:checked').length;
-			  
 			  $('.check').click(function(){
 				 var selectval= $(this).parents('tr').find('#selectPeriod option:selected').val();
 				 $('#servicePrice').text(eachprice*(length+1)*selectval+"원");
-				 
-					 if($(this).is(':checked')){
-					  	$(this).parents('tr').find('input[title=price]').attr('value',(eachprice*selectval)+"원");
-					  	
-					  
-					 	
-					 }else{
-						 $(this).parents('tr').find('input[title=price]').attr('value','');
-					 }
-					 
 			  });
 			  
 			  //전부 체크
@@ -133,7 +120,6 @@ padding: 5px;
 						$(".check").prop("checked",false);  
 						$('#chklength').text("0개");
 						$('#servicePrice').text(eachprice+"원");
-						$('input[name=price]').attr('value','');
 					}
 			});
 			  
@@ -306,7 +292,7 @@ padding: 5px;
                         <li>매월1일</li>
                     </ul>
                     <input type="hidden" name="name" value="${serviceVo.serviceName }">
-                     <input type="hidden" name="price" value="${serviceVo.servicePrice }">
+                     <input type="hidden" name="" value="${serviceVo.servicePrice }">
                     <button type="button" class="btn btn-lg btn-primary"
                      id="pay" title="${serviceVo.serviceCode }" name="pay">신청하기</button>
                 </div>
@@ -351,14 +337,13 @@ padding: 5px;
 				
 				<c:forEach var="jobopeningVo" items="${list }">
 				<form id="frmList" method="post" name="frmList"> 
-						<%-- <input type="hidden" name="payItems[${idx }].paymentway">
-						<input type="hidden" name="payItems[${idx }].progress"> --%>
-						<input type="text" value="${memberVo.memberCode }" name="payItems[${idx }].memberCode">
-						<input type="text" value="1" name="payItems[${idx }].serviceCode">
-						<%-- <input type="hidden" value="${jobopeningVo.jobopening }" name="jobno" id="jobnoparam"> --%>
+				
+						<input type="hidden" value="${memberVo.memberCode }" name="memberCode">
+						<input type="text" value="" name="serviceCode">
+						<input type="hidden" value="${jobopeningVo.jobopening }" name="jobno" id="jobnoparam">
 					<tr> 
 						<td align="center">
-						<input type="checkbox" name="payItems[${idx }].jobopening" value="${jobopeningVo.jobopening }" class="check" >
+						<input type="checkbox" name="jobItems[${idx }].jobopening" value="${jobopeningVo.jobopening }" class="check" >
 						</td>
 						<td align="center">${no }</td>
 						<td align="center">${jobopeningVo.jobtitle }</td>
@@ -367,20 +352,20 @@ padding: 5px;
 						 ~ 	${fn:substring(jobopeningVo.endDate,0,10) } </td>  
 						<td align="center">
 						 <c:import url="../inc/date.jsp">
-							<c:param name="name" value="payItems[${idx }].paystartDate"></c:param> 
+							<c:param name="name" value="paystartDate"></c:param> 
 							<c:param name="id" value="paystartDate"></c:param> 
 						 </c:import> 
 						 	<!-- <input type="text" name="paystartDate" id="paystartDate"> -->
 						</td>
 						<td align="center">
-							<select name="payItems[${idx }].period" id="selectPeriod" class="selectclass">
+							<select name="selectPeriod" style="" id="selectPeriod">
 								<c:forEach var="i" begin="2" end="30">
 									<option value="${i }">${i}일 </option> 
 								</c:forEach>
-							</select>
+						</select>
 						</td>
 						<td align="center">
-							<input type="text" name="payItems[${idx }].price" id="price" title="price" readonly>
+							<input type="text" name="price" value="">원
 						</td>
  					</tr> 
 				  <c:set var="idx" value="${idx+1 }"/> 

@@ -15,6 +15,7 @@ public class PaymentVO {
 	//추가
 	private int jobopening;  //채용공고 코드
 	private String paystartDate;
+	private int price;
 	
 	public int getPaymentCode() {
 		return paymentCode;
@@ -80,14 +81,21 @@ public class PaymentVO {
 	public void setJobopening(int jobopening) {
 		this.jobopening = jobopening;
 	}
+	
+	
+	public int getPrice() {
+		return price;
+	}
+	public void setPrice(int price) {
+		this.price = price;
+	}
 	@Override
 	public String toString() {
 		return "PaymentVO [paymentCode=" + paymentCode + ", paymentway=" + paymentway + ", progress=" + progress
 				+ ", period=" + period + ", paydate=" + paydate + ", payendDate=" + payendDate + ", serviceCode="
 				+ serviceCode + ", memberCode=" + memberCode + ", jobopening=" + jobopening + ", paystartDate="
-				+ paystartDate + "]";
+				+ paystartDate + ", price=" + price + "]";
 	}
-	
 	
 	
 	
