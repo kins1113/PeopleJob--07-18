@@ -88,6 +88,9 @@
 	<select id="selectresumebyid3" parameterType="map" resultType="tableaplyVO">
 		select * from apply where member_code=#{memberCode} and jobopening=#{jobopening}
 	</select>
+	<select id="applyCnt" parameterType="int" resultType="int">
+		select count(*) from apply where jobopening=#{jobopening}
+	</select>
 </mapper>
 
 

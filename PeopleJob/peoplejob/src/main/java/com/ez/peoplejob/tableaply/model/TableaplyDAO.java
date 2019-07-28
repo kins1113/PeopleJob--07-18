@@ -19,4 +19,5 @@ public interface TableaplyDAO {
 	ResumeVO selectresumebyid(int memberCode);
 	List<ResumeVO> selectresumebyid2(int memberCode);
 	TableaplyVO selectresumebyid3(Map<String,Object> map);
+	int applyCnt(int jobopening);
 }

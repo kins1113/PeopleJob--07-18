@@ -30,6 +30,7 @@ import com.ez.peoplejob.member.model.CompanyService;
 import com.ez.peoplejob.member.model.CompanyVO;
 import com.ez.peoplejob.member.model.MemberService;
 import com.ez.peoplejob.member.model.MemberVO;
+import com.ez.peoplejob.tableaply.model.TableaplyService;
 
 @RequestMapping("/company")
 @Controller
@@ -39,6 +40,7 @@ public class JobopeningController {
 	@Autowired private FileUploadUtility fileUploadUtil;
 	@Autowired MemberService memberService;
 	@Autowired CompanyService companyService;
+	@Autowired TableaplyService tableaplyService;
 	@RequestMapping(value="/jobopening_register.do",method = RequestMethod.GET)
 	public String jobopening_register_get(HttpSession session,Model model) {
 		String id=(String)session.getAttribute("memberid");
@@ -218,12 +220,15 @@ public class JobopeningController {
 		}
 		MemberVO mvo=memberService.selectByUserid(id);
 		CompanyVO cvo=companyService.selectcompany(vo.getCompanyCode());
+		int cnt=tableaplyService.applyCnt(jobopening);
 		logger.info("로그인한 회원 정보 mvo={}",mvo);
 		logger.info("자세히보기 변수 vo={}",vo);
 		logger.info("해당기업정보 cvo={}",cvo);
+		logger.info("해당 공고 지원현황 수 cnt={}",cnt);
 		model.addAttribute("vo", vo);
 		model.addAttribute("mvo", mvo);
 		model.addAttribute("cvo", cvo);
+		model.addAttribute("cnt", cnt);
 		return "company/jobopening_view";
 	}
 	@RequestMapping("/jobopening_where.do")

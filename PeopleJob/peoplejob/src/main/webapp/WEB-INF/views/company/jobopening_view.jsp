@@ -148,7 +148,7 @@ span #companyname{
         <h2 class="mb-5">회사정보</h2>
         <span id="companyname" aria-hidden="true" style="font-size:20px;font-weight: bold;">${cvo.companyname}</span>&nbsp;&nbsp;
         <p class="lead mb-7" style="font-weight: bold;">${vo.jobtitle}</p><!-- 공고제목 -->
-        공고등록일:<span>${fn:substring(vo.jobregdate,0,10) }</span><br><br>
+        <span style="float:right;">공고등록일:${fn:substring(vo.jobregdate,0,10) }</span><br><br>
         <div id="imgDiv">
 	        <img src="<c:url value='/logo_upload/${cvo.image }'/>" 
 							alt="" width="50">
@@ -189,7 +189,8 @@ span #companyname{
 			        <span  aria-hidden="true"></span>근무지역:<span>${vo.localcheck}</span><br><br>
 			        <span  aria-hidden="true"></span>역정보:<span>${vo.subwayinfo}</span><br><br>
 			        <span  aria-hidden="true"></span>고용형태:<span>${vo.workform}</span><br><br>
-            		<span  aria-hidden="true">급여/급여방식:${vo.pay }/${vo.payway }</span><br><br>
+					
+            		<span  aria-hidden="true">급여/급여방식:<fmt:formatNumber value="${vo.pay }" pattern="#,###"/>원/${vo.payway }</span><br><br>
             		<span  aria-hidden="true">근무형태:${vo.workway}</span><br><br>
             		<span  aria-hidden="true">우대사항:${vo.sweetener}</span><br><br>
             		<span  aria-hidden="true">복리후생:${vo.welfare}</span><br><br>
@@ -218,7 +219,9 @@ span #companyname{
         <div class="resume-item d-flex flex-column flex-md-row justify-content-between mb-5">
           <div class="memberinfo">
             <div class="subheading mb-3">
-            		<span  aria-hidden="true">모집기간:${fn:substring(vo.workdate,0,10) }~${fn:substring(vo.endDate,0,10)}</span><br><br>
+           			<span  aria-hidden="true" style="font-weight: bold;color: red;">모집기간:${fn:substring(vo.workdate,0,10) }~${fn:substring(vo.endDate,0,10)}</span>
+            		<br>해당기간내에 지원해 주시길 바랍니다.
+            		<br>
             		<span  aria-hidden="true">모집인원:${vo.recruit }명</span><br><br>
             		<span  aria-hidden="true">모집대상:${vo.recruitmentTarget}</span><br><br>
             		<span  aria-hidden="true">접수방법:${vo.receiveway}</span><br><br>
@@ -234,6 +237,17 @@ span #companyname{
 			 <div class="resume-item d-flex flex-column flex-md-row justify-content-between mb-5">
           <div class="memberinfo">
             		<span aria-hidden="true"></span> <span>${vo.applicationhandbook}</span>
+          </div>
+        </div>
+		</div> 
+    </section>  
+    <section class="resume-section p-3 p-lg-5 d-flex align-items-center redetail" id="gonnggo">
+		<div class="w-100">
+			<h2 class="mb-5">해당공고 지원현황</h2>
+			 <div class="resume-item d-flex flex-column flex-md-row justify-content-between mb-5">
+          <div class="memberinfo">
+            		<span aria-hidden="true"></span> <span>지금까지 ${cnt}명 지원했습니다.</span> <br>
+            		<span aria-hidden="true"></span> <span>즉시지원 인원수이기 때문에 모든 인원수를 체크한 것은 아닙니다. </span> 
           </div>
         </div>
 		</div> 
