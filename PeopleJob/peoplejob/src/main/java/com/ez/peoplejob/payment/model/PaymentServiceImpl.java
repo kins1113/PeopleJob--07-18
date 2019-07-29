@@ -56,10 +56,11 @@ public class PaymentServiceImpl implements PaymentService{
 	public int selectTotalCount(SearchVO searchVo) {
 		return paymentDao.selectTotalCount(searchVo);
 	}
-	
 
-
-	
+	@Override
+	public List<Map<String, Object>> selectPayByTime(String memberid) {
+		return paymentDao.selectPayByTime(memberid);
+	}
 
 	
 }

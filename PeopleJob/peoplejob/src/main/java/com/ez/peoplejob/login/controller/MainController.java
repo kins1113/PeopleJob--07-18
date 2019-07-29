@@ -16,7 +16,6 @@ import com.ez.peoplejob.jobopening.model.JobopeningService;
 import com.ez.peoplejob.member.model.MemberService;
 import com.ez.peoplejob.member.model.MemberVO;
 import com.ez.peoplejob.payment.model.PaymentService;
-import com.ez.peoplejob.tableaply.model.TableaplyService;
 
 @Controller
 public class MainController {
@@ -62,6 +61,13 @@ public class MainController {
 	public String chkgrammer() {
 		logger.info("글자수 세기 화면 보여주기");
 		return "main/chkgrammer";
+		
+	}
+	
+	@RequestMapping("/references/FreeLecture.do")
+	public String freelecture() {
+		logger.info("자료실-무료강좌 화면 보여주기");
+		return "references/FreeLecture";
 		
 	}
 	

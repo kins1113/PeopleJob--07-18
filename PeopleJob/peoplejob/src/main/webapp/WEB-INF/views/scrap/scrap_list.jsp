@@ -6,6 +6,9 @@
 		document.frmSearch.currentPage.value=curPage;
 		document.frmSearch.submit();
 	}
+	function go(jobopening){ 
+		window.open("<c:url value='/apply/resumelist.do?jobopening="+jobopening+"'/>","이력서 선택","height=400,width=600,resizable=yes");
+	}
 	$(document).ready(function(){
 		$("#where").hide();
 		$("#search").click(function(){
@@ -146,7 +149,7 @@
 	                <br>
 	                 <span class="label label-info">복리후생 : ${vo.welfare }</span>
 	                 <br>
-					<a href="<c:url value='/apply/insertapply.do?jobopening=${vo.jobopening}'/>"><input type="button" id="apply" name="apply"class="btn btn-primary" value="즉시지원"></a>
+					<input type="button" id="apply" name="apply"class="btn btn-primary" value="즉시지원" onclick="go(${vo.jobopening});">
 					<a id="del2" href="<c:url value='/scrap/deletescrap2.do?jobopening=${vo.jobopening}&member_code=${mvo.memberCode }'/>"><img alt="스크랩" src="<c:url value='/peoplejob_upload/scrapstar.PNG'/>"></a>
 	            </div>
 	        </div>

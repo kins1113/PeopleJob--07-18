@@ -215,11 +215,11 @@ function company(){
 							</li>
 
 							<li style="width: 98px;">
-								<a href="#">자료실</a>
+								<a href="">자료실</a>
 								<ul class="sub-menu">
 									<li><a href="">이력서 양식</a></li>
 									<li><a href="">취업 뉴스</a></li>
-									<li><a href="">무료 강좌</a></li>
+									<li><a href="<c:url value='/references/FreeLecture.do'/>">무료 강좌</a></li>
 									
 								</ul>
 							</li>

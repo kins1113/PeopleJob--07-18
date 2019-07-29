@@ -79,48 +79,73 @@ padding: 5px;
 	 
 	  
 	  
-	  /* checkbox 개수 * 날짜* 1일당 가격  */
-	 
+	
 	  
 	  $('button[name=pay]').click(function(){
+		  
+		 
+		  
 		  $('#Info').hide();
 		  $("#selectPeriod").val("2").prop("selected", true);
 		  $('.selectclass').find('option:first').attr('selected', 'selected');
 		  
 		  var scode=$(this).parents("div[name=divcolor]").find("input[name=serviceCode1]").val();
-		  var eachprice=$(this).parents("div[name=divcolor]").find("input[name=price]").val();
+		  
+		  var eachprice=$(this).parents("div[name=divcolor]").find("input[name=sprice]").val();
 		  $('#serviceName').text($(this).parents("div[name=divcolor]").find("input[name=name]").val());
 		  $('input[name=serviceCode]').attr('value',scode);
-		  $('#servicePrice').text(eachprice+"원");
-		  
+		 // $('#servicePrice').text(eachprice+"원");
+		 
 		  
 		  /* checkbox 체크될때마다 체크개수, 가격 변동 */
 		  function check(){
 				var length=  $('.check:checked').length;
 				$('#chklength').text(length+"개");
-				$('#servicePrice').text(eachprice*(length+1)+"원");
-				
-			  }
+				//$('#totalPrice').attr('value',eachprice*(length+1)+"원");
+		}
+		  
 			  check();
 			  $('.check').click(check);
 			  
-			  /* 현재 체크박스 체크시 변경되지만 체크박스 해제시 그대로남아있음 */
+			 
+			  var sum=0; //totalprice에 보여줄 모든 price들의 합
 			  var length=  $('.check:checked').length;
 			  
+			  /* select 값 변경 시 check된 것만 각각의금액 보여주기 */
+			  $('.selectclass').change(function(){
+					var selectval= $(this).parents('tr').find('#selectPeriod option:selected').val();
+					  
+					  if($(this).parents('tr').find('.check').is(':checked')){
+						  $(this).parents('tr').find('input[title=price]').attr('value',(eachprice*selectval));
+						  sum+=Number($(this).parents('tr').find('input[title=price]').val());
+						  
+						  $('#totalPrice').attr('value',sum);
+					  }else{
+						  sum-=Number($(this).parents('tr').find('input[title=price]').val());
+						  $('#totalPrice').attr('value',sum);
+						  
+					  }
+				  });
+			
 			  $('.check').click(function(){
 				 var selectval= $(this).parents('tr').find('#selectPeriod option:selected').val();
-				 $('#servicePrice').text(eachprice*(length+1)*selectval+"원");
-				 
-					 if($(this).is(':checked')){
-					  	$(this).parents('tr').find('input[title=price]').attr('value',(eachprice*selectval)+"원");
-					  	
+				// $('#totalPrice').text(eachprice*(length+1)*selectval+"원");
+				
 					  
-					 	
+					 if($(this).is(':checked')){
+					  	$(this).parents('tr').find('input[title=price]').attr('value',(eachprice*selectval));
+					  	 
+						sum += Number($(this).parents("tr").find("input[title=price]").val());
+						  /* checkbox 개수 * 날짜* 1일당 가격  */
 					 }else{
-						 $(this).parents('tr').find('input[title=price]').attr('value','');
+						sum -= Number($(this).parents("tr").find("input[title=price]").val());
+						 $(this).parents('tr').find('input[title=price]').attr('value',sum);
 					 }
+						$('#totalPrice').attr('value',sum);
 					 
 			  });
+			  
+			
 			  
 			  //전부 체크
 			  $("#chkAll").click(function(){
@@ -128,12 +153,19 @@ padding: 5px;
 					if($(this).is(":checked")){
 						$(".check").prop("checked","checked");
 						$('#chklength').text(${fn:length(list)}+"개");
-						$('#servicePrice').text(eachprice*(${fn:length(list)}+1)+"원");
+						//sum=모든 price들의 합
+						
+						var size=$('input[name=price]').length;
+						for(var i=0;i<size;i++){
+							sum+=$('input[name=price]').eq(i).val();
+						}
+						
+						$('#totalPrice').attr('value',sum);
 					}else{
 						$(".check").prop("checked",false);  
 						$('#chklength').text("0개");
-						$('#servicePrice').text(eachprice+"원");
-						$('input[name=price]').attr('value','');
+						$('#totalPrice').attr('value','0');
+						$('input[title=price]').attr('value','0');
 					}
 			});
 			  
@@ -144,7 +176,7 @@ padding: 5px;
 		  $('#cardBoduPostList').hide();
 		  $("#selectPeriod").val("2").prop("selected", true);
 		  $("#serviceTerm").html("0일");
-		  $('#servicePrice').text(eachprice+"원");
+		  $('#totalPrice').attr('value','0');
 		  
 		  if(${sessionScope.memberid==null}){     
 			  alert('로그인을 해주세요');
@@ -162,7 +194,8 @@ padding: 5px;
 			  	$('#cardBoduPostList').show();
 			  	$("#selectPeriod").val("2").prop("selected", true);
 			  	$("#chklength").html("0개");
-			  	$('#servicePrice').text(eachprice+"원");
+			  	//$('#servicePrice').text(eachprice+"원");
+			  	$('#totalPrice').attr('value','0');
 			  	
 			  }else if(${sessionScope.author_code==3 && fn:length(list)<1}){   
 				  alert('등록된 채용공고가 없습니다. 채용공고를 먼저 등록해주세요');
@@ -175,7 +208,7 @@ padding: 5px;
   
  
 	  $("#frmList").submit(function(){ 
-		  if($('input[type=checkbox]:checked').length<1){
+		  if($('.check:checked').length<1){
 				alert('결제할 채용공고를 먼저 선택하세요');
 				event.preventDefault();
 				return;
@@ -186,6 +219,16 @@ padding: 5px;
 				return false;
 				
 			} else{ 
+				$('.check:checked').each(function(){
+					if($(this).parents('tr').find('#paystartDate').length<1){
+						alert('선택한 상품의 이용기간 시작날짜를 선택해주세요.');
+						event.preventDefault();
+						return false;
+						
+					}
+				});
+				
+				
 				//$('form[name=frmList]').prop('action','<c:url value="/service/payList.do"/>');
 				//$('form[name=frmList]').submit();
 				
@@ -197,6 +240,8 @@ padding: 5px;
 				
 				var param=$("#frmList").serialize();
 				var length=  $('.check:checked').length;
+				var totalprice=$('#totalPrice').val();
+				
 				$.ajax({
 					url : "<c:url value='/service/ajaxpayList.do'/>",
 					type : "POST",
@@ -217,7 +262,7 @@ padding: 5px;
 									    pay_method : 'card',
 									    merchant_uid : 'peoplejob_' + new Date().getTime(),
 									    name : 'PEOPLEJOB 채용공고 vvip관',
-									    amount : 10*length,
+									    amount : totalprice,
 									    buyer_email : '${memberVo.email}',
 									    buyer_name : '${sessionScope.memberName}',
 									    buyer_tel : '${memberVo.tel}',
@@ -255,7 +300,7 @@ padding: 5px;
 					}
 				});
 				
-			}
+			}//else(정상)
 		  event.preventDefault();
 	  }); //submit 
 
@@ -288,12 +333,12 @@ padding: 5px;
     <c:forEach var="serviceVo" items="${serviceList}">
         <div class="col-12 col-md-6 col-lg-3">
             <div class="card text-center p-table" id="divcolor" name="divcolor">
-            <input type="Text" id="serviceCode1" name="serviceCode1" value="${serviceVo.serviceCode }">
+            <input type="hidden" id="serviceCode1" name="serviceCode1" value="${serviceVo.serviceCode }">
+            <input type="hidden" name="content" value="${serviceVo.serviceContent }">
                 <div class="card-header">
                     <h3 class="p-name p-name">${serviceVo.serviceName }</h3>
                     <h4 class="p-price">${serviceVo.servicePrice }원</h4>
                     <small class="text-muted">1일당 가격</small>
-                    <input type="text" name="content" value="">
                 </div>
                 <div class="card-body">
 
@@ -306,7 +351,7 @@ padding: 5px;
                         <li>매월1일</li>
                     </ul>
                     <input type="hidden" name="name" value="${serviceVo.serviceName }">
-                     <input type="hidden" name="price" value="${serviceVo.servicePrice }">
+                     <input type="hidden" name="sprice" value="${serviceVo.servicePrice }">
                     <button type="button" class="btn btn-lg btn-primary"
                      id="pay" title="${serviceVo.serviceCode }" name="pay">신청하기</button>
                 </div>
@@ -318,7 +363,7 @@ padding: 5px;
         
         <div class="card-body" id="cardBoduPostList" style="min-height: 300px; display: none; background-color: #ffffff; "> 
         <span id="hideList" style="cursor: pointer;font-size:1.5em;" >채용공고 리스트 목록 닫기 ▲</span>
-	<table class="table table-bordered" style="margin-top: 15px; ">
+	<table class="table table-bordered" style="margin-top: 15px;" name="jobopeninglist">
 		<thead>
 			<tr> 
 				<th scope="col"><input type="checkbox" id="chkAll" style="margin: 0 auto;"></th>
@@ -353,8 +398,8 @@ padding: 5px;
 				<form id="frmList" method="post" name="frmList"> 
 						<%-- <input type="hidden" name="payItems[${idx }].paymentway">
 						<input type="hidden" name="payItems[${idx }].progress"> --%>
-						<input type="text" value="${memberVo.memberCode }" name="payItems[${idx }].memberCode">
-						<input type="text" value="1" name="payItems[${idx }].serviceCode">
+						<input type="hidden" value="${memberVo.memberCode }" name="payItems[${idx }].memberCode">
+						<input type="hidden" value="1" name="payItems[${idx }].serviceCode">
 						<%-- <input type="hidden" value="${jobopeningVo.jobopening }" name="jobno" id="jobnoparam"> --%>
 					<tr> 
 						<td align="center">
@@ -368,7 +413,7 @@ padding: 5px;
 						<td align="center">
 						 <c:import url="../inc/date.jsp">
 							<c:param name="name" value="payItems[${idx }].paystartDate"></c:param> 
-							<c:param name="id" value="paystartDate"></c:param> 
+							<c:param name="id" value="payItems[${idx }].paystartDate"></c:param> 
 						 </c:import> 
 						 	<!-- <input type="text" name="paystartDate" id="paystartDate"> -->
 						</td>
@@ -380,7 +425,11 @@ padding: 5px;
 							</select>
 						</td>
 						<td align="center">
-							<input type="text" name="payItems[${idx }].price" id="price" title="price" readonly>
+							<input type="text" name="payItems[${idx }].price" id="price" title="price" readonly 
+							style="    cursor: default;
+    text-align: right;
+    display: inline;
+    width: 36px;" value="0">원
 						</td>
  					</tr> 
 				  <c:set var="idx" value="${idx+1 }"/> 
@@ -392,14 +441,14 @@ padding: 5px;
 	</table>
 	<br>
 	
-	<span style="font-size: 1.5em;">견적서</span>
+	<span style="font-size: 2em; font-weight: bold;">견적서</span>
 		<table class="table table-bordered" style="margin-top: 15px; " id="priceList">
 		<thead>
 			<tr> 
 				<th scope="col">서비스명</th>
-				<th scope="col">결제할 채용공고 개수</th>
+				<th scope="col">선택한 상품 개수</th>
 				<th scope="col">세부내용</th>
-				<th scope="col">결제금액</th>
+				<th scope="col">총 합계금액</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -410,7 +459,10 @@ padding: 5px;
 				</td>
 				<td id="serviceContent"></td>
 				<td id="servicePrice" name="servicePrice" style="color: orangered;">
-				<input type="text" name="sPrice" id="sPrice" style="color:orangered;">
+				<input type="text" name="totalPrice" id="totalPrice" style="    color: orangered;
+    cursor: default;
+    text-align: right;
+    width: 36px; display: inline;" readonly value="0">원 
 				</td>
 			</tr>
 		</tbody> 

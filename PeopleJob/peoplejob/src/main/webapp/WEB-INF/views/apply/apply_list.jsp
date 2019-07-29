@@ -141,7 +141,7 @@
 					    </c:if>
 				    </c:forEach>
 					</td>
-					<td><a href="<c:url value='/resume/resumedetail.do?resumeCode=${resumeCode }'/>"><input type="button" id="detail" class="btn btn-primary" name="detail" value="자세히보기"></a></td>
+					<td><a href="<c:url value='/resume/resumedetail.do?resumeCode=${vo.resumeCode }'/>"><input type="button" id="detail" class="btn btn-primary" name="detail" value="자세히보기"></a></td>
 				</tr>
 	    	</c:forEach>
 	</c:if>
@@ -178,7 +178,7 @@
 		</a>
 	</c:if>
 </div>
-	<input type="text" name="applyCode" id="applyCode"> 
+	<input type="hidden" name="applyCode" id="applyCode"> 
 	<div class="pull-right">
       <input type="button" id="del" name="del" class="btn btn-primary" role="button" value="삭제하기">
        <a href="<c:url value='/company/jobopening_list.do'/>" class="btn btn-primary" role="button">채용정보로 돌아가기</a>
