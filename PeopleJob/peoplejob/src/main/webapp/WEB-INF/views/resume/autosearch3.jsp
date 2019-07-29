@@ -8,6 +8,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+
 <link rel="stylesheet" type="text/css" 
 	href="<c:url value='/resources/css/jquery-ui.min.css'/>">
 <script type="text/javascript" 
@@ -827,7 +828,7 @@
 	    '	직업능력개발훈련교사(요업)    '    ,
 	    '	직업능력개발훈련교사(의약품제'     ,
 	    '	직업능력개발훈련교사(전기)    '    ,
-	    '	직업능력개발훈련교사(전기부품'조)  ,
+	    '	직업능력개발훈련교사(전기부품조)'  ,
 	    '	직업능력개발훈련교사(신호보안)'    ,
 	    '	직업능력개발훈련교사(전자)    '    ,
 	    '	직업능력개발훈련교사(전자부품조)'  ,

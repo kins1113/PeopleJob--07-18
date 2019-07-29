@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ez.peoplejob.hopecompany.controller.OccupantionController;
-import com.ez.peoplejob.hopecompany.model.LocationVO;
 import com.ez.peoplejob.resume.model.CareerService;
 import com.ez.peoplejob.resume.model.CareerVO;
 
