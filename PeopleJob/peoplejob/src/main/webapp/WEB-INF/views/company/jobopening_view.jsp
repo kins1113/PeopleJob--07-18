@@ -10,6 +10,10 @@ $(window).scroll(function( ){  //스크롤이 움직일때마다 이벤트 발�
     var position = $(window).scrollTop(); // 현재 스크롤바의 위치값을 반환합니다.
     $( id ).stop().animate({top:position+"px"}, 1); //해당 오브젝트 위치값 재설정
 });
+//<c:url value='/company/map.do?companyCode=${cvo.companyCode}'/>
+	function go(companyCode){ 
+		window.open("<c:url value='/company/map.do?companyCode="+companyCode+"'/>","주소로 장소 표시","height=500,width=700,resizable=yes");
+	}
 </script>
 <style type="text/css">
 form {
@@ -60,13 +64,13 @@ p.lead.mb-7 {
 
 div #memberinfo {
    border: 1px solid lightgray;
-    width: 500px;
+    width: 550px;
     padding: 21px;
     margin-left: 197px;
 }
 div .memberinfo {
    border: 1px solid lightgray;
-    width: 600px;
+    width: 800px;
     padding: 21px;
     
 }
@@ -133,7 +137,10 @@ span #companyname{
           <a class="nav-link js-scroll-trigger" href="#education">접수기간 및 방법 | </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link js-scroll-trigger" href="#skills">상세모집요강</a>
+          <a class="nav-link js-scroll-trigger" href="#skills">상세모집요강 | </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link js-scroll-trigger" href="#gonggo">해당공고 지원현황</a>
         </li>
       </ul>
     </div>
@@ -156,7 +163,9 @@ span #companyname{
 		<div id="memberinfo">				
         	&nbsp;&nbsp;<br>   
         <div class="subheading mb-5">
-        <span aria-hidden="true"></span>회사 주소:<span>${cvo.companyAddress} ${cvo.companyAddressdetail }</span><br><br>
+        <span aria-hidden="true"></span>회사 주소:<span>${cvo.companyAddress} ${cvo.companyAddressdetail }</span>
+        <a href="#" onclick="go(${cvo.companyCode})" ><input type="button" id="map" class="btn btn-default btn-mg" role="button" value="지도보기"></a>
+        <br><br>
         <span aria-hidden="true"></span>총 사원 수:<span>${cvo.womannum + cvo.mannum}명</span><br><br>
         <span aria-hidden="true"></span>설립년도:<span>${cvo.establishyear}</span><br><br>
         <span aria-hidden="true"></span>사이트:<span>${cvo.site}</span><br><br>
@@ -166,13 +175,13 @@ span #companyname{
       </div>
       </div>
     </section>
-     <c:if test="${mvo.authorityCode==1}">
+     <c:if test="${mvo.authorityCode==1}"> 
      <div style="height:50px;"> 
 	     <a style="position: absolute;  
-	left: 50%; 
-	transform: translateX(-50%);" href="<c:url value='/apply/insertapply.do?jobopening=${vo.jobopening}'/>"><input type="button" id="apply" name="apply"class="btn btn-primary" value="즉시지원"></a>
+	left: 45%; 
+	transform: translateX(-45%);" href="<c:url value='/apply/insertapply.do?jobopening=${vo.jobopening}'/>"><input type="button" id="apply" name="apply"class="btn btn-primary" value="즉시지원"></a>
 	     <a style="position: absolute; 
-	left: 55%; 
+	left: 50%; 
 	transform: translateX(-50%);" href="<c:url value='/scrap/insertscrap.do?jobopening=${vo.jobopening}&member_code=${mvo.memberCode }'/>"><input type="button" class="btn btn-default btn-mg" role="button" value="스크랩"></a>
 	</div>
      </c:if>
@@ -182,7 +191,7 @@ span #companyname{
         <h2 class="mb-5">공고정보</h2>
 
         <div class="resume-item d-flex flex-column flex-md-row justify-content-between mb-5">
-          <div class="experience">
+          <div class="memberinfo">
             <div class="subheading mb-3">
             		
 			        <span  aria-hidden="true"></span>고용형태:<span>${vo.workway}</span><br><br>
@@ -241,7 +250,7 @@ span #companyname{
         </div>
 		</div> 
     </section>  
-    <section class="resume-section p-3 p-lg-5 d-flex align-items-center redetail" id="gonnggo">
+    <section class="resume-section p-3 p-lg-5 d-flex align-items-center redetail" id="gonggo">
 		<div class="w-100">
 			<h2 class="mb-5">해당공고 지원현황</h2>
 			 <div class="resume-item d-flex flex-column flex-md-row justify-content-between mb-5">
