@@ -13,6 +13,9 @@
 	<select id="selectBydvCode" parameterType="int" resultType="resumeVo">
 		select * from career where dv_code=#{dvCode}
 	</select>
+	<select id="selectBydvCode2" parameterType="int" resultType="resumeVo">
+		select * from career where dv_code=#{dvCode}
+	</select>
 	<select id="selectByacademicCode" parameterType="int" resultType="resumeVo">
 		select * from education where academic_code=#{academicCode}
 	</select>

@@ -72,6 +72,7 @@ input[type="submit"] {
 <style>
 
 </style>
+
 <script type="text/javascript">
 $(document).ready(function (){
 	
@@ -92,7 +93,9 @@ $(document).ready(function (){
 			selectThird(secondCode);
 		}
 	});
+
 	
+
 	
 	//지역정보를 가져오기 - 시도
 	getLocation();
@@ -258,6 +261,7 @@ function settingLocation(res){
 	});
 }
 
+
 //지역정보를 가져오는 메서드 - 구군
 function getLocation2(sidoCode){
 	$.ajax({
@@ -384,8 +388,42 @@ function settingBtype3(res){
 		}
 	})
 }
+//직급을 가져오기 - 직급
 
-
+var jobgradeCode=$('#jobgrade').val();
+//값을 가져오는 메서드
+getjobgrade(dvCode);
+//직급 가져오기
+function getjobgrade(dvCode){
+	$.ajax({
+		url:"<c:url value='/career/selectCareer.do'/>",
+		type:"post",
+		data:"dvCode="+dvCode,
+		success:function(res){
+				settingjobgrade(res);
+		},
+		error:function(xhr, status, error){
+			alert(status+":"+error);
+		}
+	})
+}
+//직급 뿌리기
+function settingjobgrade(res){
+	$.each(res,function(idx,item){
+		if(idx==0){
+			var chEl=$("<input type='text' value='0'>직급")
+			var opEl=$("<input type='text' value='"+item["dv_code"]+"'>");
+			opEl.append(item['jobgrade']);
+			$("#jobgrade").html(chEl);
+			$("#jobgrade").append(opEl); 
+		}else{
+			var opEl=$("<input type='text' value='"+item["dv_code"]+"'>");
+			opEl.append(item['jobgrade']);
+			$("#jobgrade").append(opEl); 
+		}
+	})
+	
+}
 
 
 $(function () {
@@ -411,6 +449,7 @@ $(function () {
 
 });
 </script>
+
 <article>
 <div id="registerdiv">
 <div class="divForm">
@@ -548,8 +587,8 @@ $(function () {
         </select>   
        </div>
        <div>
-       <label>전공</label>
-  		<input type="text"  class="form-control" placeholder="전공을 입력하세요" name="major" id="major" >
+       <c:import url="autosearch.jsp"/><!-- 전공 -->
+       
        
        </div>
        <div>
@@ -596,10 +635,10 @@ $(function () {
         <label for="chargework">직종</label>
         <input type="text" class="form-control"  name="chargework" id="chargework" style="ime-mode:active">
         <%-- <c:import url="occupation.jsp"/> --%>
-    </div>	
+    </div>
+    	
     <div>
-        <label for="jobgrade">직급</label>
-        <input type="text" class="form-control"  name="jobgrade" id="jobgrade" style="ime-mode:active" placeholder="직급을 입력하세요">
+       <c:import url="autosearch2.jsp"/><!-- 직급 -->
    </div>
    </section>
 
@@ -611,9 +650,7 @@ $(function () {
 
         
    <input class="form-control" name="certificationtype" id="certificationtype" value="자격증/면허증">
-        <label for="lName">자격증명</label>
-        licenceCode
-        <input type="text" class="form-control"  name="licenceCode" id="lName" placeholder="자격증명을 입력하세요" style="ime-mode:active">
+        <c:import url="autosearch3.jsp"/> <!-- 자격증명 -->
     <div>    
         <label for="lInstitution">발행처/기관</label>
         <input type="text" class="form-control"  name="lInstitution" placeholder="발행처/기관을 입력하세요" id="lInstitution" style="ime-mode:active">
