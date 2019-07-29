@@ -13,7 +13,8 @@ public interface PaymentDAO {
 	List<Map<String , Object>> selectMainAdvertiseByServiceCode(int serviceCode);
 	int getpaymentJobCount(PaymentVO paymentVo);
 	int getCountByJobopening(int jobno);
-
+	List<Map<String, Object>> selectPayByTime(String memberid);
+	
 	
 	public List<Map<String, Object>> selectAll(Map<String, Object> map);
 	int selectTotalCount(SearchVO searchVo);
