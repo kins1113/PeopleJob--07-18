@@ -176,7 +176,7 @@
 		</a>
 	</c:if>
 </div>
-	<input type="text" name="applyCode" id="applyCode"> 
+	<input type="hidden" name="applyCode" id="applyCode"> 
 	<div class="pull-right">
       <input type="button" id="del" name="del" class="btn btn-primary" role="button" value="삭제하기">
        <a href="<c:url value='/company/jobopening_list.do'/>" class="btn btn-primary" role="button">채용정보로 돌아가기</a>

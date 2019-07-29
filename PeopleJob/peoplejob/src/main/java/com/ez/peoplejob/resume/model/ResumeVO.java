@@ -2,7 +2,9 @@ package com.ez.peoplejob.resume.model;
 
 import java.sql.Timestamp;
 
-public class ResumeVO {
+import com.ez.peoplejob.common.SearchVO;
+
+public class ResumeVO{
 	private int resumeCode;
 	private String resumeTitle;
 	private Timestamp resumeRegdate;

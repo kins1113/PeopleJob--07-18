@@ -494,4 +494,12 @@ public class JobopeningController {
 		model.addAttribute("msg",msg);
 		return "common/message";
 	}
+	@RequestMapping("/map.do")
+	public String map(@RequestParam (defaultValue = "0")int companyCode,Model model) {
+		CompanyVO cvo=companyService.selectcompany(companyCode);
+		logger.info("지도api companyCode={}",companyCode);
+		logger.info("해당 회사 정보 cvo={}",cvo);
+		model.addAttribute("cvo", cvo);
+		return "company/map";
+	}
 }

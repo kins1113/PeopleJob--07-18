@@ -243,8 +243,13 @@ public class ApplyController {
 		return "common/message";
 	}
 	@RequestMapping("/resumelist.do")
-	public String list(@ModelAttribute SearchVO searchVo,@RequestParam(defaultValue = "0") int jobopening, Model model) {
-
+	public String list(@ModelAttribute SearchVO searchVo,
+			@RequestParam(defaultValue = "0") int jobopening,
+			HttpSession session,
+			Model model) {
+			String id=(String)session.getAttribute("memberid");
+			MemberVO mvo=memberService.selectByUserid(id);
+			logger.info("로그인한 회원정보 mvo={}",mvo);
 			//1
 			logger.info("이력서목록 파라미터 searchVo={}", searchVo);
 			
@@ -261,7 +266,7 @@ public class ApplyController {
 			logger.info("셋팅 후 searchVo={}", searchVo);
 			
 			//[3] 조회처리
-			List<ResumeVO> list=resumeService.selectAll(searchVo);
+			List<ResumeVO> list=tableaplyService.selectresumebyid2(mvo.getMemberCode());
 			logger.info("이력서목록 결과, list.size={}",list.size());
 				
 			//3
