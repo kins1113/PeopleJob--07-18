@@ -274,12 +274,12 @@
                     <input id="applicationhandbook" name="applicationhandbook" class="form-control" type="text" />
                 </div>
             </div>
-            <div class="form-group">
+            <!-- <div class="form-group">
                 <div  >
                     <label  >카테고리</label> 
                     <input id="category" name="category" class="form-control" type="text" />
                 </div>
-            </div>
+            </div> -->
             <div class="form-group">
                 <div  >
                     <label  >공고 이미지</label> 

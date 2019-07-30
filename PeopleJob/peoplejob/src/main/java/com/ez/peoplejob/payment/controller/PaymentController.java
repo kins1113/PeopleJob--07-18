@@ -101,6 +101,22 @@ public class PaymentController {
 		
 	}
 	
+	@RequestMapping(value="/mypage/corp/paymentDetail.do", method = RequestMethod.GET)
+	public String paymentDetail(HttpSession session, Model model) {
+		String memberid=(String)session.getAttribute("memberid");
+		List<Map<String , Object>> list=paymentService.selectPaymentById(memberid);
+		logger.info("결제 내역 list.size={}",list.size());
+		
+		List<Map<String , Object>> Timelist=paymentService.selectPayByTime(memberid);
+		logger.info("(group by) 결제 내역 Timelist.size={}",Timelist.size());
+		
+		model.addAttribute("list",list);
+		model.addAttribute("Timelist",Timelist);
+		
+		return "mypage/corp/paymentDetail";
+	}
+	
+	
 	@RequestMapping(value="/mypage/corp/paymentDetail.do", method = RequestMethod.POST)
 	public String cancelpay(@RequestParam int paymentCode, Model model) {
 		logger.info("결제 취소 파라미터 paymentCode={}",paymentCode);
@@ -130,6 +146,21 @@ public class PaymentController {
 		model.addAttribute("url",url);
 		
 		return "common/message";
+		
+	}
+	
+	@RequestMapping(value="/mypage/corp/paymoreDetail.do", method = RequestMethod.GET)
+	public String paymoreDetail(@RequestParam String paydate, @RequestParam(defaultValue = "0") int memberCode,
+			@RequestParam String serviceName, Model model) {
+		logger.info("결제내역 상세보기 파라미터, paydate={}, memberCode={}",paydate, memberCode);
+		logger.info("결제내역 상세보기 파라미터 serviceName={}",serviceName);
+		
+		List<Map<String, Object>> list=paymentService.selectBySameTime(paydate, memberCode);
+		logger.info("같은 시간대, 결제내역 상세보기 list.size={}",list.size());
+		
+		model.addAttribute("serviceName",serviceName);
+		model.addAttribute("list",list);
+		return "mypage/corp/paymoreDetail";
 		
 	}
 	
