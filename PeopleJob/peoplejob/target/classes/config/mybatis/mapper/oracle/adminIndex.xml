@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="config.mybatis.mapper.oracle.adminIndex">
+	<insert id="insertConnet" parameterType="int">
+		insert into connet (connet_code,member_code)
+		values(connet_seq.nextval, #{memberCode})
+	</insert>
+	
+	<select id="selectConnet" parameterType="String" resultType="connetVo" >
+		select count(*) as count,connet_day from
+		(
+			select to_date(connet_day) as connet_day from connet
+			<![CDATA[where connet_day>=to_date(#{today}) and connet_day<to_date(#{today})+1]]>
+		)
+		group by connet_day		
+
+	</select>
+	
+	<select id="selectMemberCount" parameterType="map" resultType="int">
+		select count(*) as count from member
+		<if test="type!=0"> 
+			<where>
+				<if test="type==1">withdrawaldate is not null</if>
+				<if test="type==2">authority_code=1</if>
+				<if test="type==3">authority_code=1 and withdrawaldate>=#{today}</if>
+				<if test="type==4">authority_code in (2,3)</if>
+				<if test="type==5">authority_code in (2,3) and withdrawaldate>=#{today}</if>	
+				<if test="type==6">authority_code=1 and regdate>=#{today}</if>
+				<if test="type==7">authority_code in (2,3) and regdate>=#{today}</if>	
+			</where>
+		</if>
+	</select>
+
+
+
+
+
+</mapper>
+
+
+
+
+
+
+
+
+
