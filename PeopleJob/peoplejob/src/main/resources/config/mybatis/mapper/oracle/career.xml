@@ -4,7 +4,7 @@
 
 <mapper namespace="config.mybatis.mapper.oracle.career">
 	<select id="selectBydvCode" parameterType="int" resultType="careerVo">
-		select dv_code,jobgrade,workcondition,workcheck from career where dv_code=#{dvCode}
+		select dv_code,jobgrade from career where dv_code=#{dvCode}
 	</select>	
 </mapper>
 

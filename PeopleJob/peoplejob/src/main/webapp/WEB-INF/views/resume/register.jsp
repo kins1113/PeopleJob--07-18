@@ -388,19 +388,50 @@ function settingBtype3(res){
 		}
 	})
 }
-//직급을 가져오기 - 직급
 
-var dvCode=$('#jobgrade').val();
-//값을 가져오는 메서드
-getjobgrade(dvCode);
+/* $(function(){
+    $( "#jobgrade" ).autocomplete({
+        source : function( request, response ) {
+             $.ajax({
+                    type: 'post',
+                    url: "<c:url value='register.jsp'/>",
+                    dataType: "json",
+                    //request.term = $("#autocomplete").val()
+                    data: { value : request.term },
+                    success: function(data) {
+                        //서버에서 json 데이터 response 후 목록에 뿌려주기 위함
+                        response(
+                            $.map(data, function(item) {
+                                return {
+                                    label: item.data,
+                                    value: item.data
+                                }
+                            })
+                        );
+                    }
+               });
+            },
+        //조회를 위한 최소글자수
+        minLength: 2,
+        select: function( event, ui ) {
+            // 만약 검색리스트에서 선택하였을때 선택한 데이터에 의한 이벤트발생
+        }
+    });
+}) */
+//직급을 가져오는
+$("#jobgrade").change(function(){
+	var dvCode=$(this).find("option:checked").val();
+	//값을 가져오는 메서드
+	getJobgrade(dvCode);
+});
 //직급 가져오기
-function getjobgrade(dvCode){
+function getJobgrade(dvCode){
 	$.ajax({
 		url:"<c:url value='/career/selectCareer.do'/>",
 		type:"post",
 		data:"dvCode="+dvCode,
 		success:function(res){
-				settingjobgrade(res);
+				settingJobgrade(res);
 		},
 		error:function(xhr, status, error){
 			alert(status+":"+error);
@@ -408,22 +439,25 @@ function getjobgrade(dvCode){
 	})
 }
 //직급 뿌리기
-function settingjobgrade(res){
+function settingJobgrade(res){
 	$.each(res,function(idx,item){
 		if(idx==0){
-			var chEl=$("<input type='text' value='0'>직급")
-			var opEl=$("<input type='text' value='"+item["dv_code"]+"'>");
+			var chEl=$("<option value='0'>직급</option>")
+			var opEl=$("<option value='"+item["dv_code"]+"'></option>");
 			opEl.append(item['jobgrade']);
 			$("#jobgrade").html(chEl);
 			$("#jobgrade").append(opEl); 
 		}else{
-			var opEl=$("<input type='text' value='"+item["dv_code"]+"'>");
+			var opEl=$("<option value='"+item["dv_code"]+"'></option>");
 			opEl.append(item['jobgrade']);
 			$("#jobgrade").append(opEl); 
 		}
 	})
 	
 }
+
+ 
+
 
 
 
@@ -595,7 +629,8 @@ $(document).ready(function (){
         </select>   
        </div>
        <div>
-       <c:import url="autosearch.jsp"/><!-- 전공 -->
+                <label>전공</label>
+  		<input type="text"  class="form-control" placeholder="전공을 입력하세요" name="major" id="major" >
        
        
        </div>
@@ -614,7 +649,7 @@ $(document).ready(function (){
         </select>
        </div>
        </div>
-       <script>
+<!--        <script>
        $('#graduate').datepicker({
 			dateFormat:"yy-mm-dd",
 			changeYear:true,
@@ -1193,7 +1228,7 @@ $(document).on("click","button[name=addStaff]",function(){
   '</div>'+
   '<div>'+
   '<label>전공</label>'+
-  		'<input type="text"  class="form-control" placeholder="전공을 입력하세요" name="major" id="major" >'+<!-- 전공 -->
+  		'<input type="text"  class="form-control" placeholder="전공을 입력하세요" name="major" id="major" >'+
   '</div>'+
   '<div>'+
   '<label>학위</label> '+
@@ -1233,7 +1268,7 @@ $(document).on("click","button[name=delStaff]",function(){
     trHtml.remove(); //tr 테그 삭제
       
 });	
-</script>
+</script> -->
     </section>
     <section id="registerds">
     <h3>경력사항</h3>
@@ -1268,7 +1303,10 @@ $(document).on("click","button[name=delStaff]",function(){
     </div>
     	
     <div>
-       <c:import url="autosearch2.jsp"/><!-- 직급 -->
+        <select class="form-control" name="dvCode" id="jobgrade" >
+        	<option>직급</option>
+        	
+        </select>
    </div>
    </section>
 
@@ -1280,7 +1318,9 @@ $(document).on("click","button[name=delStaff]",function(){
 
         
    <input class="form-control" name="certificationtype" id="certificationtype" value="자격증/면허증">
-        <c:import url="autosearch3.jsp"/> <!-- 자격증명 -->
+         <label for="lName">자격증명</label>
+        
+        <input type="text" class="form-control"  name="lName" id="lName" placeholder="자격증명을 입력하세요" style="ime-mode:active">
     <div>    
         <label for="lInstitution">발행처/기관</label>
         <input type="text" class="form-control"  name="lInstitution" placeholder="발행처/기관을 입력하세요" id="lInstitution" style="ime-mode:active">
