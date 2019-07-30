@@ -15,7 +15,7 @@
 		 ,
 		 #{gender},#{agelimit},#{academicCondition},#{career},#{sweetener},#{recruit},
 		 #{recruitmentTarget},#{endDate},#{receiveway},#{submit},#{applicationhandbook},
-		 sysdate,0,'N',#{adminagree},#{category},#{companyimage},#{companyCode}
+		 sysdate,0,'N',#{adminagree},1,#{companyimage},#{companyCode}
 		 )
 	</insert>
 		
