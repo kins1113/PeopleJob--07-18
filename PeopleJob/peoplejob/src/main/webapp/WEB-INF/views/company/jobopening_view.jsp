@@ -188,7 +188,7 @@ span #companyname{
     
     <section class="resume-section p-3 p-lg-5 d-flex justify-content-center redetail" id="experience">
       <div class="w-100">
-        <h2 class="mb-5">공고정보</h2>
+        <h2 class="mb-5">상세내용</h2>
 
         <div class="resume-item d-flex flex-column flex-md-row justify-content-between mb-5">
           <div class="memberinfo">

@@ -376,7 +376,7 @@
                         <c:if test="${vo.receiveway=='홈페이지지원'}">
                         selected
                         </c:if>
-                        >이메일</option>
+                        >홈페이지지원</option>
                     </select>
                 </div>
             </div>
@@ -392,12 +392,12 @@
                     <input id="applicationhandbook" name="applicationhandbook" class="form-control" type="text" value="${vo.applicationhandbook }"/>
                 </div>
             </div>
-            <div class="form-group">
+            <%-- <div class="form-group">
                 <div >
                     <label>카테고리 :</label> 
                     <input id="category" name="category" class="form-control" type="text" value="${vo.category }"/>
                 </div>
-            </div>
+            </div> --%>
             <div class="form-group">
                 <div >
                     <label >공고 이미지 :</label> 
