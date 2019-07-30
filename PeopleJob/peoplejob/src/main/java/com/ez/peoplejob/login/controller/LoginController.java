@@ -118,7 +118,11 @@ private Logger logger=LoggerFactory.getLogger(LoginController.class);
 		List<Map<String , Object>> list=paymentService.selectPaymentById(memberid);
 		logger.info("결제 내역 list.size={}",list.size());
 		
+		List<Map<String , Object>> Timelist=paymentService.selectPayByTime(memberid);
+		logger.info("결제 내역 Timelist.size={}",Timelist.size());
+		
 		model.addAttribute("list",list);
+		model.addAttribute("Timelist",Timelist);
 		
 		return "mypage/corp/paymentDetail";
 	}

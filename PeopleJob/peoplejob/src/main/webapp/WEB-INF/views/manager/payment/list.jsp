@@ -64,7 +64,9 @@ input.btn.btn-secondary.btn-default {margin-top: 4px;}
 				</div>
 				<div class="form-group serDiv">
 					<select class="custom-select my-1 mr-sm-2" name="searchCondition">
-						
+						<option value="전체">
+						전체
+						</option>
 						<option value="memberid"
 							<c:if test="${param.searchCondition=='memberid' }">
 							selected="selected"
@@ -73,7 +75,12 @@ input.btn.btn-secondary.btn-default {margin-top: 4px;}
 						<option value="progress"
 							<c:if test="${param.searchCondition=='progress' }">
 							selected="selected"
-							</c:if>>결제상태
+							</c:if>>a
+						</option>
+						<option value="progress1"
+							<c:if test="${param.searchCondition=='progress1' }">
+							selected="selected"
+							</c:if>>b
 						</option>
 
 					</select>
@@ -154,9 +161,9 @@ input.btn.btn-secondary.btn-default {margin-top: 4px;}
 								<td>${vo['PAYMENT_CODE']}</td>
 								<td>${vo['MEMBERID']}</td>
 								<td>${vo['PAYMENTWAY']}</td>
-								<td>${vo['ROGRESS']} </td>
+								<td>${vo['PROGRESS']} </td>
 								<td>${vo['SERVICENAME']}</td>
-								<td>${vo['DISCOUNT']}</td>
+								<td>${vo['PERIOD']}</td>
 								<td>${vo['PAYDATE']}</td>
 							</tr>
 						</c:forEach>

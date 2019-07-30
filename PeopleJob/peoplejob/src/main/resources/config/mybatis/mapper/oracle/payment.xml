@@ -79,17 +79,11 @@
 							<if test="searchVo.searchCondition!= null and searchVo.searchCondition!=''
 								and searchVo.searchKeyword!= null and searchVo.searchKeyword!=''">
 							
-							<if test='searchVo.searchCondition=="all"'>
-									progress like  '%' || #{searchVo.searchKeyword}  || '%' or
-									m.memberid like  '%' || #{searchVo.searchKeyword} || '%' 
-							</if>
+							
 							<if test='searchVo.searchCondition=="memberid"'>
 									 m.memberid like  '%' || #{searchVo.searchKeyword} || '%'
 							</if>
 
-							<if test='searchVo.searchCondition=="progress"'>
-									 progress like  '%' || #{searchVo.searchKeyword} || '%'
-							</if>
 
 							
 							<if test="startDay!=null and startDay !='' and endDay!=null and endDay != ''">
@@ -97,8 +91,16 @@
 							</if>
 					</if>				
 					
-					<if test="searchVo.searchCondition== null or searchVo.searchCondition==''
-								or searchVo.searchKeyword== null or searchVo.searchKeyword==''">
+					<if test=" searchVo.searchKeyword== null or searchVo.searchKeyword==''">
+						
+						<if test='searchVo.searchCondition=="progress"'>
+									 progress ='a'
+						</if>
+						<if test='searchVo.searchCondition=="progress1"'>
+									 progress ='b'
+						</if>
+						
+						
 						<if test="startDay!=null and startDay !='' and endDay!=null and endDay != ''">
 							 <![CDATA[paydate >= #{startDay} and paydate <to_date(#{endDay})+1]]>
 						</if>	
@@ -111,6 +113,20 @@
 		and RNUM<=#{searchVo.firstRecordIndex} + #{searchVo.recordCountPerPage}]]> 
 	</select>
 	
+	<!-- <select id="selectBySameTime" resultType="map" parameterType="string">
+	select * from payment
+	where to_char(paydate,'yyyy-MM-dd HH:mm:ss')=#{paydate}
+	order by paydate desc
+	</select> -->
+	
+	<select id="selectPayByTime" resultType="map" parameterType="string">
+	select s.servicename, sum(p.price) as "totalprice",p.progress, to_char(p.paydate,'yyyy-MM-dd HH:mm:ss') as "ByTime"
+	from payment p join service s
+	on p.SERVICE_CODE = s.SERVICE_CODE
+	where p.member_code=(select member_code from member where memberid=#{memberid})
+	group by to_char(p.paydate,'yyyy-MM-dd HH:mm:ss'), s.servicename, p.progress
+	order by to_char(p.paydate,'yyyy-MM-dd HH:mm:ss') desc
+	</select>
 
 	
 </mapper>

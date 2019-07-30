@@ -1001,9 +1001,9 @@ $(function () {
     </div>
     <br>
 </fieldset> 
+    <input class="btn btn-success" type="submit" value="이력서 수정">
 </form>
 </div> 
-    <input class="btn btn-success" type="submit" value="이력서 수정">
 </div>      
 </article>
 <%@include file="../main/inc/bottom.jsp" %>
