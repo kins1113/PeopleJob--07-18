@@ -147,8 +147,7 @@ option{
 	});
 </script>
 
-<div class="container"
-	style="background-color: #f5f6f8; min-width: 100%;">
+<div class="container" style="background-color: #f5f6f8; min-width: 100%;">
 	<div>
 		<div class="row" style="background-color: #f5f6f8;">
 			<div class="col-md-6 col-md-offset-3" style="margin: 0 auto;">

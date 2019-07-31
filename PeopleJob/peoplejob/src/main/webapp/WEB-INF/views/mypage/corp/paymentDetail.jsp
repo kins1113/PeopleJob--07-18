@@ -156,7 +156,9 @@ table tr td, table tr th{
 	 
 	
 	 $('#cancelpay').click(function(){
-			 //현재시간이 결제일+1보다 크면 불가
+		 
+		 
+			/*  //현재시간이 결제일+1보다 크면 불가
 			 alert(paydate);
 		  if(time>(paydate+1)){
 		 alert('결제일로부터 하루가 지난 상품은 취소할 수 없습니다.');
@@ -167,7 +169,7 @@ table tr td, table tr th{
 					 event.preventDefault();
 					 return false; 
 				  }
-			 }  
+			 }   */
 	 });
 	 
 
@@ -175,8 +177,8 @@ table tr td, table tr th{
  });
  
 	
-	function detail(paydate, memberCode, serviceName){
-		 window.open('<c:url value="/mypage/corp/paymoreDetail.do?paydate='+paydate+'&memberCode='+memberCode+'&serviceName='+serviceName+'"/>',
+	function detail(paydate, memberCode, serviceName, jobopening){
+		 window.open('<c:url value="/mypage/corp/paymoreDetail.do?paydate='+paydate+'&memberCode='+memberCode+'&serviceName='+serviceName+'&jobopening='+jobopening+'"/>',
 				 'paymoreDetailView',
 				 "'status=no, height=500, width=1100, left='300px', top='300px'");
 		
@@ -243,7 +245,7 @@ table tr td, table tr th{
 							</form>
 							<td>
 						 <input type="button" value="..." style="background: white; border: 1px solid lightgray; width: 40px;
-	    font-weight: bold; margin: 0 auto; cursor: pointer;" onclick="detail('${map['BYTIME']}', '${map['MEMBER_CODE'] }', '${map['SERVICENAME'] }')" class="btnmore"> 
+	    font-weight: bold; margin: 0 auto; cursor: pointer;" onclick="detail('${map['BYTIME']}', '${map['MEMBER_CODE'] }', '${map['SERVICENAME'] }', '${map['JOBOPENING'] }')" class="btnmore"> 
 	
 	    </td>
 	 					</tr>  
