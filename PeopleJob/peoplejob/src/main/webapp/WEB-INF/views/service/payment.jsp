@@ -139,7 +139,7 @@ padding: 5px;
 						  /* checkbox 개수 * 날짜* 1일당 가격  */
 					 }else{
 						sum -= Number($(this).parents("tr").find("input[title=price]").val());
-						 $(this).parents('tr').find('input[title=price]').attr('value',sum);
+						 $(this).parents('tr').find('input[title=price]').attr('value','0');
 					 }
 						$('#totalPrice').attr('value',sum);
 					 
@@ -219,14 +219,14 @@ padding: 5px;
 				return false;
 				
 			} else{ 
-				$('.check:checked').each(function(){
+				/* $('.check:checked').each(function(){
 					if($(this).parents('tr').find('#paystartDate').length<1){
 						alert('선택한 상품의 이용기간 시작날짜를 선택해주세요.');
 						event.preventDefault();
 						return false;
 						
 					}
-				});
+				}); */
 				
 				
 				//$('form[name=frmList]').prop('action','<c:url value="/service/payList.do"/>');
@@ -273,9 +273,9 @@ padding: 5px;
 									    if ( rsp.success ) {
 									        var msg = '결제가 완료되었습니다.\n';
 									        msg+='결제일로부터 30일간 이용가능합니다.\n';
-									        msg += '고유ID : ' + rsp.imp_uid;
-									        msg += '상점 거래ID : ' + rsp.merchant_uid;
-									        msg += '결제 금액 : ' + rsp.paid_amount+'원';
+									        msg += '고유ID : ' + rsp.imp_uid+"\n";
+									        msg += '상점 거래ID : ' + rsp.merchant_uid+"\n";
+									        msg += '결제 금액 : ' + rsp.paid_amount+'원\n';
 									        msg += '카드 승인번호 : ' + rsp.apply_num;
 									        
 									        $('#frmList').prop('action','<c:url value="/service/paysuccess.do"/>');

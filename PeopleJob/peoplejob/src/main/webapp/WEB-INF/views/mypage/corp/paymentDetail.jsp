@@ -155,19 +155,27 @@ table tr td, table tr th{
 	var paydate=$('#pd').val();
 	 
 	
-	 $('#cancelpay').click(function(){
-			 //현재시간이 결제일+1보다 크면 불가
-			 alert(paydate);
-		  if(time>(paydate+1)){
-		 alert('결제일로부터 하루가 지난 상품은 취소할 수 없습니다.');
-				event.preventDefault();
-				return false; 
-			   if(!confirm('해당 상품을 결제 취소 하시겠습니까?')){
-				  }else{
-					 event.preventDefault();
-					 return false; 
-				  }
-			 }  
+	 $('#refund').click(function(){
+		 var cancelprice=$('input[name=totalprice]').val();
+		 
+		 $.ajax({
+		        url: "http://www.myservice.com/payments/cancel",
+		        type: "POST",
+		        contentType: "application/json",
+		        data: JSON.stringify({
+		          merchant_uid:  "peoplejob_1564556321967", // 주문번호
+		          cancel_request_amount: cancelprice, // 환불금액
+		          reason: "테스트 결제 환불", // 환불사유
+		          //refund_holder: "${sessionScope.memberName}", // [가상계좌 환불시 필수입력] 환불 가상계좌 예금주
+		          //refund_bank: "88",
+		          // [가상계좌 환불시 필수입력] 환불 가상계좌 은행코드(ex. KG이니시스의 경우 신한은행은 88번)
+		          //refund_account: "1002952534048" 
+		          // [가상계좌 환불시 필수입력] 환불 가상계좌 번호
+		        }),
+		        dataType: "json" 
+		      });
+		 
+			
 	 });
 	 
 
@@ -225,6 +233,7 @@ table tr td, table tr th{
 							<td>일시불</td>
 							<td>${map['BYTIME'] }</td>
 							<td>${map['TOTALPRICE'] }원</td>
+							<input type="hidden" name="totalprice" value="${map['TOTALPRICE'] }">
 							<td>
 							<c:if test="${map['PROGRESS']=='결제완료' }">
 							<span class="badge badge-success">Completed</span>
@@ -239,7 +248,9 @@ table tr td, table tr th{
 							
 							<form id="frmpay" method="post" action="<c:url value='/mypage/corp/paymentDetail.do'/>">
 							<input type="hidden" name="paymentCode" value="${map['PAYMENT_CODE'] }">
-							<td><input type="submit" value="결제 취소" id="cancelpay" style="padding: 5px; font-size: 0.9em; margin: 0 auto;"></td>
+							<td><input type="submit" value="결제 취소" id="cancelpay" style="padding: 5px; font-size: 0.9em; margin: 0 auto;">
+								<input type="button" id="refund" value="결제 환불"></td> 
+						
 							</form>
 							<td>
 						 <input type="button" value="..." style="background: white; border: 1px solid lightgray; width: 40px;

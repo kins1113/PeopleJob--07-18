@@ -6,4 +6,5 @@ public interface ConnetService {
 	public int insertConnet(int memberCode);
 	public List<ConnetVO> selectConnet();
 	public int[] selectMemberCount();
+	public int[] selectResumeManagerIndex();
 }
