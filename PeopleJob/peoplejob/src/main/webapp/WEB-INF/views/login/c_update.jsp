@@ -321,7 +321,7 @@ option{
 									<div class="form-group">
 										<label for="image" class="labeltitle">기업 로고 이미지</label>
 										<c:if test="${!empty companyVo.image }">
-											<span style="color: orangered; display: block;"> ※ 첨부파일을 새로 지정할 경우 기존 파일 ${fileInfo }은 삭제됩니다. </span>
+											<span style="color: orangered; display: block;"> ※ 첨부파일을 새로 지정할 경우 <br>기존 파일 ${fileInfo }은 삭제됩니다. </span>
 										</c:if>
 										<input id="companyimageurl" name="imageurl"
 											class="form-control" type="file" value="${companyVo.image}"
@@ -331,12 +331,9 @@ option{
 									<c:if test="${!empty companyVo.image }">
 										<div class="form-group">
 										
-											<label for="oldimage" class="labeltitle">현재 로고 이미지</label><br>
+											<label for="oldimage" class="labeltitle" style="float: left;">현재 로고 이미지</label><br>
 											<img alt="현재 로고 이미지" src="<c:url value='/logo_upload/${companyVo.image}'/>"
-												style="float: left; margin-right: 40px;"> <input
-												type="text" name="oldFileName" tabindex="1"
-												class="form-control"
-												style="width: 400px; border: none;">
+												style=" margin-bottom: 10px; float: left; width: 200px; margin-top: -30px;">
 										</div>
 									</c:if>
 								<input type="hidden" name="oldFileName" value="${companyVo.image}" />
