@@ -1,6 +1,9 @@
 package com.ez.peoplejob.admin.Index;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -9,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ez.peoplejob.popup.model.PopupService;
 import com.ez.peoplejob.popup.model.PopupVO;
@@ -17,6 +21,7 @@ import com.ez.peoplejob.popup.model.PopupVO;
 public class IndexController {
 	Logger logger = LoggerFactory.getLogger(IndexController.class);
 	@Autowired private PopupService popupServie;	
+	@Autowired private ConnetService connetService;
 	
 	
 	@RequestMapping("/manager/index.do")
@@ -33,6 +38,24 @@ public class IndexController {
 	
 	@RequestMapping("/inc/date.do")
 	public void date(@RequestParam String id, @RequestParam String name) {
+	}
+	
+	@RequestMapping("/manager/index/connet.do")
+	@ResponseBody
+	public List<ConnetVO> connetSelect(){
+		logger.info("접속 통계 가져오기");
+		List<ConnetVO> list= connetService.selectConnet();
+		return list;
+	}
+	
+	@RequestMapping("/manager/index/memberInfo.do")
+	@ResponseBody
+	public int[] selectMemberCount(){
+		logger.info("회원 통계 가져오기");
+		
+		int[] result=connetService.selectMemberCount();
+		
+		return result;
 	}
 	
 }

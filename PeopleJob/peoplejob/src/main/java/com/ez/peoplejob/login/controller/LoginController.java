@@ -1,7 +1,5 @@
 package com.ez.peoplejob.login.controller;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -17,19 +15,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.ez.peoplejob.common.PaginationInfo;
 import com.ez.peoplejob.common.SearchVO;
-import com.ez.peoplejob.common.WebUtility;
 import com.ez.peoplejob.jobopening.model.JobopeningService;
 import com.ez.peoplejob.jobopening.model.JobopeningVO;
-import com.ez.peoplejob.member.model.CompanyVO;
 import com.ez.peoplejob.member.model.MemberService;
 import com.ez.peoplejob.member.model.MemberVO;
 import com.ez.peoplejob.payment.model.PaymentService;
 import com.ez.peoplejob.scrap.model.ScrapService;
 import com.ez.peoplejob.scrap.model.ScrapVO;
 import com.ez.peoplejob.tableaply.model.TableaplyService;
-import com.ez.peoplejob.tableaply.model.TableaplyVO;
 import com.fasterxml.jackson.databind.JsonNode;
 
 @Controller
@@ -111,23 +105,6 @@ private Logger logger=LoggerFactory.getLogger(LoginController.class);
 		return "mypage/user/userpage";
 		
 	}
-	
-	@RequestMapping("/mypage/corp/paymentDetail.do")
-	public String paymentDetail(HttpSession session, Model model) {
-		String memberid=(String)session.getAttribute("memberid");
-		List<Map<String , Object>> list=paymentService.selectPaymentById(memberid);
-		logger.info("결제 내역 list.size={}",list.size());
-		
-		List<Map<String , Object>> Timelist=paymentService.selectPayByTime(memberid);
-		logger.info("결제 내역 Timelist.size={}",Timelist.size());
-		
-		model.addAttribute("list",list);
-		model.addAttribute("Timelist",Timelist);
-		
-		return "mypage/corp/paymentDetail";
-	}
-	
-	
 	
 	//테스트
 	@RequestMapping("/login/kaokaoTest.do")
