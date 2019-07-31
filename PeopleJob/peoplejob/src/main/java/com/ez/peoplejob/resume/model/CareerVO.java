@@ -1,6 +1,5 @@
 package com.ez.peoplejob.resume.model;
 
-import java.sql.Timestamp;
 
 public class CareerVO {
 	private int dvCode;    

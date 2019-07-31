@@ -9,12 +9,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 
-<link rel="stylesheet" type="text/css" 
-	href="<c:url value='/resources/css/jquery-ui.min.css'/>">
-<script type="text/javascript" 
-	src="<c:url value='/resources/js/jquery-ui.min.js'/>">
-</script>
-  <script>
+  <script type="text/javascript">
   $( function() {
     var availableTags1 = [
     	

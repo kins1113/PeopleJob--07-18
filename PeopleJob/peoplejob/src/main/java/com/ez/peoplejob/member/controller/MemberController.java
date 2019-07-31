@@ -449,13 +449,14 @@ public class MemberController {
 		logger.info("아이디로 memberVo 가져오기 결과 memberVo={}",memberVo);
 		
 		//파일이 있을 경우 파일 업로드
-		List<Map<String,Object>>list=fileUploadUtil.fileUpload(request,FileUploadUtility.PEOPLEJOB_UPLOAD);
+		List<Map<String,Object>>list=fileUploadUtil.fileUpload(request,FileUploadUtility.LOGO_UPLOAD);
 		String imageURL="";
 		for(Map<String,Object>map:list) {
 			imageURL=(String)map.get("fileName");
 		}
 		
 		companyVo.setImage(imageURL);
+		logger.info("처리전 Logoimage={}",companyVo.getImage());
 		
 		//수정처리 전 비밀번호 체크
 		int result=memberService.loginCheck(memberId, memVo.getPwd());
@@ -465,6 +466,7 @@ public class MemberController {
 		if(result==MemberService.LOGIN_OK) {
 			int cnt=memberService.updateCompany(companyVo);
 			logger.info("기업정보 수정 처리 결과 cnt={}",cnt);
+			logger.info("수정처리 후 로고이미지={}",companyVo.getImage());
 			
 		if(cnt>0) {
 			msg="기업정보 수정이 완료되었습니다.";

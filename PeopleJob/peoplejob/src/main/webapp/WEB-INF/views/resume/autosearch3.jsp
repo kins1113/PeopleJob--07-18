@@ -9,15 +9,10 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 
-<link rel="stylesheet" type="text/css" 
-	href="<c:url value='/resources/css/jquery-ui.min.css'/>">
-<script type="text/javascript" 
-	src="<c:url value='/resources/js/jquery-ui.min.js'/>">
-</script>
-  <script>
+  <script type="text/javascript">
   
   
-  
+  /* 
   $( function() {
 	    var availableTags3 = [
 	    '	자격면허명             '      ,
@@ -1181,10 +1176,51 @@
 	    $( "#lName" ).autocomplete({
 	      source: availableTags3
 	    });
-	  } );
+	  } ); */
+	    
+	  request.setCharacterEncoding("UTF-8");
+	    String value = request.getParameter("value");
+	    JSONArray list = new JSONArray();
+	    JSONObject object = null;
+	     
+	    if(value.indexOf("개발") > -1) {
+	        object = new JSONObject();
+	        object.put("data", "개발자");
+	        list.add(object);
+	        object = new JSONObject();
+	        object.put("data", "개발로짜");
+	        list.add(object);
+	        object = new JSONObject();
+	        object.put("data", "개발이 어려워요");
+	        list.add(object);
+	        object = new JSONObject();
+	        object.put("data", "개발이란?");
+	        list.add(object);
+	    }else if(value.indexOf("블로") > -1) {
+	        object = new JSONObject();
+	        object.put("data", "블로그꾸미기");
+	        list.add(object);      
+	        object = new JSONObject();
+	        object.put("data", "블로그누락");
+	        list.add(object);
+	        object = new JSONObject();
+	        object.put("data", "개발로짜의블로그");
+	        list.add(object);
+	        object = new JSONObject();
+	        object.put("data", "블로장생");
+	        list.add(object);
+	    }
+	         
+	    PrintWriter pw = response.getWriter();
+	    pw.print(list);
+	    pw.flush();
+	    pw.close();
+
   </script>
   </head>
 <body>
+
+
         <label for="lName">자격증명</label>
         
         <input type="text" class="form-control"  name="lName" id="lName" placeholder="자격증명을 입력하세요" style="ime-mode:active">
