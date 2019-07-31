@@ -14,9 +14,24 @@ public class CareerServiceImpl implements CareerService{
 	private CareerDAO careerDao;
 
 	@Override
-	public List<CareerVO> selectBydvCode(int dvCode) {
+	public List<CareerVO> selectBydvCode() {
 		
-		return careerDao.selectBydvCode(dvCode);
+		return careerDao.selectBydvCode();
+	}
+
+	@Override
+	public List<CareerVO> selectFirst() {
+		return careerDao.selectFirst();
+	}
+
+	@Override
+	public List<CareerVO> selectSecond(String chargework) {
+		return careerDao.selectSecond(chargework);
+	}
+
+	@Override
+	public List<CareerVO> selectThird(String chargework2) {
+		return careerDao.selectThird(chargework2);
 	}
 	
 

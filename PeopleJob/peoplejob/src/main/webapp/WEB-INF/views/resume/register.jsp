@@ -76,6 +76,7 @@ input[type="submit"] {
 <script type="text/javascript">
 $(document).ready(function (){
 	
+	  
 	//1차 직종 가져오기 /manager/occupantion/firstList.do
 	selectFirst();
 	//1차 직종 클릭하면 2차직종 가져오기 
@@ -418,18 +419,54 @@ function settingBtype3(res){
         }
     });
 }) */
-//직급을 가져오는
-$("#jobgrade").change(function(){
-	var dvCode=$(this).find("option:checked").val();
-	//값을 가져오는 메서드
-	getJobgrade(dvCode);
-});
-//직급 가져오기
-function getJobgrade(dvCode){
+
+//전공을 가져오는
+
+getMajor();
+
+//전공 가져오기
+function getMajor(){
 	$.ajax({
-		url:"<c:url value='/career/selectCareer.do'/>",
+		url:"<c:url value='/resume/education/selectMajor.do'/>",
 		type:"post",
-		data:"dvCode="+dvCode,
+		success:function(res){
+				settingMajor(res);
+		},
+		error:function(xhr, status, error){
+			alert(status+":"+error);
+		}
+	})
+}
+
+
+//전공 뿌리기
+function settingMajor(res){
+	$.each(res,function(idx,item){
+		if(idx==0){
+			var chEl=$("<option value='0'>전공</option>")
+			var opEl=$("<option value='"+item.academicCode+"'></option>");
+			opEl.append(item.academicCode);
+			$("#selectMajor").html(chEl);
+			$("#selectMajor").append(opEl); 
+		}else{
+			var opEl=$("<option value='"+item.academicCode+"'></option>");
+			opEl.append(item.major);
+			$("#selectMajor").append(opEl); 
+		}
+	})
+	
+}
+
+
+//직급을 가져오는
+
+getJobgrade();
+
+//직급 가져오기
+function getJobgrade(){
+	$.ajax({
+		url:"<c:url value='/resume/career/selectCareer.do'/>",
+		type:"post",
 		success:function(res){
 				settingJobgrade(res);
 		},
@@ -438,28 +475,64 @@ function getJobgrade(dvCode){
 		}
 	})
 }
+
+
 //직급 뿌리기
 function settingJobgrade(res){
 	$.each(res,function(idx,item){
 		if(idx==0){
 			var chEl=$("<option value='0'>직급</option>")
-			var opEl=$("<option value='"+item["dv_code"]+"'></option>");
-			opEl.append(item['jobgrade']);
-			$("#jobgrade").html(chEl);
-			$("#jobgrade").append(opEl); 
+			var opEl=$("<option value='"+item.dvCode+"'></option>");
+			opEl.append(item.dvCode);
+			$("#selectBydvCode").html(chEl);
+			$("#selectBydvCode").append(opEl); 
 		}else{
-			var opEl=$("<option value='"+item["dv_code"]+"'></option>");
-			opEl.append(item['jobgrade']);
-			$("#jobgrade").append(opEl); 
+			var opEl=$("<option value='"+item.dvCode+"'></option>");
+			opEl.append(item.jobgrade);
+			$("#selectBydvCode").append(opEl); 
 		}
 	})
 	
 }
 
+//1차 커리어 직종 가져오기 /resume/career/firstList.do
+selectFirst();
+
+//1차 직종 가져오기
+function selectFirst(){
+	$.ajax({
+		url:"<c:url value='/resume/career/firstList.do'/>",
+		type:"post",
+		success:function(res){
+				settingFirst(res);
+		},
+		error:function(xhr, status, error){
+			alert(status+":"+error);
+		}
+	})
+}
+
+//1차 직종 뿌리기
+//[{"firstCode":1,"firstname":"경영·사무"},{"firstCode":2,"firstname":"영업·고객상담"},{"firstCode":3,"firstname":"생산·제조"},
+//{"firstCode":4,"firstname":"IT·인터넷"},{"firstCode":5,"firstname":"전문직"},{"firstCode":6,"firstname":"교육"}
+function settingFirst(res){
+		$.each(res,function(idx,item){
+			if(idx==0){
+				var chEl=$("<option value='0'>직종</option>")
+				var opEl=$("<option value='"+item.dvCode+"'></option>");
+				opEl.append(item.chargework3);
+				$("#selectFirst").html(chEl);
+				$("#selectFirst").append(opEl); //최종으로 여기에 넣음
+			}else{
+				var opEl=$("<option value='"+item.dvCode+"'></option>");
+				opEl.append(item.chargework3);
+				$("#selectFirst").append(opEl); //최종으로 여기에 넣음
+			}
+		})
+}
+
+
  
-
-
-
 
 
 
@@ -629,8 +702,17 @@ $(document).ready(function (){
         </select>   
        </div>
        <div>
-                <label>전공</label>
-  		<input type="text"  class="form-control" placeholder="전공을 입력하세요" name="major" id="major" >
+       <table>
+       <tr>
+			<th>전공</th>
+		<td colspan="1">
+		<select class="custom-select my-1 FST" name="academicCode" id="selectMajor">
+		<option>전공</option>
+		</select>
+		</td>
+		</tr>
+		</table>
+           
        
        
        </div>
@@ -1297,16 +1379,33 @@ $(document).on("click","button[name=delStaff]",function(){
         </select>
 	</div>
 	<div>
-        <label for="chargework">직종</label>
-        <input type="text" class="form-control"  name="chargework" id="chargework" style="ime-mode:active">
-        <%-- <c:import url="occupation.jsp"/> --%>
+		<table>
+       <tr>
+			<th>직종</th>
+		<td colspan="1">
+		<select class="custom-select my-1 FST" name="dvCode" id="selectFirst">
+		<option>직종</option>
+		</select>
+		</td>
+		</tr>
+		</table>
+        
     </div>
     	
     <div>
-        <select class="form-control" name="dvCode" id="jobgrade" >
-        	<option>직급</option>
-        	
-        </select>
+     <table>
+       <tr>
+			<th>직급</th>
+		<td colspan="1">
+		<select class="custom-select my-1 FST" name="dvCode" id="selectBydvCode">
+		<option>직급</option>
+		</select>
+		</td>
+		</tr>
+		</table>
+		
+		
+
    </div>
    </section>
 

@@ -7,11 +7,28 @@ public class CareerVO {
 	private String workTerm;   
 	private String workTerm2;   
 	private String chargeWork;
+	private String chargeWork2;
+	private String chargeWork3;
 	private String workcheck;
 	private String jobgrade;
 	private String workcondition;
 	
 	
+	public String getChargeWork2() {
+		return chargeWork2;
+	}
+	public void setChargeWork2(String chargeWork2) {
+		this.chargeWork2 = chargeWork2;
+	}
+	public String getChargeWork3() {
+		return chargeWork3;
+	}
+	public void setChargeWork3(String chargeWork3) {
+		this.chargeWork3 = chargeWork3;
+	}
+	public String getWorkTerm() {
+		return workTerm;
+	}
 	public String getWorkTerm2() {
 		return workTerm2;
 	}
@@ -62,8 +79,9 @@ public class CareerVO {
 	@Override
 	public String toString() {
 		return "CareerVO [dvCode=" + dvCode + ", companyName=" + companyName + ", workTerm=" + workTerm + ", workTerm2="
-				+ workTerm2 + ", chargeWork=" + chargeWork + ", workcheck=" + workcheck + ", jobgrade=" + jobgrade
-				+ ", workcondition=" + workcondition + "]";
+				+ workTerm2 + ", chargeWork=" + chargeWork + ", chargeWork2=" + chargeWork2 + ", chargeWork3="
+				+ chargeWork3 + ", workcheck=" + workcheck + ", jobgrade=" + jobgrade + ", workcondition="
+				+ workcondition + "]";
 	}
 	
 	

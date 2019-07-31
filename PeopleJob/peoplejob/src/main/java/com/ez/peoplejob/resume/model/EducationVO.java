@@ -1,14 +1,45 @@
 package com.ez.peoplejob.resume.model;
 
-import java.sql.Timestamp;
 
 public class EducationVO {
 	private int academicCode; 
 	private String schoolName;    
 	private String major;         
 	private String degree;        
-	private Timestamp graduate;     
-	private String graduateCheck;
+	private String graduate;     
+	private String graduate2;     
+	private String graduatecheck;
+	private String graduatetype;
+	private String schoollocal;
+	
+	
+	public String getGraduate2() {
+		return graduate2;
+	}
+	public void setGraduate2(String graduate2) {
+		this.graduate2 = graduate2;
+	}
+	public String getGraduatecheck() {
+		return graduatecheck;
+	}
+	public void setGraduatecheck(String graduatecheck) {
+		this.graduatecheck = graduatecheck;
+	}
+	public String getGraduatetype() {
+		return graduatetype;
+	}
+	public void setGraduatetype(String graduatetype) {
+		this.graduatetype = graduatetype;
+	}
+	public String getSchoollocal() {
+		return schoollocal;
+	}
+	public void setSchoollocal(String schoollocal) {
+		this.schoollocal = schoollocal;
+	}
+	public void setGraduate(String graduate) {
+		this.graduate = graduate;
+	}
 	public int getAcademicCode() {
 		return academicCode;
 	}
@@ -33,22 +64,13 @@ public class EducationVO {
 	public void setDegree(String degree) {
 		this.degree = degree;
 	}
-	public Timestamp getGraduate() {
-		return graduate;
-	}
-	public void setGraduate(Timestamp graduate) {
-		this.graduate = graduate;
-	}
-	public String getGraduateCheck() {
-		return graduateCheck;
-	}
-	public void setGraduateCheck(String graduateCheck) {
-		this.graduateCheck = graduateCheck;
-	}
+	
+	
 	@Override
 	public String toString() {
 		return "EducationVO [academicCode=" + academicCode + ", schoolName=" + schoolName + ", major=" + major
-				+ ", degree=" + degree + ", graduate=" + graduate + ", graduateCheck=" + graduateCheck + "]";
+				+ ", degree=" + degree + ", graduate=" + graduate + ", graduate2=" + graduate2 + ", graduatecheck="
+				+ graduatecheck + ", graduatetype=" + graduatetype + ", schoollocal=" + schoollocal + "]";
 	}
 	
 	
