@@ -114,8 +114,8 @@
 		<%-- <%@include file="jobopening_where.jsp" %> --%>
 			<c:import url="jobopening_where.jsp"/>
 		</div> 
-        </div>
     </form>
+        </div>
 
         <div>
         <c:if test="${empty list }">	 

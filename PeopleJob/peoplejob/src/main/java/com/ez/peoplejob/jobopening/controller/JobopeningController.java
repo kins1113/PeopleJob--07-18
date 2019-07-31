@@ -92,6 +92,7 @@ public class JobopeningController {
 			@RequestParam(required=false) String[] payway1,
 			@RequestParam(required=false) String[] academicCondition1,
 			@RequestParam(required = false) String[] career1,
+			@RequestParam(required=false,defaultValue = "10") int recordCountPerPage,
 			HttpSession session,
 			@ModelAttribute SearchVO searchVo,Model model) {
 		String id=(String)session.getAttribute("memberid");
@@ -105,11 +106,14 @@ public class JobopeningController {
 		//1]PaginationInfo 객체 생성
 		PaginationInfo pagingInfo=new PaginationInfo();
 		pagingInfo.setBlockSize(WebUtility.BLOCK_SIZE);
-		pagingInfo.setRecordCountPerPage(WebUtility.RECORD_COUNT_PER_PAGE);
+		pagingInfo.setRecordCountPerPage(recordCountPerPage);
+		//pagingInfo.setRecordCountPerPage(WebUtility.RECORD_COUNT_PER_PAGE);
+		//pagingInfo.setRecordCountPerPage(searchVo.getRecordCountPerPage());
 		pagingInfo.setCurrentPage(searchVo.getCurrentPage());
 		
 		//2]SearchVo에 페이징 관련 변수 세팅
-		searchVo.setRecordCountPerPage(WebUtility.RECORD_COUNT_PER_PAGE);
+		searchVo.setRecordCountPerPage(recordCountPerPage);
+		//searchVo.setRecordCountPerPage(WebUtility.RECORD_COUNT_PER_PAGE);
 		searchVo.setFirstRecordIndex(pagingInfo.getFirstRecordIndex());
 		logger.info("셋팅 후 serchVo={}",searchVo);
 		

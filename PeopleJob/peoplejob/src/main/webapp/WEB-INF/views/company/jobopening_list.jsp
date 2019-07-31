@@ -21,7 +21,20 @@
 			$("#hi3").val($("#payway").val());
 			$("#hi4").val($("#academicCondition").val()); */
 		}); 
-		
+		$("#recordCountPerPage").change(function(){
+			var a=$(this).val();
+			//<c:set var="b" value="$(this).val()"/>
+			 $.ajax({
+				url:"<c:url value='/company/jobopening_list.do?recordCountPerPage="+a+"'/>",  
+				method:'POST',
+				success:function(data){
+					//alert(a); 
+				}
+			});  
+			//<c:set var="recordCountPerPage" value="a"/> 
+			//<c:set var="a" value="${recordCountPerPage}"/> 
+			//${param.recordCountPerPage}
+		});	
 	});
 </script>
 <style type="text/css">
@@ -69,9 +82,9 @@
         근무방식<input type="text" name="hi2" id="hi2">
        	급여방식<input type="text" name="hi3" id="hi3">
        	 학력<input type="text" name="hi4" id="hi4"> -->
-        <c:if test="${!empty param.searchKeyword}">
+        <c:if test="${!empty param.localcheck1||!empty param.workday1||!empty param.payway1||!empty param.academicCondition1||!empty param.career1}">
 			<p>
-				검색어 : ${param.searchKeyword}, ${pagingInfo.totalRecord}건 검색되었습니다.
+				검색결과 : ${pagingInfo.totalRecord}건 검색되었습니다.
 			</p>
 		</c:if>
 	 </div> 
@@ -83,13 +96,36 @@
    		<input type="button" id="search" class="btn btn-primary" name="search" value="검색조건"> 
    		<input type="hidden" name='currentPage' value="1" >
 		<input type="submit" class="btn btn-primary" value="검색">
+		<div class="form-group" id='pageSize'>
+					<select class="custom-select my-1 mr-sm-2" id="recordCountPerPage" name="recordCountPerPage">
+						<option value="10"
+							<c:if test="${param.recordCountPerPage==10 }">
+								selected="selected"
+							</c:if>>10개씩
+						</option>
+						<option value="20"
+							<c:if test="${param.recordCountPerPage==20 }">
+								selected="selected"
+							</c:if>>20개씩
+						</option>
+						<option value="30"
+							<c:if test="${param.recordCountPerPage==30 }">
+								selected="selected"
+							</c:if>>30개씩
+						</option>
+						<option value="50"
+							<c:if test="${param.recordCountPerPage==50 }">
+								selected="selected"
+							</c:if>>50개씩
+						</option>
+					</select>
+				</div>
 		<div id="where" class="where">
 		<%-- <%@include file="jobopening_where.jsp" %> --%>
 			<c:import url="jobopening_where.jsp"/>
 		</div> 
-        
-    </form>
-
+   		</form>
+			</div>
         <div>
         <c:if test="${empty list }">	 
 	 	<tr>
