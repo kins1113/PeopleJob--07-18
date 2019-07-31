@@ -29,11 +29,31 @@
 				<if test="type==5">authority_code in (2,3) and withdrawaldate>=#{today}</if>	
 				<if test="type==6">authority_code=1 and regdate>=#{today}</if>
 				<if test="type==7">authority_code in (2,3) and regdate>=#{today}</if>	
+				<if test="type==8">withdrawaldate >= #{today} and authority_code=1</if>	
+				<if test="type==9">withdrawaldate >= #{today} and authority_code in(2,3)</if>	
 			</where>
 		</if>
 	</select>
 
+	<select id="selectResumeManagerIndex" parameterType="map" resultType="int">
+		select count(*) as count from resume
+		<where>
+  		<if test="type==0"> resumeregdate >=#{today} and resumeregdate <![CDATA[<]]> to_date(#{today})+1</if>
+			<if test="type==1"> resumeregdate >=to_date(#{today})-1 and resumeregdate <![CDATA[<]]> #{today}</if>
+			<if test="type==2"> resumeregdate >=to_date(#{today}) and resumeregdate <![CDATA[<]]> to_date(#{today})+8</if>
+			<if test="type==3"> resumeregdate >=to_date(#{today})-7 and resumeregdate <![CDATA[<]]> to_date(#{today})</if>
+		</where> 
+	</select>
 
+	<select id="selectJobopeningManagerIndex" parameterType="map" resultType="int">
+		select count(*) as count from jobopening 
+		<where>
+			<if test="type==0">jobregdate >=#{today} and jobregdate <![CDATA[<]]> to_date(#{today})+1</if>
+			<if test="type==1">jobregdate >=to_date(#{today})-1 and jobregdate <![CDATA[<]]> #{today}</if>
+			<if test="type==2">jobregdate >=to_date(#{today}) and jobregdate <![CDATA[<]]> to_date(#{today})+8</if>
+			<if test="type==3">jobregdate >=to_date(#{today})-7 and jobregdate <![CDATA[<]]> to_date(#{today})</if>
+		</where>
+	</select>
 
 
 

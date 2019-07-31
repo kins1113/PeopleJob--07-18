@@ -57,5 +57,14 @@ public class IndexController {
 		
 		return result;
 	}
+	@RequestMapping("/manager/index/reJobInfo.do")
+	@ResponseBody
+	public int[] selectReJobCount(){
+		logger.info("인제/채용정보 가져오기");
+		
+		int[] result=connetService.selectResumeManagerIndex();
+		
+		return result;
+	}
 	
 }
