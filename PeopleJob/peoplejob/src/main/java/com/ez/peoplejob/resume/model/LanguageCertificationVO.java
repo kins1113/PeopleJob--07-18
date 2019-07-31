@@ -5,8 +5,43 @@ import java.sql.Timestamp;
 public class LanguageCertificationVO {
 	private int langLicenseCode; 
 	private String langLicenseName; 
-	private Timestamp getdate;          
 	private String institute;
+	private String certificationtype;
+	private String language;
+	private String langpoint;
+	private String langGrade;
+	private String langGetdate;
+	
+	public String getCertificationtype() {
+		return certificationtype;
+	}
+	public void setCertificationtype(String certificationtype) {
+		this.certificationtype = certificationtype;
+	}
+	public String getLanguage() {
+		return language;
+	}
+	public void setLanguage(String language) {
+		this.language = language;
+	}
+	public String getLangpoint() {
+		return langpoint;
+	}
+	public void setLangpoint(String langpoint) {
+		this.langpoint = langpoint;
+	}
+	public String getLangGrade() {
+		return langGrade;
+	}
+	public void setLangGrade(String langGrade) {
+		this.langGrade = langGrade;
+	}
+	public String getLangGetdate() {
+		return langGetdate;
+	}
+	public void setLangGetdate(String langGetdate) {
+		this.langGetdate = langGetdate;
+	}
 	public int getLangLicenseCode() {
 		return langLicenseCode;
 	}
@@ -19,12 +54,6 @@ public class LanguageCertificationVO {
 	public void setLangLicenseName(String langLicenseName) {
 		this.langLicenseName = langLicenseName;
 	}
-	public Timestamp getGetdate() {
-		return getdate;
-	}
-	public void setGetdate(Timestamp getdate) {
-		this.getdate = getdate;
-	}
 	public String getInstitute() {
 		return institute;
 	}
@@ -34,7 +63,9 @@ public class LanguageCertificationVO {
 	@Override
 	public String toString() {
 		return "LanguageCertificationVO [langLicenseCode=" + langLicenseCode + ", langLicenseName=" + langLicenseName
-				+ ", getdate=" + getdate + ", institute=" + institute + "]";
+				+ ", institute=" + institute + ", certificationtype=" + certificationtype
+				+ ", language=" + language + ", langpoint=" + langpoint + ", langGrade=" + langGrade + ", langGetdate="
+				+ langGetdate + "]";
 	}
 	
 	
