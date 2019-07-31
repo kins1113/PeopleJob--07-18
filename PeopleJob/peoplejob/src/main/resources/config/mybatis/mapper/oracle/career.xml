@@ -7,7 +7,7 @@
 		select * from career
 	</select>	
 	
-	<select id="selectFirst" resultType="careerVo">
+	<select id="selectcareer" resultType="careerVo">
 		select * from career
 	</select>
 	

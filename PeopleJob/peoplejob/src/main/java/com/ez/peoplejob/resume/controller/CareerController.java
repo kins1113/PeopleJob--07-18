@@ -37,7 +37,7 @@ public class CareerController {
 	public List<CareerVO> selectFirst(){
 		logger.info("ajax - 1차 직종 가져가는 곳 ");
 		
-		List<CareerVO> list=careerservice.selectFirst();
+		List<CareerVO> list=careerservice.selectcareer();
 		logger.info("first가져온 결과 list.size={}",list.size());
 		
 		return list;

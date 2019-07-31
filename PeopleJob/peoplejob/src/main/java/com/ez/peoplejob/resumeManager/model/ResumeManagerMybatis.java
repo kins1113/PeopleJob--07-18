@@ -8,7 +8,7 @@ import com.ez.peoplejob.hopecompany.model.HopeWorkingConditionsVO;
 import com.ez.peoplejob.resume.model.CareerVO;
 import com.ez.peoplejob.resume.model.CertificateVO;
 import com.ez.peoplejob.resume.model.EducationVO;
-import com.ez.peoplejob.resume.model.LanguageCertificationVO;
+import com.ez.peoplejob.resume.model.LangCertificationVO;
 import com.ez.peoplejob.resume.model.ResumeManagerVO;
 
 @Repository
@@ -32,7 +32,7 @@ public class ResumeManagerMybatis implements ResumeManagerDAO{
 	}
 
 	@Override
-	public int insertLangcertificationMN(LanguageCertificationVO langVo) {
+	public int insertLangcertificationMN(LangCertificationVO langVo) {
 		return sqlSession.insert(namespace+"insertLangcertificationMN",langVo);
 	}
 

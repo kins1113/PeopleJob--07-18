@@ -17,8 +17,8 @@ public class CareerDAOMybatis implements CareerDAO {
 		return sqlsession.selectList(namespace+"selectBydvCode");
 	}
 	@Override
-	public List<CareerVO> selectFirst() {
-		return sqlsession.selectList(namespace+"selectFirst");
+	public List<CareerVO> selectcareer() {
+		return sqlsession.selectList(namespace+"selectcareer");
 	}
 	@Override
 	public List<CareerVO> selectSecond(String chargework) {

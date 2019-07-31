@@ -20,8 +20,8 @@ public class CareerServiceImpl implements CareerService{
 	}
 
 	@Override
-	public List<CareerVO> selectFirst() {
-		return careerDao.selectFirst();
+	public List<CareerVO> selectcareer() {
+		return careerDao.selectcareer();
 	}
 
 	@Override
