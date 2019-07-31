@@ -1066,7 +1066,7 @@ span[name=publicname]{
 								<div class="m-b-45">   
 								<div class="imgclass">
 									<div style="width: 294px; text-align: center;"> 
-										<img src ="<c:url value='/peoplejob_upload/${map["IMAGE"] }'/>" alt="IMG" class="imgsize">
+										<img src ="<c:url value='/logo_upload/${map["IMAGE"] }'/>" alt="IMG" class="imgsize">
 									</div>
 									<div class="p-t-16"> 
 										<span class="p-b-5" style="font-size: 1.1em; display: block; margin-right: 10px;"> ${map['COMPANYNAME'] } </span>
@@ -1122,7 +1122,7 @@ span[name=publicname]{
 								<div class="m-b-45">   
 								<div class="imgclass">
 									<div style="width: 294px; text-align: center;"> 
-										<img src ="<c:url value='/peoplejob_upload/${map["IMAGE"] }'/>" alt="IMG" class="imgsize">
+										<img src ="<c:url value='/logo_upload/${map["IMAGE"] }'/>" alt="IMG" class="imgsize">
 									</div>
 									<div class="p-t-16"> 
 										<span class="p-b-5" style="font-size: 1.1em; display: block; margin-right: 10px;"> ${map['COMPANYNAME'] } </span>

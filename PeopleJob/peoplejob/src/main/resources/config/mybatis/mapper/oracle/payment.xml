@@ -114,7 +114,9 @@
 	</select>
 	
 	 <select id="selectBySameTime" resultType="map" parameterType="paymentVo">
-	select * from payment
+	 select p.*, j.jobtitle
+	 from payment p join jobopening j
+ 	on p.JOBOPENING = j.JOBOPENING
 	where to_char(paydate,'yyyy-MM-dd HH:mm:ss')=#{paydate} 
 	and member_code=#{memberCode}
 	order by paydate desc

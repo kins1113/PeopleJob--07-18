@@ -216,7 +216,7 @@ public class PaymentController {
 		}
 		
 		logger.info("payment 등록 cnt={}",cnt+"\n");
-		return "mypage/corp/paymentDetail";
+		return "redirect:/mypage/corp/paymentDetail.do";
 	}
 	
 	@RequestMapping("/manager/payment/list.do")

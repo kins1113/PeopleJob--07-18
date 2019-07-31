@@ -443,20 +443,19 @@ public class MemberController {
 		logger.info("기업정보 수정 화면 처리 파라미터, companyVo={}, oldfileName={}",companyVo,oldFileName);
 		logger.info("가져온 memVo={}", memVo);
 		String memberId=(String)session.getAttribute("memberid");
+		logger.info("수정처리전 Logoimage={}",companyVo.getImage());
 		
 		//아이디로 memberVo가져오기 (비밀번호 가져오기)
 		MemberVO memberVo=memberService.selectByUserid(memberId);
 		logger.info("아이디로 memberVo 가져오기 결과 memberVo={}",memberVo);
 		
 		//파일이 있을 경우 파일 업로드
-		List<Map<String,Object>>list=fileUploadUtil.fileUpload(request,FileUploadUtility.LOGO_UPLOAD);
+		List<Map<String,Object>> list=fileUploadUtil.fileUpload(request,FileUploadUtility.LOGO_UPLOAD);
 		String imageURL="";
-		for(Map<String,Object>map:list) {
+		for(Map<String,Object> map:list) {
 			imageURL=(String)map.get("fileName");
 		}
-		
 		companyVo.setImage(imageURL);
-		logger.info("처리전 Logoimage={}",companyVo.getImage());
 		
 		//수정처리 전 비밀번호 체크
 		int result=memberService.loginCheck(memberId, memVo.getPwd());
