@@ -14,6 +14,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.ez.peoplejob.custext.model.CustextVO;
+
 @Service
 public class ConnetServiceImpl implements ConnetService{
 
@@ -30,9 +32,18 @@ public class ConnetServiceImpl implements ConnetService{
 	public static final int MEMBER_WITHDRAW_COM=5;
 	public static final int MEMBER_JOIN_GEN=6;
 	public static final int MEMBER_JOIN_COM=7;
+	public static final int MEMBER_WITHDRAW_TODAY_GEN=8;
+	public static final int MEMBER_WITHDRAW_TODAY_COM=9;
+	
+	
 	@Override
-	public int insertConnet(int memberCode) {
-		return connetDao.insertConnet(memberCode);
+	public int checkConnet(ConnetVO connetVo) {
+		return connetDao.checkConnet(connetVo);
+	}
+
+	@Override
+	public int insertConnet(ConnetVO connetVo) {
+		return connetDao.insertConnet(connetVo);
 	}
 
 	@Override
@@ -57,10 +68,10 @@ public class ConnetServiceImpl implements ConnetService{
 				ConnetVO cVo=new ConnetVO();
 				cVo.setConnetDay(fometDay(d));
 				cVo.setCount(0);
-				logger.info("fometDay(d)={}\n cVo={}",fometDay(d),cVo);
+				//logger.info("fometDay(d)={}\n cVo={}",fometDay(d),cVo);
 				list.add(cVo);
 			}
-			logger.info("서비스에서 접속 현황 조회결과 list.size={}",list.size());
+			//logger.info("서비스에서 접속 현황 조회결과 list.size={}",list.size());
 			
 		}
 		return list;
@@ -68,7 +79,7 @@ public class ConnetServiceImpl implements ConnetService{
 	
 	public String fometDay(String day) {
 		String fDay=day.substring(5,7)+"/"+day.substring(8,10);
-		logger.info("메소드에서 포멧 완료된 값 fDay={}",fDay);
+		//logger.info("메소드에서 포멧 완료된 값 fDay={}",fDay);
 		return fDay;
 	}
 /*
@@ -83,9 +94,9 @@ public class ConnetServiceImpl implements ConnetService{
  * */
 	@Override
 	public int[] selectMemberCount() {
-		int[] result=new int[8];
+		int[] result=new int[10];
 		//type today 값 넣어서 넘겨주기
-		for(int i=0;i<=7;i++) {
+		for(int i=0;i<=9;i++) {
 		Map<String, Object>map =new HashMap<String, Object>();
 			if(i==1 || i==2 || i==4) {
 				map.put("type", i);
@@ -99,6 +110,79 @@ public class ConnetServiceImpl implements ConnetService{
 			}
 		}
 		return result;
+	}
+
+	@Override
+	public int[] selectResumeManagerIndex() {
+		//type today 값 넘겨주기	select를 8번 해서 가져올거임. 
+		//type=0 today=오늘 
+		//type=1 today=오늘
+		//type=2 today=일요일
+		//type=3 today=지난주 일요일
+		//오늘날짜
+		SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
+		String today=sdf.format(new Date());
+		logger.info("오늘날짜 today={}",today);
+		//일요일
+		Calendar c = Calendar.getInstance();
+ 		c.set(Calendar.DAY_OF_WEEK,Calendar.SUNDAY);
+ 		c.add(c.DATE,0);
+ 		String sunday=sdf.format(c.getTime());
+ 		logger.info("sunday={}",sunday);
+
+ 		int[] re=new int[8];
+		int count=0;
+		for(int i=0;i<4;i++) {
+			Map<String, Object> map=new HashMap<String, Object>();
+			map.put("type", i);
+			if(i==0 || i==1) {
+				map.put("today", today);
+			}else if(i==2 || i==3) {
+				map.put("today", sunday);
+			}
+			logger.info("{}일때 map에 type={}",i,map.get("type"));
+			logger.info("{}일때 map에 today={}",i,map.get("today"));
+			re[count++]=connetDao.selectResumeManagerIndex(map);
+			logger.info("Resume에 count={}",count);
+			re[count++]=connetDao.selectJobopeningManagerIndex(map);
+			logger.info("Jobopening에 count={}",count);
+		}
+		
+		return re;
+	}
+
+	@Override
+	public List<CustextVO> selectCustextManagerIndex() {
+		return connetDao.selectCustextManagerIndex();
+	}
+
+	@Override
+	public int[] selectPaymentManagerIndex() {
+		int[] countArr=new int[4];
+		//오늘날짜
+		SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
+		String today=sdf.format(new Date());
+		//일요일
+		Calendar c = Calendar.getInstance();
+ 		c.set(Calendar.DAY_OF_WEEK,Calendar.SUNDAY);
+ 		c.add(c.DATE,0);
+ 		String sunday=sdf.format(c.getTime());
+		for(int i=0;i<4;i++) {
+			Map<String, Object> map=new HashMap<String, Object>();
+			map.put("type", i);
+			if(i==0 || i==1) {
+				map.put("day", today);
+			}else if(i==2 || i==3) {
+				map.put("day", sunday);
+			}
+			logger.info("{}일때 map에 type={}",i,map.get("type"));
+			logger.info("{}일때 map에 today={}",i,map.get("day"));
+			countArr[i]=connetDao.selectPaymentManagerIndex(map);
+			
+		}
+	
+		
+		return countArr;
 	}
 	
 }

@@ -6,7 +6,6 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.ez.peoplejob.common.SearchVO;
 
 @Repository
 public class CareerDAOMybatis implements CareerDAO {
@@ -14,8 +13,20 @@ public class CareerDAOMybatis implements CareerDAO {
 	private SqlSessionTemplate sqlsession;
 	private String namespace="config.mybatis.mapper.oracle.career.";
 	@Override
-	public List<CareerVO> selectBydvCode(int dvCode) {
-		return sqlsession.selectOne(namespace+"selectBydvCode",dvCode);
+	public List<CareerVO> selectBydvCode() {
+		return sqlsession.selectList(namespace+"selectBydvCode");
+	}
+	@Override
+	public List<CareerVO> selectcareer() {
+		return sqlsession.selectList(namespace+"selectcareer");
+	}
+	@Override
+	public List<CareerVO> selectSecond(String chargework) {
+		return sqlsession.selectList(namespace+"selectSecond",chargework);
+	}
+	@Override
+	public List<CareerVO> selectThird(String chargework2) {
+		return sqlsession.selectList(namespace+"selectThird",chargework2);
 	}
 	
 

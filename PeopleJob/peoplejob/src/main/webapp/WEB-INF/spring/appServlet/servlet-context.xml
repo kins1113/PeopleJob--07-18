@@ -52,12 +52,12 @@
 	
 	<!-- Managerintercepter -->
 	 <interceptors>
-		<!-- <interceptor>
+		<interceptor>
 			<mapping path="/manager/**"/>
 			<exclude-mapping path="/manager/login/managerLogin.do"/>
 				<exclude-mapping path="/manager/login/managerLogin.do"/>
 			<beans:ref bean="managerInterceptor"/>
-		</interceptor> -->
+		</interceptor>
 		
 		<interceptor>
 		<mapping path="/mypage/**"/>
