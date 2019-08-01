@@ -3,9 +3,18 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="config.mybatis.mapper.oracle.adminIndex">
-	<insert id="insertConnet" parameterType="int">
-		insert into connet (connet_code,member_code)
-		values(connet_seq.nextval, #{memberCode})
+
+	<select id="checkConnet" parameterType="connetVo" resultType="int">
+		SELECT count(*) FROM CONNET
+		WHERE MEMBER_CODE=#{memberCode} AND CONNET_DAY=#{connetDay}
+	</select>
+	
+	<insert id="insertConnet" parameterType="connetVo">
+		<selectKey resultType="int" keyProperty="connetCode" order="BEFORE">
+			select connet_seq.nextval from dual
+		</selectKey>
+		insert into connet (connet_code,member_code,CONNET_DAY)
+		values(#{connetCode}, #{memberCode},#{connetDay})
 	</insert>
 	
 	<select id="selectConnet" parameterType="String" resultType="connetVo" >
@@ -53,6 +62,23 @@
 			<if test="type==2">jobregdate >=to_date(#{today}) and jobregdate <![CDATA[<]]> to_date(#{today})+8</if>
 			<if test="type==3">jobregdate >=to_date(#{today})-7 and jobregdate <![CDATA[<]]> to_date(#{today})</if>
 		</where>
+	</select>
+	
+	<select id="selectCustextManagerIndex" resultType="custextVo">
+		select * from (
+			SELECT * FROM CUSTEXT
+			order by cus_regdate desc
+		)where rownum <![CDATA[ <= ]]>5
+	</select>
+	
+	<select id="selectPaymentManagerIndex" parameterType="map" resultType="int">
+		select count(*) from payment 
+			<where>
+				<if test="type==0">progress='결제완료' and paydate>= #{day} and paydate <![CDATA[ < ]]> to_date(#{day})+1</if>
+				<if test="type==1">progress='결제완료' and paydate>= to_date(#{day})-1 and paydate <![CDATA[ < ]]> to_date(#{day})</if>
+				<if test="type==2">progress='결제완료' and paydate>= to_date(#{day}) and paydate <![CDATA[ < ]]> to_date(#{day})+8</if>
+				<if test="type==3">progress='결제완료' and paydate>= to_date(#{day})-7 and paydate <![CDATA[ < ]]> to_date(#{day})</if>
+			</where>	
 	</select>
 
 
