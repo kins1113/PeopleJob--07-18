@@ -9,4 +9,8 @@ public interface PostService {
 	int updateDelete(Map<String, int[]> map);
 	int changeDelete(Map<String, Object> map);
 	int insertPosToManager(PostVO postVo);
+	
+	List<PostVO> selectByboardCode(int boardCode);
+	PostVO selectByboardCode2(int boardCode2);
+	int postcountUpdate(int boardCode2);
 }

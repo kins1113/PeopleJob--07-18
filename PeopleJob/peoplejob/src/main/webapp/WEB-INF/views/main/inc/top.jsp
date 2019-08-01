@@ -248,8 +248,7 @@ button {
 							<li>
 								<a href="">게시판</a>
 								<ul class="sub-menu">
-									<li><a href="">자유게시판</a></li>
-									<li><a href="">QnA</a></li>
+									<c:import url="/board/boardList.do"></c:import>
 									<li><a href="<c:url value='/notice/list.do'/>">공지사항</a></li>
 								</ul>
 							</li>

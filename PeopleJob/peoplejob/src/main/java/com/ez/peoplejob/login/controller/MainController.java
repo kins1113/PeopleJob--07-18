@@ -12,6 +12,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.ez.peoplejob.board.model.BoardService;
+import com.ez.peoplejob.board.model.BoardVO;
 import com.ez.peoplejob.jobopening.model.JobopeningService;
 import com.ez.peoplejob.member.model.MemberService;
 import com.ez.peoplejob.member.model.MemberVO;
@@ -24,6 +26,7 @@ public class MainController {
 	@Autowired private PaymentService paymentService;
 	@Autowired private JobopeningService jobService;
 	@Autowired private MemberService memberService;
+	@Autowired private BoardService BoardService;
 	
 	@RequestMapping("/main/mainindex.do")
 	public String mainindex(Model model,HttpSession session) {
@@ -70,5 +73,8 @@ public class MainController {
 		return "references/FreeLecture";
 		
 	}
+	
+
+
 	
 }

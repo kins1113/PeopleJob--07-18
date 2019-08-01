@@ -37,5 +37,17 @@ public class PostDAOMybatis implements PostDAO{
 	public int insertPosToManager(PostVO postVo) {
 		return sqlsession.insert(namespace+"insertPosToManager",postVo);
 	}
+	@Override
+	public List<PostVO> selectByboardCode(int boardCode) {
+		return sqlsession.selectList(namespace+"selectByboardCode",boardCode);
+	}
+	@Override
+	public int postcountUpdate(int boardCode2) {
+		return sqlsession.update(namespace+"postcountUpdate",boardCode2);
+	}
+	@Override
+	public PostVO selectByboardCode2(int boardCode2) {
+		return sqlsession.selectOne(namespace+"selectByboardCode2",boardCode2);
+	}
 
 }

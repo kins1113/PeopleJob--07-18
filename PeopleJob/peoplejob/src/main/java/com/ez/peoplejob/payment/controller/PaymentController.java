@@ -1,5 +1,8 @@
 package com.ez.peoplejob.payment.controller;
 
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -108,7 +111,7 @@ public class PaymentController {
 		logger.info("결제 내역 list.size={}",list.size());
 		
 		List<Map<String , Object>> Timelist=paymentService.selectPayByTime(memberid);
-		logger.info("(group by) 결제 내역 Timelist.size={}",Timelist.size());
+		logger.info("마이페이지 결제 내역 Timelist.size={}",Timelist.size());
 		
 		model.addAttribute("list",list);
 		model.addAttribute("Timelist",Timelist);
@@ -118,30 +121,33 @@ public class PaymentController {
 	
 	
 	@RequestMapping(value="/mypage/corp/paymentDetail.do", method = RequestMethod.POST)
-	public String cancelpay(@RequestParam int paymentCode, Model model) {
-		logger.info("결제 취소 파라미터 paymentCode={}",paymentCode);
+	public String cancelpay(@RequestParam int memberCode,@RequestParam String paydate, Model model) {
+		logger.info("결제 취소 파라미터 memberCode={}, paydate={}",memberCode,paydate);
 
-		PaymentVO paymentVo=paymentService.selectPaymentByCode(paymentCode);
-		logger.info("paymentCode로 select 결과 paymentVo={}",paymentVo);
+		List<PaymentVO> confirmlist=paymentService.selectCancelConfirm(paydate, memberCode);
+		logger.info("결제 취소 확인 리스트 confirmlist.size={}", confirmlist.size());
 		
 		int cnt=0;
 		String msg="", url="/mypage/corp/paymentDetail.do";
-		if(paymentVo.getProgress().equals("결제완료")) {
-			cnt=paymentService.cancelPay(paymentCode);
-			logger.info("결제 취소 처리 결과 cnt={}",cnt);
+		if(confirmlist.size()>0) {
+			for(int i=0;i<confirmlist.size();i++) {
+				PaymentVO paymentVo=confirmlist.get(i);
+				logger.info("i번째={}번째,paymentVo={}", i, paymentVo);
+				
+				cnt=paymentService.cancelPay(paymentVo.getPaymentCode());
 				if(cnt>0) {
-					msg="결제 취소되었습니다.";
+					msg="결제 취소 요청 처리 완료";
+					
 				}else {
-					msg="결제 취소 실패";
+					msg="결제 취소 요청 실패";
 				}
-			
-		}else if(paymentVo.getProgress().equals("결제취소요청")){
-			msg="이미 결제 취소 요청 하신 상품입니다.";
-		}else { //결제취소완료
-			msg="결제취소 완료된 상품입니다.";
+			}
+		}else {
+			msg="결제취소할 상품을 다시 선택해주세요";
 		}
 		
 		
+		logger.info("결제취소 결과 cnt={}",cnt);
 		model.addAttribute("msg",msg);
 		model.addAttribute("url",url);
 		
