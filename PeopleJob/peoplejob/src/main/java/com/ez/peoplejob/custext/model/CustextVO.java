@@ -5,11 +5,34 @@ import java.sql.Timestamp;
 public class CustextVO {
 	private int custextCode;
 	private String custextcategory;
-	private String custitleCUSTITLE;
+	private String custitle;
 	private String cuscontent;
 	private Timestamp cusRegdate;
 	private int memberCode;
-	public int getCustextCode() {
+	private int answercontent;
+	private String answerRegdate;
+	private int adminCode;
+	
+	
+	public int getAnswercontent() {
+		return answercontent;
+	}
+	public void setAnswercontent(int answercontent) {
+		this.answercontent = answercontent;
+	}
+	public String getAnswerRegdate() {
+		return answerRegdate;
+	}
+	public void setAnswerRegdate(String answerRegdate) {
+		this.answerRegdate = answerRegdate;
+	}
+	public int getAdminCode() {
+		return adminCode;
+	}
+	public void setAdminCode(int adminCode) {
+		this.adminCode = adminCode;
+	}
+	public int getCustextCode()	{
 		return custextCode;
 	}
 	public void setCustextCode(int custextCode) {
@@ -21,11 +44,11 @@ public class CustextVO {
 	public void setCustextcategory(String custextcategory) {
 		this.custextcategory = custextcategory;
 	}
-	public String getCustitleCUSTITLE() {
-		return custitleCUSTITLE;
+	public String getcustitle() {
+		return custitle;
 	}
-	public void setCustitleCUSTITLE(String custitleCUSTITLE) {
-		this.custitleCUSTITLE = custitleCUSTITLE;
+	public void setcustitle(String custitle) {
+		this.custitle = custitle;
 	}
 	public String getCuscontent() {
 		return cuscontent;
@@ -47,9 +70,10 @@ public class CustextVO {
 	}
 	@Override
 	public String toString() {
-		return "CustextVO [custextCode=" + custextCode + ", custextcategory=" + custextcategory + ", custitleCUSTITLE="
-				+ custitleCUSTITLE + ", cuscontent=" + cuscontent + ", cusRegdate=" + cusRegdate + ", memberCode="
-				+ memberCode + "]";
+		return "CustextVO [custextCode=" + custextCode + ", custextcategory=" + custextcategory + ", custitle="
+				+ custitle + ", cuscontent=" + cuscontent + ", cusRegdate=" + cusRegdate + ", memberCode="
+				+ memberCode + ", answercontent=" + answercontent + ", answerRegdate=" + answerRegdate + ", adminCode="
+				+ adminCode + "]";
 	}
 	
 	

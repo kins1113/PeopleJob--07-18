@@ -1,9 +1,6 @@
 package com.ez.peoplejob.admin.Index;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.ez.peoplejob.custext.model.CustextVO;
 import com.ez.peoplejob.popup.model.PopupService;
 import com.ez.peoplejob.popup.model.PopupVO;
 
@@ -67,4 +65,22 @@ public class IndexController {
 		return result;
 	}
 	
+	@RequestMapping("/manager/index/custextReg5.do")
+	@ResponseBody
+	public List<CustextVO> selectCustextReg5(){
+		logger.info("최근 문의사항 5개 가져오는 곳");
+		List<CustextVO> list=connetService.selectCustextManagerIndex();
+		logger.info("문의사항 가져온 결과 list.size={}",list.size());
+		 return list;
+	}
+	
+	@RequestMapping("/manager/index/payment.do")
+	@ResponseBody
+	public int[] selectPaymentManagerIndex() {
+		logger.info("결제 완료된 것들 카운트 하는 곳");
+		
+		int[] payArr=connetService.selectPaymentManagerIndex();
+		logger.info("결제 완료된것 카운트 payArr.length={}",payArr.length);
+		return payArr;
+	}
 }

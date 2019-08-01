@@ -1,6 +1,8 @@
 package com.ez.peoplejob.member.controller;
 
 import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
@@ -29,6 +31,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.ez.peoplejob.admin.Index.ConnetService;
+import com.ez.peoplejob.admin.Index.ConnetVO;
 import com.ez.peoplejob.common.FileUploadUtility;
 import com.ez.peoplejob.common.WebUtility;
 import com.ez.peoplejob.member.model.CompanyVO;
@@ -40,6 +44,7 @@ import com.ez.peoplejob.member.model.MemberVO;
 public class MemberController {
 	private Logger logger=LoggerFactory.getLogger(MemberController.class);
 	@Autowired private FileUploadUtility fileUploadUtil;
+	@Autowired private ConnetService connetService;
 	
 	@Autowired
 	private MemberService memberService;
@@ -173,6 +178,19 @@ public class MemberController {
 		
 			msg=memberId+"님 로그인되었습니다.";
 			url="/main/mainindex.do";
+			//방문 기록 남기기 ,, 
+			ConnetVO connetVo=new ConnetVO();
+			MemberVO memberVo=memberService.selectByUserid(memberId);
+			connetVo.setMemberCode(memberVo.getMemberCode());
+			SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
+			connetVo.setConnetDay(sdf.format(new Date()));
+			//logger.info("로그인 처리시  방문기록 connetVo={}",connetVo);
+
+			int checkConnet=connetService.checkConnet(connetVo);
+			if(checkConnet==0) {
+				int connetCount=connetService.insertConnet(connetVo);
+				//logger.info("로그인 처리 로그인 기록 더하는 값={}",connetCount);
+			}
 		}else if(result==MemberService.PWD_DISAGREE) {
 			msg="비밀번호가 일치하지 않습니다.";
 			
