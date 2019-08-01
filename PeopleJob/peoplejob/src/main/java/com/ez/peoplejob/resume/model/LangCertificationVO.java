@@ -1,8 +1,8 @@
 package com.ez.peoplejob.resume.model;
 
 public class LangCertificationVO {
-	private int langlicenseCode; 
-	private String langlicensename; 
+	private int langlicenceCode; 
+	private String langlicencename; 
 	private String institute;
 	private String certificationtype;
 	private String language;
@@ -10,18 +10,20 @@ public class LangCertificationVO {
 	private String langGrade;
 	private String langGetdate;
 	
-	public int getLanglicenseCode() {
-		return langlicenseCode;
+	
+	public int getLanglicenceCode() {
+		return langlicenceCode;
 	}
-	public void setLanglicenseCode(int langlicenseCode) {
-		this.langlicenseCode = langlicenseCode;
+	public void setLanglicenceCode(int langlicenceCode) {
+		this.langlicenceCode = langlicenceCode;
 	}
-	public String getLanglicensename() {
-		return langlicensename;
+	public String getLanglicencename() {
+		return langlicencename;
 	}
-	public void setLanglicensename(String langlicensename) {
-		this.langlicensename = langlicensename;
+	public void setLanglicencename(String langlicencename) {
+		this.langlicencename = langlicencename;
 	}
+	
 	public String getCertificationtype() {
 		return certificationtype;
 	}
@@ -62,7 +64,7 @@ public class LangCertificationVO {
 	
 	@Override
 	public String toString() {
-		return "LangCertificationVO [langlicenseCode=" + langlicenseCode + ", langlicensename=" + langlicensename
+		return "LangCertificationVO [langlicenceCode=" + langlicenceCode + ", langlicencename=" + langlicencename
 				+ ", institute=" + institute + ", certificationtype=" + certificationtype + ", language=" + language
 				+ ", langpoint=" + langpoint + ", langGrade=" + langGrade + ", langGetdate=" + langGetdate + "]";
 	}

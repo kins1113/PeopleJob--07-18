@@ -76,9 +76,34 @@ input[type="submit"] {
 <script type="text/javascript">
 $(document).ready(function (){
 	
+	//자격증을 가져오는
+	$("#certification").click(function(){
+		getCertificate();
+	})
+	
+	//1차 커리어 직종 가져오기 /resume/career/firstList.do
+	selectcareer();
 	  
 	//1차 직종 가져오기 /manager/occupantion/firstList.do
 	selectFirst();
+	
+	//어학을 가져오는
+	$("#langcertbt").click(function(){
+		getLangcertification();
+	})
+	
+	//전공을 가져오는
+
+	getMajor();
+	
+	//직급을 가져오는
+
+	getJobgrade();
+
+	//희망 근무 조건
+	$("#hopeworkbt").click(function(){
+	gethopeworkform();
+	})
 	//1차 직종 클릭하면 2차직종 가져오기 
 	$("#selectFirst").change(function(){
 		var firstCode=$(this).find("option:selected").val();
@@ -420,9 +445,6 @@ function settingBtype3(res){
     });
 }) */
 
-//전공을 가져오는
-
-getMajor();
 
 //전공 가져오기
 function getMajor(){
@@ -458,9 +480,6 @@ function settingMajor(res){
 }
 
 
-//직급을 가져오는
-
-getJobgrade();
 
 //직급 가져오기
 function getJobgrade(){
@@ -483,7 +502,7 @@ function settingJobgrade(res){
 		if(idx==0){
 			var chEl=$("<option value='0'>직급</option>")
 			var opEl=$("<option value='"+item.dvCode+"'></option>");
-			opEl.append(item.dvCode);
+			opEl.append(item.jobgrade);
 			$("#selectBydvCode").html(chEl);
 			$("#selectBydvCode").append(opEl); 
 		}else{
@@ -495,16 +514,15 @@ function settingJobgrade(res){
 	
 }
 
-//1차 커리어 직종 가져오기 /resume/career/firstList.do
-selectFirst();
+
 
 //1차 커리어 직종 가져오기
-function selectFirst(){
+function selectcareer(){
 	$.ajax({
-		url:"<c:url value='/resume/career/firstList.do'/>",
+		url:"<c:url value='/resume/career/firstCareer.do'/>",
 		type:"post",
 		success:function(res){
-				settingFirst(res);
+			settingcareer(res);
 		},
 		error:function(xhr, status, error){
 			alert(status+":"+error);
@@ -515,7 +533,7 @@ function selectFirst(){
 //1차 커리어 직종 뿌리기
 //[{"firstCode":1,"firstname":"경영·사무"},{"firstCode":2,"firstname":"영업·고객상담"},{"firstCode":3,"firstname":"생산·제조"},
 //{"firstCode":4,"firstname":"IT·인터넷"},{"firstCode":5,"firstname":"전문직"},{"firstCode":6,"firstname":"교육"}
-function settingFirst(res){
+function settingcareer(res){
 		$.each(res,function(idx,item){
 			if(idx==0){
 				var chEl=$("<option value='0'>직종</option>")
@@ -531,9 +549,6 @@ function settingFirst(res){
 		})
 }
 
-//자격증을 가져오는
-
-getCertificate();
 
 //자격증 가져오기
 function getCertificate(){
@@ -567,9 +582,7 @@ function settingCertificate(res){
 	})
 	
 }
-//어학을 가져오는
 
-getLangcertification();
 
 //어학 가져오기
 function getLangcertification(){
@@ -585,7 +598,6 @@ function getLangcertification(){
 	})
 }
 
-
 //어학 뿌리기
 function settingLangcertification(res){
 	$.each(res,function(idx,item){
@@ -599,6 +611,37 @@ function settingLangcertification(res){
 			var opEl=$("<option value='"+item.langlicenceCode+"'></option>");
 			opEl.append(item.langlicencename);
 			$("#selectlanglicencename").append(opEl); 
+		}
+	})
+	
+}
+//희망 근무조건 가져오기
+function gethopeworkform(){
+	$.ajax({
+		url:"<c:url value='/resume/hopeWorking/selecthopework.do'/>",
+		type:"post",
+		success:function(res){
+			settinghopeworkform(res);
+		},
+		error:function(xhr, status, error){
+			alert(status+":"+error);
+		}
+	})
+}
+
+//희망 근무조건 뿌리기
+function settinghopeworkform(res){
+	$.each(res,function(idx,item){
+		if(idx==0){
+			var chEl=$("<option value='0'>희망근무조건</option>")
+			var opEl=$("<option value='"+item.hopeworkCode+"'></option>");
+			opEl.append(item.hopeworkform);
+			$("#hopeworkform").html(chEl);
+			$("#hopeworkform").append(opEl); 
+		}else{
+			var opEl=$("<option value='"+item.hopeworkCode+"'></option>");
+			opEl.append(item.hopeworkform);
+			$("#hopeworkform").append(opEl); 
 		}
 	})
 	
@@ -873,7 +916,7 @@ $(document).ready(function (){
        <tr>
 			<th>자격증명</th>
 		<td colspan="1">
-		<select class="custom-select my-1 FST" name="lCode" id="selectLname">
+		<select class="custom-select my-1 FST" name="lNo" id="selectLname">
 		<option>자격증명</option>
 		</select> 
 		</td>
@@ -907,7 +950,7 @@ $(document).ready(function (){
      <div>
      <table>
        <tr>
-			<th></th>
+			<th>시험종류</th>
 		<td colspan="1">
 		<select class="custom-select my-1 FST" name="langlicenceCode" id="selectlanglicencename">
 		<option>시험종류</option>
@@ -959,7 +1002,17 @@ $(document).ready(function (){
 	 <div  id="hopework">
       <h3>희망근무 선택</h3>
       <div>
-    	<label for="hopeworkform">근무형태</label>
+       <table>
+       <tr>
+			<th>근무형태</th>
+		<td colspan="1">
+		<select class="custom-select my-1 FST" name="hopeworkCode" id="hopeworkform">
+		<option>근무형태</option>
+		</select> 
+		</td>
+		</tr>
+		</table>
+    	<!-- <label for="hopeworkform">근무형태</label>
     	<select class="form-control" name="hopeworkform" id="hopeworkform" >
         	<option value="근무형태 선택">근무형태 선택</option>
         	<option value="정규직">정규직</option>
@@ -975,8 +1028,8 @@ $(document).ready(function (){
         	<option value="해외취업">해외취업</option>
         	<option value="위촉직">위촉직</option>
         	<option value="프리랜서">프리랜서</option>
-        </select>
-       </div>
+        </select>-->
+       </div> 
        <div>
     	<label for="hopepay">희망연봉</label>
     	<select class="form-control" name="hopepay" id="hopepay" >

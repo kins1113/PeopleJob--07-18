@@ -15,14 +15,12 @@ public class ResumeServiceImpl implements ResumeService{
 	@Override
 	@Transactional
 	public int insertResume(ResumeVO vo) {
-		
-		int cnt=resumeDao.insertLangcertification(vo);
-		cnt=resumeDao.insertCertificate(vo);
-		cnt=resumeDao.insertCareer(vo);
-		cnt=resumeDao.insertEducation(vo);
-		cnt=resumeDao.insertHopeWorking(vo);
+		int cnt=resumeDao.updateedu(vo);
+		cnt=resumeDao.updatecareer(vo);
+		cnt=resumeDao.updatecer(vo);
+		cnt=resumeDao.updatelang(vo);
+		cnt=resumeDao.updatehope(vo);
 		cnt=resumeDao.insertResume(vo);
-		
 		return cnt;
 	}
 	@Override
@@ -162,6 +160,30 @@ public class ResumeServiceImpl implements ResumeService{
 	@Override
 	public ResumeVO selectBythird(int thirdCode) {
 		return resumeDao.selectBythird(thirdCode);
+	}
+	@Override
+	public int updatelang(ResumeVO vo) {
+		return resumeDao.updatelang(vo);
+	}
+	@Override
+	public int updatecer(ResumeVO vo) {
+		return resumeDao.updatecer(vo);
+	}
+	@Override
+	public int updatecareer(ResumeVO vo) {
+		return resumeDao.updatecareer(vo);
+	}
+	@Override
+	public int updateedu(ResumeVO vo) {
+		return resumeDao.updateedu(vo);
+	}
+	@Override
+	public int updatehope(ResumeVO vo) {
+		return resumeDao.updatehope(vo);
+	}
+	@Override
+	public int updatemember(ResumeVO vo) {
+		return resumeDao.updatemember(vo);
 	}
 	
 

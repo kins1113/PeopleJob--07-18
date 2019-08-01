@@ -56,4 +56,12 @@ public interface ResumeDAO {
 	public int insertBtype3(ResumeVO vo);
 	public int insertLocation2(ResumeVO vo);
 	
+	int updatelang(ResumeVO vo);
+	int updatecer(ResumeVO vo);
+	int updatecareer(ResumeVO vo);
+	int updateedu(ResumeVO vo);
+	int updatehope(ResumeVO vo);
+	int updatemember(ResumeVO vo);
+	
+	
 }

@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.ez.peoplejob.hopecompany.model.HopeWorkingConditionsVO;
+import com.ez.peoplejob.hopecompany.model.HopeWorkingVO;
 import com.ez.peoplejob.resume.model.CareerVO;
 import com.ez.peoplejob.resume.model.CertificateVO;
 import com.ez.peoplejob.resume.model.EducationVO;
@@ -41,7 +41,7 @@ public class ResumeManagerController {
 	
 	@RequestMapping(value="/resumeAdd.do",method = RequestMethod.POST)
 	public String resumeAdd_post(@ModelAttribute ResumeManagerVO resumeMaVo, 
-								 @ModelAttribute HopeWorkingConditionsVO hopeVo,
+								 @ModelAttribute HopeWorkingVO hopeVo,
 								 @ModelAttribute CertificateVO certificateVO, 
 							 	 @ModelAttribute EducationVO educationVo,
 						  		 @ModelAttribute LangCertificationVO langVo,
