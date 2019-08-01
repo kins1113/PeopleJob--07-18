@@ -14,7 +14,7 @@ import com.ez.peoplejob.hopecompany.model.HopeWorkingConditionsVO;
 import com.ez.peoplejob.resume.model.CareerVO;
 import com.ez.peoplejob.resume.model.CertificateVO;
 import com.ez.peoplejob.resume.model.EducationVO;
-import com.ez.peoplejob.resume.model.LanguageCertificationVO;
+import com.ez.peoplejob.resume.model.LangCertificationVO;
 import com.ez.peoplejob.resume.model.ResumeManagerVO;
 import com.ez.peoplejob.resumeManager.model.ResumeManagerService;
 
@@ -44,7 +44,7 @@ public class ResumeManagerController {
 								 @ModelAttribute HopeWorkingConditionsVO hopeVo,
 								 @ModelAttribute CertificateVO certificateVO, 
 							 	 @ModelAttribute EducationVO educationVo,
-						  		 @ModelAttribute LanguageCertificationVO langVo,
+						  		 @ModelAttribute LangCertificationVO langVo,
 								 @ModelAttribute CareerVO careerVo,
 								 @RequestParam(required = false) int[] localCode,
 								 @RequestParam(required = false) int[] thirdCode) {

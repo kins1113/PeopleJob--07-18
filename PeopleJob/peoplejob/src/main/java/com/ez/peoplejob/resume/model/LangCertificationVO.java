@@ -1,10 +1,8 @@
 package com.ez.peoplejob.resume.model;
 
-import java.sql.Timestamp;
-
-public class LanguageCertificationVO {
-	private int langLicenseCode; 
-	private String langLicenseName; 
+public class LangCertificationVO {
+	private int langlicenseCode; 
+	private String langlicensename; 
 	private String institute;
 	private String certificationtype;
 	private String language;
@@ -12,6 +10,18 @@ public class LanguageCertificationVO {
 	private String langGrade;
 	private String langGetdate;
 	
+	public int getLanglicenseCode() {
+		return langlicenseCode;
+	}
+	public void setLanglicenseCode(int langlicenseCode) {
+		this.langlicenseCode = langlicenseCode;
+	}
+	public String getLanglicensename() {
+		return langlicensename;
+	}
+	public void setLanglicensename(String langlicensename) {
+		this.langlicensename = langlicensename;
+	}
 	public String getCertificationtype() {
 		return certificationtype;
 	}
@@ -42,30 +52,19 @@ public class LanguageCertificationVO {
 	public void setLangGetdate(String langGetdate) {
 		this.langGetdate = langGetdate;
 	}
-	public int getLangLicenseCode() {
-		return langLicenseCode;
-	}
-	public void setLangLicenseCode(int langLicenseCode) {
-		this.langLicenseCode = langLicenseCode;
-	}
-	public String getLangLicenseName() {
-		return langLicenseName;
-	}
-	public void setLangLicenseName(String langLicenseName) {
-		this.langLicenseName = langLicenseName;
-	}
+	
 	public String getInstitute() {
 		return institute;
 	}
 	public void setInstitute(String institute) {
 		this.institute = institute;
 	}
+	
 	@Override
 	public String toString() {
-		return "LanguageCertificationVO [langLicenseCode=" + langLicenseCode + ", langLicenseName=" + langLicenseName
-				+ ", institute=" + institute + ", certificationtype=" + certificationtype
-				+ ", language=" + language + ", langpoint=" + langpoint + ", langGrade=" + langGrade + ", langGetdate="
-				+ langGetdate + "]";
+		return "LangCertificationVO [langlicenseCode=" + langlicenseCode + ", langlicensename=" + langlicensename
+				+ ", institute=" + institute + ", certificationtype=" + certificationtype + ", language=" + language
+				+ ", langpoint=" + langpoint + ", langGrade=" + langGrade + ", langGetdate=" + langGetdate + "]";
 	}
 	
 	

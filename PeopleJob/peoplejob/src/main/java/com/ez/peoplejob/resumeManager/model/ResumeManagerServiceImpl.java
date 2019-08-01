@@ -10,7 +10,7 @@ import com.ez.peoplejob.hopecompany.model.HopeWorkingConditionsVO;
 import com.ez.peoplejob.resume.model.CareerVO;
 import com.ez.peoplejob.resume.model.CertificateVO;
 import com.ez.peoplejob.resume.model.EducationVO;
-import com.ez.peoplejob.resume.model.LanguageCertificationVO;
+import com.ez.peoplejob.resume.model.LangCertificationVO;
 import com.ez.peoplejob.resume.model.ResumeManagerVO;
 
 @Service
@@ -21,7 +21,7 @@ public class ResumeManagerServiceImpl implements ResumeManagerService{
 	@Override
 	@Transactional
 	public int insertResumeMN(HopeWorkingConditionsVO hopeVo, CertificateVO ceritificateVo, EducationVO educationVo,
-			LanguageCertificationVO langVo, CareerVO careerVo, ResumeManagerVO resumeVo){
+			LangCertificationVO langVo, CareerVO careerVo, ResumeManagerVO resumeVo){
 		logger.info("서비스인대 여기는 들어옴????");
 		//hope_working 희망근무 insert 필수 
 		
@@ -52,9 +52,9 @@ public class ResumeManagerServiceImpl implements ResumeManagerService{
 		
 		//langcertification 언어 선택
 		if(langVo!=null) {
-			if(langVo.getLangLicenseName()!=null) { //이름이 있을때만 처리
+			if(langVo.getLanglicensename()!=null) { //이름이 있을때만 처리
 			checkRe=resumeManagerDao.insertLangcertificationMN(langVo);
-			resumeVo.setLanglicenceCode(langVo.getLangLicenseCode());
+			resumeVo.setLanglicenceCode(langVo.getLanglicenseCode());
 			checkRe=0;
 			}
 			logger.info("서비스에 언어 checkRe={}",checkRe);
