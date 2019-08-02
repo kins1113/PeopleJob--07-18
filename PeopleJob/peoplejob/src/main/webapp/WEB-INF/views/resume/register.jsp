@@ -632,17 +632,11 @@ function gethopeworkform(){
 //희망 근무조건 뿌리기
 function settinghopeworkform(res){
 	$.each(res,function(idx,item){
-		if(idx==0){
-			var chEl=$("<option value='0'>희망근무조건</option>")
-			var opEl=$("<option value='"+item.hopeworkCode+"'></option>");
-			opEl.append(item.hopeworkform);
-			$("#hopeworkform").html(chEl);
-			$("#hopeworkform").append(opEl); 
-		}else{
+	
 			var opEl=$("<option value='"+item.hopeworkCode+"'></option>");
 			opEl.append(item.hopeworkform);
 			$("#hopeworkform").append(opEl); 
-		}
+		
 	})
 	
 }
@@ -703,7 +697,7 @@ $(document).ready(function (){
     <!--이력서 사진  https://kuzuro.blogspot.com/2018/10/11.html-->
     <div class="inputArea">
  <label for="picture">이력서 사진</label>
- <input type="file" id="gdsImg" name="file" />
+ <input type="file" id="gdsImg"  />
  <div class="select_img"><img src="" /></div>
  
  <script>
@@ -719,7 +713,7 @@ $(document).ready(function (){
  </script>
 
 </div>
-        <input type="hidden" class="form-control"  name="picture" id="picture"  >
+
     </div>
     <div>        
         <label for="membername">이름</label>
