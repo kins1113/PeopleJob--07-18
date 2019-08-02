@@ -158,7 +158,7 @@ public class PostController {
 	@RequestMapping(value="/postAddByBoardCode.do",method=RequestMethod.POST)
 	public String postAddByBoardCode_post() {
 		logger.info("여기는 등록을 할 예정입니다~~~!!");
-		
+			
 		return "manager/post/postWriteByCode";
 	}
 	
