@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="config.mybatis.mapper.oracle.search">
+	<select id="searchjobopen" resultType="jobopeningvo" parameterType="map">
+	
+	select *
+		from
+		(
+		    select A.*, rownum as RNUM 
+		    from
+		    (
+		        select * from jobopening where adminagree='Y' 	
+				<if test="localcheck1 != null">
+				and localcheck IN 
+				<foreach collection="localcheck1" item="localcheck" 
+					index="index" open="(" close=")" separator=",">
+				#{localcheck}
+				</foreach>
+				</if>
+				<if test="workway1 != null">
+					and workway IN 
+					<foreach collection="workway1" item="workway" 
+						index="index" open="(" close=")" separator=",">
+					#{workway}
+					</foreach>
+				</if>
+				<if test="payway1 != null">
+					and payway IN 
+					<foreach collection="payway1" item="payway" 
+						index="index" open="(" close=")" separator=",">
+					#{payway}
+					</foreach>
+				</if>		
+				<if test="academicCondition1 != null">
+					and academic_Condition IN 
+					<foreach collection="academicCondition1" item="academicCondition" 
+						index="index" open="(" close=")" separator=",">
+					#{academicCondition}
+					</foreach>
+				</if>		
+				<if test="career1 != null">
+					and career IN 
+					<foreach collection="career1" item="career" 
+						index="index" open="(" close=")" separator=",">
+					#{career}
+					</foreach>
+				</if>
+				and
+				(jobtitle like '%' || #{keyword} || '%' or localcheck like '%' || #{keyword} || '%' or subwayinfo like '%' || #{keyword} || '%'
+				or workway like '%' || #{keyword} || '%' or payway like '%' || #{keyword} || '%' or workform like '%' || #{keyword} || '%'
+				or welfare like '%' || #{keyword} || '%' or academic_condition like '%' || #{keyword} || '%')
+
+				order by jobregdate desc
+		    ) A
+		)
+		<where>
+		<![CDATA[ RNUM>#{firstRecordIndex}  
+		and RNUM<=#{firstRecordIndex} + #{recordCountPerPage}]]>
+		</where>
+	</select>
+	<select id="cntsearch" resultType="int" parameterType="map">
+		 select count(*) from jobopening where adminagree='Y' 	
+				<if test="localcheck1 != null">
+				and localcheck IN 
+				<foreach collection="localcheck1" item="localcheck" 
+					index="index" open="(" close=")" separator=",">
+				#{localcheck}
+				</foreach>
+				</if>
+				<if test="workway1 != null">
+					and workway IN 
+					<foreach collection="workway1" item="workway" 
+						index="index" open="(" close=")" separator=",">
+					#{workway}
+					</foreach>
+				</if>
+				<if test="payway1 != null">
+					and payway IN 
+					<foreach collection="payway1" item="payway" 
+						index="index" open="(" close=")" separator=",">
+					#{payway}
+					</foreach>
+				</if>		
+				<if test="academicCondition1 != null">
+					and academic_Condition IN 
+					<foreach collection="academicCondition1" item="academicCondition" 
+						index="index" open="(" close=")" separator=",">
+					#{academicCondition}
+					</foreach>
+				</if>		
+				<if test="career1 != null">
+					and career IN 
+					<foreach collection="career1" item="career" 
+						index="index" open="(" close=")" separator=",">
+					#{career}
+					</foreach>
+				</if>
+				and
+				(jobtitle like '%' || #{keyword} || '%' or localcheck like '%' || #{keyword} || '%' or subwayinfo like '%' || #{keyword} || '%'
+				or workway like '%' || #{keyword} || '%' or payway like '%' || #{keyword} || '%' or workform like '%' || #{keyword} || '%'
+				or welfare like '%' || #{keyword} || '%' or academic_condition like '%' || #{keyword} || '%')
+
+				order by jobregdate desc
+	</select>
+	<select id="searchcompany" parameterType="map" resultType="companyVO">
+		select *
+		from
+		(
+		    select A.*, rownum as RNUM 
+		    from
+		    (
+				select * from company where companyname like '%' || #{keyword} || '%'
+				or company_address like '%' || #{keyword} || '%'
+				order by company_code desc
+		    ) A
+		)
+		<where>
+		<![CDATA[ RNUM>#{firstRecordIndex}  
+		and RNUM<=#{firstRecordIndex} + #{recordCountPerPage}]]>
+		</where>
+		
+	</select>
+	<select id="cntcompany" parameterType="map" resultType="int">
+		select count(*) from company where companyname like '%' || #{keyword} || '%'
+		or company_address like '%' || #{keyword} || '%'
+	</select>
+</mapper>
+
+
+
+
+
+
+
+
+

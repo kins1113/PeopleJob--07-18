@@ -66,6 +66,7 @@ div #detail {
     margin: 0 auto;
     padding: 10px;
     background: white;
+    min-height: 400px;
 }
 .where input[name="wheresubmit"]{
 	position: absolute; 
@@ -79,25 +80,26 @@ div #detail {
 <article>
 	<fieldset>
 <div id="detail">
-<div class="divList" style="min-height: 630px">
+<div class="divList">
         <div class="page-header">
             <h3>채용공고</h3>
-       
+      		 <p>
+				검색결과 : ${pagingInfo.totalRecord}건 검색되었습니다.
+			</p>
        <!--  지역<input type="text" name="hi" id="hi">
         근무방식<input type="text" name="hi2" id="hi2">
        	급여방식<input type="text" name="hi3" id="hi3">
        	 학력<input type="text" name="hi4" id="hi4"> -->
-        <c:if test="${!empty param.localcheck1||!empty param.workday1||!empty param.payway1||!empty param.academicCondition1||!empty param.career1}">
-			<p>
-				검색결과 : ${pagingInfo.totalRecord}건 검색되었습니다.
-			</p>
-		</c:if>
+        <%-- <c:if test="${!empty param.localcheck1||!empty param.workday1||!empty param.payway1||!empty param.academicCondition1||!empty param.career1}">
+			
+		</c:if> --%>
 	 </div> 
 	<div class="divSearch"> 
 	<!-- 페이징 처리에도 사용 -->
    	<form name="frmSearch" method="post" 
-   		action='<c:url value="/company/jobopening_list.do"/>'>
+   		action='<c:url value="/search/search_list.do"/>'>
    		<!-- 현재 페이지 hidden에 넣기 -->  
+   		<input type="hidden" id="keyword" class="btn btn-primary" name="keyword" value="${param.keyword}"> 
    		<input type="button" id="search" class="btn btn-primary" name="search" value="검색조건"> 
    		<input type="hidden" name='currentPage' value="1" >
 		<input type="submit" class="btn btn-primary" value="검색">
@@ -127,7 +129,7 @@ div #detail {
 				</div>
 		<div id="where" class="where">
 		<%-- <%@include file="jobopening_where.jsp" %> --%>
-			<c:import url="jobopening_where.jsp"/>
+			<c:import url="../company/jobopening_where.jsp"/> 
 		</div> 
    		</form>
 			</div>
@@ -210,13 +212,146 @@ div #detail {
 
         </div>
        <!-- 기업회원(3)이면 글쓰기 나옴  -->
-         <c:if test="${mvo.authorityCode==3}"> 
+        <%--  <c:if test="${mvo.authorityCode==3}"> 
         <div class="pull-right"> 
             <a href="<c:url value='/apply/Capply_list.do'/>" class="btn btn-primary" role="button">지원현황 보기</a>
             <a href="<c:url value='/company/my_jobopening_list.do?companycode1=${mvo.companyCode}'/>" class="btn btn-primary" role="button">내가쓴 채용 정보</a>
             <a href="<c:url value='/company/jobopening_register.do'/>" class="btn btn-primary" role="button">공고등록</a>
         </div>
-        </c:if>
+        </c:if> --%>
+    </div>
+    </div>
+<div id="detail">
+<div class="divList" >
+        <div class="page-header">
+            <h3>기업정보</h3>
+      		 <p>
+				검색결과 : ${pagingInfo2.totalRecord}건 검색되었습니다.
+			</p>
+       <!--  지역<input type="text" name="hi" id="hi">
+        근무방식<input type="text" name="hi2" id="hi2">
+       	급여방식<input type="text" name="hi3" id="hi3">
+       	 학력<input type="text" name="hi4" id="hi4"> -->
+        <%-- <c:if test="${!empty param.localcheck1||!empty param.workday1||!empty param.payway1||!empty param.academicCondition1||!empty param.career1}">
+			
+		</c:if> --%>
+	 </div> 
+	<div class="divSearch"> 
+	<!-- 페이징 처리에도 사용 -->
+   	<%-- <form name="frmSearch" method="post" 
+   		action='<c:url value="/search/search_list.do"/>'>
+   		<!-- 현재 페이지 hidden에 넣기 -->  
+   		<input type="hidden" id="keyword" class="btn btn-primary" name="keyword" value="${param.keyword}"> 
+   		<input type="button" id="search" class="btn btn-primary" name="search" value="검색조건"> 
+   		<input type="hidden" name='currentPage' value="1" >
+		<input type="submit" class="btn btn-primary" value="검색">
+		<div class="form-group" id='pageSize'>
+					<select class="custom-select my-1 mr-sm-2" id="recordCountPerPage" name="recordCountPerPage">
+						<option value="10"
+							<c:if test="${param.recordCountPerPage==10 }">
+								selected="selected"
+							</c:if>>10개씩
+						</option>
+						<option value="20"
+							<c:if test="${param.recordCountPerPage==20 }">
+								selected="selected"
+							</c:if>>20개씩
+						</option>
+						<option value="30"
+							<c:if test="${param.recordCountPerPage==30 }">
+								selected="selected"
+							</c:if>>30개씩
+						</option>
+						<option value="50"
+							<c:if test="${param.recordCountPerPage==50 }">
+								selected="selected"
+							</c:if>>50개씩
+						</option>
+					</select>
+				</div>
+		<div id="where" class="where">
+		<%@include file="jobopening_where.jsp" %>
+			<c:import url="../company/jobopening_where.jsp"/> 
+		</div> 
+   		</form> --%>
+			</div>
+        <div>
+        <c:if test="${empty comlist }">	 
+	 	<tr>
+	 		<td colspan="5" class="align_center">데이터가 존재하지 않습니다.</td>
+	 	</tr>
+		</c:if>
+		<c:if test="${!empty comlist }">
+			<c:forEach var="vo" items="${comlist }"> 
+			<c:set var="loop_flag" value="false" /> 
+			
+	        <div class="list-group"> 
+	            <div class="list-group-item">
+				         <img src="<c:url value='/logo_upload/${vo.image }'/>"   
+							alt="로고이미지" width="60px" height="100px" style="float:right;">   	
+							<div style="width=100px;float:left;"> 
+			                <div class="cname"style="height:100px; width:120px;text-align: center;"><h2><a href="<c:url value='/search/companyInfo.do?companyCode=${vo.companyCode }'/>">${vo.companyname}</a></h2></div>
+				            <c:set var="loop_flag" value="true" />
+			                 </div>
+							<%-- <h4 class="list-group-item-heading"><a href="<c:url value='/company/jobopening_upHit.do?jobopening=${vo.jobopening }'/>">:${vo.companyname }</a></h4> --%>
+	                <p class="list-group-item-text">
+	                
+	                   ${vo.majorbusiness} | 설립  ${fn:substring(vo.establishyear,0,10)} | 사원수 ${vo.womannum+vo.mannum}명 | ${vo.companytype }
+	                   <br>
+	                   <br>
+	                   <small>${vo.companyname}은(는) ${vo.companyAddress} ${vo.companyAddressdetail }에 위치해 있으며 ${vo.majorbusiness }를 하고 있습니다.</small>
+	                <%--| <small>등록일 : ${fn:substring(vo.jobregdate,0,10)}</small> 
+	                | <small>근무방식 : ${vo.workway }</small>
+	                | <small>급여방식 : ${vo.payway }</small><br>
+	                 <small>경력사항 : ${vo.career }</small>
+	                | <small>학력사항 : ${vo.academicCondition }</small>
+	                | <small>조회수 : ${vo.hits }</small>
+	                <br>
+	                 <span class="label label-info">복리후생 : ${vo.welfare }</span> --%>
+	                 <br>
+	            </div> 
+	        </div>
+	        </c:forEach>
+		</c:if>
+		</div>
+        <div class="pull-left">
+            <div class="divPage">
+	<!-- 이전블럭으로 이동하기 -->
+	<c:if test="${pagingInfo2.firstPage>1 }">	
+		<a href="#" onclick="pageFunc(${pagingInfo2.firstPage-1})">
+			<img src="<c:url value='/resources/images/first.JPG'/>" alt="이전블럭으로 이동">
+		</a>	
+	</c:if>
+	<!-- 페이지 번호 추가 -->
+	<!-- [1][2][3][4][5][6][7][8][9][10] -->
+	<c:forEach var="i" begin="${pagingInfo2.firstPage }" end="${pagingInfo2.lastPage }">
+		<c:if test="${i==pagingInfo2.currentPage }">
+			<span style="color:blue;font-size: 1em">${i }</span>
+		</c:if>
+		<c:if test="${i!=pagingInfo2.currentPage }">
+			<a href="#" onclick="pageFunc(${i})">
+				[${i}]</a>
+		</c:if>
+	</c:forEach>
+	<!--  페이지 번호 끝 -->
+	
+	<!-- 다음 블럭으로 이동하기 -->
+	<c:if test="${pagingInfo2.lastPage<pagingInfo2.totalPage }">	
+		<a href="#" onclick="pageFunc(${pagingInfo2.lastPage+1})">
+			<img src="<c:url value='/resources/images/last.JPG'/>" alt="다음블럭으로 이동">
+		</a>
+	</c:if>
+</div>
+
+        </div>
+       <!-- 기업회원(3)이면 글쓰기 나옴  -->
+        <%--  <c:if test="${mvo.authorityCode==3}"> 
+        <div class="pull-right"> 
+            <a href="<c:url value='/apply/Capply_list.do'/>" class="btn btn-primary" role="button">지원현황 보기</a>
+            <a href="<c:url value='/company/my_jobopening_list.do?companycode1=${mvo.companyCode}'/>" class="btn btn-primary" role="button">내가쓴 채용 정보</a>
+            <a href="<c:url value='/company/jobopening_register.do'/>" class="btn btn-primary" role="button">공고등록</a>
+        </div>
+        </c:if> --%>
     </div>
     </div>
     </fieldset>

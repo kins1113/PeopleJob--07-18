@@ -163,11 +163,25 @@ button {
 					<a href="<c:url value='/main/mainindex.do'/>"><img src="<c:url value='/resources/main/images/peoplejob_logo.JPG'/>" alt="LOGO"></a>
 				</div>	
 			<div class="pos-relative size-a-2 bo-1-rad-22 of-hidden bocl11 m-tb-6" style="width: 500px">
-				<input class="f1-s-1 cl6 plh9 s-full p-l-25 p-r-45" type="text" name="search" placeholder="Search">
-				<button class="flex-c-c size-a-1 ab-t-r fs-20 cl2 hov-cl10 trans-03">
+				<input class="f1-s-1 cl6 plh9 s-full p-l-25 p-r-45" type="text" name="search" placeholder="Search" value="${param.keyword }">
+				<button class="flex-c-c size-a-1 ab-t-r fs-20 cl2 hov-cl10 trans-03" id="submitbut" name="submitbut">
 					<i class="zmdi zmdi-search"></i>
 				</button>
 			</div>
+				<script type="text/javascript">
+					$("#submitbut").click(function(){//검색버튼 누를 시 이벤트
+						var a=$("input[name=search]").val();
+						location.href="<c:url value='/search/search_list.do?keyword="+a+"'/>";
+						$("input[name=search]").val(a);
+					});
+					$("input[name=search]").keydown(function (key) { //엔터버튼 누를 시 이벤트
+						if (key.keyCode == 13) { // 엔터키면
+							var a=$("input[name=search]").val();
+							location.href="<c:url value='/search/search_list.do?keyword="+a+"'/>";
+							$("input[name=search]").val(a);
+						}
+			        });
+				</script>
 				<!-- Banner -->
 				<div class="banner-header">
 					<a href="https://themewagon.com/themes/free-bootstrap-4-html5-news-website-template-magnews2/">
