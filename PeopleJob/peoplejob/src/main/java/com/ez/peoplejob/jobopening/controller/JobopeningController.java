@@ -372,7 +372,7 @@ public class JobopeningController {
 			logger.info("vo={}",vo);
 			if(cnt>0) {
 				msg="삭제완료";
-				url="/company/jobopening_list.do";
+				url="/company/my_jobopening_list.do?companycode1="+vo.getCompanyCode();
 				if(vo.getCompanyimage()!=null 
 						&& !vo.getCompanyimage().isEmpty()) {
 					String path=fileUploadUtil.getUploadPath(request,FileUploadUtility.JOBOPENING_UPLOAD);

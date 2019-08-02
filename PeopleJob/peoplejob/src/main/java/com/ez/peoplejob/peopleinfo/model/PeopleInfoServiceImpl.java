@@ -6,6 +6,10 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.ez.peoplejob.hopecompany.model.FirstOccupationVO;
+import com.ez.peoplejob.hopecompany.model.LocationVO;
+import com.ez.peoplejob.hopecompany.model.SecondOccupationVO;
+import com.ez.peoplejob.hopecompany.model.ThirdOccupationVO;
 import com.ez.peoplejob.resume.model.ResumeVO;
 
 @Service
@@ -84,4 +88,44 @@ public class PeopleInfoServiceImpl implements PeopleInfoService {
 		return peopleinfoDao.selectTotalCountPeople(map);
 	}
 
+	
+	@Override
+	public List<FirstOccupationVO> selectFirst() {
+		return peopleinfoDao.selectFirst();
+	}
+
+	@Override
+	public List<SecondOccupationVO> selectSecond(int firstCode) {
+		return peopleinfoDao.selectSecond(firstCode);
+	}
+
+	@Override
+	public List<ThirdOccupationVO> selectThird(int secondCode) {
+		return peopleinfoDao.selectThird(secondCode);
+	}
+
+	@Override
+	public List<LocationVO> selectLocation() {
+		return peopleinfoDao.selectLocation();
+	}
+
+	@Override
+	public List<Map<String, Object>> selectLocation2(int sidoCode) {
+		return peopleinfoDao.selectLocation2(sidoCode);
+	}
+
+	@Override
+	public List<Map<String, Object>> selectBtype1() {
+		return peopleinfoDao.selectBtype1();
+	}
+
+	@Override
+	public List<Map<String, Object>> selectBtype2(int btypeCode1) {
+		return peopleinfoDao.selectBtype2(btypeCode1);
+	}
+
+	@Override
+	public List<Map<String, Object>> selectBtype3(int btypeCode2) {
+		return peopleinfoDao.selectBtype3(btypeCode2);
+	}
 }

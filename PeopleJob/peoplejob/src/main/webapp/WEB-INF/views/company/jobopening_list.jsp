@@ -38,18 +38,22 @@
 	});
 </script>
 <style type="text/css">
+div #detail { 
+    background: #f2f4f7;
+}
 .where{
-	min-height: 600px; 
+	min-height: 700px; 
+	background-color: gray;
 }
 .where div input[type="checkbox"]{  
 	width:50px;
 	margin:0 auto;
-	float: right;
+	float: left;
 }
 .where div label{ 
 	width:130px; 
 	margin:0 auto;  
-	height:30px;
+	height:20px;
 }
 .where fieldset{
 	min-width: 0;
@@ -61,6 +65,7 @@
     width: 900px;
     margin: 0 auto;
     padding: 10px;
+    background: white;
 }
 .where input[name="wheresubmit"]{
 	position: absolute; 
@@ -73,7 +78,7 @@
 </style>
 <article>
 	<fieldset>
-    
+<div id="detail">
 <div class="divList" style="min-height: 630px">
         <div class="page-header">
             <h3>채용공고</h3>
@@ -138,18 +143,19 @@
 			
 	        <div class="list-group"> 
 	            <div class="list-group-item">
-	                <img src="<c:url value='/jobopening_upload/${vo.companyimage }'/>"  
-							alt="공고이미지" width="50px" height="50px" style="float:right;"> 
-							<div style="width=100px;float:left;">
+	             
 							<c:forEach var="cvo" items="${clist }">
 	                 <c:if test="${not loop_flag }">
 				        <c:if test="${vo.companyCode==cvo.companyCode}">   
+				         <img src="<c:url value='/logo_upload/${cvo.image }'/>"   
+							alt="로고이미지" width="60px" height="100px" style="float:right;">   	
+							<div style="width=100px;float:left;">
 			                <div class="cname"style="height:100px; width:120px;text-align: center;"><h2>${cvo.companyname}</h2></div>
 				            <c:set var="loop_flag" value="true" />
+			                </div>
 				        </c:if>
 				    </c:if>
 	                </c:forEach>
-	                </div>
 							<h4 class="list-group-item-heading"><a href="<c:url value='/company/jobopening_upHit.do?jobopening=${vo.jobopening }'/>">공고제목:${vo.jobtitle }</a></h4>
 	                <p class="list-group-item-text">
 	                

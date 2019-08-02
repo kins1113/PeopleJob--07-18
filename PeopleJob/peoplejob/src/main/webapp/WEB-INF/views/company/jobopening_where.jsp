@@ -48,7 +48,7 @@
 <article>
 <fieldset>
 <div>
-<label>지역구분</label><br>
+<label>지역구분</label><hr>
 <label><input type="checkbox" id="localcheck1" name="localcheck1" value="서울특별시">서울</label>
 <label><input type="checkbox" id="localcheck1" name="localcheck1" value="부산광역시">부산</label>
 <label><input type="checkbox" id="localcheck1" name="localcheck1" value="인천광역시">인천</label>
@@ -67,16 +67,16 @@
 <label><input type="checkbox" id="localcheck1" name="localcheck1"value="경상남도">경남</label>
 <label><input type="checkbox" id="localcheck1" name="localcheck1" value="제주">제주</label>
 
-<br><label>근무방식</label><br>
+<hr><label>근무방식</label><hr>
 <label><input type="checkbox" id="workway1" name="workway1" value="정규직(경력)">정규직(경력)</label>
 <label><input type="checkbox" id="workway1" name="workway1" value="정규직(신입)">정규직(신입)</label>
 <label><input type="checkbox" id="workway1" name="workway1" value="계약직">계약직</label>
 <label><input type="checkbox" id="workway1" name="workway1" value="인턴">인턴</label>
-<br><label>급여방식</label><br>
+<hr><label>급여방식</label><hr>
 <label><input type="checkbox" id="payway1" name="payway1" value="월급">월급</label>
 <label><input type="checkbox" id="payway1" name="payway1" value="연봉">연봉</label>
 <label><input type="checkbox" id="payway1" name="payway1" value="주급">주급</label>
-<br><label>학력</label> <br>
+<hr><label>학력</label><hr>
 <label><input type="checkbox" id="academicCondition1" name="academicCondition1" value="고졸">고졸</label>
 <label><input type="checkbox" id="academicCondition1" name="academicCondition1" value="대졸(2,3년)">대졸(2,3년)</label>
 <label><input type="checkbox" id="academicCondition1" name="academicCondition1" value="대졸(4년)">대졸(4년)</label>
@@ -84,13 +84,13 @@
 <label><input type="checkbox" id="academicCondition1" name="academicCondition1" value="박사졸업">박사졸업</label>
 <label><input type="checkbox" id="academicCondition1" name="academicCondition1" value="학력무관">학력무관</label>
 
-<br><label>경력</label> <br>
+<hr><label>경력</label><hr> 
 <label><input type="checkbox" id="career1" name="career1" value="경력무관">경력무관</label>
 <label><input type="checkbox" id="career1" name="career1" value="1~3년">1~3년</label>
 <label><input type="checkbox" id="career1" name="career1" value="4~6년">4~6년</label>
 <label><input type="checkbox" id="career1" name="career1" value="7~9년">7~9년</label>
 </div>
-<br><br><hr> 
+<hr> 
 <input type="button" id="wheresubmit" name="wheresubmit"value="확인" class="btn btn-primary">
 </fieldset>
 </article>

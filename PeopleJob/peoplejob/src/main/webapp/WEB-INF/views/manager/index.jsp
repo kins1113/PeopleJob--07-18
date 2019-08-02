@@ -10,12 +10,12 @@
 .card-body.reJob table{ width: 100%;height: 100%; }
 .card-body.reJob table tbody th {width: 124px;border: 1px solid #795548;background: aliceblue;text-align: center;}
 .card-body.reJob table tbody tr:nth-of-type(1) {background: aliceblue;}
-.card-body.reJob table thead th, #custextTable thead th {width: 124px;background: #f7f7f7; font-size: 1.1em; font-weight: bold;text-align: right; }
+.card-body.reJob table thead th, #custextTable thead th, #popupTable thead th {width: 124px;background: #f7f7f7; font-size: 1.1em; font-weight: bold;text-align: right; }
 .card-body.reJob table td {  width: 20%; border: 1px solid #795548;text-align: center;}
 .card-body.reJob table tbody {  border: 1px solid #795548;}
 span#todaySpan {color: #3F51B5;font-size: 0.8em;}
-.card-body.CusDiv { padding: 5px;}
-#custextTable {width: 100%}
+.card-body.CusDiv, .card-body.popup { padding: 2px;}
+#custextTable, #popupTable{height:100%; width: 100%}
 #custextTable thead {  border-bottom: 2px solid #54504e;}
 #custextTable tbody tr { border-bottom: 1px dotted silver;height: 22px; font-size: 12px;}
 #custextTable tbody th { text-align: center;width: 70px;padding-right: 4px;}
@@ -23,10 +23,15 @@ span#todaySpan {color: #3F51B5;font-size: 0.8em;}
 .col-md-12, .col-xl-6{  position: relative;  width: 100%;  min-height: 1px;  padding-right: 5px;    padding-left: 5px;}
 .card-default {  margin-bottom: 0.5rem;}
 .col-xl-3 {   flex: 0 0 25%;  max-width: 27%;}
+.card-body.quickMenu {  padding: 6px;}
+.card-header.justify-content-center {    padding: 20px;}
+button.mb-1.btn.btn-pill.btn-lg.btn-outline-primary {     line-height: 0.5em;    font-size: 13px;    width: 100%;}
+.card-body.popup table tbody th {border: 1px solid #795548;background: aliceblue;text-align: center;}
+.card-body.popup table tbody tr{height: 30px;}
+#popupTable td { border: 1px solid #795548;  text-align: center;}
+</style>
 
- </style>
-
-<c:forEach var="popupVo" items="${popupList}">
+<%-- <c:forEach var="popupVo" items="${popupList}">
 
 	<c:set var="popupName" value=" ${popupVo.popupName }"/> 
 	<c:set var="popupImg" value="${popupVo.popupImg }"/>
@@ -36,30 +41,21 @@ span#todaySpan {color: #3F51B5;font-size: 0.8em;}
 	<c:set var="top" value="${popupVo.top }"/>
 	<c:set var="popupImg" value="${popupVo.popupImg}"/>
 
+</c:forEach> --%>
+<c:forEach var="popupVo" items="${popupList}">
+	<script type="text/javascript">
+		$(function(){
+			
+			var count = ${fn:length(popupList)}
+			for(var i=0;i<count;i++){
+				window.open("<c:url value='/manager/popup/popupOpen.do?popupImg=${popupVo.popupImg }'/>",
+					"${popupVo.popupName }","width=${popupVo.width },height=${popupVo.height},left=${popupVo.left},top=${popupVo.top}")
+					/* window.open("<c:url value='/manager/popup/popupOpen.do'/>",
+					"popupNam","width=500,height=600,left=100,top=20") */
+			}
+	})
+	</script>
 </c:forEach>
-<script type="text/javascript">
-$(function(){
-	var count = ${fn:length(popupList)}
-	for(var i=0;i<count;i++){
-		window.open("<c:url value='/manager/popup/popupOpen.do?popupImg=${popupImg}'/>",
-			"${popupName}","width=${width},height=${height},left=${left},top=${top}")
-			/* window.open("<c:url value='/manager/popup/popupOpen.do'/>",
-			"popupNam","width=500,height=600,left=100,top=20") */
-	}
-	// 기존 css에서 플로팅 배너 위치(top)값을 가져와 저장한다.
-	var floatPosition = parseInt($("#floatMenu").css('top'));
-	// 250px 이런식으로 가져오므로 여기서 숫자만 가져온다. parseInt( 값 );
-	$(window).scroll(function() {
-		// 현재 스크롤 위치를 가져온다.
-		var scrollTop = $(window).scrollTop();
-		var newPosition = scrollTop + floatPosition + "px";
-		 $("#floatMenu").css('top', newPosition);
-		$("#floatMenu").stop().animate({
-			"top" : newPosition
-		}, 500);
-	}).scroll();
-})
-</script>
 
 <jsp:useBean id="now" class="java.util.Date" />
 <fmt:formatDate value="${now}" pattern="yyyy-MM-dd" var="today" />
@@ -73,8 +69,35 @@ $(function(){
 <script type="text/javascript">
 
 $(function(){
+	$("#popupTable tbody").find("tr").eq(1).click(function(){
+		alert("asd");
+	})
+	// 기존 css에서 플로팅 배너 위치(top)값을 가져와 저장한다.
+	var floatPosition = parseInt($("#floatMenu").css('top'));
+	// 250px 이런식으로 가져오므로 여기서 숫자만 가져온다. parseInt( 값 );
+	$(window).scroll(function() {
+		// 현재 스크롤 위치를 가져온다.
+		var scrollTop = $(window).scrollTop();
+		var newPosition = scrollTop + floatPosition + "px";
+		 $("#floatMenu").css('top', newPosition);
+		$("#floatMenu").stop().animate({
+			"top" : newPosition
+		}, 500);
+	}).scroll();
+	
+	//popup관련 정보 가져오는 ajax /manager/index/popup.do
+	$.ajax({
+		url:"<c:url value='/manager/index/popup.do'/>",
+		type:"post",
+		success:function(res){
+			popupSetting(res);
+		},
+		error:function(xht, status, error){
+			alert(status+" : "+error);
+		}
+	});	
 	//결제 완료 가져가는 ajax /manager/index/payment.do
-		$.ajax({
+	$.ajax({
 		url:"<c:url value='/manager/index/payment.do'/>",
 		type:"post",
 		success:function(res){
@@ -148,6 +171,25 @@ $(function(){
 		}
 	});
 	
+	//퀵 메뉴 누르면 넘어가기
+	$(".quickMenu button").click(function(){
+		var type=$(this).html();
+		if(type=='이력서 등록'){
+			location.href="<c:url value='/manager/resume/resumeAdd.do?showKey=resume'/>";
+		}else if(type=='채용공고 등록'){
+			location.href="<c:url value='/manager/jobopening/jobopeningAdd.do?showKey=resume'/>";
+		}else if(type=='상품 등록'){
+			location.href="<c:url value='/manager/service/register.do?showKey=service'/>";
+		}else if(type=='팝업 등록'){
+			location.href="<c:url value='/manager/popup/popupAdd.do?showKey=popup'/>";
+		}else if(type=='메일보내기'){
+			location.href="<c:url value='/manager/email_sms/emailWrite.do?showKey=mail'/>";
+		}else if(type=='게시글 쓰기'){
+			location.href="<c:url value='/manager/post/postWrite.do?showKey=post'/>";
+		}
+			
+	});
+	
 });
 
 //결제완료 세팅
@@ -177,10 +219,9 @@ function highChartsConnet(){
 		    }
 		  },
 		  tooltip: {
-			    formatter: function () {
-			      return '<b>' + this.series.name + '</b><br/>' +
-			        this.point.y + ' ' + this.point.name.toLowerCase();
-			    }
+		        formatter: function () {
+		            return  this.point.y;
+		        }
 		  }
 	});
 }
@@ -272,7 +313,16 @@ function highChartsMember(item){
 				resume.append(tdEl);
 			}
 		})
-}
+	}
+	//popup정보 세팅
+	function popupSetting(res){
+		$.each(res,function(idx,item){
+			var tdEl=$("<td></td>");
+			tdEl.html(item);
+			$("#popupTable tbody").find("tr").eq(1).append(tdEl);
+		})
+	}
+	
 	//문의사항 세팅 custextTable
 	function custextSetting(res){
 		$.each(res,function(idx, item){
@@ -332,12 +382,17 @@ function highChartsMember(item){
 			</div>
 			<div class="col-xl-2 col-md-12" id="floatMenu">
 				<!-- Doughnut Chart -->
-				<div class="card card-default" data-scroll-height="450">
+				<div class="card card-default" data-scroll-height="300">
 					<div class="card-header justify-content-center">
 						<h2>퀵 메뉴</h2>
 					</div>
-					<div class="card-body">
-					
+					<div class="card-body quickMenu">
+						<button type="button" class="mb-1 btn btn-pill btn-lg btn-outline-primary" >이력서 등록</button>
+						<button type="button" class="mb-1 btn btn-pill btn-lg btn-outline-primary" >채용공고 등록</button>
+						<button type="button" class="mb-1 btn btn-pill btn-lg btn-outline-primary" >상품 등록</button>
+						<button type="button" class="mb-1 btn btn-pill btn-lg btn-outline-primary" >팝업 등록</button>
+						<button type="button" class="mb-1 btn btn-pill btn-lg btn-outline-primary" >메일보내기</button>
+						<button type="button" class="mb-1 btn btn-pill btn-lg btn-outline-primary" >게시글 쓰기</button>
 					
 					</div>
 				</div>
@@ -348,7 +403,7 @@ function highChartsMember(item){
 				<div class="card card-default" data-scroll-height="150">
 					<div class="card-body reJob">
 						<table id="reJobTable">
-							<thead><tr><th colspan="5">인재/채용현황 <span id="reJobSpan">(오늘 <span id="todaySpan"><c:out value="${today}"/></span>)</span><a href="#" class="moreShow">더 보기</a></th></tr></thead>
+							<thead><tr><th colspan="5">인재/채용현황 <span id="reJobSpan">(오늘 <span id="todaySpan"><c:out value="${today}"/></span>)</span><a href="<c:url value='/manager/resume/resumeList.do?showKey=resume'/>" class="moreShow">더 보기</a></th></tr></thead>
 							<tbody>
 								<tr>
 									<th></th>
@@ -385,7 +440,7 @@ function highChartsMember(item){
 				<div class="card card-default" data-scroll-height="130">
 					<div class="card-body reJob">
 						<table id="paymentTable">
-							<thead><tr><th colspan="5">서비스 결제 현황 <span id="reJobSpan">(오늘 <span id="todaySpan"><c:out value="${today}"/></span>)</span><a href="#" class="moreShow">더 보기</a></th></tr></thead>
+							<thead><tr><th colspan="5">서비스 결제 현황 <span id="reJobSpan">(오늘 <span id="todaySpan"><c:out value="${today}"/></span>)</span><a href="<c:url value='/manager/payment/list.do'/>"  class="moreShow">더 보기</a></th></tr></thead>
 							<tbody>
 								<tr>
 									<th></th>
@@ -404,8 +459,22 @@ function highChartsMember(item){
 			</div>				
 			<div class="col-xl-3 col-md-12">
 				<!-- Doughnut Chart -->
-				<div class="card card-default" data-scroll-height="200">
-					<div class="card-body PDZ">
+				<div class="card card-default" data-scroll-height="130">
+					<div class="card-body popup">
+					<table id="popupTable">
+							<thead><tr><th colspan="5">팝업 현황 <span id="reJobSpan">(오늘 <span id="todaySpan"><c:out value="${today}"/></span>)</span><a href="<c:url value='/manager/popup/popupList.do?showKey=popup'/>"  class="moreShow">더 보기</a></th></tr></thead>
+							<tbody>
+								<tr>
+									<th></th>
+									<th>진행중</th>
+									<th>마감직전</th>
+									<th>미사용</th>
+								</tr>
+								<tr>
+									<th>수량</th>
+								</tr>
+							</tbody>
+						</table>
 					</div>
 				</div>
 			</div>				
