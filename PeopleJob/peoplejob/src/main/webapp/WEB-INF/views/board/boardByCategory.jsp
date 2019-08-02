@@ -89,8 +89,8 @@
  </script>
  
  
- <div class="wraper">
-          <div class="container">
+ <div class="wraper" style="">
+          <div class="container" style="height: 96%;">
           
           <h2>${param.boardName }</h2>
           <div class="row">
@@ -116,14 +116,21 @@
               <c:forEach var="postVo" items="${list }">
                 <tr style="background: white;">
 				   	<td>${i }</td>
-				   	<td><a href="<c:url value='/post/countUpdate.do?no=${postVo.boardCode2}'/>">
+				   	<td><a href="<c:url value='/post/countUpdate.do?no=${postVo.boardCode2}&name=${postVo.boardCode }'/>">
 				   	
 				   	<c:if test="${fn:length(postVo.boardtitle)>=30 }">
 						${fn:substring(postVo.boardtitle,0,30) }...</c:if>
 						<c:if test="${fn:length(postVo.boardtitle)<30 }">
 						${postVo.boardtitle}</c:if>
 						</td>
-				   	<td>${postVo.memberCode }</td>
+				   	<td>
+					   	<c:if test="${postVo.memberCode==0 && postVo.adminCode!=0}">
+					   		관리자
+					   	</c:if>
+					   	<c:if test="${postVo.memberCode!=0 && postVo.adminCode==0 }">
+					   		${postVo.memberCode }
+					   	</c:if>
+				   	</td>
 				   	<td><fmt:formatDate value="${postVo.boardregdate2 }" pattern="yyyy-MM-dd HH:mm:ss"/></td>
 				   	<td>${postVo.boardhits }</td>
 				</tr>
@@ -135,6 +142,11 @@
               </tbody>
             </table>
           </div>
+          <div class="flex-wr-s-c m-rl--7 p-t-15">
+						<a href="#" class="flex-c-c pagi-item hov-btn1 trans-03 m-all-7 pagi-active">1</a>
+						<a href="#" class="flex-c-c pagi-item hov-btn1 trans-03 m-all-7">2</a>
+					</div>
+          	<input type="button" value="글쓰기" style="float:right;" onclick="location.href='/board/boardWrite.do?${postVo.boardCode}' ">
     </div>
     
     

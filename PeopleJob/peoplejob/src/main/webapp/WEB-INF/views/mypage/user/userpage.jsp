@@ -111,10 +111,11 @@ $(function(){
 				<img alt="회원이미지" src="<c:url value='/resources/main/images/people.PNG'/>" width="100%">
 				${sessionScope.memberName }<span>님</span>
 			</div>
-				<div class="p-l-10 p-rl-0-sr991 p-t-70" style="padding-top: 29px;float:left;">						
+				<div class="p-l-10 p-rl-0-sr991 p-t-70" style="padding-top: 29px;float:left;    width: 217px;
+    margin-left: -22px;">						
 						<!-- Category -->
 						<div class="p-b-60">
-							<div class="how2 how2-cl4 flex-s-c">
+							<div class="how2 how2-cl4 flex-s-c" style="margin-left: 12px;  width: 200px;">
 								<h3 class="f1-m-2 cl3 tab01-title">
 									마이페이지
 								</h3>

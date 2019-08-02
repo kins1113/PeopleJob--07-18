@@ -203,7 +203,7 @@ button {
 								<a href="">자료실</a>
 								<ul class="sub-menu">
 									<li><a href="">이력서 양식</a></li>
-									<li><a href="">취업 뉴스</a></li>
+									<li><a href="<c:url value='/references/news.do'/>">취업 뉴스</a></li>
 									<li><a href="<c:url value='/references/FreeLecture.do'/>">무료 강좌</a></li>
 									
 								</ul>
@@ -246,7 +246,7 @@ button {
 							</li>
 
 							<li>
-								<a href="">게시판</a>
+								<a href="<c:url value='/notice/list.do'/>">게시판</a>
 								<ul class="sub-menu">
 									<c:import url="/board/boardList.do"></c:import>
 									<li><a href="<c:url value='/notice/list.do'/>">공지사항</a></li>

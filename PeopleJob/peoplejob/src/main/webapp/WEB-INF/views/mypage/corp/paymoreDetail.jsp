@@ -79,10 +79,10 @@ table{
 			</c:if>
 			
 			<c:if test="${!empty list }"> 
-		<c:forEach var="map" items="${list }" begin="0" end="1">
+		<%-- <c:forEach var="map" items="${list }" begin="0" end="1">
 				<span style="color: black; font-size: 1.1em;">
 				${map['PAYDATE'] } 에 결제한 상품 내역 리스트: 총 ${fn:length(list) }개</span>
-		</c:forEach>
+		</c:forEach> --%>
 		
 				<c:forEach var="map" items="${list }">
 					<tr>
