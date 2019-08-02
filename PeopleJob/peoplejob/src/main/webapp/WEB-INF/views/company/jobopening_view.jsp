@@ -200,7 +200,7 @@ span #companyname{
 			        <span  aria-hidden="true"></span>고용형태:<span>${vo.workform}</span><br><br>
 					
             		<span  aria-hidden="true">급여/급여방식:<fmt:formatNumber value="${vo.pay }" pattern="#,###"/>원/${vo.payway }</span><br><br>
-            		<span  aria-hidden="true">근무형태:${vo.workway}</span><br><br>
+            		<span  aria-hidden="true">근무형태:${vo.workform}</span><br><br>
             		<span  aria-hidden="true">우대사항:${vo.sweetener}</span><br><br>
             		<span  aria-hidden="true">복리후생:${vo.welfare}</span><br><br>
             		<span  aria-hidden="true">근무요일:${vo.dayofweek }</span><br><br>

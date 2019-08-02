@@ -135,8 +135,8 @@
 		set jobopening=#{jobopening},jobtitle=#{jobtitle},localcheck=#{localcheck},subwayinfo=#{subwayinfo},workway=#{workway},
 		 workdate=#{workdate},dayofweek=#{dayofweek},worktime=#{worktime},payway=#{payway},pay=#{pay},workform=#{workform},	welfare=#{welfare},
 		 gender=#{gender},agelimit=#{agelimit},academic_condition=#{academicCondition},career=#{career},sweetener=#{sweetener},recruit=#{recruit},
-		 recruitment_target=#{recruitmentTarget},end_date=#{endDate},receiveway=#{receiveway},submit=#{submit},applicationhandbook=#{applicationhandbook},
-		 jobregdate=sysdate
+		 recruitment_target=#{recruitmentTarget},end_date=#{endDate},receiveway=#{receiveway},submit=#{submit},applicationhandbook=#{applicationhandbook}
+		 <!-- ,jobregdate=sysdate -->
 		 <if test="companyimage!=null and companyimage!=''">
 		 ,companyimage=#{companyimage}
 		 </if>

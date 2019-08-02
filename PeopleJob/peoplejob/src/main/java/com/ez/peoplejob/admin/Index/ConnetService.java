@@ -12,4 +12,5 @@ public interface ConnetService {
 	public int[] selectResumeManagerIndex();
 	public List<CustextVO> selectCustextManagerIndex();
 	public int[] selectPaymentManagerIndex();
+	public int[] selectPopupManagerIndex();
 }
