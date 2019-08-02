@@ -68,6 +68,10 @@ public class PaymentDAOMybatis implements PaymentDAO{
 	public List<Map<String, Object>> selectBySameTime(PaymentVO paymentVo) {
 		return sqlSession.selectList(namespace+"selectBySameTime",paymentVo);
 	}
+	@Override
+	public List<PaymentVO> selectCancelConfirm(PaymentVO paymentVo) {
+		return sqlSession.selectList(namespace+"selectCancelConfirm", paymentVo);
+	}
 	
 	
 

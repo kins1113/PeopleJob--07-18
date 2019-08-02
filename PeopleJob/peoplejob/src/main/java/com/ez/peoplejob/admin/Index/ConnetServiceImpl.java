@@ -14,6 +14,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.ez.peoplejob.custext.model.CustextVO;
+
 @Service
 public class ConnetServiceImpl implements ConnetService{
 
@@ -32,9 +34,16 @@ public class ConnetServiceImpl implements ConnetService{
 	public static final int MEMBER_JOIN_COM=7;
 	public static final int MEMBER_WITHDRAW_TODAY_GEN=8;
 	public static final int MEMBER_WITHDRAW_TODAY_COM=9;
+	
+	
 	@Override
-	public int insertConnet(int memberCode) {
-		return connetDao.insertConnet(memberCode);
+	public int checkConnet(ConnetVO connetVo) {
+		return connetDao.checkConnet(connetVo);
+	}
+
+	@Override
+	public int insertConnet(ConnetVO connetVo) {
+		return connetDao.insertConnet(connetVo);
 	}
 
 	@Override
@@ -140,6 +149,40 @@ public class ConnetServiceImpl implements ConnetService{
 		}
 		
 		return re;
+	}
+
+	@Override
+	public List<CustextVO> selectCustextManagerIndex() {
+		return connetDao.selectCustextManagerIndex();
+	}
+
+	@Override
+	public int[] selectPaymentManagerIndex() {
+		int[] countArr=new int[4];
+		//오늘날짜
+		SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
+		String today=sdf.format(new Date());
+		//일요일
+		Calendar c = Calendar.getInstance();
+ 		c.set(Calendar.DAY_OF_WEEK,Calendar.SUNDAY);
+ 		c.add(c.DATE,0);
+ 		String sunday=sdf.format(c.getTime());
+		for(int i=0;i<4;i++) {
+			Map<String, Object> map=new HashMap<String, Object>();
+			map.put("type", i);
+			if(i==0 || i==1) {
+				map.put("day", today);
+			}else if(i==2 || i==3) {
+				map.put("day", sunday);
+			}
+			logger.info("{}일때 map에 type={}",i,map.get("type"));
+			logger.info("{}일때 map에 today={}",i,map.get("day"));
+			countArr[i]=connetDao.selectPaymentManagerIndex(map);
+			
+		}
+	
+		
+		return countArr;
 	}
 	
 }

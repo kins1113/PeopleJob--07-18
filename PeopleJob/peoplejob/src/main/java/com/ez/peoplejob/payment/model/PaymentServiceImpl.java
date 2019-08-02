@@ -76,5 +76,19 @@ public class PaymentServiceImpl implements PaymentService{
 		return paymentDao.selectBySameTime(paymentVo);
 	}
 
+
+	@Override
+	public List<PaymentVO> selectCancelConfirm(String paydate, int memberCode) {
+		PaymentVO paymentVo=new PaymentVO();
+		
+		//String으로 받은 paydate를 setting하기 위해 timestamp로 형변환
+		Timestamp paydate2=Timestamp.valueOf(paydate);
+				
+		paymentVo.setPaydate(paydate2);
+		paymentVo.setMemberCode(memberCode);
+		
+		return paymentDao.selectCancelConfirm(paymentVo);
+	}
+
 	
 }

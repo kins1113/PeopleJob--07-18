@@ -4,7 +4,7 @@
 
 <mapper namespace="config.mybatis.mapper.oracle.resumeManager">
 
-	<insert id="insertHopeWorkingMN" parameterType="HopeWorkingConditionsVO">
+	<insert id="insertHopeWorkingMN" parameterType="HopeWorkingVO">
 		<selectKey resultType="int" keyProperty="hopworkCode" order="BEFORE">
 			select hope_working_seq.nextval from dual
 		</selectKey>
@@ -31,13 +31,13 @@
 					#{graduatetype},#{graduate2},#{graduate})
 	</insert>
 	
-	<insert id="insertLangcertificationMN" parameterType="LanguageCertificationVO">
-		<selectKey resultType="int" keyProperty="langLicenseCode" order="BEFORE">
+	<insert id="insertLangcertificationMN" parameterType="LangCertificationVO">
+		<selectKey resultType="int" keyProperty="langLicenceCode" order="BEFORE">
 			select LANGCERTIFICATION_seq.nextval from dual
 		</selectKey>
 		insert into LANGCERTIFICATION (langlicence_code, langlicencename, institute,
 		        certificationtype, language, langpoint, lang_grade, lang_getdate)
-		values (#{langLicenseCode},#{langLicenseName}, #{institute}, #{certificationtype}, #{language},
+		values (#{langLicenceCode},#{langLicenceName}, #{institute}, #{certificationtype}, #{language},
 					 #{langpoint}, #{langGrade}, #{langGetdate})
 	</insert>
 	
@@ -61,15 +61,15 @@
 		<if test='licenceCode!=0'>licence_code,</if>
 		<if test='dvCode!=0'>dv_code,</if>
 		<if test='academicCode!=0'>academic_code,</if>
-		<if test='desiredWorkCode!=0'>desiredwork_code,</if>
+		<if test='hopeworkCode!=0'>hopework_code,</if>
 		        member_code,picture)
 		values(#{resumeCode}, #{resumeTitle}, #{introduce},
 		<if test='award!=""'>#{award},</if>
 		<if test='langlicenceCode!=0'> #{langlicenceCode},</if>
-		<if test='licenceCode!=0'>#{licenceCode},</if>
+		<if test='lNo!=0'>#{l_no},</if>
 		<if test='dvCode!=0'>#{dvCode},</if>
 		<if test='academicCode!=0'>#{academicCode},</if>
-		<if test='desiredWorkCode!=0'>#{desiredWorkCode},</if>
+		<if test='hopeworkCode!=0'>#{hopeworkCode},</if>
 			 #{memberCode}, #{picture})
 	</insert>
 	

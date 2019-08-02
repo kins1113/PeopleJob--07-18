@@ -151,9 +151,30 @@ table tr td, table tr th{
  <script type="text/javascript">
  
  $(function(){ 
-	var time=new Date().getTime(); 
+	var time=new Date();
 	var paydate=$('#pd').val();
 	 
+	
+	$('input[type=submit]').click(function(){
+		if(!confirm("해당 상품을 결제취소하시겠습니까?")){
+			event.preventDefault();
+			return false;
+		}else{
+			if($(this).parents('td').find('input[name=confirmtime]').val()>=1){
+				event.preventDefault();
+				alert('결제일로부터 하루가 지나 결제 취소가 불가능합니다.')
+				return false;
+				
+			}else{//결제일로부터 하루가 지나지 않았을 경우(결제취소가능한 날짜일때)
+				if($(this).parents('td').find('input[name=progress]').val()=='결제취소요청'){
+					event.preventDefault();
+					alert('이미 결제 취소 요청된 상품입니다.');
+					return false;
+				}
+			}
+		}
+		 
+	});
 	
 	 $('#refund').click(function(){
 		 var cancelprice=$('input[name=totalprice]').val();
@@ -198,6 +219,8 @@ table tr td, table tr th{
 연락처 (1588-4954) , 결제금액, 사용기간?! , 결제취소 버튼 -->
 
 <div class="card-body" id="cardBoduPostList" style="min-height: 629px; ">
+<span style="color: red; font-size: 1.1em;">*결제일로 부터 하루가 지난 상품은 결제취소할 수 없습니다.</span><br>
+<span style="font-size: 1.1em;">상세보기 버튼을 누르면 결제한 채용공고에 대한 정보를 볼 수 있습니다. </span>
 <a href="<c:url value='/service/payment.do'/>" style="float: right; font-size: 1.3em; color: steelblue;">채용광고 및 배너 광고 신청 문의</a>
 <br><br><br>
 	<table class="table table-bordered">
@@ -210,7 +233,7 @@ table tr td, table tr th{
 				<th scope="col">할부 기간</th>
 				<th scope="col">결제 일시</th>
 				<th scope="col">결제 금액</th>
-				<!-- <th scope="col">사용기간</th> -->
+				<th scope="col">결제한 채용공고 개수</th> 
 				<th scope="col">결제 상황</th>
 				<th scope="col">결제 취소</th>
 				<th scope="col">상세보기</th>
@@ -232,11 +255,13 @@ table tr td, table tr th{
 							<td>카드</td> 
 							<td>일시불</td>
 							<td>${map['BYTIME'] }</td>
-							<td>${map['TOTALPRICE'] }원</td>
-							<input type="hidden" name="totalprice" value="${map['TOTALPRICE'] }">
+							<td>${map['TOTALPRICE'] }원
+							<input type="hidden" name="totalprice" value="${map['TOTALPRICE'] }"></td>
+							<td>${map['COUNT'] }개</td>
+							
 							<td>
 							<c:if test="${map['PROGRESS']=='결제완료' }">
-							<span class="badge badge-success">Completed</span>
+							<span class="badge badge-success">결제완료</span>
 							</c:if>
 							<c:if test="${map['PROGRESS']=='결제취소요청' }">
 							<span class="badge badge-warning">결제 취소 요청</span>
@@ -246,12 +271,19 @@ table tr td, table tr th{
 							</c:if>
 							</td>
 							
+							
 							<form id="frmpay" method="post" action="<c:url value='/mypage/corp/paymentDetail.do'/>">
-							<input type="hidden" name="paymentCode" value="${map['PAYMENT_CODE'] }">
-							<td><input type="submit" value="결제 취소" id="cancelpay" style="padding: 5px; font-size: 0.9em; margin: 0 auto;">
-								<input type="button" id="refund" value="결제 환불"></td> 
+							<input type="hidden" name="paydate" value="${map['BYTIME'] }">
+							<input type="hidden" name="memberCode" value="${map['MEMBER_CODE'] }">
+							
+							<td>
+							<input type="hidden" name="progress" value="${map['PROGRESS']}">
+							<input type="hidden" name="confirmtime" value="${map['CONFIRMTIME'] }">
+							<input type="submit" value="결제 취소" id="cancelpay" style="padding: 5px; font-size: 0.9em; margin: 0 auto;">
+								<!-- <input type="button" id="refund" value="결제 환불"> -->
+								</td> 
 						
-							</form>
+							</form> 
 							<td>
 						 <input type="button" value="..." style="background: white; border: 1px solid lightgray; width: 40px;
 	    font-weight: bold; margin: 0 auto; cursor: pointer;" onclick="detail('${map['BYTIME']}', '${map['MEMBER_CODE'] }', '${map['SERVICENAME'] }')" class="btnmore"> 
@@ -265,7 +297,6 @@ table tr td, table tr th{
 			<!-- 반복 끝 -->
 		</tbody>
 	</table>
-
 </div>
 
 <%@include file="../../main/inc/bottom.jsp"%>

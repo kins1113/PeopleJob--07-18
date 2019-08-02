@@ -75,6 +75,12 @@
 	<select id="selectByBoardCode" parameterType="int" resultType="boardVo">
 		select * from board where board_code1=#{code}
 	</select>
+	
+	
+	
+	<select id="selectByUsage" resultType="boardVo">
+		select * from board where usage='Y'
+	</select>
 </mapper>
 
 

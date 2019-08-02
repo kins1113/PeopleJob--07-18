@@ -4,7 +4,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.ez.peoplejob.hopecompany.model.HopeWorkingConditionsVO;
+import com.ez.peoplejob.hopecompany.model.HopeWorkingVO;
 import com.ez.peoplejob.resume.model.CareerVO;
 import com.ez.peoplejob.resume.model.CertificateVO;
 import com.ez.peoplejob.resume.model.EducationVO;
@@ -17,7 +17,7 @@ public class ResumeManagerMybatis implements ResumeManagerDAO{
 	private SqlSessionTemplate sqlSession;
 	private String namespace="config.mybatis.mapper.oracle.resumeManager.";
 	@Override
-	public int insertHopeWorkingMN(HopeWorkingConditionsVO hopeVO) {
+	public int insertHopeWorkingMN(HopeWorkingVO hopeVO) {
 		return sqlSession.insert(namespace+"insertHopeWorkingMN",hopeVO);
 	}
 

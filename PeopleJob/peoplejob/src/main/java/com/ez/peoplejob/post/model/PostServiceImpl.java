@@ -31,6 +31,18 @@ public class PostServiceImpl implements PostService{
 	public int insertPosToManager(PostVO postVo) {
 		return postDao.insertPosToManager(postVo);
 	}
+	@Override
+	public List<PostVO> selectByboardCode(int boardCode) {
+		return postDao.selectByboardCode(boardCode);
+	}
+	@Override
+	public int postcountUpdate(int boardCode2) {
+		return postDao.postcountUpdate(boardCode2);
+	}
+	@Override
+	public PostVO selectByboardCode2(int boardCode2) {
+		return postDao.selectByboardCode2(boardCode2);
+	}
 	
 	
 }

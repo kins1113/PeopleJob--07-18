@@ -296,55 +296,6 @@ textarea {
 					} */
 				});
 		
-		$('#pwd').keyup(function() {
-			if (validate_pwd($('#pwd').val()) && validate_pwd($('#pwd2').val()) && $('#pwd').val().length>=4 && $('#pwd2').val().length>=4) {
-				// pwd와 pwd2 모두 규칙에 만족할 때
-
-				var pwd=$('#pwd').val();
-				var pwd2=$('#pwd2').val(); 
-				
-				$.ajax({
-					
-					url : "<c:url value='/login/ajaxchkPwd.do'/>",
-					type : "get",
-					data : {"pwd":pwd, "pwd2":pwd2},
-					success : function(res) {
-						var str = "";
-						if (res) { //bool=true
-							str = "비밀번호 일치";
-							$('#chkpwd').val('Y');
-						} else { //bool=false
-								str = "비밀번호 불일치";
-								$('#chkpwd').val('N');
-						}
-						$('.pwderror').html(str);
-						$('.pwderror').show();
-
-					},
-					error : function(xhr, status, error) {
-						alert(status + ":" + error);
-					}
-				});
-
-			}else if($('#pwd').val().length<1){
-				$('.pwderror').hide();
-				$('.pwd1error').hide(); 
-				$('#chkpwd').val('N');
-				 
-			}else if($('#pwd').val()>=4 && validate_pwd($('#pwd').val())){
-				$('.pwderror').html("비밀번호 규칙에 맞지 않습니다.");
-				$('.pwderror').show();
-				$('#chkpwd').val('N');
-			}
-			
-			
-			/* else if(!validate_pwd($('#pwd').val()) || !validate_pwd($('#pwd2').val()) || $('#pwd').val().length<4 || $('#pwd2').val().length<4){
-				$('.pwderror').html("비밀번호 규칙에 맞지 않습니다.");
-				$('.pwderror').show();
-				$('#chkpwd').val('N');
-			} */
-		});
-		
 
 		//핸드폰 정규식
 		function validate_phoneno(ph) {
@@ -434,10 +385,12 @@ textarea {
 										placeholder="비밀번호 " class="form-control" style="width: 300px"
 										title="비밀번호">비밀번호는 4글자 이상, 영문자와 숫자로 만들어주세요.
 								</div>
-
-									<div class="row" style="display: inline-block;">
-										<span id="pwderror" class="pwderror" style="margin-top: 22px;"></span>
+								
+							<div class="form-group">
+									<div class="row">
+										<span id="pwderror" class="pwderror" style="margin-top: 38px; margin-left: -72px;"></span>
 									</div>
+								</div>
 								
 								<div class="form-group" style="float: left; margin-right: 30px;">
 									<input type="password" name="pwd2" id="pwd2" tabindex="1"
@@ -445,13 +398,7 @@ textarea {
 										style="width: 300px" title="비밀번호 확인">
 								</div>
 								
-								
-<!-- 
-								<div class="form-group">
-									<div class="row">
-										<span id="pwd1error" class="pwd1error" style="margin-top: 28px;margin-left:-20px;"></span>
-									</div>
-								</div> -->
+
 								
 								<div class="form-group">
 									<div class="row">
