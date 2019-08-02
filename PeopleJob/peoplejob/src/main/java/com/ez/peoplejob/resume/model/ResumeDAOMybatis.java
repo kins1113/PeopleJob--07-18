@@ -224,4 +224,40 @@ public class ResumeDAOMybatis implements ResumeDAO {
 		ResumeVO vo=sqlsession.selectOne(namespace+"selectBythird",thirdCode);
 		return vo;
 	}
+
+	@Override
+	public int updatelang(ResumeVO vo) {
+		int cnt=sqlsession.update(namespace+"updatelang",vo);
+		return cnt;
+	}
+
+	@Override
+	public int updatecer(ResumeVO vo) {
+		int cnt=sqlsession.update(namespace+"updatecer",vo);
+		return cnt;
+	}
+
+	@Override
+	public int updatecareer(ResumeVO vo) {
+		int cnt=sqlsession.update(namespace+"updatecareer",vo);
+		return cnt;
+	}
+
+	@Override
+	public int updateedu(ResumeVO vo) {
+		int cnt=sqlsession.update(namespace+"updateedu",vo);
+		return cnt;
+	}
+
+	@Override
+	public int updatehope(ResumeVO vo) {
+		int cnt=sqlsession.update(namespace+"updatehope",vo);
+		return cnt;
+	}
+
+	@Override
+	public int updatemember(ResumeVO vo) {
+		int cnt=sqlsession.update(namespace+"updatemember",vo);
+		return cnt;
+	}
 }

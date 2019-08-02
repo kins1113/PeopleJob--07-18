@@ -14,7 +14,7 @@ public class LangCertificationDAOMybatis implements LangcertificationDAO {
 	private String namespace="config.mybatis.mapper.oracle.langcertification.";
 	@Override
 	public List<LangCertificationVO> selectlanglicencename() {
-		return sqlsession.selectList(namespace+"selectBydvCode");
+		return sqlsession.selectList(namespace+"selectlanglicencename");
 	}
 	
 

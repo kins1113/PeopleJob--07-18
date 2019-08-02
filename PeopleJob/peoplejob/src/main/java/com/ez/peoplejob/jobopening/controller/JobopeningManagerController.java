@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.ez.peoplejob.hopecompany.model.HopeWorkingConditionsVO;
+import com.ez.peoplejob.hopecompany.model.HopeWorkingVO;
 import com.ez.peoplejob.jobopening.model.JobopeningVO;
 
 @Controller

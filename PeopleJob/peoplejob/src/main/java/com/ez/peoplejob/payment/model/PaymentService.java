@@ -18,6 +18,8 @@ public interface PaymentService {
 	int getCountByJobopening(int jobno);
 	List<Map<String, Object>> selectPayByTime(String memberid);
 	List<Map<String, Object>> selectBySameTime(String paydate, int memberCode);
+	List<PaymentVO> selectCancelConfirm(String paydate, int memberCode);
+	
 	/*public List<PaymentVO> selectAll();*/
 	
 	  public List<Map<String, Object>> selectAll(Map<String, Object> map); 

@@ -32,7 +32,7 @@ public class CareerController {
 		
 	}
 	
-	@RequestMapping("/firstList.do")
+	@RequestMapping("/firstCareer.do")
 	@ResponseBody
 	public List<CareerVO> selectFirst(){
 		logger.info("ajax - 1차 직종 가져가는 곳 ");

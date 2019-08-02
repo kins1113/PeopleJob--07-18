@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.ez.peoplejob.hopecompany.model.HopeWorkingConditionsVO;
+import com.ez.peoplejob.hopecompany.model.HopeWorkingVO;
 import com.ez.peoplejob.resume.model.CareerVO;
 import com.ez.peoplejob.resume.model.CertificateVO;
 import com.ez.peoplejob.resume.model.EducationVO;
@@ -20,7 +20,7 @@ public class ResumeManagerServiceImpl implements ResumeManagerService{
 	private Logger logger=LoggerFactory.getLogger(ResumeManagerServiceImpl.class);
 	@Override
 	@Transactional
-	public int insertResumeMN(HopeWorkingConditionsVO hopeVo, CertificateVO ceritificateVo, EducationVO educationVo,
+	public int insertResumeMN(HopeWorkingVO hopeVo, CertificateVO ceritificateVo, EducationVO educationVo,
 			LangCertificationVO langVo, CareerVO careerVo, ResumeManagerVO resumeVo){
 		logger.info("서비스인대 여기는 들어옴????");
 		//hope_working 희망근무 insert 필수 
@@ -52,9 +52,9 @@ public class ResumeManagerServiceImpl implements ResumeManagerService{
 		
 		//langcertification 언어 선택
 		if(langVo!=null) {
-			if(langVo.getLanglicensename()!=null) { //이름이 있을때만 처리
+			if(langVo.getLanglicencename()!=null) { //이름이 있을때만 처리
 			checkRe=resumeManagerDao.insertLangcertificationMN(langVo);
-			resumeVo.setLanglicenceCode(langVo.getLanglicenseCode());
+			resumeVo.setLanglicenceCode(langVo.getLanglicenceCode());
 			checkRe=0;
 			}
 			logger.info("서비스에 언어 checkRe={}",checkRe);

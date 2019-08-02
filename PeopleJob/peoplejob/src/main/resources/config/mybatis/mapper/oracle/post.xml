@@ -87,6 +87,21 @@
 		values(#{boardCode2}, #{boardtitle},#{boardcontent},#{adminCode},#{boardCode})
 	</insert>
 	
+	
+	
+	<select id="selectByboardCode" resultType="postVo" parameterType="int">
+	 	select * from post where board_code=#{boardCode}
+	</select>
+	
+	<select id="selectByboardCode2" resultType="postVo" parameterType="int">
+	 	select * from post where board_code2=#{boardCode2}
+	</select>
+	
+	<update id="postcountUpdate" parameterType="int">
+	update post
+	set boardhits=boardhits+1
+	where board_code2=#{boardCode2}
+	</update>
 </mapper>
 
 
