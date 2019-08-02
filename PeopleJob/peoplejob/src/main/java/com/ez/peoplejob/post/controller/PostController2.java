@@ -13,36 +13,44 @@ import com.ez.peoplejob.post.model.PostService;
 import com.ez.peoplejob.post.model.PostVO;
 
 @Controller
-@RequestMapping("/post")
 public class PostController2 {
 	private Logger logger=LoggerFactory.getLogger(PostController2.class);
 	@Autowired private PostService postService;
 	
-	@RequestMapping(value="/countUpdate.do",method = RequestMethod.GET)
-	public String countUpdate(@RequestParam int no, Model model) {
-		logger.info("post 글 조회수 증가 파라미터 boardCode2={}",no);
-		int cnt=postService.postcountUpdate(no);
-		logger.info("조회수 증가 결과 cnt={}",cnt);
+	@RequestMapping(value="/board/detail.do", method = RequestMethod.GET)
+	public String detail(@RequestParam(defaultValue = "0") int no,@RequestParam String name, Model model) {
+		logger.info("게시판 상세보기 파라미터 code={}",no);
 		
-		
-		String url="";
-		if(cnt>0) {
-			url="/board/detail.do?code="+no;
-		}else {
-			url="main/mainindex.do";
+		if(no==0) {
+			model.addAttribute("msg", "잘못된 url입니다.");
+			model.addAttribute("url", "/board/boardByCategory.do?boardCode="+no+"&boardName="+name);
+			
+			return "common/message";
 		}
-		model.addAttribute("url", url);
-		return "redirect:"+url;
 		
-	}
-	
-	@RequestMapping(value="/detail.do", method = RequestMethod.GET)
-	public String detail(@RequestParam int code, Model model) {
-		logger.info("게시판 상세보기 파라미터 code={}",code);
-		PostVO postVo=postService.selectByboardCode2(code);
+		PostVO postVo=postService.selectByboardCode2(no);
+		logger.info("상세보기 결과 postVo={}",postVo);
 		
 		model.addAttribute("postVo",postVo);
 		return "board/detail";
 	}
+	
+	@RequestMapping(value="/post/countUpdate.do",method = RequestMethod.GET)
+	public String countUpdate(@RequestParam(defaultValue = "0") int no,@RequestParam String name, Model model) {
+		logger.info("post 글 조회수 증가 파라미터 boardCode2={}, boardName={}",no,name);
+		int cnt=postService.postcountUpdate(no);
+		logger.info("조회수 증가 결과 cnt={}",cnt);
+		
+			if(no==0) {
+				model.addAttribute("msg", "잘못된 url입니다.");
+				model.addAttribute("url", "/board/boardByCategory.do?boardCode="+no+"&boardName="+name);
+				
+				return "common/message";
+			}
+			
+		return "redirect:/board/detail.do?no="+no+"&name="+name;
+	}
+	
+	
 
 }

@@ -26,7 +26,8 @@ public class BoardController2 {
 	
 	@RequestMapping("/boardByCategory.do")
 	public String boardkind(Model model, @RequestParam int boardCode, @RequestParam String boardName) {
-		logger.info("\nboard 파라미터, boardCode={}, boardName={}",boardCode, boardName);
+		logger.info("\n");
+		logger.info("board 파라미터, boardCode={}, boardName={}",boardCode, boardName);
 
 		List<PostVO> list=postService.selectByboardCode(boardCode);
 		logger.info("게시글 목록 list.size={}",list.size());

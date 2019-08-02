@@ -68,8 +68,7 @@ public class NoticeController2 {
 	
 
 	@RequestMapping("/notice/countUpdate.do")
-	public String countUpdate(@RequestParam(defaultValue = "0") int notifyCode, 
-			Model model) {
+	public String countUpdate(@RequestParam(defaultValue = "0") int notifyCode, Model model) {
 		logger.info("조회수 증가, 파라미터 notifyCode={}", notifyCode);
 		
 		if(notifyCode==0) {
