@@ -1,22 +1,43 @@
 package com.ez.peoplejob.resume.model;
 
-
 public class CareerVO {
 	private int dvCode;    
-	private String companyName; 
-	private String workTerm;   
-	private String workTerm2;   
-	private String chargeWork;
-	private String workcheck;
-	private String jobgrade;
-	private String workcondition;
-	
-	
-	public String getWorkTerm2() {
-		return workTerm2;
+	private String companyname; 
+	private String workterm; 
+	private String workterm2; 
+	private String chargework;
+	private String workcheck; //경력구분 (신입,경력)
+	private String jobgrade; //직급
+	private String workcondition; //근무상태(재직중,퇴직)
+	public int getDvCode() {
+		return dvCode;
 	}
-	public void setWorkTerm2(String workTerm2) {
-		this.workTerm2 = workTerm2;
+	public void setDvCode(int dvCode) {
+		this.dvCode = dvCode;
+	}
+	public String getCompanyname() {
+		return companyname;
+	}
+	public void setCompanyname(String companyname) {
+		this.companyname = companyname;
+	}
+	public String getWorkterm() {
+		return workterm;
+	}
+	public void setWorkterm(String workterm) {
+		this.workterm = workterm;
+	}
+	public String getWorkterm2() {
+		return workterm2;
+	}
+	public void setWorkterm2(String workterm2) {
+		this.workterm2 = workterm2;
+	}
+	public String getChargework() {
+		return chargework;
+	}
+	public void setChargework(String chargework) {
+		this.chargework = chargework;
 	}
 	public String getWorkcheck() {
 		return workcheck;
@@ -36,36 +57,13 @@ public class CareerVO {
 	public void setWorkcondition(String workcondition) {
 		this.workcondition = workcondition;
 	}
-	public void setWorkTerm(String workTerm) {
-		this.workTerm = workTerm;
-	}
-	public int getDvCode() {
-		return dvCode;
-	}
-	public void setDvCode(int dvCode) {
-		this.dvCode = dvCode;
-	}
-	public String getCompanyName() {
-		return companyName;
-	}
-	public void setCompanyName(String companyName) {
-		this.companyName = companyName;
-	}
-	
-	public String getChargeWork() {
-		return chargeWork;
-	}
-	public void setChargeWork(String chargeWork) {
-		this.chargeWork = chargeWork;
-	}
-	
 	@Override
 	public String toString() {
-		return "CareerVO [dvCode=" + dvCode + ", companyName=" + companyName + ", workTerm=" + workTerm + ", workTerm2="
-				+ workTerm2 + ", chargeWork=" + chargeWork + ", workcheck=" + workcheck + ", jobgrade=" + jobgrade
+		return "CareerVO [dvCode=" + dvCode + ", companyname=" + companyname + ", workterm=" + workterm + ", workterm2="
+				+ workterm2 + ", chargework=" + chargework + ", workcheck=" + workcheck + ", jobgrade=" + jobgrade
 				+ ", workcondition=" + workcondition + "]";
 	}
-	
+
 	
 	
 }

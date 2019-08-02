@@ -60,6 +60,7 @@ table{
 	<table class="table table-bordered">
 		<thead>
 			<tr> 
+				<th scope="col">채용공고 제목</th>
 				<th scope="col">상품명</th> 
 				<th scope="col">구매자 이름</th>
 				<th scope="col">결제 수단</th>
@@ -78,13 +79,16 @@ table{
 			</c:if>
 			
 			<c:if test="${!empty list }"> 
-		<c:forEach var="map" items="${list }" begin="1" end="2">
+		<c:forEach var="map" items="${list }" begin="0" end="1">
 				<span style="color: black; font-size: 1.1em;">
 				${map['PAYDATE'] } 에 결제한 상품 내역 리스트: 총 ${fn:length(list) }개</span>
 		</c:forEach>
 		
 				<c:forEach var="map" items="${list }">
 					<tr>
+						<td>
+						<a href="<c:url value='/company/jobopening_view.do?jobopening=${map["JOBOPENING"] }' /> " target="_blank">${map['JOBTITLE'] }</a>
+						</td>
 						<td>${serviceName }</td>
 						<td>${sessionScope.memberName }</td>
 						<td>${map['PAYMENTWAY'] }</td> 

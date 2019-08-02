@@ -141,23 +141,8 @@ button {
 <script type="text/javascript" src="<c:url value='/resources/main/js/jquery-3.4.1.min.js'/>"></script>
 <script type="text/javascript">
 
-var author_code="${sessionScope.author_code}";
-function jobopening(){
-	if(author_code==2){
-		alert('기업회원은 관리자의 승인을 받은 후 채용공고를 등록할 수 있습니다.');
-	}else if(author_code==3){
-		
-		location.href="<c:url value='/company/my_jobopening_list.do?companycode1=${session.companyCode}'/>";  
-	}
-}  
 
-function company(){
-	if(author_code==2){
-		alert('기업회원은 관리자의 승인을 받은 후 기업정보를 등록할 수 있습니다.');
-	}else if(author_code==3){
-		location.href="<c:url value='/login/c_update.do'/>";
-	}
-} 
+
 </script>
 </head>
 <body class="animsition">

@@ -26,6 +26,14 @@ public class ConnetDAOMybatis implements ConnetDAO{
 	public int selectMemberCount(Map<String, Object> map) {
 		return sqlSession.selectOne(namespace+"selectMemberCount",map);
 	}
+	@Override
+	public int selectResumeManagerIndex(Map<String, Object> map) {
+		return sqlSession.selectOne(namespace+"selectResumeManagerIndex",map);
+	}
+	@Override
+	public int selectJobopeningManagerIndex(Map<String, Object> map) {
+		return sqlSession.selectOne(namespace+"selectJobopeningManagerIndex",map);
+	}
 	
 	
 }

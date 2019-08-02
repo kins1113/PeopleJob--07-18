@@ -127,8 +127,13 @@ $(function(){
 										이력서 관리
 									</a>
 									</c:if>
-									<c:if test="${sessionScope.author_code==2 || sessionScope.author_code==3 }" > <!-- 나중에 3으로 바꿀것, 바꾼 후 2이면 못들어가게 막기 -->
-									<a href="<c:url value='/company/my_jobopening_list.do?companycode1=${sessionScope.companyCode}'/>" class="dis-block f1-s-10 text-uppercase cl2 hov-cl10 trans-03 p-tb-13" id="jobopening" onclick="jobopening()">
+									<c:if test="${sessionScope.author_code==2}" > <!-- 나중에 3으로 바꿀것, 바꾼 후 2이면 못들어가게 막기 -->
+									<a href="#" class="dis-block f1-s-10 text-uppercase cl2 hov-cl10 trans-03 p-tb-13" id="jobopening" onclick="alert('관리자의 승인을 받은 기업회원만 이용가능합니다.')">
+										채용공고 관리
+									</a>
+									</c:if>
+									<c:if test="${sessionScope.author_code==3 }" > <!-- 나중에 3으로 바꿀것, 바꾼 후 2이면 못들어가게 막기 -->
+									<a href="<c:url value='/company/my_jobopening_list.do?companycode1=${sessionScope.companyCode}'/>" class="dis-block f1-s-10 text-uppercase cl2 hov-cl10 trans-03 p-tb-13" id="jobopening">
 										채용공고 관리
 									</a>
 									</c:if>
@@ -157,7 +162,7 @@ $(function(){
 										지원 현황
 									</a>
 									</c:if>
-									<c:if test="${sessionScope.author_code==2|| sessionScope.author_code==3 }" > <!-- 나중에 3으로 바꿀것, 바꾼 후 2이면 못들어가게 막기 -->
+									<c:if test="${sessionScope.author_code==2|| sessionScope.author_code==3 }" > 
 									<a href="<c:url value='/mypage/corp/paymentDetail.do'/>" class="dis-block f1-s-10 text-uppercase cl2 hov-cl10 trans-03 p-tb-13">
 										결제 내역
 									</a>
@@ -170,8 +175,13 @@ $(function(){
 										내 정보 관리
 									</a>
 									</c:if>
-									<c:if test="${sessionScope.author_code==2|| sessionScope.author_code==3 }" >
-									<a href="#" class="dis-block f1-s-10 text-uppercase cl2 hov-cl10 trans-03 p-tb-13" onclick="company()">
+									<c:if test="${sessionScope.author_code==2}" >
+									<a href="" class="dis-block f1-s-10 text-uppercase cl2 hov-cl10 trans-03 p-tb-13" onclick="alert('관리자의 승인을 받은 기업회원만 이용가능합니다.')">
+										기업정보 관리
+									</a>
+									</c:if>
+									<c:if test="${sessionScope.author_code==3 }" >
+									<a href="<c:url value='/login/c_update.do'/>" class="dis-block f1-s-10 text-uppercase cl2 hov-cl10 trans-03 p-tb-13">
 										기업정보 관리
 									</a>
 									</c:if>
