@@ -176,7 +176,7 @@
 										href="${pageContext.request.contextPath }/manager/resume/resumeList.do?showKey=resume"> <span class="nav-text">이력서	관리</span>
 									</a></li>
 								<li><a class="sidenav-item-link"
-										href="${pageContext.request.contextPath }/manager/resume/resumeAdd.do?showKey=resume"> <span class="nav-text">이력서	등록</span>
+										href="${pageContext.request.contextPath }/manager/resume/resumeAdd.do?showKey=resume"> <span class="nav-text">이력서 등록</span>
 									</a></li>
 								<li><a class="sidenav-item-link"
 										href="${pageContext.request.contextPath }/manager/jobopening/jobopeningList.do?showKey=resume"> <span class="nav-text">채용공고 관리</span>

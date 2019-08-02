@@ -93,8 +93,34 @@ select#locationGugun {
 <script type="text/javascript">
 $(document).ready(function (){
 	
+	//자격증을 가져오는
+	$("#certification").click(function(){
+		getCertificate();
+	})
+	
+	//1차 커리어 직종 가져오기 /resume/career/firstList.do
+	selectcareer();
+	  
 	//1차 직종 가져오기 /manager/occupantion/firstList.do
 	selectFirst();
+	
+	//어학을 가져오는
+	$("#langcertbt").click(function(){
+		getLangcertification();
+	})
+	
+	//전공을 가져오는
+
+	getMajor();
+	
+	//직급을 가져오는
+
+	getJobgrade();
+
+	//희망 근무 조건
+	$("#hopeworkbt").click(function(){
+	gethopeworkform();
+	})
 	//1차 직종 클릭하면 2차직종 가져오기 
 	$("#selectFirst").change(function(){
 		var firstCode=$(this).find("option:selected").val();
@@ -110,7 +136,9 @@ $(document).ready(function (){
 			selectThird(secondCode);
 		}
 	});
+
 	
+
 	
 	//지역정보를 가져오기 - 시도
 	getLocation();
@@ -276,6 +304,7 @@ function settingLocation(res){
 	});
 }
 
+
 //지역정보를 가져오는 메서드 - 구군
 function getLocation2(sidoCode){
 	$.ajax({
@@ -403,10 +432,245 @@ function settingBtype3(res){
 	})
 }
 
+/* $(function(){
+    $( "#jobgrade" ).autocomplete({
+        source : function( request, response ) {
+             $.ajax({
+                    type: 'post',
+                    url: "<c:url value='register.jsp'/>",
+                    dataType: "json",
+                    //request.term = $("#autocomplete").val()
+                    data: { value : request.term },
+                    success: function(data) {
+                        //서버에서 json 데이터 response 후 목록에 뿌려주기 위함
+                        response(
+                            $.map(data, function(item) {
+                                return {
+                                    label: item.data,
+                                    value: item.data
+                                }
+                            })
+                        );
+                    }
+               });
+            },
+        //조회를 위한 최소글자수
+        minLength: 2,
+        select: function( event, ui ) {
+            // 만약 검색리스트에서 선택하였을때 선택한 데이터에 의한 이벤트발생
+        }
+    });
+}) */
+
+
+//전공 가져오기
+function getMajor(){
+	$.ajax({
+		url:"<c:url value='/resume/education/selectMajor.do'/>",
+		type:"post",
+		success:function(res){
+				settingMajor(res);
+		},
+		error:function(xhr, status, error){
+			alert(status+":"+error);
+		}
+	})
+}
+
+
+//전공 뿌리기
+function settingMajor(res){
+	$.each(res,function(idx,item){
+		if(idx==0){
+			var chEl=$("<option value='0'>전공</option>")
+			var opEl=$("<option value='"+item.academicCode+"'></option>");
+			opEl.append(item.major);
+			$("#selectMajor").html(chEl);
+			$("#selectMajor").append(opEl); 
+		}else{
+			var opEl=$("<option value='"+item.academicCode+"'></option>");
+			opEl.append(item.major);
+			$("#selectMajor").append(opEl); 
+		}
+	})
+	
+}
 
 
 
-$(function () {
+//직급 가져오기
+function getJobgrade(){
+	$.ajax({
+		url:"<c:url value='/resume/career/selectCareer.do'/>",
+		type:"post",
+		success:function(res){
+				settingJobgrade(res);
+		},
+		error:function(xhr, status, error){
+			alert(status+":"+error);
+		}
+	})
+}
+
+
+//직급 뿌리기
+function settingJobgrade(res){
+	$.each(res,function(idx,item){
+		if(idx==0){
+			var chEl=$("<option value='0'>직급</option>")
+			var opEl=$("<option value='"+item.dvCode+"'></option>");
+			opEl.append(item.jobgrade);
+			$("#selectBydvCode").html(chEl);
+			$("#selectBydvCode").append(opEl); 
+		}else{
+			var opEl=$("<option value='"+item.dvCode+"'></option>");
+			opEl.append(item.jobgrade);
+			$("#selectBydvCode").append(opEl); 
+		}
+	})
+	
+}
+
+
+
+//1차 커리어 직종 가져오기
+function selectcareer(){
+	$.ajax({
+		url:"<c:url value='/resume/career/firstCareer.do'/>",
+		type:"post",
+		success:function(res){
+			settingcareer(res);
+		},
+		error:function(xhr, status, error){
+			alert(status+":"+error);
+		}
+	})
+}
+
+//1차 커리어 직종 뿌리기
+//[{"firstCode":1,"firstname":"경영·사무"},{"firstCode":2,"firstname":"영업·고객상담"},{"firstCode":3,"firstname":"생산·제조"},
+//{"firstCode":4,"firstname":"IT·인터넷"},{"firstCode":5,"firstname":"전문직"},{"firstCode":6,"firstname":"교육"}
+function settingcareer(res){
+		$.each(res,function(idx,item){
+			if(idx==0){
+				var chEl=$("<option value='0'>직종</option>")
+				var opEl=$("<option value='"+item.dvCode+"'></option>");
+				opEl.append(item.chargework);
+				$("#selectcareer").html(chEl);
+				$("#selectcareer").append(opEl); //최종으로 여기에 넣음
+			}else{
+				var opEl=$("<option value='"+item.dvCode+"'></option>");
+				opEl.append(item.chargework);
+				$("#selectcareer").append(opEl); //최종으로 여기에 넣음
+			}
+		})
+}
+
+
+//자격증 가져오기
+function getCertificate(){
+	$.ajax({
+		url:"<c:url value='/resume/certificate/selectLname.do'/>",
+		type:"post",
+		success:function(res){
+			settingCertificate(res);
+		},
+		error:function(xhr, status, error){
+			alert(status+":"+error);
+		}
+	})
+}
+
+
+//자격증 뿌리기
+function settingCertificate(res){
+	$.each(res,function(idx,item){
+		if(idx==0){
+			var chEl=$("<option value='0'>자격증명</option>")
+			var opEl=$("<option value='"+item.lNo+"'></option>");
+			opEl.append(item.lName);
+			$("#selectLname").html(chEl);
+			$("#selectLname").append(opEl); 
+		}else{
+			var opEl=$("<option value='"+item.lNo+"'></option>");
+			opEl.append(item.lName);
+			$("#selectLname").append(opEl); 
+		}
+	})
+	
+}
+
+
+//어학 가져오기
+function getLangcertification(){
+	$.ajax({
+		url:"<c:url value='/resume/langcertification/selectlangcertification.do'/>",
+		type:"post",
+		success:function(res){
+			settingLangcertification(res);
+		},
+		error:function(xhr, status, error){
+			alert(status+":"+error);
+		}
+	})
+}
+
+//어학 뿌리기
+function settingLangcertification(res){
+	$.each(res,function(idx,item){
+		if(idx==0){
+			var chEl=$("<option value='0'>어학</option>")
+			var opEl=$("<option value='"+item.langlicenceCode+"'></option>");
+			opEl.append(item.langlicencename);
+			$("#selectlanglicencename").html(chEl);
+			$("#selectlanglicencename").append(opEl); 
+		}else{
+			var opEl=$("<option value='"+item.langlicenceCode+"'></option>");
+			opEl.append(item.langlicencename);
+			$("#selectlanglicencename").append(opEl); 
+		}
+	})
+	
+}
+//희망 근무조건 가져오기
+function gethopeworkform(){
+	$.ajax({
+		url:"<c:url value='/resume/hopeWorking/selecthopework.do'/>",
+		type:"post",
+		success:function(res){
+			settinghopeworkform(res);
+		},
+		error:function(xhr, status, error){
+			alert(status+":"+error);
+		}
+	})
+}
+
+//희망 근무조건 뿌리기
+function settinghopeworkform(res){
+	$.each(res,function(idx,item){
+		if(idx==0){
+			var chEl=$("<option value='0'>희망근무조건</option>")
+			var opEl=$("<option value='"+item.hopeworkCode+"'></option>");
+			opEl.append(item.hopeworkform);
+			$("#hopeworkform").html(chEl);
+			$("#hopeworkform").append(opEl); 
+		}else{
+			var opEl=$("<option value='"+item.hopeworkCode+"'></option>");
+			opEl.append(item.hopeworkform);
+			$("#hopeworkform").append(opEl); 
+		}
+	})
+	
+}
+ 
+
+
+
+</script>
+<script type="text/javascript">
+
+$(document).ready(function (){
 	$("#certificationtype").hide();
 	$("#certification").click(function () {
 		$("#certificationtype").toggle(500);
@@ -426,8 +690,8 @@ $(function () {
 	$("#langcertbt").click(function () {
 		$("#langcert").toggle(500);
 	});
-
 });
+
 </script>
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 <script>

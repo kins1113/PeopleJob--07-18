@@ -12,7 +12,6 @@ import com.ez.peoplejob.custext.model.CustextVO;
 
 @Repository
 public class ConnetDAOMybatis implements ConnetDAO{
-	
 	@Autowired
 	private SqlSessionTemplate sqlSession;
 	private	String namespace="config.mybatis.mapper.oracle.adminIndex.";
@@ -49,6 +48,10 @@ public class ConnetDAOMybatis implements ConnetDAO{
 	@Override
 	public int selectPaymentManagerIndex(Map<String, Object> map) {
 		return sqlSession.selectOne(namespace+"selectPaymentManagerIndex",map);
+	}
+	@Override
+	public int selectPopupManagerIndex(Map<String, Integer> map) {
+		return sqlSession.selectOne(namespace+"selectPopupManagerIndex", map);
 	}
 	
 }

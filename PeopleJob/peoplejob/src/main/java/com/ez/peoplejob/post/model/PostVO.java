@@ -8,7 +8,7 @@ public class PostVO extends SearchVO{
 	private int boardCode2;				//게시글 코드
 	private String boardtitle;			//제목
 	private String boardcontent;		//내용
-	private Timestamp boardregdate2;	//등록일
+	private String boardregdate2;	//등록일
 	private int boardhits;				//조회수
 	private String deletecheck;			//삭제 여부
 	private int memberCode;				//회원 코드
@@ -76,10 +76,10 @@ public class PostVO extends SearchVO{
 	public void setBoardcontent(String boardcontent) {
 		this.boardcontent = boardcontent;
 	}
-	public Timestamp getBoardregdate2() {
+	public String getBoardregdate2() {
 		return boardregdate2;
 	}
-	public void setBoardregdate2(Timestamp boardregdate2) {
+	public void setBoardregdate2(String boardregdate2) {
 		this.boardregdate2 = boardregdate2;
 	}
 	public int getBoardhits() {

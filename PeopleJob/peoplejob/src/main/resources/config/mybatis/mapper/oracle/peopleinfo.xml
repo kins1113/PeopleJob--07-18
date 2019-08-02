@@ -12,8 +12,8 @@
 		    (
 		        select r.resume_code,t.thirdname,s.secondname,f.firstname,b3.btypename3,b2.btypename2,b1.btypename1,l.sido,e.graduatetype,NVL(TRUNC(MONTHS_BETWEEN(SYSDATE, TO_DATE(SUBSTR(m.birth, 1, 4), 'YYYY'))/12), 0) AS AGE,trunc(months_between(c.workterm2,c.workterm)/12,0) as "term" from resume r,career c,member m,education e,hope_working h,location l,btype1 b1, btype2 b2, btype3 b3,first f, second s, third t where
 		        
-                r.DV_CODE = c.DV_CODE and r.academic_code=e.ACADEMIC_CODE and r.member_code=m.member_code and h.HOPEWORK_CODE = r.DESIREDWORK_CODE and h.LOCAL_CODE=l.LOCAL_CODE and b1.BTYPE_CODE1=b2.btype_code1 and b2.BTYPE_CODE2 = b3.BTYPE_CODE2 and
-                f.first_code=s.first_code and s.second_code = t.second_code and resume_code =78
+                r.DV_CODE = c.DV_CODE and r.academic_code=e.ACADEMIC_CODE and r.member_code=m.member_code and h.HOPEWORK_CODE = r.HOPEWORK_CODE and h.LOCAL_CODE=l.LOCAL_CODE and b1.BTYPE_CODE1=b2.btype_code1 and b2.BTYPE_CODE2 = b3.BTYPE_CODE2 and
+                f.first_code=s.first_code and s.second_code = t.second_code and resume_code =#{resumeCode}
 		    
 		    <if test="term != null">
 				and term IN 
@@ -266,7 +266,7 @@
 	select count(*),trunc(months_between(c.workterm2,c.workterm)/12,0) as "term",NVL(TRUNC(MONTHS_BETWEEN(SYSDATE, TO_DATE(SUBSTR(m.birth, 1, 4), 'YYYY'))/12), 0) AS AGE,b1.btypename1,b2.btypename2,b3.btypename3,f.firstname,s.secondname,t.thirdname,l.sido,e.graduatetype,m.membergender,c.workcheck  from resume r,career c,member m,education e,hope_working h,location l,btype1 b1, btype2 b2, btype3 b3,first f, second s, third t 
 	
 		        
-             where  r.DV_CODE = c.DV_CODE and r.academic_code=e.ACADEMIC_CODE and r.member_code=m.member_code and h.HOPEWORK_CODE = r.DESIREDWORK_CODE and h.LOCAL_CODE=l.LOCAL_CODE and b1.BTYPE_CODE1=b2.btype_code1 and b2.BTYPE_CODE2 = b3.BTYPE_CODE2 and
+             where  r.DV_CODE = c.DV_CODE and r.academic_code=e.ACADEMIC_CODE and r.member_code=m.member_code and h.HOPEWORK_CODE = r.HOPEWORK_CODE and h.LOCAL_CODE=l.LOCAL_CODE and b1.BTYPE_CODE1=b2.btype_code1 and b2.BTYPE_CODE2 = b3.BTYPE_CODE2 and
                 f.first_code=s.first_code and s.second_code = t.second_code and resume_code =78
 		    
 		      <if test="term != null">
@@ -335,6 +335,48 @@
 	
 	
 	</select>
+	
+	<select id="selectFirst" resultType="FirstOccupationVO">
+		select * from first
+	</select>
+	
+	<select id="selectSecond" resultType="secondOccupationVo" parameterType="int">
+		select * from second
+		where first_code=#{firstCode}	
+	</select>
+	
+	<select id="selectThird" resultType="thirdOccupationVo" parameterType="int">
+		select * from third
+		where second_code=#{secondCode}
+	</select>
+
+	<select id="selectLocation" resultType="LocationVO">
+		select sido, local_code2 from 
+		(
+			select local_code, sido, trunc(local_code2/1000) as local_code2 from location
+		)
+		group by sido, local_code2
+		order by local_code2
+	</select>
+	
+	<select id="selectLocation2" parameterType="int" resultType="map">
+		select * from location2 
+		<![CDATA[where local_code2>=#{code}*1000 and local_code2<(#{code}+1)*1000]]>
+	</select>
+	<select id="selectBtype1" resultType="map">
+		select * from btype1
+	</select>
+	
+	<select id="selectBtype2" resultType="map" parameterType="int">
+		select * from btype2
+		where btype_code1=#{code}
+	</select>	
+
+	<select id="selectBtype3" resultType="map" parameterType="int">
+		select * from btype3
+		where btype_code2=#{code}
+	</select>		
+	
 	
 </mapper>
 

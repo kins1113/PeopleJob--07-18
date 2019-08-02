@@ -3,16 +3,26 @@
 <%@include file="../main/inc/top.jsp" %>
 <style>
 .divForm {
-    width: 1000px;
+    width: 1500px;
     margin: 0 auto;
     background: white;
     padding: 13px;
+    height: 900px;
 }
 #peopleinfo {
     background: #f2f4f7;
+        height: 871px;
 }
-
+h2 {
+    font-size: 18px;
+    margin: 0 0 16px;
+    margin-left: 286px;
+    font-weight: bold;
+}
 </style>
+<script type="text/javascript">
+
+</script>
 <div id="peopleinfo">
 <div class="divForm">
 	<form name="frmSearch" method="post" 
@@ -26,17 +36,16 @@
 			<c:import url="peopleinfowhere.jsp"/>
 		</div> 
 		
-        <c:import url="../resume/occupation.jsp"/>
 		</div>
         <c:if test="${empty list }" >	 
-        <div style="margin: 0 auto; min-height: 630px;position: relative;bottom: 0;width: 446px;">
+        
 	 	<table class="table table-hover"style="position: relative;
     bottom: -59px;">
 	 	<tr>
 	 		<td colspan="5" class="align_center">데이터가 존재하지 않습니다.</td>
 	 	</tr>
 	 	</table>
-		</div>
+		
 		</c:if>
             <div class="divPage">
 	<!-- 이전블럭으로 이동하기 -->
@@ -94,13 +103,7 @@
         </table>
         
         </div>
-        <div class="choice_wrap new mt20 mb10">
-  <div class="choice_inner">
-    <p class="total" id="total">
-      <strong>선택직종 :</strong> 
-    </p>
-  </div><!-- end choice_inner -->
-</div>
+       
         </c:if>
       </div> 
       </div> 

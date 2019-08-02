@@ -81,6 +81,14 @@
 			</where>	
 	</select>
 
+	<select id="selectPopupManagerIndex" parameterType="map" resultType="int">
+		select count(*) from popup
+		<where>
+			<if test="type==0">usage='Y' and end_day>=to_date(sysdate)</if>
+			<if test="type==1">usage='Y' and end_day>=to_date(sysdate) and end_day <![CDATA[ < ]]> to_date(sysdate)+7</if>
+			<if test="type==2">usage='N'</if>
+		</where> 
+	</select>
 
 
 </mapper>

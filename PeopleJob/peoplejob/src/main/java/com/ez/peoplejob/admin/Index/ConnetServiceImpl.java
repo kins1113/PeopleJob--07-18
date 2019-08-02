@@ -184,5 +184,17 @@ public class ConnetServiceImpl implements ConnetService{
 		
 		return countArr;
 	}
+
+	@Override
+	public int[] selectPopupManagerIndex() {
+		int[] popupArr=new int[3];
+		for(int i=0;i<3;i++) {
+			Map<String, Integer>map=new HashMap<String, Integer>();
+			map.put("type", i);
+			popupArr[i]=connetDao.selectPopupManagerIndex(map);
+		}
+		logger.info("popup정보를 가져가는 서비스 결과 popupArr.length={}",popupArr.length);
+		return popupArr;
+	}
 	
 }

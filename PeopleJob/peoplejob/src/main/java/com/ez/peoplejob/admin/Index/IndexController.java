@@ -83,4 +83,14 @@ public class IndexController {
 		logger.info("결제 완료된것 카운트 payArr.length={}",payArr.length);
 		return payArr;
 	}
+	
+	@RequestMapping("/manager/index/popup.do")
+	@ResponseBody
+	public int[] selectPopupManagerIndex() {
+		logger.info("popup관련  카운트 하는 곳");
+		
+		int[] popupArr=connetService.selectPopupManagerIndex();
+		logger.info("popup관련 카운트 popupArr.length={}",popupArr.length);
+		return popupArr;
+	}
 }

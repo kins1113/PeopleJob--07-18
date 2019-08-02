@@ -14,4 +14,5 @@ public interface ConnetDAO {
 	public int selectJobopeningManagerIndex(Map<String, Object> map);
 	public List<CustextVO> selectCustextManagerIndex();
 	public int selectPaymentManagerIndex(Map<String, Object>map);
+	public int selectPopupManagerIndex(Map<String, Integer>map);
 }
