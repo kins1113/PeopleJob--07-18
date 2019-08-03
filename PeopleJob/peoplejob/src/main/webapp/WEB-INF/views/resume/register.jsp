@@ -74,7 +74,11 @@ input[type="submit"] {
 </style>
 
 <script type="text/javascript">
+
 $(document).ready(function (){
+	$("#hopeworkform").data("name", "hopeworkform");
+
+	$("#selectMajor").data("name","major");
 	
 	//자격증을 가져오는
 	$("#certification").click(function(){
@@ -453,6 +457,7 @@ function getMajor(){
 		type:"post",
 		success:function(res){
 				settingMajor(res);
+
 		},
 		error:function(xhr, status, error){
 			alert(status+":"+error);
@@ -470,14 +475,19 @@ function settingMajor(res){
 			opEl.append(item.major);
 			$("#selectMajor").html(chEl);
 			$("#selectMajor").append(opEl); 
+			
 		}else{
 			var opEl=$("<option value='"+item.academicCode+"'></option>");
 			opEl.append(item.major);
+			
 			$("#selectMajor").append(opEl); 
+			
 		}
 	})
 	
 }
+
+
 
 
 
@@ -642,8 +652,6 @@ function settinghopeworkform(res){
 }
  
 
-
-
 </script>
 <script type="text/javascript">
 
@@ -671,12 +679,23 @@ $(document).ready(function (){
 
 </script>
 
+
 <article>
 <div id="registerdiv">
 <div class="divForm">
 <form name="frm1" method="post" 
 	action="<c:url value='/resume/register.do'/>" enctype="multipart/form-data">
 <fieldset>
+
+<input type="hidden"  name="major" id="selectMajor2" >
+	<input type="hidden"  name="langlicencename">
+	
+	<input type="hidden"  name="chargework" >
+	<input type="hidden"  name="jobgrade">
+
+	<input type="hidden"  name="hopeworkform" >
+	<input type="hidden"  name="lName" >
+	
 	<legend style="font-weight: bold">이력서등록</legend>
 	<section id="registerds">
 	<div>        
@@ -697,7 +716,7 @@ $(document).ready(function (){
     <!--이력서 사진  https://kuzuro.blogspot.com/2018/10/11.html-->
     <div class="inputArea">
  <label for="picture">이력서 사진</label>
- <input type="file" id="gdsImg"  />
+ <input type="file" id="gdsImg" name="file" />
  <div class="select_img"><img src="" /></div>
  
  <script>
@@ -814,7 +833,7 @@ $(document).ready(function (){
        <tr>
 			<th>전공</th>
 		<td colspan="1">
-		<select class="custom-select my-1 FST" name="academicCode" id="selectMajor">
+		<select class="custom-select my-1 FST" name="academicCode" data-name="major" id="selectMajor">
 		<option>전공</option>
 		</select>
 		</td>
@@ -871,7 +890,7 @@ $(document).ready(function (){
        <tr>
 			<th>직종</th>
 		<td colspan="1">
-		<select class="custom-select my-1 FST" name="dvCode" id="selectcareer">
+		<select class="custom-select my-1 FST" name="dvCode"  id="selectcareer">
 		<option>직종</option>
 		</select>
 		</td>
@@ -885,7 +904,7 @@ $(document).ready(function (){
        <tr>
 			<th>직급</th>
 		<td colspan="1">
-		<select class="custom-select my-1 FST" name="dvCode" id="selectBydvCode">
+		<select class="custom-select my-1 FST" name="dvCode"  id="selectBydvCode">
 		<option>직급</option>
 		</select>
 		</td>
@@ -910,7 +929,7 @@ $(document).ready(function (){
        <tr>
 			<th>자격증명</th>
 		<td colspan="1">
-		<select class="custom-select my-1 FST" name="lNo" id="selectLname">
+		<select class="custom-select my-1 FST" name="lNo"  id="selectLname">
 		<option>자격증명</option>
 		</select> 
 		</td>
@@ -946,7 +965,7 @@ $(document).ready(function (){
        <tr>
 			<th>시험종류</th>
 		<td colspan="1">
-		<select class="custom-select my-1 FST" name="langlicenceCode" id="selectlanglicencename">
+		<select class="custom-select my-1 FST" name="langlicenceCode"  id="selectlanglicencename">
 		<option>시험종류</option>
 		</select> 
 		</td>
@@ -1000,7 +1019,7 @@ $(document).ready(function (){
        <tr>
 			<th>근무형태</th>
 		<td colspan="1">
-		<select class="custom-select my-1 FST" name="hopeworkCode" id="hopeworkform">
+		<select class="custom-select my-1 FST" name="hopeworkCode" data-name="hopeworkform" id="hopeworkform">
 		<option>근무형태</option>
 		</select> 
 		</td>
