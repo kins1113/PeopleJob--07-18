@@ -26,11 +26,12 @@ public class IndexController {
 	public String index(Model model) {
 		logger.info("index 화면 보여주기");
 		
-		//활성화 된것만 가져오기
+		/*//활성화 된것만 가져오기
 		List<PopupVO> popupList=popupServie.selectUsageY();
 		logger.info("popup은 popupList.size={}",popupList.size());
 		
 		model.addAttribute("popupList", popupList);
+		*/
 		return "manager/index";
 	}
 	

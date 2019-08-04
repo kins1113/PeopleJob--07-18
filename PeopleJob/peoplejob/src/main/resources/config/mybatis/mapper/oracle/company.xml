@@ -281,6 +281,39 @@
 	 <![CDATA[where rownum<=6 and end_date>sysdate ]]>
 	</select>
 	
+	<select id="selectMemeberByAuthority" parameterType="map" resultType="MemberVO">
+		select memberid from member
+		<where>
+			<if test='type=="1"'>authority_code=1</if>
+			<if test='type=="2"'>authority_code=2</if>
+			<if test='type=="3"'>authority_code=3</if>
+		</where>
+	</select>
+	
+	<select id="selectMemberById" parameterType="String" resultType="memberVo">
+		select * from member where memberid=#{id}
+	</select>
+	
+	<select id="selectMemberByMcode" parameterType="int" resultType="memberVo">
+		select * from member where member_code=#{code}
+	</select>
+	
+	<select id="selectMemberSearch" parameterType="map" resultType="map" >
+		select * from 
+		(
+		    select * from member where authority_code=3 
+		)m 
+		left join company c
+		on m.COMPANY_CODE = c.COMPANY_CODE
+		<where>
+			<if test="searchCon=='company'">
+				companyname like '%'|| #{searchKey} ||'%'
+			</if>
+			<if test="searchCon=='id'">
+				memberid like '%'|| #{searchKey} ||'%'
+			</if>
+		</where> 
+	</select>
 	
 </mapper>
 

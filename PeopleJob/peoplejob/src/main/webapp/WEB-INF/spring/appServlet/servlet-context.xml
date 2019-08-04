@@ -52,10 +52,11 @@
 	
 	<!-- Managerintercepter -->
 	 <interceptors>
-		<interceptor>
+		 <interceptor>
 			<mapping path="/manager/**"/>
 			<exclude-mapping path="/manager/login/managerLogin.do"/>
-				<exclude-mapping path="/manager/login/managerLogin.do"/>
+			<exclude-mapping path="/manager/popup/popupOpen.do"/>
+				
 			<beans:ref bean="managerInterceptor"/>
 		</interceptor>
 		

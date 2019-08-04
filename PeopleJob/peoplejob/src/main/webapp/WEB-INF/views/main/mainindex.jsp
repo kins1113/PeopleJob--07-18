@@ -151,6 +151,21 @@ $(function() {
 });
 </script>
 
+
+<c:forEach var="popupVo" items="${popupList}">
+	<script type="text/javascript">
+		$(function(){
+			var count = ${fn:length(popupList)}
+			for(var i=0;i<count;i++){
+				window.open("<c:url value='/manager/popup/popupOpen.do?popupImg=${popupVo.popupImg }'/>",
+					"${popupVo.popupName }","width=${popupVo.width },height=${popupVo.height},left=${popupVo.left},top=${popupVo.top}")
+					/* window.open("<c:url value='/manager/popup/popupOpen.do'/>",
+					"popupNam","width=500,height=600,left=100,top=20") */
+			}
+	})
+	</script>
+</c:forEach>
+
 <!------ Include the above in your HEAD tag ---------->
 <style type="text/css">
 #vvipone:HOVER {     

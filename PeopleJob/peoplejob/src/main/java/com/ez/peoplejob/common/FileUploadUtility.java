@@ -124,7 +124,7 @@ public class FileUploadUtility {
 			}else if(uploadePathDi==POST_UPLOAD) {
 				result=props.getProperty("postFile.upload.path.test");
 			}else if(uploadePathDi==JOBOPENING_UPLOAD) {
-				result=props.getProperty("postFile.upload.path.test");
+				result=props.getProperty("jobopeningFile.upload.path.test");
 			}
 			//여기에 경로 추가해야함.
 			
