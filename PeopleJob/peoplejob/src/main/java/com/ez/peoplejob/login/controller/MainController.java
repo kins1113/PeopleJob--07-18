@@ -26,7 +26,6 @@ public class MainController {
 	@Autowired private PaymentService paymentService;
 	@Autowired private JobopeningService jobService;
 	@Autowired private MemberService memberService;
-	@Autowired private BoardService BoardService;
 	
 	@RequestMapping("/main/mainindex.do")
 	public String mainindex(Model model,HttpSession session) {

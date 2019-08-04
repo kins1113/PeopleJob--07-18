@@ -43,24 +43,27 @@ span{
 	<div class="col-lg-12">
 		<div class="card card-default">
 			<div class="card-header card-header-border-bottom">
-				<h2> 글 등록</h2>
+				<h2>자유게시판 글 등록</h2>
 			</div>
 			<!-- 해더 부분 버튼 그룹 끝 -->
 			<form name="postWriteForm" id="postWriteForm" enctype="multipart/form-data" 
 					method="post" action="<c:url value='/board/boardWrite.do'/>">
 			<!-- 게시판 정보를 넘기기위한 hidden -->
 			<input type="hidden" name="boardCode" value='${param.boardCode }'>
+			<input type="hidden" name="boardName" value='${param.boardName }'>		
 			<div class="card-body" id="cardBoduPostList">
 				
 				<div class="form-group" id="divTitle">
 					<label for="boardtitle">게시글 제목</label> 
-					<input type="text" name="boardtitle" id="boardtitle" class="form-control"  placeholder="게시글 제목" class="title"> 
+					<input type="text" name="boardtitle" id="boardtitle" class="form-control"  placeholder="게시글 제목" class="title" value="${postVo.boardtitle }"> 
 					
 				</div>
 					<div class="form-group" >
 					<label>게시글 내용</label>
+					
 						<c:import url="/manager/smarteditorTestjsp.do">
 							<c:param name="name" value="boardcontent"></c:param>
+							<c:param name="value" value="${postVo.content }"></c:param>
 						</c:import>
 					<div id="postInfo">
 				
@@ -70,7 +73,7 @@ span{
 				<c:forEach begin="1" end="${boardVo.upnumage }">
 					<div class="form-group" id="divTitle">
 						<label for="boardtitle">업로드할 파일 ${i }</label> 
-						<input type="file" name="boardfile" id="boardfile" class="form-control"> 
+						<input type="file" name="boardtitle" id="boardtitle" class="form-control"> 
 						
 					</div>
 					<c:set var="i" value="${i+1 }" />
