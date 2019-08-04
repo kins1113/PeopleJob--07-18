@@ -74,4 +74,8 @@ public class JobopeningManagerServiceImpl implements JobopeningManagerService{
 		return jobManagerDao.selectJobopeningManager(map);
 	}
 
+	@Override
+	public int getTotalCountJobopeningManager(Map<String, Object> map) {
+		return jobManagerDao.getTotalCountJobopeningManager(map);
+	}
 }

@@ -15,5 +15,9 @@ public class JobopeningManagerDAOMybatis implements JobopeningManagerDAO{
 	public List<Map<String, Object>> selectJobopeningManager(Map<String, Object> map) {
 		return sqlSession.selectList(namespace+"selectJobopeningManager", map);
 	}
+	@Override
+	public int getTotalCountJobopeningManager(Map<String, Object> map) {
+		return sqlSession.selectOne(namespace+"getTotalCountJobopeningManager", map);
+	}
 	
 }

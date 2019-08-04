@@ -134,9 +134,9 @@ public class MemberManagerController {
 	
 	@RequestMapping("/manager/member/getMemeberCompany.do")
 	@ResponseBody
-	public String[] getMemeberCompany() {
-		logger.info("ajax - 기업회원 아이디만 가져오는 곳");
-		return companyService.selectMemeberByAuthority();
+	public String[] getMemeberCompany(@RequestParam(defaultValue = "3")int type) {
+		logger.info("ajax - 기업회원 아이디만 가져오는 곳 type={}",type);
+		return companyService.selectMemeberByAuthority(type);
 	}
 	
 	@RequestMapping("/manager/member/getMemberSelectId.do")
@@ -165,5 +165,7 @@ public class MemberManagerController {
 		logger.info("ajax - 기업회원 아이디만 가져오는 곳 파라미터 mCode={}",mCode);
 		return companyService.selectMemberByMcode(mCode);
 	}
+	
+	
 	
 }
