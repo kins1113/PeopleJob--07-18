@@ -29,19 +29,10 @@ button.mb-1.btn.btn-pill.btn-lg.btn-outline-primary {     line-height: 0.5em;   
 .card-body.popup table tbody th {border: 1px solid #795548;background: aliceblue;text-align: center;}
 .card-body.popup table tbody tr{height: 30px;}
 #popupTable td { border: 1px solid #795548;  text-align: center;}
+.card.card-default.quickMenu{border: 0; background: #f5f6fa}
+.quickMenu,.card-header.justify-content-center.quickMenu{background:#f5f6fa; }
 </style>
-
-<%-- <c:forEach var="popupVo" items="${popupList}">
-
-	<c:set var="popupName" value=" ${popupVo.popupName }"/> 
-	<c:set var="popupImg" value="${popupVo.popupImg }"/>
-	<c:set var="width" value="${popupVo.width }"/>
-	<c:set var="height" value="${popupVo.height }"/>
-	<c:set var="left" value="${popupVo.left }"/>
-	<c:set var="top" value="${popupVo.top }"/>
-	<c:set var="popupImg" value="${popupVo.popupImg}"/>
-
-</c:forEach> --%>
+<%-- 
 <c:forEach var="popupVo" items="${popupList}">
 	<script type="text/javascript">
 		$(function(){
@@ -55,7 +46,7 @@ button.mb-1.btn.btn-pill.btn-lg.btn-outline-primary {     line-height: 0.5em;   
 			}
 	})
 	</script>
-</c:forEach>
+</c:forEach> --%>
 
 <jsp:useBean id="now" class="java.util.Date" />
 <fmt:formatDate value="${now}" pattern="yyyy-MM-dd" var="today" />
@@ -382,8 +373,8 @@ function highChartsMember(item){
 			</div>
 			<div class="col-xl-2 col-md-12" id="floatMenu">
 				<!-- Doughnut Chart -->
-				<div class="card card-default" data-scroll-height="300">
-					<div class="card-header justify-content-center">
+				<div class="card card-default quickMenu" data-scroll-height="300">
+					<div class="card-header justify-content-center quickMenu">
 						<h2>퀵 메뉴</h2>
 					</div>
 					<div class="card-body quickMenu">

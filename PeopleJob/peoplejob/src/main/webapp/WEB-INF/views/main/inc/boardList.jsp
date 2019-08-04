@@ -7,7 +7,7 @@
 <c:if test="${!empty list }">
 	<c:forEach var="boardVo" items="${list }">
 	<li>
-	<a href="<c:url value='/board/boardByCategory.do?boardCode=${boardVo.boardCode1 }&boardName=${boardVo.boardname }'/>">
+	<a href="<c:url value='/board/boardByCategory.do?boardCode=${boardVo.boardCode1 }'/>">
 	${boardVo.boardname }</a>
 	</li>
 	</c:forEach>
