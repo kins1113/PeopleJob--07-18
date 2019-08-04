@@ -32,8 +32,16 @@ public class ResumeServiceImpl implements ResumeService{
 		return resumeDao.deleteResumeByNo(resumeCode);
 	}
 	@Override
+	@Transactional
 	public int updateResume(ResumeVO vo) {
-		return resumeDao.updateResume(vo);
+		int cnt=resumeDao.updatemember(vo);
+		cnt=resumeDao.updateedu(vo);
+		cnt=resumeDao.updatecareer(vo);
+		cnt=resumeDao.updatecer(vo);
+		cnt=resumeDao.updatelang(vo);
+		cnt=resumeDao.updatehope(vo);
+		cnt=resumeDao.insertResume(vo);
+		return cnt;
 	}
 	@Override
 	public int insertLangcertification(ResumeVO vo) {

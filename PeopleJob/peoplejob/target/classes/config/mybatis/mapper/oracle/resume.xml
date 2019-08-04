@@ -110,7 +110,7 @@
 		</selectKey>
 		insert into LANGCERTIFICATION (langlicence_code,langlicencename, institute,
 		        certificationtype, language, langpoint, lang_grade, lang_getdate)
-		values (#{langlicenceCode},#{langlicencename}, #{institute}, #{certificationtype}, #{language},
+		values (#{langlicenceCode},#{langlicencename,jdbcType=VARCHAR}, #{institute}, #{certificationtype}, #{language},
 					 #{langpoint}, #{langGrade}, #{langGetdate})
 	</insert>    
 	
@@ -119,7 +119,7 @@
 			select certificate_seq.nextval from dual
 		</selectKey>
 		insert into certificate (l_no,l_name, l_getdate, l_institution)
-		values (#{lNo},#{lName}, #{lGetdate}, #{lInstitution})
+		values (#{lNo},#{lName,jdbcType=VARCHAR}, #{lGetdate}, #{lInstitution})
 	</insert>
 	
 	<insert id="insertCareer" parameterType="resumeVo">
@@ -129,7 +129,7 @@
 		</selectKey>
 		insert into CAREER(dv_code, companyname,chargework,jobgrade, workcheck 
 		            ,workcondition, workterm2,workterm)
-		values(#{dvCode}, #{companyname},#{chargework},#{jobgrade}, #{workcheck}, 
+		values(#{dvCode}, #{companyname},#{chargework,jdbcType=VARCHAR},#{jobgrade,jdbcType=VARCHAR}, #{workcheck}, 
 					 #{workcondition}, #{workterm2}, #{workterm})
 	</insert>
 	
@@ -137,9 +137,9 @@
 		<selectKey resultType="int" keyProperty="academicCode" order="BEFORE">
 			select education_seq.nextval from dual
 		</selectKey>
-		insert into education (academic_code, schoolName,major, degree, graduatecheck,
+		insert into education (academic_code, schoolName, major, degree, graduatecheck,
 		                        schoolLocal, graduatetype, graduate2, graduate)
-		values (#{academicCode},#{schoolname},#{major},#{degree},#{graduatecheck},#{schoollocal},
+		values (#{academicCode},#{schoolname},#{major,jdbcType=VARCHAR},#{degree},#{graduatecheck},#{schoollocal},
 					#{graduatetype},#{graduate2},#{graduate})
 	</insert>
 	
@@ -149,7 +149,7 @@
 		</selectKey>
 		insert into hope_working (hopework_code, hopeWorkDate, hopePay,hopeworkform,  
                             local_code, btype_code3, third_code)
-		values(#{hopeworkCode},#{hopeworkdate},#{hopepay},#{hopeworkform},#{localCode},#{btypeCode3},#{thirdCode})
+		values(#{hopeworkCode},#{hopeworkdate},#{hopepay},#{hopeworkform,jdbcType=VARCHAR},#{localCode},#{btypeCode3},#{thirdCode})
 		
 	</insert>
 	

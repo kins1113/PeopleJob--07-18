@@ -6,6 +6,9 @@
 	<select id="selectMajor"  resultType="educationVo">
 		select * from education
 	</select>	
+	<select id="selectMajor2"  resultType="educationVo" parameterType="int">
+		select * from education where academic_code=#{academicCode}
+	</select>	
 </mapper>
 
 

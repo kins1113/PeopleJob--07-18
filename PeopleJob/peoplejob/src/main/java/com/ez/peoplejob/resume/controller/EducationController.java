@@ -25,8 +25,18 @@ public class EducationController {
 	@ResponseBody
 	public List<EducationVO> selectMajor(){
 		logger.info("ajax - 전공정보 가져가기");
-		 
+		
 		List<EducationVO> list = educationservice.selectMajor();
+		logger.info("ajax - 전공정보 가져가기 결과 list.size={}",list.size());
+		return list;
+		
+	}
+	@RequestMapping("/selectMajor2.do")
+	@ResponseBody
+	public List<EducationVO> selectMajor2(int academicCode){
+		logger.info("ajax - 전공정보 가져가기");
+		
+		List<EducationVO> list = educationservice.selectMajor2(academicCode);
 		logger.info("ajax - 전공정보 가져가기 결과 list.size={}",list.size());
 		return list;
 		

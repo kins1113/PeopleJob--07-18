@@ -906,9 +906,18 @@ $(document).ready(function (){
         </select>   
        </div>
        <div>
-       <label>전공</label>
-  		<input type="text"  class="form-control"  name="major" id="major"value="${vo3.major }" >
-       
+       <table>
+       <tr>
+			<th>전공</th>
+		<td colspan="1">
+		<select class="custom-select my-1 FST" name="academicCode" data-name="major" id="selectMajor">
+		<option <c:if test="${vo3.major=='${vo3.major}'}">            	
+            		selected="selected"
+            	</c:if>>전공</option>
+		</select>
+		</td>
+		</tr>
+		</table>
        </div>
        <div>
        <label>학위</label>
@@ -968,12 +977,33 @@ $(document).ready(function (){
         </select>
 	</div>
 	<div>
-        <label for="chargework">직종</label>
-        <input type="text" class="form-control"  name="chargework" id="infobox" value="${vo4.chargework }" style="ime-mode:active">
+      	<table>
+       <tr>
+			<th>직종</th>
+		<td colspan="1">
+		<select class="custom-select my-1 FST" name="dvCode"  id="selectcareer">
+		<option <c:if test="${vo4.chargework}"=="${vo4.chargework}">            	
+            		selected="selected"
+            	</c:if>>직종</option>
+		</select>
+		</td>
+		</tr>
+		</table>
+        
     </div>	
     <div>
-        <label for="jobgrade">직급</label>
-        <input type="text" class="form-control"  name="jobgrade" id="infobox" value="${vo4.jobgrade }" style="ime-mode:active">
+      <table>
+       <tr>
+			<th>직급</th>
+		<td colspan="1">
+		<select class="custom-select my-1 FST" name="dvCode"  id="selectBydvCode">
+		<option <c:if test="${vo4.jobgrade=='${vo4.jobgrade}'}">            	
+            		selected="selected"
+            	</c:if>>직급</option>
+		</select>
+		</td>
+		</tr>
+		</table>
    </div>
   </section>
    
@@ -986,8 +1016,18 @@ $(document).ready(function (){
      
    <h3>자격증/면허증</h3>
      <div>
-        <label for="lName">자격증명</label>
-        <input type="text" class="form-control"  name="lName" id="lName" value="${vo6.lName}" style="ime-mode:active">
+         <table>
+       <tr>
+			<th>자격증명</th>
+		<td colspan="1">
+		<select class="custom-select my-1 FST" name="lNo"  id="selectLname">
+		<option <c:if test="${vo6.lName}"=="${vo6.lName}">            	
+            		selected="selected"
+            	</c:if>>자격증명</option>
+		</select> 
+		</td>
+		</tr>
+		</table>
     </div>
     <div>    
         <label for="lInstitution">발행처/기관</label>
@@ -1014,8 +1054,18 @@ $(document).ready(function (){
         <input type="text" class="form-control"  name="institution" id="institution" value="${vo5.institution }" style="ime-mode:active">
      </div>
      <div>
-        <label for="langlicencename">시험종류</label>
-        <input type="text" class="form-control"  name="langlicencename" id="langlicencename" value="${vo5.langlicencename }" style="ime-mode:active">
+      <table>
+       <tr>
+			<th>시험종류</th>
+		<td colspan="1">
+		<select class="custom-select my-1 FST" name="langlicenceCode"  id="selectlanglicencename">
+		<option <c:if test="${vo5.langlicencename}"=="${vo5.langlicencename}">            	
+            		selected="selected"
+            	</c:if>>시험종류</option>
+		</select> 
+		</td>
+		</tr>
+		</table>
      </div> 
      <div>
         <label for="langpoint">점수</label>
@@ -1064,51 +1114,18 @@ $(document).ready(function (){
 	 <div  id="hopework">
       <h3>희망근무 선택</h3>
       <div>	
-    	<label for="hopeworkform">근무형태</label>
-    	<select class="form-control" name="hopeworkform" id="hopeworkform" >
-        	<option value="근무형태 선택" <c:if test="${vo2.hopeworkform=='근무형태 선택'}">            	
+    	<table>
+       <tr>
+			<th>근무형태</th>
+		<td colspan="1">
+		<select class="custom-select my-1 FST" name="hopeworkCode" data-name="hopeworkform" id="hopeworkform">
+		<option <c:if test="${vo2.hopeworkform}"=="${vo2.hopeworkform}">            	
             		selected="selected"
-            	</c:if>>근무형태 선택</option>
-        	<option value="정규직" <c:if test="${vo2.hopeworkform=='정규직'}">            	
-            		selected="selected"
-            	</c:if>>정규직</option>
-        	<option value="교육생 (정규직 전환가능)" <c:if test="${vo2.hopeworkform=='교육생 (정규직 전환가능)'}">            	
-            		selected="selected"
-            	</c:if>>교육생</option>
-        	<option value="별정직" <c:if test="${vo2.hopeworkform=='별정직'}">            	
-            		selected="selected"
-            	</c:if>>별정직</option>
-        	<option value="파트" <c:if test="${vo2.hopeworkform=='파트'}">            	
-            		selected="selected"
-            	</c:if>>파트</option>
-        	<option value="전임" <c:if test="${vo2.hopeworkform=='전임'}">            	
-            		selected="selected"
-            	</c:if>>전임</option>
-        	<option value="계약직 (정규직 전환가능)" <c:if test="${vo2.hopeworkform=='계약직 (정규직 전환가능)'}">            	
-            		selected="selected"
-            	</c:if>>계약직</option>
-        	<option value="병역특례" <c:if test="${vo2.hopeworkform=='병역특례'}">            	
-            		selected="selected"
-            	</c:if>>병역특례</option>
-        	<option value="인턴직 (정규직 전환가능)" <c:if test="${vo2.hopeworkform=='인턴직 (정규직 전환가능)'}">            	
-            		selected="selected"
-            	</c:if>>인턴직</option>
-        	<option value="아르바이트" <c:if test="${vo2.hopeworkform=='아르바이트'}">            	
-            		selected="selected"
-            	</c:if>>아르바이트</option>
-        	<option value="파견직" <c:if test="${vo2.hopeworkform=='파견직'}">            	
-            		selected="selected"
-            	</c:if>>파견직</option>
-        	<option value="해외취업" <c:if test="${vo2.hopeworkform=='해외취업'}">            	
-            		selected="selected"
-            	</c:if>>해외취업</option>
-        	<option value="위촉직" <c:if test="${vo2.hopeworkform=='위촉직'}">            	
-            		selected="selected"
-            	</c:if>>위촉직</option>
-        	<option value="프리랜서" <c:if test="${vo2.hopeworkform=='프리랜서'}">            	
-            		selected="selected"
-            	</c:if>>프리랜서</option>
-        </select>
+            	</c:if>>근무형태</option>
+		</select> 
+		</td>
+		</tr>
+		</table>
        </div>
        <div>
     	<label for="hopepay">희망연봉</label>
@@ -1174,61 +1191,73 @@ $(document).ready(function (){
        
        <h3>희망근무지역</h3>
         <div>
-       
-       <label for="시도">시도</label>
-       	<select class="form-control" name="sido" id="locationSiDo" style="ime-mode:active" >
-   			<option value="${vo7.sido }">시도</option>
-        	
-        </select>   
+       <table>
+      <tr>
+				<th>지역</th>
+								<td>
+									<select class="custom-select my-1 mr-sm-2 FST" name="localCode" id="locationSiDo">
+										<option <c:if test="${vo7.sido}"=="${vo7.sido}">            	
+            		selected="selected"
+            	</c:if>>시/도</option>
+									</select>
+									<select class="custom-select my-1 mr-sm-2 FST" name="localCode2" id="locationGugun">
+										<option <c:if test="${vo8.gugun}"=="${vo8.gugun}">            	
+            		selected="selected"
+            	</c:if>>구/군</option>
+										<option>먼저 시/도를 선택하세요</option>
+									</select>
+								</td>
+								</tr>
+					</table>
         </div>
-       	<div>
-       
-       <label for="구군">구군</label>
-       <select class="form-control" name="gugun" id="locationGugun" style="ime-mode:active" >
-       	<option value="${vo8.gugun }">구군</option>
-       </select>
-
         </div>
        
         <div>
         <%-- <c:import url="btype.jsp"/> --%>
-        <label for="btypename1">업종1차</label>
-        <select name="btypename1" id="btypename1" >
-        <option value="${vo9.btypename1 }" >업종1차</option>
-        </select>
-        </div>
-        <div>
-        <label for="btypename2">업종2차</label>
-        
-        <select name="btypename2" id="btypename2" >
-        <option value="${vo10.btypename2 }" >업종2차</option>
-        </select>
-        </div>
-        <div>
-        <label for="btypename3">업종3차</label>
-         <select name="btypename3" id="btypename3">
-        <option value="${vo11.btypename3 }">업종3차</option>
-        </select>
-        </div>
-        <div>
-        <label for="firstname">직종1차</label>
-         <select name="firstname" id="selectFirst">
-        <option value="${vo12.firstname }">직종1차</option>
-        </select>
-     
-        </div>
-        <div>
-        <label for="secondname">직종2차</label>
-         <select name="secondname" id="selectSecond">
-        <option value="${vo13.secondname }">직종2차</option>
-        </select>
-     	
-        </div>
-        <div>
-        <label for="thirdname">직종3차</label>
-        <select name="thirdname" id="selectThird">
-        <option value="${vo14.thirdname }" >직종3차</option>
-        </select>
+        <table>
+       <tr>
+								<th>직종</th>
+								<td colspan="1">
+									<select class="custom-select my-1 FST" name="firstCode" id="selectFirst">
+										<option <c:if test="${vo12.firstname}"=='${vo12.firstname}'>            	
+            		selected="selected"
+            	</c:if>>1차 직종</option>
+									</select>
+									<select class="custom-select my-1 mr-sm-2 FST" name="secondCode" id="selectSecond">
+										<option <c:if test="${vo13.secondname}"=='${vo13.secondname}'>            	
+            		selected="selected"
+            	</c:if>>2차 직종</option>
+										<option>먼저 1차 직종을 선택하세요</option>
+									</select>
+									<select class="custom-select my-1 mr-sm-2 FST" name="thirdCode" id="selectThird">
+										<option <c:if test="${vo14.thirdname}"=='${vo14.thirdname}'>            	
+            		selected="selected"
+            	</c:if>>3차 직종</option>
+										<option>먼저 2차 직종을 선택하세요</option>
+									</select>
+								</td>
+								<th>업종</th>
+								<td colspan="2">
+									<select class="custom-select my-1 FST" name="btypeCode1" id="selectBtype1">
+										<option <c:if test="${vo9.btypename1}"=='${vo9.btypename1}'>            	
+            		selected="selected"
+            	</c:if>>1차 업종</option>
+									</select>
+									<select class="custom-select my-1 mr-sm-2 FST" name="btypeCode2" id="selectBtype2">
+										<option <c:if test="${vo10.btypename2}"=='${vo10.btypename2}'>            	
+            		selected="selected"
+            	</c:if>>2차 업종</option>
+										<option>먼저 1차 업종을 선택하세요</option>
+									</select>
+									<select class="custom-select my-1 mr-sm-2 FST" name="btypeCode3" id="selectBtype3">
+										<option <c:if test="${vo11.btypename3}"=='${vo11.btypename3}'>            	
+            		selected="selected"
+            	</c:if>>3차 업종</option>
+										<option>먼저 2차 업종을 선택하세요</option>
+									</select>
+								</td>
+							</tr>
+							</table>
         </div>
         
         <div>
