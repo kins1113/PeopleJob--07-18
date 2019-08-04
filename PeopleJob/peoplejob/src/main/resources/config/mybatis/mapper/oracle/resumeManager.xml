@@ -5,12 +5,12 @@
 <mapper namespace="config.mybatis.mapper.oracle.resumeManager">
 
 	<insert id="insertHopeWorkingMN" parameterType="HopeWorkingVO">
-		<selectKey resultType="int" keyProperty="hopworkCode" order="BEFORE">
+		<selectKey resultType="int" keyProperty="hopeworkCode" order="BEFORE">
 			select hope_working_seq.nextval from dual
 		</selectKey>
 		insert into hope_working (hopework_code, hopeWorkDate, hopePay, hopeWorkForm, 
                             local_code, btype_code3, third_code)
-		values(#{hopworkCode},#{hopeworkdate},#{hopepay},#{hopeworkform},#{localCode},#{btypeCode3},#{thirdCode})
+		values(#{hopeworkCode},#{hopeworkdate},#{hopepay},#{hopeworkform},#{localCode},#{btypeCode3},#{thirdCode})
 	</insert>
 	
 	<insert id="insertCertificateMN" parameterType="CertificateVO">

@@ -8,13 +8,27 @@ public class ResumeManagerVO {
 	private String introduce;
 	private String award;
 	private int langlicenceCode;
-	private int licenceCode;
+	private int lNo;
 	private int dvCode;
 	private int academicCode;
-	private int desiredWorkCode;
+	private int hopeworkCode;
 	private String opencheck;
 	private int memberCode;
 	private String picture;
+	
+	
+	public int getlNo() {
+		return lNo;
+	}
+	public void setlNo(int lNo) {
+		this.lNo = lNo;
+	}
+	public int getHopeworkCode() {
+		return hopeworkCode;
+	}
+	public void setHopeworkCode(int hopeworkCode) {
+		this.hopeworkCode = hopeworkCode;
+	}
 	public int getResumeCode() {
 		return resumeCode;
 	}
@@ -51,12 +65,7 @@ public class ResumeManagerVO {
 	public void setLanglicenceCode(int langlicenceCode) {
 		this.langlicenceCode = langlicenceCode;
 	}
-	public int getLicenceCode() {
-		return licenceCode;
-	}
-	public void setLicenceCode(int licenceCode) {
-		this.licenceCode = licenceCode;
-	}
+	
 	public int getDvCode() {
 		return dvCode;
 	}
@@ -69,12 +78,7 @@ public class ResumeManagerVO {
 	public void setAcademicCode(int academicCode) {
 		this.academicCode = academicCode;
 	}
-	public int getDesiredWorkCode() {
-		return desiredWorkCode;
-	}
-	public void setDesiredWorkCode(int desiredWorkCode) {
-		this.desiredWorkCode = desiredWorkCode;
-	}
+	
 	public String getOpencheck() {
 		return opencheck;
 	}
@@ -93,13 +97,15 @@ public class ResumeManagerVO {
 	public void setPicture(String picture) {
 		this.picture = picture;
 	}
+	
+	
 	@Override
 	public String toString() {
 		return "ResumeManagerVO [resumeCode=" + resumeCode + ", resumeTitle=" + resumeTitle + ", resumeRegdate="
 				+ resumeRegdate + ", introduce=" + introduce + ", award=" + award + ", langlicenceCode="
-				+ langlicenceCode + ", licenceCode=" + licenceCode + ", dvCode=" + dvCode + ", academicCode="
-				+ academicCode + ", desiredWorkCode=" + desiredWorkCode + ", opencheck=" + opencheck + ", memberCode="
-				+ memberCode + ", picture=" + picture + "]";
+				+ langlicenceCode + ", lNo=" + lNo + ", dvCode=" + dvCode + ", academicCode=" + academicCode
+				+ ", hopeworkCode=" + hopeworkCode + ", opencheck=" + opencheck + ", memberCode=" + memberCode
+				+ ", picture=" + picture + "]";
 	}
 	
 	

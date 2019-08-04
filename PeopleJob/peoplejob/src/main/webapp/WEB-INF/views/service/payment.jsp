@@ -92,7 +92,7 @@ padding: 5px;
 		  
 		  eachprice=$(this).parents("div[name=divcolor]").find("input[name=sprice]").val();
 		  $('#serviceName').text($(this).parents("div[name=divcolor]").find("input[name=name]").val());
-		  $('input[name=serviceCode]').attr('value',scode);
+		  $('input[name=serviceCode]').val(scode);
 		 // $('#servicePrice').text(eachprice+"원");
 		 
 		  
@@ -112,15 +112,17 @@ padding: 5px;
 					
 						  
 						 if($(this).is(':checked')){
-						  	$(this).parents('tr').find('.priceclass').attr('value',(eachprice*selectval));
+						  	$(this).parents('tr').find('input[title=price]').val(eachprice*selectval);
+						  	//$(this).parents('tr').find('.priceclass').attr('value',(eachprice*selectval));
 						  	 
 							sum += Number($(this).parents("tr").find("input[title=price]").val());
 							  /* checkbox 개수 * 날짜* 1일당 가격  */
 						 }else{
+							 var p=0;
 							sum -= Number($(this).parents("tr").find("input[title=price]").val());
-							 $(this).parents('tr').find('input[title=price]').attr('value','0');
+							 $(this).parents('tr').find('input[title=price]').val(p);
 						 }
-							$('#totalPrice').attr('value',sum);
+							$('#totalPrice').val(sum);
 						 
 				  });
 			  
@@ -132,13 +134,14 @@ padding: 5px;
 					var selectval= $(this).parents('tr').find('#selectPeriod option:selected').val();
 					  
 					  if($(this).parents('tr').find('.check').is(':checked')){
-						  $(this).parents('tr').find('input[title=price]').attr('value',(eachprice*selectval));
+						 // $(this).parents('tr').find('input[title=price]').attr('value',(eachprice*selectval));
+						  $(this).parents('tr').find('input[title=price]').val(eachprice*selectval);
 						  sum+=Number($(this).parents('tr').find('input[title=price]').val());
 						  
-						  $('#totalPrice').attr('value',sum);
+						  $('#totalPrice').val(sum);
 					  }else{
 						  sum-=Number($(this).parents('tr').find('input[title=price]').val());
-						  $('#totalPrice').attr('value',sum);
+						  $('#totalPrice').val(sum);
 						  
 					  }
 				  });
@@ -153,23 +156,46 @@ padding: 5px;
 						$('#chklength').text(${fn:length(list)}+"개");
 						//sum=모든 price들의 합
 						
+						$('.check').each(function(){
 						var selectval= $(this).parents('table').find('#selectPeriod option:selected').val();
-						
-						$(this).parents('table').find('input[title=price]').val(eachprice*selectval);
+						$(this).parents('tr').find('input[title=price]').val(eachprice*selectval);
+							
+						});
 						
 						
 						$(this).parents('table').find('input[title=price]').each(function(){
 							sum += Number($(this).val());
 						});
 						
-						$('#totalPrice').attr('value',sum);
+						$('#totalPrice').val(sum);
+						
+						/* select 값 변경 시 check된 것만 각각의금액 보여주기 */
+						  $('.selectclass').change(function(){
+								sum-=Number($(this).parents('tr').find('input[title=price]').val());
+								var selectval= $(this).parents('tr').find('#selectPeriod option:selected').val();
+								  
+								  if($(this).parents('tr').find('.check').is(':checked')){
+									  $(this).parents('tr').find('input[title=price]').val(eachprice*selectval);
+									  //$(this).parents('tr').find('input[title=price]').attr('value',(eachprice*selectval));
+									  sum+=Number($(this).parents('tr').find('input[title=price]').val());
+									  
+									  $('#totalPrice').val(sum);
+								  }else{
+									  
+									  sum-=Number($(this).parents('tr').find('input[title=price]').val());
+									  $('#totalPrice').val(sum);
+									  
+								  }
+							  });
+						
+						
 						
 					}else{
 						sum=0;
 						$(".check").prop("checked",false);  
 						$(this).parents('table').find('input[title=price]').val('0');
 						$('#chklength').text("0개");
-						$('#totalPrice').attr('value',sum);
+						$('#totalPrice').val(sum);
 						$(".selectclass").val("2").prop("selected", true);
 						//$('input[title=price]').attr('value','0');
 					}
@@ -183,7 +209,7 @@ padding: 5px;
 		  $('#cardBoduPostList').hide();
 		  $("#selectPeriod").val("2").prop("selected", true);
 		  $("#serviceTerm").html("0일");
-		  $('#totalPrice').attr('value','0');
+		  $('#totalPrice').val('0');
 		  
 		  if(${sessionScope.memberid==null}){     
 			  alert('로그인을 해주세요');
@@ -202,7 +228,7 @@ padding: 5px;
 			  	$("#selectPeriod").val("2").prop("selected", true);
 			  	$("#chklength").html("0개");
 			  	//$('#servicePrice').text(eachprice+"원");
-			  	$('#totalPrice').attr('value','0');
+			  	$('#totalPrice').val('0');
 			  	
 			  }else if(${sessionScope.author_code==3 && fn:length(list)<1}){   
 				  alert('등록된 채용공고가 없습니다. 채용공고를 먼저 등록해주세요');
@@ -228,14 +254,26 @@ padding: 5px;
 				return false;
 				
 			} else{ 
-				 $('.check:checked').each(function(){
-					if($(this).parents('tr').find('.form-control workdate1').length<1){
-						alert('선택한 상품의 이용기간 시작날짜를 선택해주세요.');
-						event.preventDefault();
-						return false;
+				 var count =0;
+				 $('.check:checked').each(function(idx,item){
+					// alert(idx+", "+$(this).attr("name"))
+					//alert("if전 "+$(this).parents('tr').find('.form-control').val());
+					
+					if($(this).parents('tr').find('.form-control').val()==''){
+						//alert("count가 증가 된다..."+count);
+						count=count+1;
+						 //alert(count);
 						
-					}else{//체크한 상품의 파라미터 다 입력되었을때
-						
+					} //체크한 상품의 파라미터 다 입력되었을때
+				 });
+				 
+				 //alert("if밖"+count);
+				 if(count >0){
+					 alert('선택한 상품의 이용기간 시작날짜를 선택해주세요.');
+							event.preventDefault();
+							return false;
+					 
+				 }else{
 						/*
 						$('form[name=frmList]').prop('action','<c:url value="/service/payList.do"/>');
 						$('form[name=frmList]').submit();
@@ -308,16 +346,12 @@ padding: 5px;
 								alert(status + ":" + error);
 							}
 						});//ajax
+				 }
 						
-						
-					}
-				}); 
-				
-			
-				
-			}//else(정상)
+					
+			} //바깥 else
 		  event.preventDefault();
-	  }); //submit 
+	});//submit
 
 	  
 	 
@@ -331,6 +365,7 @@ padding: 5px;
 		});
 
   });
+
   
 </script> 
 <div class="container" style="margin-top: 30px; margin-bottom: 30px;min-height: 629px; ">
@@ -444,7 +479,7 @@ padding: 5px;
 							style="    cursor: default;
     text-align: right;
     display: inline;
-    width: 36px;" value="0" class="priceclass">원
+    width: 43px;" value="0" class="priceclass">원
 						</td>
  					</tr> 
 				  <c:set var="idx" value="${idx+1 }"/> 
@@ -477,7 +512,7 @@ padding: 5px;
 				<input type="text" name="totalPrice" id="totalPrice" style="    color: orangered;
     cursor: default;
     text-align: right;
-    width: 36px; display: inline;" readonly value="0">원 
+    width: 45px; display: inline;" readonly value="0">원 
 				</td>
 			</tr>
 		</tbody> 

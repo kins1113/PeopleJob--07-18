@@ -140,6 +140,8 @@ public class FileUploadUtility {
 				key="popupFile.upload.path";
 			}else if(uploadePathDi==POST_UPLOAD) {	//개시판
 				key="postFile.upload.path";
+			}else if(uploadePathDi==JOBOPENING_UPLOAD) {
+				key="jobopeningFile.upload.path";
 			}
 			String path=props.getProperty(key);	//pds_upload
 			//실제 물리적 경로 구하기

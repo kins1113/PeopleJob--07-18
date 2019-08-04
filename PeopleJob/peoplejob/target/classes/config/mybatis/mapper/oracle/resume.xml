@@ -72,7 +72,7 @@
 	</update>
 	<update id="updatecer" parameterType="resumeVo">
 	update certificate
-	set l_institute=#{lInstitute},l_getdate=#{lGetdate}
+	set l_institution=#{lInstitution},l_getdate=#{lGetdate}
 	
 	where l_no=#{lNo}
 	</update>
@@ -104,47 +104,54 @@
 	
 	where member_code=#{memberCode}
 	</update>
-	<!-- <insert id="insertLangcertification" parameterType="resumeVo">
-		<selectKey order="BEFORE" keyProperty="langlicenceCode" resultType="int">
-		select langcertification_seq.nextval from dual
+	<insert id="insertLangcertification" parameterType="resumeVo">
+		<selectKey resultType="int" keyProperty="langLicenceCode" order="BEFORE">
+			select LANGCERTIFICATION_seq.nextval from dual
 		</selectKey>
-		insert into langcertification(langlicence_code,langlicencename,lang_getdate,institute,certificationtype,language,langpoint,lang_grade)
-		values(#{langlicenceCode},#{langlicencename},#{langGetdate},#{institute},#{certificationtype},#{language},#{langpoint},#{langGrade})
+		insert into LANGCERTIFICATION (langlicence_code, langlicencename, institute,
+		        certificationtype, language, langpoint, lang_grade, lang_getdate)
+		values (#{langLicenceCode},#{langLicenceName}, #{institute}, #{certificationtype}, #{language},
+					 #{langpoint}, #{langGrade}, #{langGetdate})
 	</insert>    
 	
 	<insert id="insertCertificate" parameterType="resumeVo">
-		<selectKey order="BEFORE" keyProperty="lNo" resultType="int">
-		select certificate_seq.nextval from dual
+		<selectKey resultType="int" keyProperty="dvCode" order="BEFORE">
+			select career_seq.nextval from dual
 		</selectKey>
-		insert into certificate(l_no,l_name,l_getdate,l_institution)
-		values(#{lNo},#{lName},#{lGetdate},#{lInstitution})
+		insert into CAREER(dv_code, companyname, chargework, workcheck, 
+		            jobGrade,workcondition, workterm2,workterm)
+		values(#{dvCode}, #{companyname}, #{chargework}, #{workcheck}, #{jobgrade},
+					 #{workcondition}, #{workterm2}, #{workterm})
 	</insert>
 	
 	<insert id="insertCareer" parameterType="resumeVo">
-		<selectKey order="BEFORE" keyProperty="dvCode" resultType="int">
-		select career_seq.nextval from dual
+		<selectKey resultType="int" keyProperty="lNo" order="BEFORE">
+			select certificate_seq.nextval from dual
 		</selectKey>
-		insert into career
-		values(#{dvCode},#{companyname},#{chargework},#{workcheck},#{jobgrade},#{workcondition},#{workterm},#{workterm2})
+		insert into certificate (l_no, l_name, l_getdate, l_institution)
+		values (#{lNo}, #{lName}, #{lGetdate}, #{lInstitution})
 	</insert>
 	
 	<insert id="insertEducation" parameterType="resumeVo">
-		<selectKey order="BEFORE" keyProperty="academicCode" resultType="int">
-		select education_seq.nextval from dual
+		<selectKey resultType="int" keyProperty="academicCode" order="BEFORE">
+			select education_seq.nextval from dual
 		</selectKey>
-		insert into education
-		values( #{academicCode},#{schoolname},#{major},#{degree},#{graduatecheck},#{schoollocal},#{graduatetype},#{graduate2},#{graduate}) 
+		insert into education (academic_code, schoolName, major, degree, graduatecheck,
+		                        schoolLocal, graduatetype, graduate2, graduate)
+		values (#{academicCode},#{schoolname},#{major},#{degree},#{graduateCheck},#{schoollocal},
+					#{graduatetype},#{graduate2},#{graduate})
 	</insert>
 	
 	<insert id="insertHopeWorking" parameterType="resumeVo">
-		<selectKey order="BEFORE" keyProperty="hopeworkCode" resultType="int">
-		select hope_working_seq.nextval from dual
+		<selectKey resultType="int" keyProperty="hopeworkCode" order="BEFORE">
+			select hope_working_seq.nextval from dual
 		</selectKey>
-		insert into hope_working
-		values (#{hopeworkCode},#{hopeworkdate},#{hopepay},#{hopeworkform},#{localCode},#{btypeCode3},#{thirdCode})
+		insert into hope_working (hopework_code, hopeWorkDate, hopePay, hopeWorkForm, 
+                            local_code, btype_code3, third_code)
+		values(#{hopworkCode},#{hopeworkdate},#{hopepay},#{hopeworkform},#{localCode},#{btypeCode3},#{thirdCode})
 		
 	</insert>
-	 -->
+	
 	
 	
 	

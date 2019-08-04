@@ -32,10 +32,10 @@ public interface ResumeService {
 	public List<ResumeVO> selectAll(SearchVO searscVo);
 	
 	public ResumeVO selectBylanglicenceCode(int langlicenceCode);
-	public ResumeVO selectBylicenceCode(int licenceCode);
+	public ResumeVO selectBylicenceCode(int lNo);
 	public ResumeVO selectBydvCode(int dvCode);
 	public ResumeVO selectByacademicCode(int academicCode);
-	public ResumeVO selectBydesiredWorkCode(int desiredWorkCode);
+	public ResumeVO selectBydesiredWorkCode(int hopeworkCode);
 	public ResumeVO selectBymemberCode(int memberCode);
 	public ResumeVO selectBybtype1(int btypeCode1);
 	public ResumeVO selectBybtype2(int btypeCode2);

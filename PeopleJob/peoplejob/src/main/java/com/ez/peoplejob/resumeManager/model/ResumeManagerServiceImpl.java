@@ -26,13 +26,13 @@ public class ResumeManagerServiceImpl implements ResumeManagerService{
 		//hope_working 희망근무 insert 필수 
 		
 		int hopeRe=resumeManagerDao.insertHopeWorkingMN(hopeVo);
-		resumeVo.setDesiredWorkCode(hopeVo.getHopworkCode());
+		resumeVo.setHopeworkCode(hopeVo.getHopeworkCode());
 		
 		int checkRe=0;
 		//certificate 자격증 insert 선택
 		if(ceritificateVo!=null) {
 			checkRe=resumeManagerDao.insertCertificateMN(ceritificateVo);
-			resumeVo.setLicenceCode(ceritificateVo.getlNo());
+			resumeVo.setlNo(ceritificateVo.getlNo());
 			logger.info("서비스에 자격증 checkRe={}",checkRe);
 			checkRe=0;
 		}

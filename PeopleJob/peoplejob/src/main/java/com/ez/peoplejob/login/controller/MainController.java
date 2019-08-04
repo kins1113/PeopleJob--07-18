@@ -84,6 +84,20 @@ public class MainController {
 		
 	}
 	
+	@RequestMapping("/references/news.do")
+	public String news() {
+		logger.info("취업뉴스 화면 보여주기");
+		return "references/news";
+		
+	}
+	
+	@RequestMapping("/references/news_detail.do")
+	public String newsdetail() {
+		logger.info("취업뉴스 상세보기화면 보여주기");
+		return "references/news_detail";
+		
+	}
+	
 
 
 	
