@@ -6,6 +6,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.ez.peoplejob.board.model.BoardVO;
 import com.ez.peoplejob.common.SearchVO;
 import com.ez.peoplejob.post_cmt.model.PostCmtVO;
 
@@ -59,16 +60,32 @@ public class PostServiceImpl implements PostService{
 		return postDao.selectCmt(boardCode2);
 	}
 	@Override
-	public int selectTotalCount(SearchVO searchVo) {
-		return postDao.selectTotalCount(searchVo);
+	public int selectTotalCount(PostVO postVO) {
+		return postDao.selectTotalCount(postVO);
 	}
 	@Override
-	public List<Map<String, Object>> selectAll(SearchVO searchVo) {
-		return postDao.selectAll(searchVo);
+	public List<Map<String, Object>> selectAll(PostVO postVO) {
+		return postDao.selectAll(postVO);
 	}
 	@Override
 	public int updatereport(PostVO postVo) {
 		return postDao.updatereport(postVo);
+	}
+	@Override
+	public PostVO selectOneByBoardCode2(int boardCode2) {
+		return postDao.selectOneByBoardCode2(boardCode2);
+	}
+	@Override
+	public int updatePost(PostVO postVo) {
+		return postDao.updatePost(postVo);
+	}
+	@Override
+	public BoardVO selectBoardByboardCode2(int boardCode2) {
+		return postDao.selectBoardByboardCode2(boardCode2);
+	}
+	@Override
+	public int deletePost(int boardCode2) {
+		return postDao.deletePost(boardCode2);
 	}
 
 	

@@ -39,7 +39,6 @@
  </script>
 </head>
 <body>
-${close }${close }${close }${close }${close }${param.close }${param.close }${param.close }
 <form method="post" action="<c:url value='/board/report.do'/>" id="frmreport" name="frmreport">
 	<h2>게시판 글 신고하기</h2>
 		<input type="hidden" name="close"  value="${param.close}">

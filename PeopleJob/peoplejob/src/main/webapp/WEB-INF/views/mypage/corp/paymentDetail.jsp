@@ -242,7 +242,7 @@ table tr td, table tr th{
 		<tbody>
 			<!--  반복 시작  -->
 			<c:if test="${empty Timelist }">
-				<td colspan="9" align="center">결제하신 상품이 없습니다.</td>
+				<td colspan="11" align="center">결제하신 상품이 없습니다.</td>
 			</c:if>
 			
 			<c:if test="${!empty Timelist }">

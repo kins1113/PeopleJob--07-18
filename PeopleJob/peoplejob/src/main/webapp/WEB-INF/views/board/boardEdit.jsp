@@ -43,36 +43,35 @@ span{
 	<div class="col-lg-12">
 		<div class="card card-default">
 			<div class="card-header card-header-border-bottom">
-				<h2>자유게시판 글 등록</h2>
+				<h2>${boardVo.boardname } 글 수정</h2>
 			</div>
 			<!-- 해더 부분 버튼 그룹 끝 -->
-			<form name="postEidtForm" id="postWriteForm" enctype="multipart/form-data" 
+			<form name="postEditForm" id="postEditForm" enctype="multipart/form-data" 
 					method="post" action="<c:url value='/board/boardEdit.do'/>">
 			<!-- 게시판 정보를 넘기기위한 hidden -->
-			<input type="hidden" name="boardCode" value='${param.boardCode }'>
 			<div class="card-body" id="cardBoduPostList">
 				
 				<div class="form-group" id="divTitle">
 					<label for="boardtitle">게시글 제목</label> 
 					<input type="text" name="boardtitle" id="boardtitle" class="form-control"  placeholder="게시글 제목" class="title" value="${postVo.boardtitle }"> 
-					
+					<input type="hidden" name="boardCode2" value="${postVo.boardCode2 }">
 				</div>
 					<div class="form-group" >
 					<label>게시글 내용</label>
 					
-						<c:import url="/manager/smarteditorTestjsp.do">
+						<c:import url="/main/smarteditorTestjsp.do">
 							<c:param name="name" value="boardcontent"></c:param>
-							<c:param name="value" value="${postVo.content }"></c:param>
-						</c:import>
+							<c:param name="value" value="${postVo.boardcontent }"></c:param>
+						</c:import> 
 					<div id="postInfo">
 				
 					
-				<c:if test="${!empty boardVo.upage }">
+				<c:if test="${boardVo.upage=='Y' }">
 				<c:set var="i" value="1"/>
 				<c:forEach begin="1" end="${boardVo.upnumage }">
 					<div class="form-group" id="divTitle">
 						<label for="boardtitle">업로드할 파일 ${i }</label> 
-						<input type="file" name="boardtitle" id="boardtitle" class="form-control"> 
+						<input type="file" name="boardimage" id="boardimage" class="form-control"> 
 						
 					</div>
 					<c:set var="i" value="${i+1 }" />
@@ -83,7 +82,7 @@ span{
 				<div>
 					<input type="submit" class="btn btn-primary btn-default" value="수정">
 					<input type="reset" class="btn btn-secondary btn-default" value="취소">
-					<a id="" href="<c:url value='/board/boardByCategory.do?boardCode=${param.boardCode }'/>"
+					<a id="" href="<c:url value='/board/boardByCategory.do?boardCode=${postVo.boardCode }'/>"
 						class="mb-1 btn btn-outline-success">목록으로</a>
 				</div>
 

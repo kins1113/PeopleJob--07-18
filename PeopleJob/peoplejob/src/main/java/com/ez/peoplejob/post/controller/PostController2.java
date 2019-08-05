@@ -41,29 +41,32 @@ public class PostController2 {
 	@Autowired private UploadInfoService uploadInfoService;
 	
 	@RequestMapping("/board/boardByCategory.do")
-	public String boardkind(Model model, @RequestParam int boardCode, @ModelAttribute SearchVO searchVo) {
-		logger.info("board 파라미터, boardCode={}",boardCode);
+	public String boardByCategory(Model model, @RequestParam int boardCode, @ModelAttribute PostVO postVo) {
+		logger.info("boardByCategory 목록 파라미터, boardCode={}, postVo={}",boardCode, postVo);
+		
+		List<BoardVO> boardkindlist=boardService.selectByUsage();
+		logger.info("게시판 목록 조회 boardkindlist.size={}",boardkindlist.size());
 		
 		//2
 				//[1] PaginationInfo 객체 생성
 				PaginationInfo pagingInfo=new PaginationInfo();
 				pagingInfo.setBlockSize(WebUtility.BLOCK_SIZE);
 				pagingInfo.setRecordCountPerPage(WebUtility.RECORD_COUNT_PER_PAGE);
-				pagingInfo.setCurrentPage(searchVo.getCurrentPage());
+				pagingInfo.setCurrentPage(postVo.getCurrentPage());
 				
 				//[2] SearchVo에 페이징 관련 변수 셋팅
-				searchVo.setRecordCountPerPage(WebUtility.RECORD_COUNT_PER_PAGE);
-				searchVo.setFirstRecordIndex(pagingInfo.getFirstRecordIndex());
-				searchVo.setBlockSize(WebUtility.BLOCK_SIZE);
-				logger.info("셋팅 후 searchVo={}", searchVo);
+				postVo.setRecordCountPerPage(WebUtility.RECORD_COUNT_PER_PAGE);
+				postVo.setFirstRecordIndex(pagingInfo.getFirstRecordIndex());
+				postVo.setBlockSize(WebUtility.BLOCK_SIZE);
+				logger.info("셋팅 후 postVo={}", postVo);
 				
 				//[3] 조회처리
-				List<Map<String, Object>> list=postService.selectAll(searchVo);
+				List<Map<String, Object>> list=postService.selectAll(postVo);
 				logger.info("게시판 글 목록 결과, list.size={}",list.size());
 				
 				//[4] 전체 레코드 개수 조회
 				int totalRecord=0;
-				totalRecord=postService.selectTotalCount(searchVo);
+				totalRecord=postService.selectTotalCount(postVo);
 				logger.info("전체 레코드 개수 조회 결과, totalRecord={}", totalRecord);
 				
 				//[5] PaginationInfo에 totalRecord 값 셋팅
@@ -77,6 +80,7 @@ public class PostController2 {
 		List<Map<String, Object>> list=postService.selectByboardCode(boardCode);
 		logger.info("게시글 목록 list.size={}",list.size());
 		*/
+		model.addAttribute("boardkindlist",boardkindlist);
 		model.addAttribute("list",list);
 		model.addAttribute("pagingInfo", pagingInfo);
 		
@@ -84,7 +88,7 @@ public class PostController2 {
 	}
 	
 	@RequestMapping("/board/boardList.do")
-	public String boardList(Model model) {
+	public String selectboardList(Model model) {
 		logger.info("게시판 목록 조회");
 		List<BoardVO> list=boardService.selectByUsage();
 		logger.info("게시판 목록 조회 list.size={}",list.size());
@@ -109,10 +113,17 @@ public class PostController2 {
 		logger.info("상세보기 결과 postList.size={}",postList.size());
 		List<Map<String, Object>> list=postService.selectCmt(no);
 		logger.info("댓글 목록 list.size={}",list.size());
+		PostVO postVo=postService.selectOneByBoardCode2(no);
+		logger.info("게시판 detail, postVo={}",postVo);
+		List<UploadInfoVO> uploadList=uploadInfoService.uploadInfoSelectByBoardCode2(no);
+		logger.info("게시판 detail, uploadList.size={}",uploadList.size());
 		
-		
+		model.addAttribute("uploadList",uploadList);
+		model.addAttribute("postVo",postVo);
 		model.addAttribute("list",list);
 		model.addAttribute("postList",postList);
+		
+		
 		return "board/detail";
 	}
 	
@@ -136,7 +147,7 @@ public class PostController2 {
 	}
 	
 	@RequestMapping(value="/board/boardWrite.do", method = RequestMethod.GET)
-	public String boardWrite(@RequestParam(defaultValue = "0") int boardCode, Model model) {
+	public String boardpostWrite(@RequestParam(defaultValue = "0") int boardCode, Model model) {
 		logger.info("게시판 글쓰기 파라미터, boardCode={}",boardCode);
 		BoardVO boardVo=boardService.selectByBoardCode(boardCode);
 		logger.info("boardVo={}",boardVo);
@@ -154,7 +165,7 @@ public class PostController2 {
 	}
 	
 	@RequestMapping(value="/board/boardWrite.do", method = RequestMethod.POST)
-	public String boardWrite_post(@ModelAttribute PostVO postVo, HttpSession session, Model model
+	public String boardpostWrite_post(@ModelAttribute PostVO postVo, HttpSession session, Model model
 			,HttpServletRequest request) {
 		logger.info("게시판 글쓰기 파라미터 , postVO={}",postVo);
 		
@@ -218,13 +229,76 @@ public class PostController2 {
 	@RequestMapping(value="/board/boardEdit.do", method=RequestMethod.GET)
 	public String postCmt(@RequestParam int no, Model model) {
 		logger.info("게시판 글 수정 화면");
-		List<Map<String, Object>> postList=postService.selectByboardCode2(no);
-		logger.info("수정할 글 postList.size={}",postList.size());
+		PostVO postVo=postService.selectOneByBoardCode2(no);
+		logger.info("게시판 글 수정, postVo={}",postVo);
+		BoardVO boardVo=postService.selectBoardByboardCode2(no);
+		logger.info("게시판 글 수정, boardVo={}",boardVo);
 		
 		
-		model.addAttribute("postList",postList);
+		model.addAttribute("boardVo",boardVo);
+		model.addAttribute("postVo",postVo);
 		return "board/boardEdit";
 	}
+	
+	@RequestMapping(value="/board/boardEdit.do", method=RequestMethod.POST)
+	public String postCmt_post(@ModelAttribute PostVO postVo, Model model, HttpServletRequest request) {
+		logger.info("게시판 글 수정 화면 파라미터, postVo={}",postVo);
+		int cnt=postService.updatePost(postVo);
+		logger.info("게시글 update 결과 cnt={}",cnt);
+		
+		List<Map<String,Object>> list=fileUploadUtil.fileMultiUpload("file", request,  FileUploadUtility.POST_UPLOAD);
+		logger.info("list.size={}",list.size());
+		
+		//업로드를 insert하기 위한 객체 생성
+				UploadInfoVO uploadInfoVo=new UploadInfoVO();
+				uploadInfoVo.setBoardCode2(postVo.getBoardCode2());
+				
+				for(Map<String, Object> map:list) {
+					uploadInfoVo.setFileName(map.get("fileName")+"");
+					uploadInfoVo.setFileSize(Integer.parseInt(map.get("fileSize")+""));
+					uploadInfoVo.setOriginalFileName(map.get("originalFileName")+"");
+					
+					logger.info("insert전 uploadInfoVo={}",uploadInfoVo);
+					uploadInfoService.fileUpload(uploadInfoVo);
+				}
+				
+		String msg="", url="/board/detail.do?no="+postVo.getBoardCode2();
+		if(cnt>0) {
+			msg="글이 정상적으로 수정되었습니다.";
+		}else {
+			msg="글이 수정 실패";
+		}
+		
+		model.addAttribute("msg",msg);
+		model.addAttribute("url",url);
+		return "common/message";
+	}
+	
+	@RequestMapping("/board/postDel.do")
+	public String postDel(@RequestParam int no, Model model) {
+		BoardVO boardVo=postService.selectBoardByboardCode2(no);
+		logger.info("게시판 글 삭제 화면 파라미터, no={}",no);
+		logger.info("boardVo={}",boardVo);
+		
+		int cnt=postService.deletePost(no);
+		logger.info("게시판 글 삭제 결과 cnt={}",cnt);
+		
+		
+		String msg="", url="/board/boardByCategory.do?boardCode="+boardVo.getBoardCode1();
+		if(cnt>0) {
+			msg="글이 정상적으로 삭제되었습니다.";
+		}else {
+			msg="글 삭제 실패";
+			url="/board/detail.do?no="+no;
+		}
+		
+		model.addAttribute("msg",msg);
+		model.addAttribute("url",url);
+		
+		return "common/message";
+		
+	}
+	
 	
 	@RequestMapping(value="/board/report.do", method=RequestMethod.GET)
 	public String report(@RequestParam(defaultValue = "0", required = false ) int no) {
@@ -248,7 +322,7 @@ public class PostController2 {
 		
 		String url="/board/report.do?close=close", msg="";		
 		if(cnt>0) {
-			msg="신고가 접수되었습니다.\n관리자에 의해 해당 글은 삭제될 수있습니다.";
+			msg="신고가 접수되었습니다.관리자에 의해 해당 글은 삭제될 수 있습니다.";
 		}else {
 			msg="신고 접수 실패";
 		}
@@ -259,6 +333,4 @@ public class PostController2 {
 	}
 	
 	
-	
-
 }
