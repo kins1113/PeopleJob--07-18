@@ -1,12 +1,17 @@
 package com.ez.peoplejob.post.controller;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.util.List;
 import java.util.Map;
 
-import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.poi.sl.usermodel.ObjectMetaData.Application;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +26,6 @@ import com.ez.peoplejob.board.model.BoardService;
 import com.ez.peoplejob.board.model.BoardVO;
 import com.ez.peoplejob.common.FileUploadUtility;
 import com.ez.peoplejob.common.PaginationInfo;
-import com.ez.peoplejob.common.SearchVO;
 import com.ez.peoplejob.common.WebUtility;
 import com.ez.peoplejob.member.model.MemberService;
 import com.ez.peoplejob.member.model.MemberVO;
@@ -40,9 +44,9 @@ public class PostController2 {
 	@Autowired private FileUploadUtility fileUploadUtil;
 	@Autowired private UploadInfoService uploadInfoService;
 	
-	@RequestMapping("/board/boardByCategory.do")
+	@RequestMapping(value="/board/boardByCategory.do", method = {RequestMethod.POST, RequestMethod.GET})
 	public String boardByCategory(Model model, @RequestParam int boardCode, @ModelAttribute PostVO postVo) {
-		logger.info("boardByCategory 목록 파라미터, boardCode={}, postVo={}",boardCode, postVo);
+logger.info("boardByCategory 목록 파라미터, boardCode={}, postVo={}",boardCode, postVo);
 		
 		List<BoardVO> boardkindlist=boardService.selectByUsage();
 		logger.info("게시판 목록 조회 boardkindlist.size={}",boardkindlist.size());
@@ -55,10 +59,10 @@ public class PostController2 {
 				pagingInfo.setCurrentPage(postVo.getCurrentPage());
 				
 				//[2] SearchVo에 페이징 관련 변수 셋팅
-				postVo.setRecordCountPerPage(WebUtility.RECORD_COUNT_PER_PAGE);
+				postVo.setRecordCountPerPage(pagingInfo.getRecordCountPerPage());
 				postVo.setFirstRecordIndex(pagingInfo.getFirstRecordIndex());
-				postVo.setBlockSize(WebUtility.BLOCK_SIZE);
-				logger.info("셋팅 후 postVo={}", postVo);
+				//postVo.setBlockSize(WebUtility.BLOCK_SIZE);
+				//logger.info("셋팅 후 postVo={}", postVo);
 				
 				//[3] 조회처리
 				List<Map<String, Object>> list=postService.selectAll(postVo);
@@ -330,6 +334,58 @@ public class PostController2 {
 		model.addAttribute("msg", msg);
 		
 		return "common/message";
+	}
+	
+	@RequestMapping("/board/filedownload.do")
+	public void filddownload(@RequestParam int no, @RequestParam String fileName,
+			HttpServletRequest request,HttpServletResponse response) {
+		logger.info("파일 다운로드 파라미터, no={}, fileName={}",no, fileName);
+		
+		
+		
+		@SuppressWarnings("deprecation")
+		String dirPath= request.getRealPath("post_upload");
+		//파일이름을 인코딩한다.(euc-kr => ISO-8859-1)
+		//=> url전송시에는 모든 문자가 ISO-8859-1로 인코딩 되기 때문에
+		//강제 다운로드 창 띄우기
+		try{
+		File myfile = new File(dirPath, fileName);
+		//page의 설정을 바꾸기 위해서 response를 다 날려버림
+		response.reset();
+		//setContentType는 MIME 타입을 지정-octet-stream으로 지정시, 형식을 지정하지 않겠다는 것
+		response.setContentType("application/octet-stream");
+		//브라우저 파일 확장자를 포함하여 모든 확장자의 파일들에 대해 다운로드시 무조건 파일다운로드
+		//대화상자가 뜨도록 하는 헤더속성
+		response.setHeader("Content-Disposition", "attachment;filename="
+		+ new String(fileName.getBytes("euc-kr"),"ISO-8859-1")+"");
+
+		
+
+		//url 전송시 ISO-8859-1 로 인코딩되므로 한글 처리 위해 인코딩 42
+
+		response.setContentLength((int)myfile.length());
+		//바이너리 데이터를 아스키 텍스트 형식으로 변환하기 위한 방법
+		response.setHeader("Content-Treansper-Encoding", "binary");
+		//cache에서 해당 페이지 읽기방지, 로딩시마다 새로고침한 것
+		response.setHeader("Pargma","no-cache");
+		//cache 막기
+		response.setHeader("Expires","-1");
+		//out.clear();
+		//out=pageContext.pushBody();
+		byte[] data = new byte[1024 * 1024];
+		BufferedInputStream bis = new BufferedInputStream(new FileInputStream(myfile));
+		BufferedOutputStream bos = new BufferedOutputStream(response.getOutputStream());
+		int count = 0;
+		while((count = bis.read(data))!= -1){
+
+		bos.write(data);
+
+		}
+		if(bis !=null) bis.close();
+		if(bos != null) bos.close();
+		}catch(Exception e){
+		e.printStackTrace();
+		}
 	}
 	
 	
