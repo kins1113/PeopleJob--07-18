@@ -2,117 +2,125 @@
     pageEncoding="UTF-8"%>
 <%@include file="../main/inc/top.jsp"%>
 
+
 <style type="text/css">
-.wraper{
-	height: 400px;
+.row{
 	margin-top: 100px;
-	min-height: 629px;
-}
-
-.text-center {
-  text-align: center;
-}
-
-
-.pagination {
-  display: inline-block;
-  padding-left: 0;
-  margin: 20px 0;
-  border-radius: 4px;
-}
-.pagination > li {
-  display: inline;
-}
-.pagination > li > a,
-.pagination > li > span {
-  position: relative;
-  float: left;
-  padding: 6px 12px;
-  margin-left: -1px;
-  line-height: 1.42857143;
-  color: #F7E7AD;
-  text-decoration: none;
-  background-color: #fff;
-  border: 1px solid #ddd;
-}
-.pagination > li:first-child > a,
-.pagination > li:first-child > span {
-  margin-left: 0;
-  border-top-left-radius: 4px;
-  border-bottom-left-radius: 4px;
-}
-.pagination > li:last-child > a,
-.pagination > li:last-child > span {
-  border-top-right-radius: 4px;
-  border-bottom-right-radius: 4px;
-}
-
-.pagination-lg > li > a,
-.pagination-lg > li > span {
-  padding: 10px 16px;
-  font-size: 18px;
-}
-.pagination-lg > li:first-child > a,
-.pagination-lg > li:first-child > span {
-  border-top-left-radius: 6px;
-  border-bottom-left-radius: 6px;
-}
-.pagination-lg > li:last-child > a,
-.pagination-lg > li:last-child > span {
-  border-top-right-radius: 6px;
-  border-bottom-right-radius: 6px;
-}
-.pagination-sm > li > a,
-.pagination-sm > li > span {
-  padding: 5px 10px;
-  font-size: 12px;
-}
-.pagination-sm > li:first-child > a,
-.pagination-sm > li:first-child > span {
-  border-top-left-radius: 3px;
-  border-bottom-left-radius: 3px;
-}
-.pagination-sm > li:last-child > a,
-.pagination-sm > li:last-child > span {
-  border-top-right-radius: 3px;
-  border-bottom-right-radius: 3px;
+	margin-bottom: 100px;
+	width: 120%;
 }
 
 </style>
+<script type="text/javascript">
 
-<script type="text/javascript" src="<c:url value='/resources/main/js/jquery-3.4.1.min.js'/>"></script>
- <script type="text/javascript">
- $(function(){
-	 
- });
- 
- </script>
- 
- 
- <div class="wraper">
-          <div class="container">
-          
-          <div class="row">
-            <table class="table table-striped" style="text-align: center; border:1px solid #dddddd">
-              <thead>
-                <tr>
-                  <th style="background-color:#eeeeee; text-align: center;">번호</th>
-                  <th style="background-color:#eeeeee; text-align: center;">제목</th>
-                  <th style="background-color:#eeeeee; text-align: center;">작성자</th>
-                  <th style="background-color:#eeeeee; text-align: center;">등록일</th>
-                  <th style="background-color:#eeeeee; text-align: center;">조회수</th>
-                </tr>
-              </thead>
-              <tbody>
-             
-				
-              </tbody>
-            </table>
-          </div>
-    </div>
-    
-    
-
+function report(no){
 	
+	 window.open('<c:url value="/board/report.do?no='+no+'"/>',
+			 'reportView',
+			 "'status=no, height=500, width=400, left='300px', top='300px'");
+}
+</script>
+  <!-- Page Content -->
+  <div class="container">
+
+    <div class="row" >
+
+      <!-- Post Content Column -->
+      <div class="col-lg-8" style="margin:0 auto;">
+	<c:forEach var="map" items="${ postList}">
+        <!-- Title -->
+        <h1 class="mt-4">${map['BOARDTITLE'] }</h1> <div></div>
+		<span>조회수 : ${map['BOARDHITS'] } </span>
+        <!-- Author -->
+        <p class="lead">
+             작성자 : ${map['MEMBERNAME'] }
+        </p>
+        <hr>
+        <!-- Date/Time -->
+        <p>등록일 :  ${map['BOARDREGDATE2'] }</p>
+        <hr>
+        <!-- Preview Image -->
+        <img class="img-fluid rounded" src="http://placehold.it/900x300" alt="">
+        <hr>
+ 		<p class="lead">${map['BOARDCONTENT'] } </p>
+        <hr>
+        <!-- Post Content -->
+        <div>
+        <c:if test="${sessionScope.memberName==map['MEMBERNAME'] }">
+<button value="수정하기" onclick="location.href='<c:url value="/board/boardEdit.do?no=${map['BOARD_CODE2'] }"/>'" class="btn btn-primary">수정하기</button>
+   </c:if>
+<button style="float:left;" onclick="report(${param.no})" class="btn btn-primary">신고하기</button>
+       
+<button style="float:right;" onclick="location.href='<c:url value="/board/boardByCategory.do?boardCode=${map['BOARD_CODE']}" />' " class="btn btn-primary">목록으로</button>
 </div>
+</c:forEach>
+<br>
+        <!-- Comments Form -->
+        <div class="card my-4">
+          <h5 class="card-header">댓글을 남겨주세요:</h5>
+          <div class="card-body">
+            <form name="frmCmt" action="<c:url value='/post/postCmt.do'/>" method="post">
+            	<input type="hidden" name="boardCode2" value="${param.no}">
+              <div class="form-group">
+                <textarea class="form-control" rows="3" name="content" ></textarea>
+              </div>
+              <button type="submit" class="btn btn-primary" style="float:right;">등록</button>
+            </form>
+          </div>
+        </div>
+
+        <!-- Single Comment -->
+        <c:if test="${!empty list }">
+        <c:forEach var="map" items="${list}">
+        <div class="media mb-4">
+          <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
+          <div class="media-body">
+            <h5 class="mt-0">${map['MEMBERNAME'] } | ${map['BOARD_DATE'] }</h5> 
+            ${map['CONTENT'] } 
+          </div>
+        </div>
+	<hr>
+	</c:forEach>
+	</c:if>
+        <!-- Comment with nested comments -->
+       <!--  <div class="media mb-4">
+          <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
+          <div class="media-body">
+            <h5 class="mt-0">Commenter Name</h5>
+            Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
+
+            <div class="media mt-4">
+              <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
+              <div class="media-body">
+                <h5 class="mt-0">Commenter Name</h5>
+                Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
+              </div>
+            </div>
+
+            <div class="media mt-4">
+              <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
+              <div class="media-body">
+                <h5 class="mt-0">Commenter Name</h5>
+                Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
+              </div>
+            </div>
+
+
+          </div>
+        </div> -->
+
+
+     
+	
+     
+
+    </div>
+    <!-- /.row -->
+
+  </div>
+  <!-- /.container -->
+  <!-- Bootstrap core JavaScript -->
+  <script src="vendor/jquery/jquery.min.js"></script>
+  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
 <%@include file="../main/inc/bottom.jsp"%>

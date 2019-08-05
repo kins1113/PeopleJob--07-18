@@ -118,8 +118,8 @@ public class ResumeDAOMybatis implements ResumeDAO {
 	}
 
 	@Override
-	public ResumeVO selectBylicenceCode(int licenceCode) {
-		ResumeVO vo=sqlsession.selectOne(namespace+"selectBylicenceCode", licenceCode );
+	public ResumeVO selectBylicenceCode(int lNo) {
+		ResumeVO vo=sqlsession.selectOne(namespace+"selectBylicenceCode", lNo );
 		return vo;
 	}
 
@@ -136,8 +136,8 @@ public class ResumeDAOMybatis implements ResumeDAO {
 	}
 
 	@Override
-	public ResumeVO selectBydesiredWorkCode(int desiredWorkCode) {
-		ResumeVO vo=sqlsession.selectOne(namespace+"selectBydesiredWorkCode", desiredWorkCode );
+	public ResumeVO selectBydesiredWorkCode(int	hopeworkCode) {
+		ResumeVO vo=sqlsession.selectOne(namespace+"selectBydesiredWorkCode", hopeworkCode );
 		return vo;
 	}
 

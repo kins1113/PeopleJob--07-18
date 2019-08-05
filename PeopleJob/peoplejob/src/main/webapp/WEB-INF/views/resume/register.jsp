@@ -74,7 +74,9 @@ input[type="submit"] {
 </style>
 
 <script type="text/javascript">
+
 $(document).ready(function (){
+
 	
 	//자격증을 가져오는
 	$("#certification").click(function(){
@@ -104,6 +106,7 @@ $(document).ready(function (){
 	$("#hopeworkbt").click(function(){
 	gethopeworkform();
 	})
+												
 	//1차 직종 클릭하면 2차직종 가져오기 
 	$("#selectFirst").change(function(){
 		var firstCode=$(this).find("option:selected").val();
@@ -453,6 +456,7 @@ function getMajor(){
 		type:"post",
 		success:function(res){
 				settingMajor(res);
+
 		},
 		error:function(xhr, status, error){
 			alert(status+":"+error);
@@ -468,16 +472,22 @@ function settingMajor(res){
 			var chEl=$("<option value='0'>전공</option>")
 			var opEl=$("<option value='"+item.academicCode+"'></option>");
 			opEl.append(item.major);
+			test2.append(item.major);
 			$("#selectMajor").html(chEl);
 			$("#selectMajor").append(opEl); 
+			
 		}else{
 			var opEl=$("<option value='"+item.academicCode+"'></option>");
 			opEl.append(item.major);
+			
 			$("#selectMajor").append(opEl); 
+			
 		}
 	})
 	
 }
+
+
 
 
 
@@ -632,23 +642,15 @@ function gethopeworkform(){
 //희망 근무조건 뿌리기
 function settinghopeworkform(res){
 	$.each(res,function(idx,item){
-		if(idx==0){
-			var chEl=$("<option value='0'>희망근무조건</option>")
-			var opEl=$("<option value='"+item.hopeworkCode+"'></option>");
-			opEl.append(item.hopeworkform);
-			$("#hopeworkform").html(chEl);
-			$("#hopeworkform").append(opEl); 
-		}else{
+	
 			var opEl=$("<option value='"+item.hopeworkCode+"'></option>");
 			opEl.append(item.hopeworkform);
 			$("#hopeworkform").append(opEl); 
-		}
+		
 	})
 	
 }
  
-
-
 
 </script>
 <script type="text/javascript">
@@ -677,12 +679,14 @@ $(document).ready(function (){
 
 </script>
 
+
 <article>
 <div id="registerdiv">
 <div class="divForm">
 <form name="frm1" method="post" 
 	action="<c:url value='/resume/register.do'/>" enctype="multipart/form-data">
 <fieldset>
+
 	<legend style="font-weight: bold">이력서등록</legend>
 	<section id="registerds">
 	<div>        
@@ -719,12 +723,13 @@ $(document).ready(function (){
  </script>
 
 </div>
-        <input type="hidden" class="form-control"  name="picture" id="picture"  >
+
     </div>
     <div>        
         <label for="membername">이름</label>
         <input type="text" class="form-control"  name="membername" id="membername" value="${vo.membername }" style="ime-mode:active">
     </div>
+    <input type="hidden" id="picture" name="picture" />
     <div>        
         <label for="birth">생년월일</label>
         <input type="text" class="form-control"  name="birth" id="birth" value="${vo.birth}" style="ime-mode:active">
@@ -816,17 +821,8 @@ $(document).ready(function (){
         </select>   
        </div>
        <div>
-       <table>
-       <tr>
-			<th>전공</th>
-		<td colspan="1">
-		<select class="custom-select my-1 FST" name="academicCode" id="selectMajor">
-		<option>전공</option>
-		</select>
-		</td>
-		</tr>
-		</table>
-           
+       <label>전공</label>
+           <input type="text" class="form-control" placeholder="전공을 입력하세요" name="major" id="major">
        
        
        </div>
@@ -873,33 +869,15 @@ $(document).ready(function (){
         </select>
 	</div>
 	<div>
-		<table>
-       <tr>
-			<th>직종</th>
-		<td colspan="1">
-		<select class="custom-select my-1 FST" name="dvCode" id="selectcareer">
-		<option>직종</option>
-		</select>
-		</td>
-		</tr>
-		</table>
+	<label for="chargework">직종</label>
+	<input type="text" class="form-control"  placeholder="직종을 입력" name="chargework" >
+		
         
     </div>
     	
     <div>
-     <table>
-       <tr>
-			<th>직급</th>
-		<td colspan="1">
-		<select class="custom-select my-1 FST" name="dvCode" id="selectBydvCode">
-		<option>직급</option>
-		</select>
-		</td>
-		</tr>
-		</table>
-		
-		
-
+    <label for="jobgrade">직급</label>
+    <input type="text"  class="form-control"  placeholder="직급을 입력"  name="jobgrade">
    </div>
    </section>
 
@@ -912,16 +890,7 @@ $(document).ready(function (){
       
    <input class="form-control" name="certificationtype" id="certificationtype" value="자격증/면허증">
          <label for="lName">자격증명</label>
-         <table>
-       <tr>
-			<th>자격증명</th>
-		<td colspan="1">
-		<select class="custom-select my-1 FST" name="lNo" id="selectLname">
-		<option>자격증명</option>
-		</select> 
-		</td>
-		</tr>
-		</table>
+         <input type="text" class="form-control" placeholder="자격증명을 입력하세요" name="lName" >
     <div>    
         <label for="lInstitution">발행처/기관</label>
         <input type="text" class="form-control"  name="lInstitution" placeholder="발행처/기관을 입력하세요" id="lInstitution" style="ime-mode:active">
@@ -948,16 +917,8 @@ $(document).ready(function (){
         <input type="text" class="form-control" placeholder="발행처/기관을 입력하세요" name="institute" id="institute" style="ime-mode:active">
      </div>
      <div>
-     <table>
-       <tr>
-			<th>시험종류</th>
-		<td colspan="1">
-		<select class="custom-select my-1 FST" name="langlicenceCode" id="selectlanglicencename">
-		<option>시험종류</option>
-		</select> 
-		</td>
-		</tr>
-		</table>
+     <label for="institute">시험종류</label>
+     	<input type="text" class="form-control" placeholder="시험종류를 입력하세요" name="langlicencename" id="langlicencename">
      </div> 
      <div>
         <label for="langpoint">점수</label>
@@ -1002,17 +963,8 @@ $(document).ready(function (){
 	 <div  id="hopework">
       <h3>희망근무 선택</h3>
       <div>
-       <table>
-       <tr>
-			<th>근무형태</th>
-		<td colspan="1">
-		<select class="custom-select my-1 FST" name="hopeworkCode" id="hopeworkform">
-		<option>근무형태</option>
-		</select> 
-		</td>
-		</tr>
-		</table>
-    	<!-- <label for="hopeworkform">근무형태</label>
+       
+    	<label for="hopeworkform">근무형태</label>
     	<select class="form-control" name="hopeworkform" id="hopeworkform" >
         	<option value="근무형태 선택">근무형태 선택</option>
         	<option value="정규직">정규직</option>
@@ -1028,7 +980,7 @@ $(document).ready(function (){
         	<option value="해외취업">해외취업</option>
         	<option value="위촉직">위촉직</option>
         	<option value="프리랜서">프리랜서</option>
-        </select>-->
+        </select>
        </div> 
        <div>
     	<label for="hopepay">희망연봉</label>

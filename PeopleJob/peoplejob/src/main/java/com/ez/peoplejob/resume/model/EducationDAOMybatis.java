@@ -16,6 +16,10 @@ public class EducationDAOMybatis implements EducationDAO {
 	public List<EducationVO> selectMajor() {
 		return sqlsession.selectList(namespace+"selectMajor");
 	}
+	@Override
+	public List<EducationVO> selectMajor2(int academicCode) {
+		return sqlsession.selectList(namespace+"selectMajor",academicCode);
+	}
 	
 
 }

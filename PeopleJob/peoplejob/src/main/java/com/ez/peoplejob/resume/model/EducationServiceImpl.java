@@ -19,6 +19,11 @@ public class EducationServiceImpl implements EducationService{
 		return educationDao.selectMajor();
 	}
 
+	@Override
+	public List<EducationVO> selectMajor2(int academicCode) {
+		return educationDao.selectMajor2(academicCode);
+	}
+
 	
 	
 

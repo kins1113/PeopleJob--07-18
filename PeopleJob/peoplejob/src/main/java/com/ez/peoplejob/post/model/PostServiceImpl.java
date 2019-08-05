@@ -6,6 +6,9 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.ez.peoplejob.common.SearchVO;
+import com.ez.peoplejob.post_cmt.model.PostCmtVO;
+
 @Service
 public class PostServiceImpl implements PostService{
 
@@ -32,7 +35,7 @@ public class PostServiceImpl implements PostService{
 		return postDao.insertPosToManager(postVo);
 	}
 	@Override
-	public List<PostVO> selectByboardCode(int boardCode) {
+	public List<Map<String, Object>> selectByboardCode(int boardCode) {
 		return postDao.selectByboardCode(boardCode);
 	}
 	@Override
@@ -40,9 +43,33 @@ public class PostServiceImpl implements PostService{
 		return postDao.postcountUpdate(boardCode2);
 	}
 	@Override
-	public PostVO selectByboardCode2(int boardCode2) {
+	public List<Map<String, Object>> selectByboardCode2(int boardCode2) {
 		return postDao.selectByboardCode2(boardCode2);
 	}
-	
+	@Override
+	public int insertPost(PostVO postVo) {
+		return postDao.insertPost(postVo);
+	}
+	@Override
+	public int insertcmt(PostCmtVO postcmtVo) {
+		return postDao.insertcmt(postcmtVo);
+	}
+	@Override
+	public List<Map<String, Object>> selectCmt(int boardCode2) {
+		return postDao.selectCmt(boardCode2);
+	}
+	@Override
+	public int selectTotalCount(SearchVO searchVo) {
+		return postDao.selectTotalCount(searchVo);
+	}
+	@Override
+	public List<Map<String, Object>> selectAll(SearchVO searchVo) {
+		return postDao.selectAll(searchVo);
+	}
+	@Override
+	public int updatereport(PostVO postVo) {
+		return postDao.updatereport(postVo);
+	}
+
 	
 }

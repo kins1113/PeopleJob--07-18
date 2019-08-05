@@ -111,10 +111,11 @@ $(function(){
 				<img alt="회원이미지" src="<c:url value='/resources/main/images/people.PNG'/>" width="100%">
 				${sessionScope.memberName }<span>님</span>
 			</div>
-				<div class="p-l-10 p-rl-0-sr991 p-t-70" style="padding-top: 29px;float:left;">						
+				<div class="p-l-10 p-rl-0-sr991 p-t-70" style="padding-top: 29px;float:left;    width: 217px;
+    margin-left: -22px;">						
 						<!-- Category -->
 						<div class="p-b-60">
-							<div class="how2 how2-cl4 flex-s-c">
+							<div class="how2 how2-cl4 flex-s-c" style="margin-left: 12px;  width: 200px;">
 								<h3 class="f1-m-2 cl3 tab01-title">
 									마이페이지
 								</h3>
@@ -214,7 +215,7 @@ $(function(){
 						
 							<div class="dashboard">
             <ul class="activity_list"> 
-                   <li class="img">
+                   <%-- <li class="img">
                    <c:if test="${sessionScope.author_code==1 }">
                         <a href="<c:url value='/apply/apply_list.do'/>" onclick="" onmousedown="try{n_trackEvent('myhome', 'dashboard' , 'resume-manage', '');}catch(e){};">
                      </c:if>
@@ -291,8 +292,11 @@ $(function(){
                             </c:if>
                            </div>
                         </a>
-                    </li> 
-                                   
+                    </li>  --%>
+                                  
+                        <li> <div style="width: 25%;height:150px; border:1px solig lightgray;">
+                        	<img src="<c:url value='/resources/main/images/start1.png'/>">
+                        <a>이력서</a></div> </li>
                                    
                             
                             </ul>

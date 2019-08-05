@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ez.peoplejob.common.PaginationInfo;
 import com.ez.peoplejob.manager.member.model.MemberServiceAdmin;
+import com.ez.peoplejob.member.model.CompanyService;
 import com.ez.peoplejob.member.model.MemberVO;
 
 @Controller
@@ -24,6 +25,8 @@ public class MemberManagerController {
 	private Logger logger=LoggerFactory.getLogger(MemberManagerController.class);
 	@Autowired
 	private MemberServiceAdmin memberserviceAdmin;
+	@Autowired
+	private CompanyService companyService;
 	
 	@RequestMapping("/manager/member/memberList.do")
 	public String manager_memberList(@ModelAttribute MemberVO memberVo,
@@ -128,5 +131,41 @@ public class MemberManagerController {
 		
 		return re;
 	}
-
+	
+	@RequestMapping("/manager/member/getMemeberCompany.do")
+	@ResponseBody
+	public String[] getMemeberCompany(@RequestParam(defaultValue = "3")int type) {
+		logger.info("ajax - 기업회원 아이디만 가져오는 곳 type={}",type);
+		return companyService.selectMemeberByAuthority(type);
+	}
+	
+	@RequestMapping("/manager/member/getMemberSelectId.do")
+	@ResponseBody
+	public MemberVO getMemberSelectId(@RequestParam String id) {
+		logger.info("ajax - 기업회원 아이디만 가져오는 곳");
+		return companyService.selectMemberById(id);
+	}
+	
+	@RequestMapping("/manager/member/getMemberSearchManager.do")
+	@ResponseBody
+	public List<Map<String, Object>> getMemberSearch(@RequestParam String searchCon,
+						@RequestParam String searchKey){
+		logger.info("ajax - 검색으로 기업 회원 가져오기 파라미터 searchCon={}, searchKey={}",searchCon, searchKey);
+		Map<String, String> map =new HashMap<String, String>();
+		map.put("searchCon", searchCon);
+		map.put("searchKey", searchKey);
+		List<Map<String, Object>>list=companyService.selectMemberSearch(map);
+		logger.info("기업회원 가져온 결과 list.size={}",list.size());
+		return list;
+	}
+	
+	@RequestMapping("/manager/member/getMemberSelectMCode.do")
+	@ResponseBody
+	public MemberVO getMemberSelectMcode(@RequestParam int mCode) {
+		logger.info("ajax - 기업회원 아이디만 가져오는 곳 파라미터 mCode={}",mCode);
+		return companyService.selectMemberByMcode(mCode);
+	}
+	
+	
+	
 }
