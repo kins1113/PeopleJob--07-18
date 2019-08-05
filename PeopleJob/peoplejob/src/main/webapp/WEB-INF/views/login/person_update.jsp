@@ -12,6 +12,13 @@
 <script type="text/javascript">
 $(function() {
 	
+	if($('input[name=gender]').val()=='남'){
+		$('input[type=radio]:eq(0)').prop("checked", true);
+	}else{
+		$('input[type=radio]:eq(1)').prop("checked", true);
+		
+	}
+	
 	$('form[name=updateU]').submit(function(){
 	/* 	$('.form-control infobox').each(function(){
 			if($(this).val().length<1){
@@ -112,7 +119,9 @@ $(function() {
 											<tr style="font-size:1.3em">
 												<td>성별</td>
 												<td>&nbsp;&nbsp;</td>
-												<td rowspan="3"><input type="radio" name="membergender" id="selectgender" value="남" checked>남</td>
+												<td rowspan="3">
+												<input type="hidden" value="${memberVo.membergender }" name="gender">
+												<input type="radio" name="membergender" id="selectgender" value="남" checked>남</td>
 												<td>&nbsp;&nbsp;</td>
 												<td rowspan="3"><input type="radio" name="membergender" id="selectgender" value="여">여</td>
 											</tr>

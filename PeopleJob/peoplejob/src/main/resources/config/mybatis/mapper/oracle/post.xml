@@ -12,7 +12,7 @@
 			select * from post_all
 			<if test="searchKeyword!=null and searchKeyword!='' 
 						and searchCondition!=null and searchCondition!=''">
-				<if test='searchCondition=="boardTitle,boardcontent"'>
+				<if test='searchCondition=="boardtitle,boardcontent"'>
 					where boardtitle like '%' || #{searchKeyword} || '%'
 					or boardcontent like '%' || #{searchKeyword} || '%'
 				</if>
@@ -133,7 +133,7 @@
 		where board_code2=#{boardCode2}
 	</select>
 	
-		<select id="selectAll" parameterType="searchVo" resultType="map">
+		<select id="selectAll" parameterType="postVo" resultType="map">
 		select *
 		from
 		(
@@ -144,22 +144,24 @@
                 (select count(*) as cnt from post_cmt where post_cmt.board_code2=p.board_code2) as commentcnt 
 		        from post p left join member m 
 		        on p.member_Code=m.member_Code	
+		        where board_code=#{boardCode}
 				<if test="searchKeyword != null and searchKeyword != ''">
-					where ${searchCondition} like '%' || #{searchKeyword} || '%'
+					and ${searchCondition} like '%' || #{searchKeyword} || '%'
 					and report_ck='N' 
 					and deletecheck='N'
 				</if>		
 				order by p.board_Code2 desc
 		    ) A
 		)
-		<![CDATA[ where RNUM>#{firstRecordIndex}  
+		<![CDATA[ where RNUM>=#{firstRecordIndex}  
 		and RNUM<=#{firstRecordIndex} + #{recordCountPerPage}]]>
 	</select>
 	
-	 <select id="selectTotalCount" parameterType="searchVo" resultType="int">
+	 <select id="selectTotalCount" parameterType="postVo" resultType="int">
 	 select count(*) from post
 	 <if test="searchKeyword != null and searchKeyword !=''">
 	 	where ${searchCondition} like '%' || #{searchKeyword} || '%'
+	 	and board_code=#{boardCode}
 	 </if>
 	 </select>
 	 
@@ -168,6 +170,24 @@
 	set report_ck='Y', report_user=#{reportUser}, report_day=sysdate, report_coment=#{reportComent}
 	where board_Code2=#{boardCode2}
 	 </update>
+	 
+	 <select id="selectOneByBoardCode2" parameterType="int" resultType="postVo">
+	 	select * from post where board_code2=#{boardCode2}
+	 </select>
+	 
+	 <update id="updatePost" parameterType="postVo">
+	 	update post
+		set boardtitle=#{boardtitle}, boardcontent=#{boardcontent}, boardregdate2=sysdate
+		where board_code2=#{boardCode2}
+	 </update>
+	 
+	 <select id="selectBoardByboardCode2" resultType="boardVo" parameterType="int">
+	 select * from board where board_code1=(select board_code from post where board_Code2=#{boardCode2})
+	 </select>
+	 
+	 <delete id="deletePost" parameterType="int">
+	 delete from post where board_code2=#{boardCode2}
+	 </delete>
 	 
 </mapper>
 

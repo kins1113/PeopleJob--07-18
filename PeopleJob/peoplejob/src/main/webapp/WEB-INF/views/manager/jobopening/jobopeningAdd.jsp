@@ -47,8 +47,9 @@
 		});
 		
 		$("#jobopeningAdd").click(function(){
-			alert("등록버튼"+$("form[name=jobopeningForm]").attr("action"));
+			$("form[name=jobopeningForm]").attr("action","<c:url value='/manager/jobopening/jobopeningAdd.do'/>")
 			//$("form[name=jobopeningForm]").attr("action","<c:url value='/manager/jobopening/jobopeningAdd.do'/>")
+
 			$("form[name=jobopeningForm]").submit();
 		});
 		
@@ -75,10 +76,12 @@
 			        sclTop();
 			    });
 			}
+		
 		//기업 회원 정보 가져오기
 		 $.ajax({
 			url:"<c:url value='/manager/member/getMemeberCompany.do'/>",
 			type:"post",
+			data:"type=3",
 			success:function(res){
 				$.each(res,function(idx,item){
 					var opEl=$("<option value='"+item+"'></option>");
@@ -210,6 +213,7 @@
 </script>
 	
 	
+<form method="post" name="jobopeningForm" enctype="multipart/form-data"><!-- enctype="multipart/form-data" -->
 <div class="content-wrapper">
           <div class="content">		
 			<div class="row">
@@ -218,7 +222,10 @@
 		<div class="card card-default">
 <div class="card-body">
 	
+<<<<<<< HEAD
+=======
 <form method="post" name="jobopeningForm" action="<c:url value='/manager/jobopening/jobopeningAdd.do'/>" enctype="multipart/form-data" ><!-- enctype="multipart/form-data" -->
+>>>>>>> branch 'master' of https://github.com/kins1113/PeopleJob--07-18.git
 <input type="text" name="companyCode" >
 	<table id="memberT">
 	<tbody>
@@ -588,7 +595,11 @@
 	</tr>
 	</tbody>
 </table>
+<<<<<<< HEAD
+
+=======
 </form>
+>>>>>>> branch 'master' of https://github.com/kins1113/PeopleJob--07-18.git
 			
 		</div>
 	</div>
@@ -629,7 +640,11 @@
 		</tr>	
 		<tr>
 			<td colspan="2">
+<<<<<<< HEAD
+			<button id="jobopeningAdd" class="mb-1 btn btn-outline-primary">
+=======
 			<button type="button" id="jobopeningAdd" class="mb-1 btn btn-outline-primary">
+>>>>>>> branch 'master' of https://github.com/kins1113/PeopleJob--07-18.git
 			<i class=" mdi mdi-star-outline mr-1"></i>등록</button>
 			</td>		
 		</tr>
@@ -647,6 +662,5 @@
 		</div>
 	</div>
 </div>
-
 
 <%@include file="/WEB-INF/views/manager/inc/adminBottom.jsp"%>

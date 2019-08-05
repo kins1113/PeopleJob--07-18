@@ -16,6 +16,7 @@
     <script type="text/javascript">
     $(document).ready(function($){
 		$('.workdate1').datepicker({
+			minDate:new Date(),
 			dateFormat:"yy-mm-dd",
 			changeYear:true,
 			dayNamesMin:["일","월","화","수","목","금","토"],

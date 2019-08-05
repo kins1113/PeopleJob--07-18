@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.ez.peoplejob.board.model.BoardVO;
 import com.ez.peoplejob.common.SearchVO;
 import com.ez.peoplejob.post_cmt.model.PostCmtVO;
 
@@ -65,16 +66,32 @@ public class PostDAOMybatis implements PostDAO{
 		return sqlsession.selectList(namespace+"selectCmt",boardCode2);
 	}
 	@Override
-	public int selectTotalCount(SearchVO searchVo) {
-		return sqlsession.selectOne(namespace+"selectTotalCount",searchVo);
+	public int selectTotalCount(PostVO postVo) {
+		return sqlsession.selectOne(namespace+"selectTotalCount",postVo);
 	}
 	@Override
-	public List<Map<String, Object>> selectAll(SearchVO searchVo) {
-		return sqlsession.selectList(namespace+"selectAll",searchVo);
+	public List<Map<String, Object>> selectAll(PostVO postVO) {
+		return sqlsession.selectList(namespace+"selectAll",postVO);
 	}
 	@Override
 	public int updatereport(PostVO postVo) {
 		return sqlsession.update(namespace+"updatereport",postVo);
+	}
+	@Override
+	public PostVO selectOneByBoardCode2(int boardCode2) {
+		return sqlsession.selectOne(namespace+"selectOneByBoardCode2",boardCode2);
+	}
+	@Override
+	public int updatePost(PostVO postVo) {
+		return sqlsession.update(namespace+"updatePost",postVo);
+	}
+	@Override
+	public BoardVO selectBoardByboardCode2(int boardCode2) {
+		return sqlsession.selectOne(namespace+"selectBoardByboardCode2",boardCode2);
+	}
+	@Override
+	public int deletePost(int boardCode2) {
+		return sqlsession.delete(namespace+"deletePost",boardCode2);
 	}
 
 }

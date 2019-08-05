@@ -51,8 +51,6 @@ hr {MARGIN: 0;}
 	$(document).ready(function (){
 		//검색 버튼 클릭했을때~!
 		$("#jobopeningSearch").click(function(){
-			alert("검색이 되랏~~!!");
-			
 			$("form[name=jobopeningList]").attr("action","<c:url value='/manager/jobopening/jobopeningList.do'/>");
 			$("form[name=jobopeningList]").submit();
 		})
@@ -264,7 +262,7 @@ hr {MARGIN: 0;}
 	//페이지 처리 함수
 	function pageFunc(curPage){
 		$("input[name=currentPage]").val(curPage);
-		$("form[name=jobopeningList]").attr("action","<c:url value='/manager/member/jobopeningList.do?authorityCk=member'/>");
+		$("form[name=jobopeningList]").attr("action","<c:url value='/manager/jobopening/jobopeningList.do?authorityCk=member'/>");
 		$("form[name=jobopeningList]").submit();
 	}
 	

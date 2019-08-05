@@ -14,11 +14,32 @@
 <script type="text/javascript">
 
 function report(no){
-	
+	if(${sessionScope.memberid==null}){
+		alert('로그인 후 신고 하실 수 있습니다.');
+	}else{
 	 window.open('<c:url value="/board/report.do?no='+no+'"/>',
 			 'reportView',
-			 "'status=no, height=500, width=400, left='300px', top='300px'");
+			 "'status=no, height=500, width=700, left='300px', top='300px'");
+		
+	}
+	
 }
+
+function del(){
+	if(confirm('해당 글을 삭제하시겠습니까?')){
+		location.href='<c:url value="/board/postDel.do?no=${param.no}"/>';
+	}
+}
+
+$(function(){
+	$('input[type=submit]').click(function(){
+		if(${sessionScope.memberid==null}){
+			alert('로그인 후 글을 작성하실 수 있습니다.');
+			event.preventDefault();
+			return false;
+		}
+	});
+});
 </script>
   <!-- Page Content -->
   <div class="container">
@@ -35,19 +56,37 @@ function report(no){
         <p class="lead">
              작성자 : ${map['MEMBERNAME'] }
         </p>
+        <c:if test="${fn:length(uploadList)!=0 }">
+        <p class="lead">
+	        <c:forEach var="uploadVo" items="${ uploadList}">
+	             첨부파일 : <a href="<c:url value='/board/filedownload.do'/>">${uploadVo.originalfilename }  (${uploadVo.filesize })</a>
+	        </c:forEach>
+        </p>
+        </c:if>
         <hr>
         <!-- Date/Time -->
-        <p>등록일 :  ${map['BOARDREGDATE2'] }</p>
+        <p>등록일 :  
+        <fmt:formatDate value="${map['BOARDREGDATE2'] }" pattern="yyyy년  MM월 dd일 HH:mm:ss"/>
+        </p>
         <hr>
+        </c:forEach>
+       
         <!-- Preview Image -->
-        <img class="img-fluid rounded" src="http://placehold.it/900x300" alt="">
+        <!--img src=http://placehold.it/900x300  -->
+        <c:forEach var="uploadVo" items="${uploadList }">
+        <img class="img-fluid rounded" src="<c:url value='/post_upload/${uploadVo.fileName }'/>" alt="">
+        </c:forEach>
         <hr>
- 		<p class="lead">${map['BOARDCONTENT'] } </p>
+         <c:forEach var="map" items="${ postList}">
+ 		<p class="lead">
+ 		${postVo.boardcontent} 
+ 		</p>
         <hr>
         <!-- Post Content -->
         <div>
         <c:if test="${sessionScope.memberName==map['MEMBERNAME'] }">
 <button value="수정하기" onclick="location.href='<c:url value="/board/boardEdit.do?no=${map['BOARD_CODE2'] }"/>'" class="btn btn-primary">수정하기</button>
+<button value="삭제하기" onclick="del()" class="btn btn-primary">삭제하기</button>
    </c:if>
 <button style="float:left;" onclick="report(${param.no})" class="btn btn-primary">신고하기</button>
        

@@ -43,7 +43,7 @@ span{
 	<div class="col-lg-12">
 		<div class="card card-default">
 			<div class="card-header card-header-border-bottom">
-				<h2> 글 등록</h2>
+				<h2>${boardVo.boardname } 글 등록</h2>
 			</div>
 			<!-- 해더 부분 버튼 그룹 끝 -->
 			<form name="postWriteForm" id="postWriteForm" enctype="multipart/form-data" 
@@ -59,7 +59,7 @@ span{
 				</div>
 					<div class="form-group" >
 					<label>게시글 내용</label>
-						<c:import url="/manager/smarteditorTestjsp.do">
+						<c:import url="/main/smarteditorTestjsp.do">
 							<c:param name="name" value="boardcontent"></c:param>
 						</c:import>
 					<div id="postInfo">
@@ -70,7 +70,7 @@ span{
 				<c:forEach begin="1" end="${boardVo.upnumage }">
 					<div class="form-group" id="divTitle">
 						<label for="boardtitle">업로드할 파일 ${i }</label> 
-						<input type="file" name="boardfile" id="boardfile" class="form-control"> 
+						<input type="file" name="file" id="file" class="form-control"> 
 						
 					</div>
 					<c:set var="i" value="${i+1 }" />
