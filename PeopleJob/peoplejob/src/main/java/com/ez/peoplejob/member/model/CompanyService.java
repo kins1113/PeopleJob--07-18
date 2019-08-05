@@ -5,7 +5,7 @@ import java.util.Map;
 
 public interface CompanyService {
 	CompanyVO selectcompany(int companyCode);
-	public String[] selectMemeberByAuthority();
+	public String[] selectMemeberByAuthority(int type);
 	public MemberVO selectMemberById(String id);
 	public List<Map<String, Object>> selectMemberSearch(Map<String, String>map);
 	public MemberVO selectMemberByMcode(int Mcode);

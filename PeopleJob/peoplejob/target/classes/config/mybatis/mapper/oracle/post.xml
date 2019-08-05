@@ -153,7 +153,7 @@
 				order by p.board_Code2 desc
 		    ) A
 		)
-		<![CDATA[ where RNUM>=#{firstRecordIndex}  
+		<![CDATA[ where RNUM>#{firstRecordIndex}  
 		and RNUM<=#{firstRecordIndex} + #{recordCountPerPage}]]>
 	</select>
 	

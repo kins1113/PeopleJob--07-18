@@ -57,9 +57,10 @@ $(function(){
              작성자 : ${map['MEMBERNAME'] }
         </p>
         <c:if test="${fn:length(uploadList)!=0 }">
-        <p class="lead">
+        <p>
 	        <c:forEach var="uploadVo" items="${ uploadList}">
-	             첨부파일 : <a href="<c:url value='/board/filedownload.do'/>">${uploadVo.originalfilename }  (${uploadVo.filesize })</a>
+	             첨부파일 : <a href="<c:url value='/board/filedownload.do?no=${uploadVo.uploadCode }&fileName=${uploadVo.fileName }'/>">${uploadVo.originalFileName }  (${uploadVo.fileSize/1000 }KB)</a>
+	       	다운로드 수 : ${uploadVo.downcount } <br>
 	        </c:forEach>
         </p>
         </c:if>

@@ -9,30 +9,10 @@ public class CustextVO {
 	private String cuscontent;
 	private Timestamp cusRegdate;
 	private int memberCode;
-	private int answercontent;
-	private String answerRegdate;
+	private String answercontent;
+	private Timestamp answerRegdate;
 	private int adminCode;
-	
-	
-	public int getAnswercontent() {
-		return answercontent;
-	}
-	public void setAnswercontent(int answercontent) {
-		this.answercontent = answercontent;
-	}
-	public String getAnswerRegdate() {
-		return answerRegdate;
-	}
-	public void setAnswerRegdate(String answerRegdate) {
-		this.answerRegdate = answerRegdate;
-	}
-	public int getAdminCode() {
-		return adminCode;
-	}
-	public void setAdminCode(int adminCode) {
-		this.adminCode = adminCode;
-	}
-	public int getCustextCode()	{
+	public int getCustextCode() {
 		return custextCode;
 	}
 	public void setCustextCode(int custextCode) {
@@ -44,10 +24,10 @@ public class CustextVO {
 	public void setCustextcategory(String custextcategory) {
 		this.custextcategory = custextcategory;
 	}
-	public String getcustitle() {
+	public String getCustitle() {
 		return custitle;
 	}
-	public void setcustitle(String custitle) {
+	public void setCustitle(String custitle) {
 		this.custitle = custitle;
 	}
 	public String getCuscontent() {
@@ -68,14 +48,30 @@ public class CustextVO {
 	public void setMemberCode(int memberCode) {
 		this.memberCode = memberCode;
 	}
+	public String getAnswercontent() {
+		return answercontent;
+	}
+	public void setAnswercontent(String answercontent) {
+		this.answercontent = answercontent;
+	}
+	public Timestamp getAnswerRegdate() {
+		return answerRegdate;
+	}
+	public void setAnswerRegdate(Timestamp answerRegdate) {
+		this.answerRegdate = answerRegdate;
+	}
+	public int getAdminCode() {
+		return adminCode;
+	}
+	public void setAdminCode(int adminCode) {
+		this.adminCode = adminCode;
+	}
 	@Override
 	public String toString() {
 		return "CustextVO [custextCode=" + custextCode + ", custextcategory=" + custextcategory + ", custitle="
-				+ custitle + ", cuscontent=" + cuscontent + ", cusRegdate=" + cusRegdate + ", memberCode="
-				+ memberCode + ", answercontent=" + answercontent + ", answerRegdate=" + answerRegdate + ", adminCode="
-				+ adminCode + "]";
+				+ custitle + ", cuscontent=" + cuscontent + ", cusRegdate=" + cusRegdate + ", memberCode=" + memberCode
+				+ ", answercontent=" + answercontent + ", answerRegdate=" + answerRegdate + ", adminCode=" + adminCode
+				+ "]";
 	}
-	
-	
 	
 }
