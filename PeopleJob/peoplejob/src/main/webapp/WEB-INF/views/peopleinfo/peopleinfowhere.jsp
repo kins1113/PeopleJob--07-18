@@ -4,9 +4,30 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>    
   
-<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>		
 <script type="text/javascript">
 $(document).ready(function (){
+	// 1. #data 공간에서 keyup이라는 이벤트가 발생했을 때
+
+	$("#age").click(function(){
+
+		// 2. #out 공간에 #data의 내용이 출력된다.
+			var str = "";
+			$("#age").each(function(){  // .each()는 forEach를 뜻한다.
+
+				if($(this).is(":checked"))  // ":checked"를 이용하여 체크가 되어있는지 아닌지 확인한다.
+
+					str += $(this).val() + " ";  // 체크된 객체를 str에 저장한다.
+
+			});
+
+			$("#selectedId").text(str);  // #multiPrint에 체크된 원소를 출력한다.
+
+		
+
+	});
+
+
+	
 		//지역정보를 가져오기 - 시도
 		getLocation();
 
@@ -48,15 +69,12 @@ $(document).ready(function (){
 			getBtype3(bytpeCode3);
 		});
 
-$("#career-years").prop("checked", false);
 
-$("#graduatecheck").prop("checked", false);
-$("#basic-search-location").prop("checked", false);
 
      
      
 });
- // 사용자 ID를 갖고 온다.
+/*  // 사용자 ID를 갖고 온다.
     var careeryears = $("#career-years").val();
     var age = $("#age").val();
     var male01 = $("#male01").val();
@@ -81,7 +99,7 @@ $("#basic-search-location").prop("checked", false);
         error:function(jqXHR, textStatus, errorThrown){
             alert("에러 발생~~");
         }
-    });  
+    });   */
 //지역정보를 가져오는 메서드 
 function getLocation(){
 	$.ajax({
@@ -349,7 +367,7 @@ function settingBtype3(res){
 		}
 	})
 }
-
+/* 
 function f_generationJob(){
     var keyList = jobData.getHeader();
     var keyList2 = searchJobData.getHeader();
@@ -389,7 +407,7 @@ function f_generationJob(){
     }
 
     $(targetId).html(regionString);
-  }
+  } */
 </script>
 <style type="text/css">
 .divSearch {
@@ -406,7 +424,7 @@ input.btn.btn-primary {
 	<!-- 페이징 처리에도 사용 -->
    <h2>인재정보 찾기</h2>
 <div class="divSearch"> 
-		<div style="border: 1px solid gold;
+		<div style="border: 1px solid #63b752;
     float: left;
     width: 9%;
     margin: 10px;
@@ -423,7 +441,7 @@ input.btn.btn-primary {
                 <li><label class="frm_chkbox01" for="career-years06"><input type="checkbox" id="career-years" name="term" title="15년 이상" value="15,"><span>15년 <em class="ico_over">이상</em></span></label></li>
             </ul>
             </div>
-        <div class="box_detail_panel" style="border: 1px solid gold;
+        <div class="box_detail_panel" style="border: 1px solid #63b752;
     float: left;
     width:  9%;
     margin: 10px;
@@ -445,7 +463,7 @@ input.btn.btn-primary {
                 <li><label class="frm_chkbox01" for="age-interval06"><input type="checkbox" id="age" name="age" value="51,"><span>51세 <em class="ico_over">이상</em></span></label></li>
             </ul>
             </div>
-        <div class="box_detail_panel" style="border: 1px solid gold; float: left; width:  11%; margin: 10px; height:414px;">
+        <div class="box_detail_panel" style="border: 1px solid #63b752; float: left; width:  11%; margin: 10px; height:414px;">
         
         <strong>최종학력</strong>
             <ul class="wrap_list_value">
@@ -460,7 +478,7 @@ input.btn.btn-primary {
                             </ul>
             
         </div>
-    <div id="hopelocal" style="border: 1px solid gold; float: left; width: 19%; margin: 10px; height:414px;">
+    <div id="hopelocal" style="border: 1px solid #63b752; float: left; width: 19%; margin: 10px; height:414px;">
        <table>
       <tr>
 				<th>희망 근무 지역</th>
@@ -478,7 +496,7 @@ input.btn.btn-primary {
         </div>
        
      
-        <div id="jobtype" style="border: 1px solid gold;
+        <div id="jobtype" style="border: 1px solid #63b752;
     float: left;
     width: 42%;
     margin: 10px;
@@ -520,9 +538,7 @@ input.btn.btn-primary {
     </div>
      <!--  <div class="choice_wrap new mt20 mb10"> -->
   <div class="choice_inner">
-    <p class="selected" id="selectedId">
-      <strong>선택직종 :</strong> 선택하신 직종이 없습니다.
-    </p> 
+  인재정보 조건 : <span id="selected"></span><br/>
   </div><!-- end choice_inner -->
 <!-- </div> -->
 	<div>
