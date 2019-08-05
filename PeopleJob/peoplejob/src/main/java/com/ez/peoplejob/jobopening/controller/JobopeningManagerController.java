@@ -83,7 +83,14 @@ public class JobopeningManagerController {
 		
 		List<Map<String, Object>>list = jobManagerService.selectJobopeningManager(map);
 		logger.info("체용공고 조회 결과 list.size={}",list.size());
+		
+		//totalCount
+		int totalCount=jobManagerService.getTotalCountJobopeningManager(map);
+		logger.info("totalCount={}"+totalCount);
+		pagingInfo.setTotalRecord(totalCount);
+		
 		model.addAttribute("list", list);
+		model.addAttribute("pagingInfo", pagingInfo);
 		
 		return "manager/jobopening/jobopeningList";
 	}

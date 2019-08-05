@@ -309,6 +309,7 @@ button {
                            <li><a href="">스크랩현황</a></li>
                         </c:if>
                         
+								<li><a href="<c:url value='/custext/mycustext.do'/>">문의내역</a></li>
 								<c:if test="${sessionScope.author_code==2 || sessionScope.author_code==3 }"> 
 									<li><a href="<c:url value='/mypage/corp/paymentDetail.do'/>">결제/이용 내역</a></li>
 								</c:if>

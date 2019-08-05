@@ -21,14 +21,22 @@
 	td.td1 { width: 470px;}
 	tdMemberImg{border: 1px solid silver;}
 	#divSide{padding: 10px;}
-	#divSide select{width: 158px;}
+	#divSide tr:nth-of-type(1) select{width: 124px;float: left;}
+	#divSide tr:nth-of-type(3) select{    width: 70px;   float: left;   padding: 0;   margin: 0;   height: 29px;}
 	#divSide td{text-align: center;}
 	h3{color: black;  font-size: 1.5em;  margin: 5px 5px 5px 30px; font-weight: bold;}
-	.floating { width:315px; position:absolute;top: 9%; left: 76%;-webkit-transition: 0.5s ease; transition: 0.5s ease; }
+	.floating { width:395px; position:absolute;top: 10%; left: 76%;-webkit-transition: 0.5s ease; transition: 0.5s ease; }
 	.floating.on {position:fixed; top:11%; z-index: 999}
 	.necessary{    color: #4c84ff;  font-size: 0.7em;}
 	.necessaryInfo{color: #4c84ff; font-size: 1.2em;}
 	.info{font-weight: bold;color: black;text-align: left;padding-left: 20px;}
+	#infoTable th {text-align: center;    border: 1.5px solid;    padding: 4px;    background: aliceblue;    color: #000000a6;}
+	#infoTable td {border-bottom: 1px dashed #204bab91;}
+	#infoTable tr:last-of-type td {border-bottom: none;}
+	input#searchKey {   width: 50%;   float: left; margin-top: 4px;height: 32px;}
+	select#searchCon {    float: left;    margin: 0 5px 0 0;    height: 32px;}
+	button#btSideSearch {    padding: 0;   margin-top: 7px;}
+	#resumeAdd,#resumeList {width: 100%;    height: 30px;    padding: 0;}
 </style>
 
 
@@ -41,6 +49,51 @@ $(function(){
 		$("form[name=jobopeningForm]").attr("action","<c:url value='/manager/resume/resumeAdd.do'/>")
 		$("form[name=jobopeningForm]").submit();
 	});
+	//사이드에 멤버 정보를 가져오는 ajax 
+	//["user1234","231123","kins1113","kk1","k1231","ki423413".....]
+	$.ajax({
+		url:"<c:url value='/manager/member/getMemeberCompany.do'/>",
+		type:"post",
+		data:"type=1",
+		success:function(res){
+			$.each(res, function(idx,item){
+				var opEl=$("<option value='"+item+"'></option>");
+				opEl.html(item);
+				$("#selectMemberId").append(opEl);
+			})
+		},
+		error:function(htx,status,error){
+			alert(status+":"+error);
+		}
+	});
+	//아이디 선택 시 기본 정보가져오기
+	/* {"searchCondition":"","searchKeyword":"","searchUseYn":"","currentPage":1,"blockSize":0,
+		"firstRecordIndex":1,"lastRecordIndex":1,"recordCountPerPage":0,"memberCode":34,
+		"memberid":"kins1113","regdate":1562756746000,"membername":"김옥환","zipcode":"557-587",
+		"address":"송파구 ","addressdetail":"서초동 123-3","withdrawaldate":null,"pwd":"9138366",
+		"birth":"1992-11-13","membergender":"남","email":"kins1113@naver.com","tel":"01045029213",
+		"authorityCode":1,"companyCode":0} */
+	$("#selectMemberId").change(function(){
+		var id=$(this).val();
+		alert("아이디 선택~! id="+id);
+		$.ajax({
+			url:"<c:url value='/manager/member/getMemberSelectId.do'/>",
+			type:"post",
+			data:"id="+id,
+			success:function(res){
+				$("#membername").val(res.membername);
+				$("#birth").val(res.birth);
+				$("#email").val(res.email);
+				$("#tel").val(res.tel);
+				$("#address").val(res.address);
+				$("#addressdetail").val(res.addressdetail);
+			},
+			error:function(htx,status,error){
+				alert(status+":"+error);
+			}
+		});
+	});
+	
 	//1차 직종 가져오기 /manager/occupantion/firstList.do
 	selectFirst();
 	selectFirst1();
@@ -539,14 +592,41 @@ $(function(){
 		<tr>
 			<th>불러오기</th>
 			<td>
-				<select class="custom-select my-1 FST" >
+				<select class="custom-select my-1 FST" id="selectMemberId">
 					<option>선택하세요</option>
 				</select>
 			</td>		
 		</tr>
 		<tr>
+			<th>검색</th>
+		</tr>
+		<tr>
 			<td colspan="2">
-				<button id="resumeAdd">등록</button>
+				<select class="custom-select my-1" id="searchCon">
+					<option value="choice">선택</option>
+					<option value="company">회사명</option>
+					<option value="id">아이디</option>
+				</select>
+				<input type="text" class="form-control" 
+				id="searchKey" placeholder="검색어를 입력하세요 ">
+				<button type="button" id="btSideSearch" class="mb-1 btn btn-square btn-outline-mdi-cloud-search-outline">
+			<i class=" mdi mdi-cloud-search-outline"></i>검색</button>
+			</td>
+		</tr>
+		<tr>
+			<table id="infoTable">
+			</table>			
+		</tr>	
+		<tr>
+			<td colspan="2">
+			<button id="resumeAdd" class="mb-1 btn btn-outline-primary">
+			<i class=" mdi mdi-star-outline mr-1"></i>등록</button>
+			</td>		
+		</tr>
+		<tr>
+			<td colspan="2">
+			<button type="button" id="resumeList" class="mb-1 btn btn-outline-primary">
+			<i class=" mdi mdi-star-outline mr-1"></i>목록으로</button>
 			</td>		
 		</tr>
 	</table>

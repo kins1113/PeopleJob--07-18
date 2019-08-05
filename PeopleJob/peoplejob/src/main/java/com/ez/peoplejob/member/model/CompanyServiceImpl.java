@@ -17,9 +17,9 @@ public class CompanyServiceImpl implements CompanyService{
 	}
 
 	@Override
-	public String[] selectMemeberByAuthority() {
+	public String[] selectMemeberByAuthority(int type) {
 		Map<String, Integer>map=new HashMap<String, Integer>();
-		map.put("type", 3);
+		map.put("type", type);
 		List<MemberVO> list=companyDao.selectMemeberByAuthority(map);
 
 		String[] idArr=new String[list.size()];
