@@ -25,6 +25,12 @@ h2 {
 </script>
 <div id="peopleinfo">
 <div class="divForm">
+  <c:if test="${!empty param.term||!empty param.age||!empty param.graduatetype||!empty param.sido||!empty param.gugun
+  ||!empty param.btypename1||!empty param.btypename2||!empty param.btypename3||!empty param.firstname||!empty param.secondname||!empty param.thirdname}">
+			<p>
+				검색결과 : ${pagingInfo.totalRecord}건 검색되었습니다.
+			</p>
+		</c:if>
 	<form name="frmSearch" method="post" 
    		action='<c:url value="/peopleinfo/peopleinfolist.do"/>'>
    		<!-- 현재 페이지 hidden에 넣기 -->  
@@ -93,8 +99,8 @@ h2 {
             <th scope="col" class="name" >이름</th>
             <th scope="col" class="contents">이력서 요약</th>
             <th scope="col" class="update" id="date_type">등록일</th>
-            <td id="peoplelist" >${vo1.membername}<br>(${vo1.membergender}|${vo15.age})</td>
-            <td id="peoplelist" >경력${vo15.term}&nbsp;${vo.resumeTitle}<br>
+            <td id="peoplelist" >${vo1.membername}<br>(${vo1.membergender}|${vo.age})</td>
+            <td id="peoplelist" >경력${vo.term}&nbsp;${vo.resumeTitle}<br>
             ${vo.schoolname}|${vo.hopepay}|${vo.sido}</td>
             <td id="peoplelist" >${vo.resumeRegdate}</td>
             

@@ -128,4 +128,9 @@ public class PeopleInfoServiceImpl implements PeopleInfoService {
 	public List<Map<String, Object>> selectBtype3(int btypeCode2) {
 		return peopleinfoDao.selectBtype3(btypeCode2);
 	}
+
+	@Override
+	public List<ResumeVO> selectResumeView(int resumeCode) {
+		return peopleinfoDao.selectResumeView(resumeCode);
+	}
 }

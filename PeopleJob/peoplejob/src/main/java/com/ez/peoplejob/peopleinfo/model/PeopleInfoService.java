@@ -32,4 +32,5 @@ public interface PeopleInfoService {
 	List<Map<String, Object>> selectBtype1();
 	List<Map<String, Object>> selectBtype2(int btypeCode1);
 	List<Map<String, Object>> selectBtype3(int btypeCode2);
+	List<ResumeVO> selectResumeView(int resumeCode);
 }

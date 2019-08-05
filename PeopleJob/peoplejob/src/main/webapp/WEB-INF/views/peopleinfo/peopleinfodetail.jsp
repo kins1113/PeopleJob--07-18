@@ -15,8 +15,8 @@
 					<img src="<c:url value='/peoplejob_upload/${vo.picture }'/>" 
 						alt="이력서이미지" width="50px" height="50px"></span>
 				</td>
- 				<td> <span>${vo.resumeTitle}</span>&nbsp; ${fn:substring(vo1.birth,0,3) } | ${vo1.membergender} | ${vo4.workcheck }</td>
- 				<td><span class="glyphicon glyphicon-user" aria-hidden="true">회사이름</span> <span>${cvo.companyname}</span></td>
+ 				<td> <span>${vo.resumeTitle}</span>&nbsp; ${fn:substring(vo1.birth,0,3) } | ${vo1.membergender} | ${vo.workcheck }</td>
+ 				<td><span class="glyphicon glyphicon-user" aria-hidden="true">이름</span> <span>${vo1.membername}</span></td>
  				</tr>
  				<tr>
  				<td><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span> <span>${vo1.email}</span></td>
@@ -38,10 +38,10 @@
 				<th>경력사항</th>
 				<th>희망연봉/근무형태</th>
 				<th>희망근무지</th>
- 				<td><span class="glyphicon glyphicon-education" aria-hidden="true"></span><br><span>${vo3.graduatetype }</span></td>
- 				<td><span class="glyphicon glyphicon-education" aria-hidden="true"></span><br><span>${vo15.term }</span></td>
- 				<td><span class="glyphicon glyphicon-education" aria-hidden="true">급여/</span><br> <span>${vo2.hopepay }/${vo2.hopeworkform }</span></td> 
- 				<td><span class="glyphicon glyphicon-education" aria-hidden="true">근무형태</span> <br><span>${vo7.sido}</span></td>
+ 				<td><span class="glyphicon glyphicon-education" aria-hidden="true"></span><br><span>${vo.graduatetype }</span></td>
+ 				<td><span class="glyphicon glyphicon-education" aria-hidden="true"></span><br><span>${vo.term }</span></td>
+ 				<td><span class="glyphicon glyphicon-education" aria-hidden="true">급여/</span><br> <span>${vo.hopepay }/${vo.hopeworkform }</span></td> 
+ 				<td><span class="glyphicon glyphicon-education" aria-hidden="true">근무형태</span> <br><span>${vo.sido}</span></td>
 	 			</tr>
 			</table>
 		</div>
@@ -61,17 +61,17 @@
 		<label for="hopework">희망조건</label> &nbsp;
 		<table class="table">
 			<tr>
- 				<td><span class="glyphicon glyphicon-star" aria-hidden="true">근무형태</span> <span>${vo2.hopeworkform}</span></td>
- 				<td><span class="glyphicon glyphicon-star" aria-hidden="true">희망연봉</span> <span>${vo2.hopepay}</span></td>
- 				<td><span class="glyphicon glyphicon-star" aria-hidden="true">(희망근무지역)시도</span> <span>${vo7.sido}</span></td>
- 				<td><span class="glyphicon glyphicon-star" aria-hidden="true">(희망근무지역)구군</span> <span>${vo8.gugun}</span></td>
- 				<td><span class="glyphicon glyphicon-star" aria-hidden="true">(희망근무지역)업종1차</span> <span>${vo9.btypename1}</span></td>
- 				<td><span class="glyphicon glyphicon-star" aria-hidden="true">(희망근무지역)업종2차</span> <span>${vo10.btypename2}</span></td>
- 				<td><span class="glyphicon glyphicon-star" aria-hidden="true">(희망근무지역)업종3차</span> <span>${vo11.btypename3}</span></td>
- 				<td><span class="glyphicon glyphicon-star" aria-hidden="true">직종1차</span> <span>${vo12.firstname}</span></td>
- 				<td><span class="glyphicon glyphicon-star" aria-hidden="true">직종2차</span> <span>${vo13.secondname}</span></td>
- 				<td><span class="glyphicon glyphicon-star" aria-hidden="true">직종3차</span> <span>${vo14.thirdname}</span></td>
- 				<td><span class="glyphicon glyphicon-star" aria-hidden="true">근무일시</span> <span>${vo2.hopeworkdate}</span></td>
+ 				<td><span class="glyphicon glyphicon-star" aria-hidden="true">근무형태</span> <span>${vo.hopeworkform}</span></td>
+ 				<td><span class="glyphicon glyphicon-star" aria-hidden="true">희망연봉</span> <span>${vo.hopepay}</span></td>
+ 				<td><span class="glyphicon glyphicon-star" aria-hidden="true">(희망근무지역)시도</span> <span>${vo.sido}</span></td>
+ 				<td><span class="glyphicon glyphicon-star" aria-hidden="true">(희망근무지역)구군</span> <span>${vo.gugun}</span></td>
+ 				<td><span class="glyphicon glyphicon-star" aria-hidden="true">(희망근무지역)업종1차</span> <span>${vo.btypename1}</span></td>
+ 				<td><span class="glyphicon glyphicon-star" aria-hidden="true">(희망근무지역)업종2차</span> <span>${vo.btypename2}</span></td>
+ 				<td><span class="glyphicon glyphicon-star" aria-hidden="true">(희망근무지역)업종3차</span> <span>${vo.btypename3}</span></td>
+ 				<td><span class="glyphicon glyphicon-star" aria-hidden="true">직종1차</span> <span>${vo.firstname}</span></td>
+ 				<td><span class="glyphicon glyphicon-star" aria-hidden="true">직종2차</span> <span>${vo.secondname}</span></td>
+ 				<td><span class="glyphicon glyphicon-star" aria-hidden="true">직종3차</span> <span>${vo.thirdname}</span></td>
+ 				<td><span class="glyphicon glyphicon-star" aria-hidden="true">근무일시</span> <span>${vo.hopeworkdate}</span></td>
 			</tr>
 		</table>
 		 <!-- 일반회원일경우 -->
@@ -93,12 +93,13 @@
                 
 			<table class="table">
 				<tr>
- 				<td><span class="glyphicon glyphicon-briefcase" aria-hidden="true">경력구분</span> <span>${vo4.workcheck}</span></td>
- 				<td><span class="glyphicon glyphicon-briefcase" aria-hidden="true">회사명</span> <span>${vo4.companyname}</span></td>
- 				<td><span class="glyphicon glyphicon-briefcase" aria-hidden="true">근무기간</span> <span>${vo4.workterm}</span></td>
- 				<td><span class="glyphicon glyphicon-briefcase" aria-hidden="true"></span> <span>${vo4.workcondition}</span></td>
- 				<td><span class="glyphicon glyphicon-briefcase" aria-hidden="true">직종</span> <span>${vo4.chargework}</span></td>
- 				<td><span class="glyphicon glyphicon-briefcase" aria-hidden="true">직급</span> <span>${vo4.jobgrade}</span></td>
+ 				<td><span class="glyphicon glyphicon-briefcase" aria-hidden="true">경력구분</span> <span>${vo.workcheck}</span></td>
+ 				<td><span class="glyphicon glyphicon-briefcase" aria-hidden="true">회사명</span> <span>${vo.companyname}</span></td>
+ 				<td><span class="glyphicon glyphicon-briefcase" aria-hidden="true">근무기간</span> <span>${vo.workterm}</span></td>
+ 				<td> <span>${vo.workterm2}</span></td>
+ 				<td><span class="glyphicon glyphicon-briefcase" aria-hidden="true"></span> <span>${vo.workcondition}</span></td>
+ 				<td><span class="glyphicon glyphicon-briefcase" aria-hidden="true">직종</span> <span>${vo.chargework}</span></td>
+ 				<td><span class="glyphicon glyphicon-briefcase" aria-hidden="true">직급</span> <span>${vo.jobgrade}</span></td>
 			</tr>
 			</table>
                 </c:if>
@@ -116,28 +117,59 @@
 			<label for="certificationtype">자격증/어학/수상 내역</label> &nbsp;
 			<table class="table">
 				<tr>
- 				<td><span class="glyphicon glyphicon-credit-card" aria-hidden="true"></span> <span>${vo5.certificationtype}</span></td>
-				<c:if test="${vo5.certificationtype=='자격증/면허증'}">            	
+				
+				
+				
+				<c:if test="${vo.certificationtype=='자격증/면허증'}">            	
             		 <label for="lName">자격증명</label>
- 				<td><span class="glyphicon glyphicon-credit-card" aria-hidden="true"></span> <span>${vo6.lName}</span></td>
+ 				<td><span class="glyphicon glyphicon-credit-card" aria-hidden="true"></span> <span>${vo.lName}</span></td>
  				<label for="lInstitution">발행처/기관</label>
- 				<td><span class="glyphicon glyphicon-credit-card" aria-hidden="true"></span> <span>${vo6.lInstitution}</span></td>
+ 				<td><span class="glyphicon glyphicon-credit-card" aria-hidden="true"></span> <span>${vo.lInstitution}</span></td>
  				 <label for="lGetdate">취득일</label>
- 				<td><span class="glyphicon glyphicon-credit-card" aria-hidden="true"></span> <span>${vo6.lGetdate}</span></td>
+ 				<td><span class="glyphicon glyphicon-credit-card" aria-hidden="true"></span> <span>${vo.lGetdate}</span></td>
             	</c:if>
-				<c:if test="${vo5.certificationtype=='어학시험'}">            	
+				<c:if test="${vo.certificationtype=='어학시험'}">            	
             		 <label for="language">언어</label>
- 				<td><span class="glyphicon glyphicon-credit-card" aria-hidden="true"></span> <span>${vo5.language}</span></td>
+ 				<td><span class="glyphicon glyphicon-credit-card" aria-hidden="true"></span> <span>${vo.language}</span></td>
  				<label for="institution">발행처/기관</label>
- 				<td><span class="glyphicon glyphicon-credit-card" aria-hidden="true"></span> <span>${vo5.institution}</span></td>
+ 				<td><span class="glyphicon glyphicon-credit-card" aria-hidden="true"></span> <span>${vo.institute}</span></td>
  				 <label for="langlicencename">시험종류</label>
- 				<td><span class="glyphicon glyphicon-credit-card" aria-hidden="true"></span> <span>${vo5.langlicencename}</span></td>
+ 				<td><span class="glyphicon glyphicon-credit-card" aria-hidden="true"></span> <span>${vo.langlicencename}</span></td>
  				 <label for="langpoint">시험점수</label>
- 				<td><span class="glyphicon glyphicon-credit-card" aria-hidden="true"></span> <span>${vo5.langpoint}</span></td>
+ 				<td><span class="glyphicon glyphicon-credit-card" aria-hidden="true"></span> <span>${vo.langpoint}</span></td>
  				 <label for="langGrade">시험급수</label>
- 				<td><span class="glyphicon glyphicon-credit-card" aria-hidden="true"></span> <span>${vo5.langGrade}</span></td>
+ 				<td><span class="glyphicon glyphicon-credit-card" aria-hidden="true"></span> <span>${vo.langGrade}</span></td>
  				<label for="langGetdate">취득일</label>
- 				<td><span class="glyphicon glyphicon-credit-card" aria-hidden="true"></span> <span>${vo5.langGetdate}</span></td>
+ 				<td><span class="glyphicon glyphicon-credit-card" aria-hidden="true"></span> <span>${vo.langGetdate}</span></td>
+            	</c:if>
+				<c:if test="${vo.certificationtype=='자격증/면허증,어학시험'}">
+ 				<td><span class="glyphicon glyphicon-credit-card" aria-hidden="true"></span> <span><c:set var="graduatetype" value="자격증/면허증,어학시험"/>
+				${fn:substring(graduatetype,0,6) }
+				</span></td>
+				           	
+            		 <label for="lName">자격증명</label>
+ 				<td><span class="glyphicon glyphicon-credit-card" aria-hidden="true"></span> <span>${vo.lName}</span></td>
+ 				<label for="lInstitution">발행처/기관</label>
+ 				<td><span class="glyphicon glyphicon-credit-card" aria-hidden="true"></span> <span>${vo.lInstitution}</span></td>
+ 				 <label for="lGetdate">취득일</label>
+ 				<td><span class="glyphicon glyphicon-credit-card" aria-hidden="true"></span> <span>${vo.lGetdate}</span></td>
+            	</c:if>
+				<c:if test="${vo.certificationtype=='자격증/면허증,어학시험'}">
+ 				<td><span class="glyphicon glyphicon-credit-card" aria-hidden="true"></span> <span><c:set var="graduatetype" value="자격증/면허증,어학시험"/>
+				${fn:substring(graduatetype,8,11) }
+				</span></td>
+            		 <label for="language">언어</label>
+ 				<td><span class="glyphicon glyphicon-credit-card" aria-hidden="true"></span> <span>${vo.language}</span></td>
+ 				<label for="institution">발행처/기관</label>
+ 				<td><span class="glyphicon glyphicon-credit-card" aria-hidden="true"></span> <span>${vo.institute}</span></td>
+ 				 <label for="langlicencename">시험종류</label>
+ 				<td><span class="glyphicon glyphicon-credit-card" aria-hidden="true"></span> <span>${vo.langlicencename}</span></td>
+ 				 <label for="langpoint">시험점수</label>
+ 				<td><span class="glyphicon glyphicon-credit-card" aria-hidden="true"></span> <span>${vo.langpoint}</span></td>
+ 				 <label for="langGrade">시험급수</label>
+ 				<td><span class="glyphicon glyphicon-credit-card" aria-hidden="true"></span> <span>${vo.langGrade}</span></td>
+ 				<label for="langGetdate">취득일</label>
+ 				<td><span class="glyphicon glyphicon-credit-card" aria-hidden="true"></span> <span>${vo.langGetdate}</span></td>
             	</c:if>
 				</tr>
 			</table>

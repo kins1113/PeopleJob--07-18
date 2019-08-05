@@ -10,10 +10,7 @@
 		    select A.*, rownum as RNUM 
 		    from
 		    (
-		        select r.resume_code,t.thirdname,s.secondname,f.firstname,b3.btypename3,b2.btypename2,b1.btypename1,l.sido,e.graduatetype,NVL(TRUNC(MONTHS_BETWEEN(SYSDATE, TO_DATE(SUBSTR(m.birth, 1, 4), 'YYYY'))/12), 0) AS AGE,trunc(months_between(c.workterm2,c.workterm)/12,0) as "term" from resume r,career c,member m,education e,hope_working h,location l,btype1 b1, btype2 b2, btype3 b3,first f, second s, third t where
-		        
-                r.DV_CODE = c.DV_CODE and r.academic_code=e.ACADEMIC_CODE and r.member_code=m.member_code and h.HOPEWORK_CODE = r.HOPEWORK_CODE and h.LOCAL_CODE=l.LOCAL_CODE and b1.BTYPE_CODE1=b2.btype_code1 and b2.BTYPE_CODE2 = b3.BTYPE_CODE2 and
-                f.first_code=s.first_code and s.second_code = t.second_code and resume_code =#{resumeCode}
+		        select * from resume_viewMain where resume_code =#{resumeCode}
 		    
 		    <if test="term != null">
 				and term IN 
@@ -29,19 +26,19 @@
 			</foreach>
 			</if>
 			<if test="graduatetype != null">
-	and e.graduatetype in
+	and graduatetype in
 	<foreach collection="graduatetype" item="graduatetype" index="index" open="(" close=")" separator=",">
 	#{graduatetype}
 	</foreach>
 	</if>
 	<if test="sido != null">
-	and l.sido in
+	and sido in
 	<foreach collection="sido" item="sido" index="index" open="(" close=")" separator=",">
 	#{sido}
 	</foreach>
 	</if>
 	<if test="btypename1 != null">
-	and b1.btypename1 in
+	and btypename1 in
 	<foreach collection="btypename1" item="btypename1" index="index" open="(" close=")" separator=",">
 	#{btypename1}
 	</foreach>
@@ -114,8 +111,13 @@
 	#{graduatetype}
 	</foreach>
 	</if>
+	</select>
+	
+	<select id="selectResumeView" parameterType="int" resultType="resumeVo">
+	select * from resume_viewMain where resume_code=#{resumeCode}
 	
 	</select>
+	
 	
 	<select id="selectSido" parameterType="map" resultType="resumeVo">
 	select sido from location
@@ -263,11 +265,11 @@
 	
 	
 	<select id="selectTotalCountPeople" parameterType="map" resultType="int">
-	select count(*),trunc(months_between(c.workterm2,c.workterm)/12,0) as "term",NVL(TRUNC(MONTHS_BETWEEN(SYSDATE, TO_DATE(SUBSTR(m.birth, 1, 4), 'YYYY'))/12), 0) AS AGE,b1.btypename1,b2.btypename2,b3.btypename3,f.firstname,s.secondname,t.thirdname,l.sido,e.graduatetype,m.membergender,c.workcheck  from resume r,career c,member m,education e,hope_working h,location l,btype1 b1, btype2 b2, btype3 b3,first f, second s, third t 
+	select count(*),trunc(months_between(c.workterm2,c.workterm)/12,0) as "term",NVL(TRUNC(MONTHS_BETWEEN(SYSDATE, TO_DATE(SUBSTR(m.birth, 1, 4), 'YYYY'))/12), 0) AS "age",b1.btypename1,b2.btypename2,b3.btypename3,f.firstname,s.secondname,t.thirdname,l.sido,e.graduatetype,m.membergender,c.workcheck  from resume r,career c,member m,education e,hope_working h,location l,btype1 b1, btype2 b2, btype3 b3,first f, second s, third t 
 	
 		        
              where  r.DV_CODE = c.DV_CODE and r.academic_code=e.ACADEMIC_CODE and r.member_code=m.member_code and h.HOPEWORK_CODE = r.HOPEWORK_CODE and h.LOCAL_CODE=l.LOCAL_CODE and b1.BTYPE_CODE1=b2.btype_code1 and b2.BTYPE_CODE2 = b3.BTYPE_CODE2 and
-                f.first_code=s.first_code and s.second_code = t.second_code and resume_code =78
+                f.first_code=s.first_code and s.second_code = t.second_code and resume_code =#{resumeCode}
 		    
 		      <if test="term != null">
 				and term IN 

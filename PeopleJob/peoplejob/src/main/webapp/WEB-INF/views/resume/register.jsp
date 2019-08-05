@@ -883,7 +883,7 @@ $(document).ready(function (){
 
    <button type="button" id="certification" class="btn btn-success" value="자격증">자격증</button>
    <section id="registerds">
-   <div id="certificationtype" name="certificationtype">
+   <div id="certificationtype" >
    
    <h3>자격증</h3>
 

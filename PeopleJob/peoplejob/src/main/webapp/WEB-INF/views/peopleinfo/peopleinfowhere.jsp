@@ -6,25 +6,8 @@
   
 <script type="text/javascript">
 $(document).ready(function (){
-	// 1. #data 공간에서 keyup이라는 이벤트가 발생했을 때
 
-	$("#age").click(function(){
 
-		// 2. #out 공간에 #data의 내용이 출력된다.
-			var str = "";
-			$("#age").each(function(){  // .each()는 forEach를 뜻한다.
-
-				if($(this).is(":checked"))  // ":checked"를 이용하여 체크가 되어있는지 아닌지 확인한다.
-
-					str += $(this).val() + " ";  // 체크된 객체를 str에 저장한다.
-
-			});
-
-			$("#selectedId").text(str);  // #multiPrint에 체크된 원소를 출력한다.
-
-		
-
-	});
 
 
 	
@@ -74,32 +57,7 @@ $(document).ready(function (){
      
      
 });
-/*  // 사용자 ID를 갖고 온다.
-    var careeryears = $("#career-years").val();
-    var age = $("#age").val();
-    var male01 = $("#male01").val();
-    var female01 = $("#female01").val();
-    var graduatecheck = $("#graduatecheck").val();
-    var sido = $("#sido").val();
- 
-    // name이 같은 체크박스의 값들을 배열에 담는다.
-    var checkboxValues = [];
-    $("input[name='term']:checked").each(function(i) {
-        checkboxValues.push($(this).val());
-    });
-    // 사용자 ID(문자열)와 체크박스 값들(배열)을 name/value 형태로 담는다.
-    var allData = { "career-years": careeryears,"age":age,"male01":male01,"female01":female01,"graduatecheck":graduatecheck,"sido":sido, "checkArray": checkboxValues };
-    $.ajax({
-        url:"<c:url value='/peopleinfo/peopleinfolist.do'/>",
-        type:'GET',
-        data: allData,
-        success:function(data){
-            $("#total").append("career-years").append("age").append("male01").append("female01").append("graduatecheck").append("sido");
-        },
-        error:function(jqXHR, textStatus, errorThrown){
-            alert("에러 발생~~");
-        }
-    });   */
+
 //지역정보를 가져오는 메서드 
 function getLocation(){
 	$.ajax({
@@ -367,47 +325,7 @@ function settingBtype3(res){
 		}
 	})
 }
-/* 
-function f_generationJob(){
-    var keyList = jobData.getHeader();
-    var keyList2 = searchJobData.getHeader();
-    var targetId = document.getElementById("selectedId");
-    var regionString = "";
 
-    //선택직종 초기화
-    $(targetId).html("");
-
-    //기본
-    var regionString = "<strong>선택직종 :</strong> ";
-    var jobsCdArr = '';
-    var jobsNmArr = '';
-
-    for(var i = 0; i < keyList.length; i++){
-      regionString += jobData.get(keyList[i]) + "<button type=\"button\" onclick=\"f_deleteJob('" + keyList[i] + "');\">삭제</button>";
-
-      if(jobsCdArr == ''){
-        jobsCdArr = keyList[i];
-        jobsNmArr = jobData.get(keyList[i]);
-      }else{
-        jobsCdArr += "," + keyList[i];
-        jobsNmArr += "," + jobData.get(keyList[i]);
-      }
-    }
-
-    for(var i = 0; i < keyList2.length; i++){
-      regionString += searchJobData.get(keyList2[i]) + "<button type=\"button\" onclick=\"f_deleteJob('" + keyList2[i] + "');\">삭제</button>";
-
-      if(jobsCdArr == ''){
-        jobsCdArr = keyList2[i];
-        jobsNmArr = searchJobData.get(keyList2[i]);
-      }else{
-        jobsCdArr += "," + keyList2[i];
-        jobsNmArr += "," + searchJobData.get(keyList2[i]);
-      }
-    }
-
-    $(targetId).html(regionString);
-  } */
 </script>
 <style type="text/css">
 .divSearch {
@@ -427,6 +345,7 @@ input.btn.btn-primary {
 		<div style="border: 1px solid #63b752;
     float: left;
     width: 9%;
+   	padding: 8px;
     margin: 10px;
     height: 414px;">
 		 <label>경력</label><br>
