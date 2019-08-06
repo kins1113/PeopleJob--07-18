@@ -96,6 +96,7 @@ span.glyphicon.glyphicon-briefcase {
     width: 900px;
     margin: 0 auto;
     padding: 10px;
+    background: #cccccc;
 }
 span #companyname{
 	font-size: 16px;

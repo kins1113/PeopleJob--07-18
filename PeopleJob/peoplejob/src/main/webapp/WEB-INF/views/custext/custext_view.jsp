@@ -6,6 +6,11 @@
     width: 900px;
     margin: 0 auto;
     padding: 10px;
+    background: #cccccc;
+    
+}
+select {
+    height: 30px;
 }
 </style>
 <script>
@@ -36,12 +41,8 @@
 					<h2>${vo.custitle}</h2>
 		<hr> 
 				<div> 
-				<p style="float:right;"><span>등록일</span>
-				<span><fmt:formatDate value="${vo.cusRegdate}" pattern="yyyy-MM-dd" /></span></p> 
-				</div>
-				<br><br>
-				 <label for="custextcategory">카테고리</label>
-              <select id="custextcategory" name="custextcategory" disabled="true">
+				<label for="custextcategory">카테고리</label>
+				<select id="custextcategory" name="custextcategory" disabled="true">
               	<option value="기업문의"
               	<c:if test="${vo.custextcategory=='개인문의' }">
               	selected
@@ -57,7 +58,12 @@
               	selected
               	</c:if>
               	>후원문의</option>
-              </select>
+              	</select>
+				<p style="float:right;"><span>등록일</span>
+				<span><fmt:formatDate value="${vo.cusRegdate}" pattern="yyyy-MM-dd" /></span></p> 
+				</div>
+				<br><br>
+              
 			<div class="lastDiv">			
 						<p class="content">
 							<% pageContext.setAttribute("newLine", "\r\n"); %>

@@ -35,7 +35,7 @@
 <body>
 <div class="form-group">
                 <div >
-                <label>근무기간(date)</label>
+                <label>모집시작일(date)</label>
                     <input id="workdate" name="workdate" class="form-control" type="text" value="${fn:substring(vo.workdate,0,10) }" readonly/>
                 </div>
             </div>

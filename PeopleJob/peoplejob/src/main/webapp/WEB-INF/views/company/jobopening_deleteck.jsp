@@ -50,6 +50,7 @@
     width: 900px;
     margin: 0 auto;
     padding: 10px;
+    background: #cccccc;
 }
 </style>
 <article>

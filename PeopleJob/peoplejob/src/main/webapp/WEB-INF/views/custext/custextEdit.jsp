@@ -12,7 +12,19 @@
       });
    });
 </script>
+<style>
+.divList {
+    width: 900px;
+    margin: 0 auto;
+    padding: 10px;
+    background: #cccccc;
+}
+select {
+    height: 30px;
+}
+</style>
 <br>
+<div class="divList">
 <div class="container">
    <h2 class="mb-10"> 1:1 문의 수정</h2>
    <br><br>
@@ -67,6 +79,7 @@
    </form>
    <br>
    <br>
+</div>
 </div>
 
 <%@include file="../main/inc/bottom.jsp" %>

@@ -42,7 +42,7 @@ div #detail {
     background: #f2f4f7;
 }
 .where{
-	min-height: 700px; 
+	min-height: 350px; 
 	background-color: gray;
 }
 .where div input[type="checkbox"]{  
@@ -65,7 +65,7 @@ div #detail {
     width: 900px;
     margin: 0 auto;
     padding: 10px;
-    background: white;
+    background: #cccccc;
 }
 .where input[name="wheresubmit"]{
 	position: absolute; 

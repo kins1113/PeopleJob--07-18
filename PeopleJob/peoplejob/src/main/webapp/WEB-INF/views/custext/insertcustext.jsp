@@ -12,7 +12,19 @@
       });
    });
 </script>
+<style>
+.divList {
+    width: 900px;
+    margin: 0 auto;
+    padding: 10px;
+    background: #cccccc;
+}
+select {
+    height: 30px;
+}
+</style>
 <br>
+<div class="divList">
 <div class="container">
    <h2 class="mb-10">고객의 소리 1:1 문의</h2>
    <br><br>
@@ -54,5 +66,5 @@
    <br>
    <br>
 </div>
-
+</div>
 <%@include file="../main/inc/bottom.jsp" %>

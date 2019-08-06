@@ -87,8 +87,18 @@
     width: 900px;
     margin: 0 auto;
     padding: 10px;
+    background: #cccccc;
 }
 .form-group{
+	width:90%;
+	padding-left: 100px;
+} 
+h3, .h3 {
+    font-size: 24px;
+    padding-left: 100px;
+}
+select {
+    height: 30px;
 }
 </style>
 <article>
@@ -220,7 +230,7 @@
                 </div>
             </div>
               <!-- name="welfare" -->
-             <div>
+             <div class="form-group">
                 <label>복리후생</label>
                 <div >  
                 <c:set var="welfare" value="${vo.welfare }"/>
