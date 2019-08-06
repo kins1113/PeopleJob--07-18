@@ -62,5 +62,17 @@ public class PaymentServiceImpl implements PaymentService{
 		return paymentDao.selectPayByTime(memberid);
 	}
 
+	@Override
+	public int updateProgress(Map<String, Object> map) {
+		
+		return paymentDao.updateProgress(map);
+	}
+
+	@Override
+	public List<Map<String, Object>> selectProgress(Map<String, Object> map) {
+		
+		return paymentDao.selectProgress(map);
+	}
+
 	
 }

@@ -32,7 +32,19 @@ public class SearchVO {
     /**페이지 별 레코드 갯수 (pageSize) */
     private int recordCountPerPage; 
     
-   /**
+    private String type;
+    
+    
+    
+   public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+
+/**
      * 검색 조건을  설정한다.
      * @param bean 검색조건
      */

@@ -192,10 +192,12 @@ public class PaymentController {
 	public String list(@ModelAttribute SearchVO searchVo, 
 			@RequestParam(required = false) String startDay,
 			@RequestParam(required = false) String endDay,
+			@RequestParam(required = false) String type,
 			Model model
 			) {
 		//1
 		
+		logger.info("결제 상태 파라미터 type={}" ,type);
 		logger.info("결제 목록 파라미터 searchVo={}" ,searchVo);
 		logger.info("결제 목록 파라미터 startDay={}, endDay={}" ,startDay,endDay);
 		
@@ -215,12 +217,20 @@ public class PaymentController {
 		
 		Map<String, Object> map=new HashMap<String, Object>();
 		
+		//map에 담아야한다
 		map.put("searchVo", searchVo);
 		map.put("startDay", startDay);
 		map.put("endDay", endDay);
+		map.put("type",type);
 		
 		//[3] 조회처리
-		List<Map<String, Object>> list=paymentService.selectAll(map);
+		List<Map<String, Object>> list=null;
+		if(type!=null && !type.isEmpty()) {
+			list=paymentService.selectProgress(map);
+		}else {
+			list=paymentService.selectAll(map);
+		}
+		
 		logger.info("결제 목록 결과, list.size={}",list.size());
 		
 		//[4] 전체 레코드 개수 조회
@@ -251,4 +261,37 @@ public class PaymentController {
 		return "manager/payment/list";
 	}
 	*/
+	
+	@RequestMapping("/manager/payment/progressEdit.do")
+	public String progressEdit(@RequestParam String [] paymentChk, Model model, String progressSel) {
+	
+		Map<String, Object> map=new HashMap<String, Object>();
+		//매
+		logger.info("progressSel={}",progressSel);
+		
+		for(int i=0; i<paymentChk.length;i++) {
+			logger.info("{}번째 넘어온값={}",i,paymentChk[i]);
+			//paymentChk을 map에 담는다.
+			map.put("paymentChk", paymentChk);
+			//progressSel을 map에 담는다.
+			map.put("progressSel",progressSel);
+		}
+		
+		int cnt=paymentService.updateProgress(map);
+		String msg="", url="/manager/payment/list.do";
+		
+		if(cnt>0) {
+			msg=cnt+"건 변경 성공";
+		}else {
+			msg="변경 실패";
+		}
+		model.addAttribute("msg",msg);
+		model.addAttribute("url",url);
+		
+		return "common/message";
+  }
+	
+
+
+	
 }

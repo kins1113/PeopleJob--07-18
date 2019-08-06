@@ -18,5 +18,7 @@ public interface PaymentDAO {
 	
 	public List<Map<String, Object>> selectAll(Map<String, Object> map);
 	int selectTotalCount(SearchVO searchVo);
+	public int updateProgress(Map<String, Object> map);
+	public List<Map<String, Object>> selectProgress(Map<String, Object> map);
 	
 }

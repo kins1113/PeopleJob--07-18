@@ -63,6 +63,17 @@ public class PaymentDAOMybatis implements PaymentDAO{
 	public List<Map<String, Object>> selectPayByTime(String memberid) {
 		return sqlSession.selectList(namespace+"selectPayByTime",memberid);
 	}
+	public int updateProgress(Map<String, Object> map) {
+		
+		return sqlSession.update(namespace+"updateProgress", map);
+	}
+	@Override
+	public List<Map<String, Object>> selectProgress(Map<String, Object> map) {
+		List<Map<String, Object>>list
+		=sqlSession.selectList(namespace+"selectProgress",map);
+		logger.info("서비스에서 list={}",list.size());
+		return list;
+	}
 	
 	
 

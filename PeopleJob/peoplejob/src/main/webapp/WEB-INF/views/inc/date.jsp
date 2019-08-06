@@ -33,8 +33,7 @@
     </script>
 </head>
 <body>
-        <input id="${param.id }" name="${param.name}" class="form-control workdate1" type="text" readonly style="font-size: 1.1em;"
-        title="${param.title }"/>
+        <input id="${param.id }" name="${param.name}" class="form-control workdate1" type="text" readonly    title="${param.title }"/>
 </body>
 </html>
     
