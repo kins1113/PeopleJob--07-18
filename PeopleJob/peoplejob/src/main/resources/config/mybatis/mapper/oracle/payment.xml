@@ -153,19 +153,28 @@
 		and RNUM<=#{searchVo.firstRecordIndex} + #{searchVo.recordCountPerPage}]]> 
 	</select>
 	
-	<!-- <select id="selectBySameTime" resultType="map" parameterType="string">
-	select * from payment
-	where to_char(paydate,'yyyy-MM-dd HH:mm:ss')=#{paydate}
+	 <select id="selectBySameTime" resultType="map" parameterType="paymentVo">
+	 select p.*, j.jobtitle, (sysdate-p.paydate) as confirmtime
+	 from payment p join jobopening j
+ 	on p.JOBOPENING = j.JOBOPENING
+	where to_char(paydate,'yyyy-MM-dd HH:mm:ss')=#{paydate} 
+	and member_code=#{memberCode}
 	order by paydate desc
-	</select> -->
+	</select> 
 	
 	<select id="selectPayByTime" resultType="map" parameterType="string">
-	select s.servicename, sum(p.price) as "totalprice",p.progress, to_char(p.paydate,'yyyy-MM-dd HH:mm:ss') as "ByTime"
+	select p.member_Code, s.servicename, sum(p.price) as totalprice , count(p.price) as count,
+	p.progress, to_char(p.paydate,'yyyy-MM-dd HH:mm:ss') as ByTime, trunc(sysdate-p.paydate) as confirmtime
 	from payment p join service s
 	on p.SERVICE_CODE = s.SERVICE_CODE
-	where p.member_code=(select member_code from member where memberid=#{memberid})
-	group by to_char(p.paydate,'yyyy-MM-dd HH:mm:ss'), s.servicename, p.progress
-	order by to_char(p.paydate,'yyyy-MM-dd HH:mm:ss') desc
+	where p.member_code=(select member_Code from member where memberid=#{memberid})
+	group by p.paydate, s.servicename, p.progress, p.member_code
+	order by p.paydate desc
+	</select>
+	
+	<select id="selectCancelConfirm" parameterType="paymentVo" resultType="paymentVo">
+	select p.*, to_char(paydate, 'yyyy-MM-dd HH:mm:ss') as stringdate , (sysdate-paydate) as confirmtime
+	from payment p where member_Code=#{memberCode} and to_char(paydate, 'yyyy-MM-dd HH:mm:ss')=#{paydate}
 	</select>
 
 	<update id="updateProgress" parameterType="map" >

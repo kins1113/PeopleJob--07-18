@@ -16,6 +16,7 @@
     <script type="text/javascript">
     $(document).ready(function($){
 		$('.workdate1').datepicker({
+			minDate:new Date(),
 			dateFormat:"yy-mm-dd",
 			changeYear:true,
 			dayNamesMin:["일","월","화","수","목","금","토"],
@@ -33,7 +34,11 @@
     </script>
 </head>
 <body>
+<<<<<<< HEAD
         <input id="${param.id }" name="${param.name}" class="form-control workdate1" type="text" readonly    title="${param.title }"/>
+=======
+        <input id="${param.id }" name="${param.name}" class="form-control workdate1" type="text" readonly style="font-size: 1.1em;"/>
+>>>>>>> branch 'master' of https://github.com/kins1113/PeopleJob--07-18.git
 </body>
 </html>
     
