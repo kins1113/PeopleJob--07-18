@@ -12,14 +12,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.ez.peoplejob.board.model.BoardService;
-import com.ez.peoplejob.board.model.BoardVO;
 import com.ez.peoplejob.jobopening.model.JobopeningService;
 import com.ez.peoplejob.member.model.MemberService;
 import com.ez.peoplejob.member.model.MemberVO;
 import com.ez.peoplejob.payment.model.PaymentService;
-import com.ez.peoplejob.popup.model.PopupService;
-import com.ez.peoplejob.popup.model.PopupVO;
 
 @Controller
 public class MainController {
@@ -28,8 +24,6 @@ public class MainController {
 	@Autowired private PaymentService paymentService;
 	@Autowired private JobopeningService jobService;
 	@Autowired private MemberService memberService;
-	@Autowired private BoardService BoardService;
-	@Autowired private PopupService popupService;
 	
 	@RequestMapping("/main/mainindex.do")
 	public String mainindex(Model model,HttpSession session) {
@@ -52,13 +46,6 @@ public class MainController {
 		model.addAttribute("randomList",randomList);
 		model.addAttribute("list",list);
 		model.addAttribute("deadlineList",deadlineList);
-		
-		//popup을 위한 추가 -옥환
-		//활성화 된것만 가져오기
-		List<PopupVO> popupList=popupService.selectUsageY();
-		logger.info("popup은 popupList.size={}",popupList.size());
-		
-		model.addAttribute("popupList", popupList);
 		
 		return "main/mainindex";
 	}
@@ -83,22 +70,5 @@ public class MainController {
 		return "references/FreeLecture";
 		
 	}
-	
-	@RequestMapping("/references/news.do")
-	public String news() {
-		logger.info("취업뉴스 화면 보여주기");
-		return "references/news";
-		
-	}
-	
-	@RequestMapping("/references/news_detail.do")
-	public String newsdetail() {
-		logger.info("취업뉴스 상세보기화면 보여주기");
-		return "references/news_detail";
-		
-	}
-	
-
-
 	
 }

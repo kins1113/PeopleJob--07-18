@@ -61,7 +61,6 @@ public class ResumeController {
 				
 			
 		logger.info("이력서 등록화면 보여주기 매개변수 vo={}",resumeVo);
-		
 		int cnt=resumeService.insertResume(resumeVo);
 		
 		logger.info("이력서 등록 결과 cnt ={}",cnt);
@@ -121,11 +120,11 @@ public class ResumeController {
 		}
 		ResumeVO vo=resumeService.selectResumeByNo(resumeCode);
 		ResumeVO vo1=resumeService.selectByMemverid(id);
-		ResumeVO vo2=resumeService.selectBydesiredWorkCode(vo.getHopeworkCode());
+		ResumeVO vo2=resumeService.selectBydesiredWorkCode(vo.getDesiredWorkCode());
 		ResumeVO vo3=resumeService.selectByacademicCode(vo.getAcademicCode());
 		ResumeVO vo4=resumeService.selectBydvCode(vo.getDvCode());
 		ResumeVO vo5=resumeService.selectBylanglicenceCode(vo.getLanglicenceCode());
-		ResumeVO vo6=resumeService.selectBylicenceCode(vo.getlNo());
+		ResumeVO vo6=resumeService.selectBylicenceCode(vo.getLicenceCode());
 		ResumeVO vo7=resumeService.selectBylocation(vo.getLocalCode());
 		ResumeVO vo8=resumeService.selectBylocation2(vo.getLocalCode2());
 		ResumeVO vo9=resumeService.selectBybtype1(vo.getBtypeCode1());
@@ -166,11 +165,11 @@ public class ResumeController {
 		}
 		ResumeVO vo=resumeService.selectResumeByNo(resumeCode);
 		ResumeVO vo1=resumeService.selectByMemverid(id);
-		ResumeVO vo2=resumeService.selectBydesiredWorkCode(vo.getHopeworkCode());
+		ResumeVO vo2=resumeService.selectBydesiredWorkCode(vo.getDesiredWorkCode());
 		ResumeVO vo3=resumeService.selectByacademicCode(vo.getAcademicCode());
 		ResumeVO vo4=resumeService.selectBydvCode(vo.getDvCode());
 		ResumeVO vo5=resumeService.selectBylanglicenceCode(vo.getLanglicenceCode());
-		ResumeVO vo6=resumeService.selectBylicenceCode(vo.getlNo());
+		ResumeVO vo6=resumeService.selectBylicenceCode(vo.getLicenceCode());
 		ResumeVO vo7=resumeService.selectBylocation(vo.getLocalCode());
 		ResumeVO vo8=resumeService.selectBylocation2(vo.getLocalCode2());
 		ResumeVO vo9=resumeService.selectBybtype1(vo.getBtypeCode1());

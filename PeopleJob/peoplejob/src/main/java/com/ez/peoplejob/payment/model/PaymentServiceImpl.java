@@ -1,6 +1,5 @@
 package com.ez.peoplejob.payment.model;
 
-import java.sql.Timestamp;
 import java.util.List;
 import java.util.Map;
 
@@ -64,30 +63,15 @@ public class PaymentServiceImpl implements PaymentService{
 	}
 
 	@Override
-	public List<Map<String, Object>> selectBySameTime(String paydate, int memberCode) {
-		PaymentVO paymentVo=new PaymentVO();
+	public int updateProgress(Map<String, Object> map) {
 		
-		//String으로 받은 paydate를 setting하기 위해 timestamp로 형변환
-		Timestamp paydate2=Timestamp.valueOf(paydate);
-		
-		paymentVo.setPaydate(paydate2);
-		paymentVo.setMemberCode(memberCode);
-		
-		return paymentDao.selectBySameTime(paymentVo);
+		return paymentDao.updateProgress(map);
 	}
 
-
 	@Override
-	public List<PaymentVO> selectCancelConfirm(String paydate, int memberCode) {
-		PaymentVO paymentVo=new PaymentVO();
+	public List<Map<String, Object>> selectProgress(Map<String, Object> map) {
 		
-		//String으로 받은 paydate를 setting하기 위해 timestamp로 형변환
-		Timestamp paydate2=Timestamp.valueOf(paydate);
-				
-		paymentVo.setPaydate(paydate2);
-		paymentVo.setMemberCode(memberCode);
-		
-		return paymentDao.selectCancelConfirm(paymentVo);
+		return paymentDao.selectProgress(map);
 	}
 
 	

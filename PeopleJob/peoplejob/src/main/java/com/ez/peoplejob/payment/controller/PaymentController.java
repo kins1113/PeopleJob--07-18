@@ -1,8 +1,5 @@
 package com.ez.peoplejob.payment.controller;
 
-import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -104,69 +101,35 @@ public class PaymentController {
 		
 	}
 	
-	@RequestMapping(value="/mypage/corp/paymentDetail.do", method = RequestMethod.GET)
-	public String paymentDetail(HttpSession session, Model model) {
-		String memberid=(String)session.getAttribute("memberid");
-		List<Map<String , Object>> list=paymentService.selectPaymentById(memberid);
-		logger.info("결제 내역 list.size={}",list.size());
-		
-		List<Map<String , Object>> Timelist=paymentService.selectPayByTime(memberid);
-		logger.info("마이페이지 결제 내역 Timelist.size={}",Timelist.size());
-		
-		model.addAttribute("list",list);
-		model.addAttribute("Timelist",Timelist);
-		
-		return "mypage/corp/paymentDetail";
-	}
-	
-	
 	@RequestMapping(value="/mypage/corp/paymentDetail.do", method = RequestMethod.POST)
-	public String cancelpay(@RequestParam int memberCode,@RequestParam String paydate, Model model) {
-		logger.info("결제 취소 파라미터 memberCode={}, paydate={}",memberCode,paydate);
+	public String cancelpay(@RequestParam int paymentCode, Model model) {
+		logger.info("결제 취소 파라미터 paymentCode={}",paymentCode);
 
-		List<PaymentVO> confirmlist=paymentService.selectCancelConfirm(paydate, memberCode);
-		logger.info("결제 취소 확인 리스트 confirmlist.size={}", confirmlist.size());
+		PaymentVO paymentVo=paymentService.selectPaymentByCode(paymentCode);
+		logger.info("paymentCode로 select 결과 paymentVo={}",paymentVo);
 		
 		int cnt=0;
 		String msg="", url="/mypage/corp/paymentDetail.do";
-		if(confirmlist.size()>0) {
-			for(int i=0;i<confirmlist.size();i++) {
-				PaymentVO paymentVo=confirmlist.get(i);
-				logger.info("i번째={}번째,paymentVo={}", i, paymentVo);
-				
-				cnt=paymentService.cancelPay(paymentVo.getPaymentCode());
+		if(paymentVo.getProgress().equals("결제완료")) {
+			cnt=paymentService.cancelPay(paymentCode);
+			logger.info("결제 취소 처리 결과 cnt={}",cnt);
 				if(cnt>0) {
-					msg="결제 취소 요청 처리 완료";
-					
+					msg="결제 취소되었습니다.";
 				}else {
-					msg="결제 취소 요청 실패";
+					msg="결제 취소 실패";
 				}
-			}
-		}else {
-			msg="결제취소할 상품을 다시 선택해주세요";
+			
+		}else if(paymentVo.getProgress().equals("결제취소요청")){
+			msg="이미 결제 취소 요청 하신 상품입니다.";
+		}else { //결제취소완료
+			msg="결제취소 완료된 상품입니다.";
 		}
 		
 		
-		logger.info("결제취소 결과 cnt={}",cnt);
 		model.addAttribute("msg",msg);
 		model.addAttribute("url",url);
 		
 		return "common/message";
-		
-	}
-	
-	@RequestMapping(value="/mypage/corp/paymoreDetail.do", method = RequestMethod.GET)
-	public String paymoreDetail(@RequestParam String paydate, @RequestParam(defaultValue = "0") int memberCode,
-			@RequestParam String serviceName, Model model) {
-		logger.info("결제내역 상세보기 파라미터, paydate={}, memberCode={}",paydate, memberCode);
-		logger.info("결제내역 상세보기 파라미터 serviceName={}",serviceName);
-		
-		List<Map<String, Object>> list=paymentService.selectBySameTime(paydate, memberCode);
-		logger.info("같은 시간대, 결제내역 상세보기 list.size={}",list.size());
-		
-		model.addAttribute("serviceName",serviceName);
-		model.addAttribute("list",list);
-		return "mypage/corp/paymoreDetail";
 		
 	}
 	
@@ -222,17 +185,19 @@ public class PaymentController {
 		}
 		
 		logger.info("payment 등록 cnt={}",cnt+"\n");
-		return "redirect:/mypage/corp/paymentDetail.do";
+		return "mypage/corp/paymentDetail";
 	}
 	
 	@RequestMapping("/manager/payment/list.do")
 	public String list(@ModelAttribute SearchVO searchVo, 
 			@RequestParam(required = false) String startDay,
 			@RequestParam(required = false) String endDay,
+			@RequestParam(required = false) String type,
 			Model model
 			) {
 		//1
 		
+		logger.info("결제 상태 파라미터 type={}" ,type);
 		logger.info("결제 목록 파라미터 searchVo={}" ,searchVo);
 		logger.info("결제 목록 파라미터 startDay={}, endDay={}" ,startDay,endDay);
 		
@@ -252,12 +217,20 @@ public class PaymentController {
 		
 		Map<String, Object> map=new HashMap<String, Object>();
 		
+		//map에 담아야한다
 		map.put("searchVo", searchVo);
 		map.put("startDay", startDay);
 		map.put("endDay", endDay);
+		map.put("type",type);
 		
 		//[3] 조회처리
-		List<Map<String, Object>> list=paymentService.selectAll(map);
+		List<Map<String, Object>> list=null;
+		if(type!=null && !type.isEmpty()) {
+			list=paymentService.selectProgress(map);
+		}else {
+			list=paymentService.selectAll(map);
+		}
+		
 		logger.info("결제 목록 결과, list.size={}",list.size());
 		
 		//[4] 전체 레코드 개수 조회
@@ -288,4 +261,37 @@ public class PaymentController {
 		return "manager/payment/list";
 	}
 	*/
+	
+	@RequestMapping("/manager/payment/progressEdit.do")
+	public String progressEdit(@RequestParam String [] paymentChk, Model model, String progressSel) {
+	
+		Map<String, Object> map=new HashMap<String, Object>();
+		//매
+		logger.info("progressSel={}",progressSel);
+		
+		for(int i=0; i<paymentChk.length;i++) {
+			logger.info("{}번째 넘어온값={}",i,paymentChk[i]);
+			//paymentChk을 map에 담는다.
+			map.put("paymentChk", paymentChk);
+			//progressSel을 map에 담는다.
+			map.put("progressSel",progressSel);
+		}
+		
+		int cnt=paymentService.updateProgress(map);
+		String msg="", url="/manager/payment/list.do";
+		
+		if(cnt>0) {
+			msg=cnt+"건 변경 성공";
+		}else {
+			msg="변경 실패";
+		}
+		model.addAttribute("msg",msg);
+		model.addAttribute("url",url);
+		
+		return "common/message";
+  }
+	
+
+
+	
 }

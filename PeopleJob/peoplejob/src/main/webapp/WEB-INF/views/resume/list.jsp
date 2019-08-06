@@ -64,23 +64,9 @@ h3, .h3 {
 					</c:if>
 					</a></td>
 		
-	    <td>
-	    <c:if test="${vo.opencheck}=='Y'">
-	    	동의
-	    </c:if>
-	    <c:if test="${vo.opencheck}=='N'">
-	    	동의안함
-	    </c:if>
-	    </td>
+	    <td>${vo.opencheck}</td>
 	   	
-	    <td>
-	    <c:if test="${vo.opencheck}=='Y'">
-	    	동의
-	    </c:if>
-	    <c:if test="${vo.opencheck}=='N'">
-	    	동의안함
-	    </c:if>
-	    </td><!--일단 멤버 네임으로  -->
+	    <td>${vo.opencheck}</td><!--일단 멤버 네임으로  -->
 	    
 	    
 	    <td><fmt:formatDate value="${vo.resumeRegdate}" pattern="yyyy-MM-dd"/>

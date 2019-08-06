@@ -118,8 +118,8 @@ public class ResumeDAOMybatis implements ResumeDAO {
 	}
 
 	@Override
-	public ResumeVO selectBylicenceCode(int lNo) {
-		ResumeVO vo=sqlsession.selectOne(namespace+"selectBylicenceCode", lNo );
+	public ResumeVO selectBylicenceCode(int licenceCode) {
+		ResumeVO vo=sqlsession.selectOne(namespace+"selectBylicenceCode", licenceCode );
 		return vo;
 	}
 
@@ -136,8 +136,8 @@ public class ResumeDAOMybatis implements ResumeDAO {
 	}
 
 	@Override
-	public ResumeVO selectBydesiredWorkCode(int	hopeworkCode) {
-		ResumeVO vo=sqlsession.selectOne(namespace+"selectBydesiredWorkCode", hopeworkCode );
+	public ResumeVO selectBydesiredWorkCode(int desiredWorkCode) {
+		ResumeVO vo=sqlsession.selectOne(namespace+"selectBydesiredWorkCode", desiredWorkCode );
 		return vo;
 	}
 
@@ -223,41 +223,5 @@ public class ResumeDAOMybatis implements ResumeDAO {
 	public ResumeVO selectBythird(int thirdCode) {
 		ResumeVO vo=sqlsession.selectOne(namespace+"selectBythird",thirdCode);
 		return vo;
-	}
-
-	@Override
-	public int updatelang(ResumeVO vo) {
-		int cnt=sqlsession.update(namespace+"updatelang",vo);
-		return cnt;
-	}
-
-	@Override
-	public int updatecer(ResumeVO vo) {
-		int cnt=sqlsession.update(namespace+"updatecer",vo);
-		return cnt;
-	}
-
-	@Override
-	public int updatecareer(ResumeVO vo) {
-		int cnt=sqlsession.update(namespace+"updatecareer",vo);
-		return cnt;
-	}
-
-	@Override
-	public int updateedu(ResumeVO vo) {
-		int cnt=sqlsession.update(namespace+"updateedu",vo);
-		return cnt;
-	}
-
-	@Override
-	public int updatehope(ResumeVO vo) {
-		int cnt=sqlsession.update(namespace+"updatehope",vo);
-		return cnt;
-	}
-
-	@Override
-	public int updatemember(ResumeVO vo) {
-		int cnt=sqlsession.update(namespace+"updatemember",vo);
-		return cnt;
 	}
 }

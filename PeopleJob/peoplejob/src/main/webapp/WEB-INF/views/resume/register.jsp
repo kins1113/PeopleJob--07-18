@@ -69,44 +69,14 @@ button#awardbt{
 input[type="submit"] {
     margin-left: 1014px;
 }
-
+<style>
 
 </style>
-
 <script type="text/javascript">
-
 $(document).ready(function (){
-
 	
-	//자격증을 가져오는
-	$("#certification").click(function(){
-		getCertificate();
-	})
-	
-	//1차 커리어 직종 가져오기 /resume/career/firstList.do
-	selectcareer();
-	  
 	//1차 직종 가져오기 /manager/occupantion/firstList.do
 	selectFirst();
-	
-	//어학을 가져오는
-	$("#langcertbt").click(function(){
-		getLangcertification();
-	})
-	
-	//전공을 가져오는
-
-	getMajor();
-	
-	//직급을 가져오는
-
-	getJobgrade();
-
-	//희망 근무 조건
-	$("#hopeworkbt").click(function(){
-	gethopeworkform();
-	})
-												
 	//1차 직종 클릭하면 2차직종 가져오기 
 	$("#selectFirst").change(function(){
 		var firstCode=$(this).find("option:selected").val();
@@ -122,9 +92,7 @@ $(document).ready(function (){
 			selectThird(secondCode);
 		}
 	});
-
 	
-
 	
 	//지역정보를 가져오기 - 시도
 	getLocation();
@@ -290,7 +258,6 @@ function settingLocation(res){
 	});
 }
 
-
 //지역정보를 가져오는 메서드 - 구군
 function getLocation2(sidoCode){
 	$.ajax({
@@ -418,244 +385,10 @@ function settingBtype3(res){
 	})
 }
 
-/* $(function(){
-    $( "#jobgrade" ).autocomplete({
-        source : function( request, response ) {
-             $.ajax({
-                    type: 'post',
-                    url: "<c:url value='register.jsp'/>",
-                    dataType: "json",
-                    //request.term = $("#autocomplete").val()
-                    data: { value : request.term },
-                    success: function(data) {
-                        //서버에서 json 데이터 response 후 목록에 뿌려주기 위함
-                        response(
-                            $.map(data, function(item) {
-                                return {
-                                    label: item.data,
-                                    value: item.data
-                                }
-                            })
-                        );
-                    }
-               });
-            },
-        //조회를 위한 최소글자수
-        minLength: 2,
-        select: function( event, ui ) {
-            // 만약 검색리스트에서 선택하였을때 선택한 데이터에 의한 이벤트발생
-        }
-    });
-}) */
-
-
-//전공 가져오기
-function getMajor(){
-	$.ajax({
-		url:"<c:url value='/resume/education/selectMajor.do'/>",
-		type:"post",
-		success:function(res){
-				settingMajor(res);
-
-		},
-		error:function(xhr, status, error){
-			alert(status+":"+error);
-		}
-	})
-}
-
-
-//전공 뿌리기
-function settingMajor(res){
-	$.each(res,function(idx,item){
-		if(idx==0){
-			var chEl=$("<option value='0'>전공</option>")
-			var opEl=$("<option value='"+item.academicCode+"'></option>");
-			opEl.append(item.major);
-			test2.append(item.major);
-			$("#selectMajor").html(chEl);
-			$("#selectMajor").append(opEl); 
-			
-		}else{
-			var opEl=$("<option value='"+item.academicCode+"'></option>");
-			opEl.append(item.major);
-			
-			$("#selectMajor").append(opEl); 
-			
-		}
-	})
-	
-}
 
 
 
-
-
-//직급 가져오기
-function getJobgrade(){
-	$.ajax({
-		url:"<c:url value='/resume/career/selectCareer.do'/>",
-		type:"post",
-		success:function(res){
-				settingJobgrade(res);
-		},
-		error:function(xhr, status, error){
-			alert(status+":"+error);
-		}
-	})
-}
-
-
-//직급 뿌리기
-function settingJobgrade(res){
-	$.each(res,function(idx,item){
-		if(idx==0){
-			var chEl=$("<option value='0'>직급</option>")
-			var opEl=$("<option value='"+item.dvCode+"'></option>");
-			opEl.append(item.jobgrade);
-			$("#selectBydvCode").html(chEl);
-			$("#selectBydvCode").append(opEl); 
-		}else{
-			var opEl=$("<option value='"+item.dvCode+"'></option>");
-			opEl.append(item.jobgrade);
-			$("#selectBydvCode").append(opEl); 
-		}
-	})
-	
-}
-
-
-
-//1차 커리어 직종 가져오기
-function selectcareer(){
-	$.ajax({
-		url:"<c:url value='/resume/career/firstCareer.do'/>",
-		type:"post",
-		success:function(res){
-			settingcareer(res);
-		},
-		error:function(xhr, status, error){
-			alert(status+":"+error);
-		}
-	})
-}
-
-//1차 커리어 직종 뿌리기
-//[{"firstCode":1,"firstname":"경영·사무"},{"firstCode":2,"firstname":"영업·고객상담"},{"firstCode":3,"firstname":"생산·제조"},
-//{"firstCode":4,"firstname":"IT·인터넷"},{"firstCode":5,"firstname":"전문직"},{"firstCode":6,"firstname":"교육"}
-function settingcareer(res){
-		$.each(res,function(idx,item){
-			if(idx==0){
-				var chEl=$("<option value='0'>직종</option>")
-				var opEl=$("<option value='"+item.dvCode+"'></option>");
-				opEl.append(item.chargework);
-				$("#selectcareer").html(chEl);
-				$("#selectcareer").append(opEl); //최종으로 여기에 넣음
-			}else{
-				var opEl=$("<option value='"+item.dvCode+"'></option>");
-				opEl.append(item.chargework);
-				$("#selectcareer").append(opEl); //최종으로 여기에 넣음
-			}
-		})
-}
-
-
-//자격증 가져오기
-function getCertificate(){
-	$.ajax({
-		url:"<c:url value='/resume/certificate/selectLname.do'/>",
-		type:"post",
-		success:function(res){
-			settingCertificate(res);
-		},
-		error:function(xhr, status, error){
-			alert(status+":"+error);
-		}
-	})
-}
-
-
-//자격증 뿌리기
-function settingCertificate(res){
-	$.each(res,function(idx,item){
-		if(idx==0){
-			var chEl=$("<option value='0'>자격증명</option>")
-			var opEl=$("<option value='"+item.lNo+"'></option>");
-			opEl.append(item.lName);
-			$("#selectLname").html(chEl);
-			$("#selectLname").append(opEl); 
-		}else{
-			var opEl=$("<option value='"+item.lNo+"'></option>");
-			opEl.append(item.lName);
-			$("#selectLname").append(opEl); 
-		}
-	})
-	
-}
-
-
-//어학 가져오기
-function getLangcertification(){
-	$.ajax({
-		url:"<c:url value='/resume/langcertification/selectlangcertification.do'/>",
-		type:"post",
-		success:function(res){
-			settingLangcertification(res);
-		},
-		error:function(xhr, status, error){
-			alert(status+":"+error);
-		}
-	})
-}
-
-//어학 뿌리기
-function settingLangcertification(res){
-	$.each(res,function(idx,item){
-		if(idx==0){
-			var chEl=$("<option value='0'>어학</option>")
-			var opEl=$("<option value='"+item.langlicenceCode+"'></option>");
-			opEl.append(item.langlicencename);
-			$("#selectlanglicencename").html(chEl);
-			$("#selectlanglicencename").append(opEl); 
-		}else{
-			var opEl=$("<option value='"+item.langlicenceCode+"'></option>");
-			opEl.append(item.langlicencename);
-			$("#selectlanglicencename").append(opEl); 
-		}
-	})
-	
-}
-//희망 근무조건 가져오기
-function gethopeworkform(){
-	$.ajax({
-		url:"<c:url value='/resume/hopeWorking/selecthopework.do'/>",
-		type:"post",
-		success:function(res){
-			settinghopeworkform(res);
-		},
-		error:function(xhr, status, error){
-			alert(status+":"+error);
-		}
-	})
-}
-
-//희망 근무조건 뿌리기
-function settinghopeworkform(res){
-	$.each(res,function(idx,item){
-	
-			var opEl=$("<option value='"+item.hopeworkCode+"'></option>");
-			opEl.append(item.hopeworkform);
-			$("#hopeworkform").append(opEl); 
-		
-	})
-	
-}
- 
-
-</script>
-<script type="text/javascript">
-
-$(document).ready(function (){
+$(function () {
 	$("#certificationtype").hide();
 	$("#certification").click(function () {
 		$("#certificationtype").toggle(500);
@@ -675,18 +408,15 @@ $(document).ready(function (){
 	$("#langcertbt").click(function () {
 		$("#langcert").toggle(500);
 	});
+
 });
-
 </script>
-
-
 <article>
 <div id="registerdiv">
 <div class="divForm">
 <form name="frm1" method="post" 
 	action="<c:url value='/resume/register.do'/>" enctype="multipart/form-data">
 <fieldset>
-
 	<legend style="font-weight: bold">이력서등록</legend>
 	<section id="registerds">
 	<div>        
@@ -723,13 +453,12 @@ $(document).ready(function (){
  </script>
 
 </div>
-
+        <input type="hidden" class="form-control"  name="picture" id="picture"  >
     </div>
     <div>        
         <label for="membername">이름</label>
         <input type="text" class="form-control"  name="membername" id="membername" value="${vo.membername }" style="ime-mode:active">
     </div>
-    <input type="hidden" id="picture" name="picture" />
     <div>        
         <label for="birth">생년월일</label>
         <input type="text" class="form-control"  name="birth" id="birth" value="${vo.birth}" style="ime-mode:active">
@@ -763,8 +492,7 @@ $(document).ready(function (){
     </section>
     <section id="registerds">
     <h3>학력사항</h3>
-    <div class="divStaff">
-    <div >
+    <div>
         <label for="education">학력사항</label>&nbsp;
        
       
@@ -790,8 +518,7 @@ $(document).ready(function (){
 		</label>
 		<hr>
 	</div>
-		<button class="btn btn-success" name="addStaff">학력 추가</button>
-   
+		
 		<div>
 		 <label for="schoolname">학교명</label>&nbsp;
 			    
@@ -822,11 +549,9 @@ $(document).ready(function (){
        </div>
        <div>
        <label>전공</label>
-           <input type="text" class="form-control" placeholder="전공을 입력하세요" name="major" id="major">
-       
+  		<input type="text"  class="form-control" placeholder="전공을 입력하세요" name="major" id="major" >
        
        </div>
-       
        <div>
        <label>학위</label>
   		<input type="text"  class="form-control" placeholder="학위를 입력하세요" name="degree" id="degree" >
@@ -839,8 +564,7 @@ $(document).ready(function (){
         	<option value="졸업">졸업</option>
         	<option value="중퇴">중퇴</option>
         </select>
-       </div>
-       </div>
+       </div>	
     </section>
     <section id="registerds">
     <h3>경력사항</h3>
@@ -869,15 +593,13 @@ $(document).ready(function (){
         </select>
 	</div>
 	<div>
-	<label for="chargework">직종</label>
-	<input type="text" class="form-control"  placeholder="직종을 입력" name="chargework" >
-		
-        
-    </div>
-    	
+        <label for="chargework">직종</label>
+        <input type="text" class="form-control"  name="chargework" id="chargework" style="ime-mode:active">
+        <%-- <c:import url="occupation.jsp"/> --%>
+    </div>	
     <div>
-    <label for="jobgrade">직급</label>
-    <input type="text"  class="form-control"  placeholder="직급을 입력"  name="jobgrade">
+        <label for="jobgrade">직급</label>
+        <input type="text" class="form-control"  name="jobgrade" id="jobgrade" style="ime-mode:active" placeholder="직급을 입력하세요">
    </div>
    </section>
 
@@ -887,10 +609,11 @@ $(document).ready(function (){
    
    <h3>자격증</h3>
 
-      
+        
    <input class="form-control" name="certificationtype" id="certificationtype" value="자격증/면허증">
-         <label for="lName">자격증명</label>
-         <input type="text" class="form-control" placeholder="자격증명을 입력하세요" name="lName" >
+        <label for="lName">자격증명</label>
+        licenceCode
+        <input type="text" class="form-control"  name="licenceCode" id="lName" placeholder="자격증명을 입력하세요" style="ime-mode:active">
     <div>    
         <label for="lInstitution">발행처/기관</label>
         <input type="text" class="form-control"  name="lInstitution" placeholder="발행처/기관을 입력하세요" id="lInstitution" style="ime-mode:active">
@@ -908,7 +631,6 @@ $(document).ready(function (){
     <h3>어학시험</h3> 
     <input class="form-control" name="certificationtype" id="certificationtype" value="어학시험">
     <div> 
-     
         <label for="language">언어</label>
         <input type="text" class="form-control" placeholder="언어를 입력하세요" name="language" id="language" style="ime-mode:active">
     </div>
@@ -917,8 +639,8 @@ $(document).ready(function (){
         <input type="text" class="form-control" placeholder="발행처/기관을 입력하세요" name="institute" id="institute" style="ime-mode:active">
      </div>
      <div>
-     <label for="institute">시험종류</label>
-     	<input type="text" class="form-control" placeholder="시험종류를 입력하세요" name="langlicencename" id="langlicencename">
+        <label for="langlicencename">시험종류</label>
+        <input type="text" class="form-control" placeholder="시험종류를 입력하세요"  name="langlicencename" id="langlicencename" style="ime-mode:active">
      </div> 
      <div>
         <label for="langpoint">점수</label>
@@ -963,7 +685,6 @@ $(document).ready(function (){
 	 <div  id="hopework">
       <h3>희망근무 선택</h3>
       <div>
-       
     	<label for="hopeworkform">근무형태</label>
     	<select class="form-control" name="hopeworkform" id="hopeworkform" >
         	<option value="근무형태 선택">근무형태 선택</option>
@@ -981,7 +702,7 @@ $(document).ready(function (){
         	<option value="위촉직">위촉직</option>
         	<option value="프리랜서">프리랜서</option>
         </select>
-       </div> 
+       </div>
        <div>
     	<label for="hopepay">희망연봉</label>
     	<select class="form-control" name="hopepay" id="hopepay" >

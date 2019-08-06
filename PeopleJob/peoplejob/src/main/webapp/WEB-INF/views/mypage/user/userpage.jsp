@@ -111,11 +111,10 @@ $(function(){
 				<img alt="회원이미지" src="<c:url value='/resources/main/images/people.PNG'/>" width="100%">
 				${sessionScope.memberName }<span>님</span>
 			</div>
-				<div class="p-l-10 p-rl-0-sr991 p-t-70" style="padding-top: 29px;float:left;    width: 217px;
-    margin-left: -22px;">						
+				<div class="p-l-10 p-rl-0-sr991 p-t-70" style="padding-top: 29px;float:left;">						
 						<!-- Category -->
 						<div class="p-b-60">
-							<div class="how2 how2-cl4 flex-s-c" style="margin-left: 12px;  width: 200px;">
+							<div class="how2 how2-cl4 flex-s-c">
 								<h3 class="f1-m-2 cl3 tab01-title">
 									마이페이지
 								</h3>
@@ -128,13 +127,8 @@ $(function(){
 										이력서 관리
 									</a>
 									</c:if>
-									<c:if test="${sessionScope.author_code==2}" > <!-- 나중에 3으로 바꿀것, 바꾼 후 2이면 못들어가게 막기 -->
-									<a href="#" class="dis-block f1-s-10 text-uppercase cl2 hov-cl10 trans-03 p-tb-13" id="jobopening" onclick="alert('관리자의 승인을 받은 기업회원만 이용가능합니다.')">
-										채용공고 관리
-									</a>
-									</c:if>
-									<c:if test="${sessionScope.author_code==3 }" > <!-- 나중에 3으로 바꿀것, 바꾼 후 2이면 못들어가게 막기 -->
-									<a href="<c:url value='/company/my_jobopening_list.do?companycode1=${sessionScope.companyCode}'/>" class="dis-block f1-s-10 text-uppercase cl2 hov-cl10 trans-03 p-tb-13" id="jobopening">
+									<c:if test="${sessionScope.author_code==2 || sessionScope.author_code==3 }" > <!-- 나중에 3으로 바꿀것, 바꾼 후 2이면 못들어가게 막기 -->
+									<a href="<c:url value='/company/my_jobopening_list.do?companycode1=${sessionScope.companyCode}'/>" class="dis-block f1-s-10 text-uppercase cl2 hov-cl10 trans-03 p-tb-13" id="jobopening" onclick="jobopening()">
 										채용공고 관리
 									</a>
 									</c:if>
@@ -163,7 +157,7 @@ $(function(){
 										지원 현황
 									</a>
 									</c:if>
-									<c:if test="${sessionScope.author_code==2|| sessionScope.author_code==3 }" > 
+									<c:if test="${sessionScope.author_code==2|| sessionScope.author_code==3 }" > <!-- 나중에 3으로 바꿀것, 바꾼 후 2이면 못들어가게 막기 -->
 									<a href="<c:url value='/mypage/corp/paymentDetail.do'/>" class="dis-block f1-s-10 text-uppercase cl2 hov-cl10 trans-03 p-tb-13">
 										결제 내역
 									</a>
@@ -176,13 +170,8 @@ $(function(){
 										내 정보 관리
 									</a>
 									</c:if>
-									<c:if test="${sessionScope.author_code==2}" >
-									<a href="" class="dis-block f1-s-10 text-uppercase cl2 hov-cl10 trans-03 p-tb-13" onclick="alert('관리자의 승인을 받은 기업회원만 이용가능합니다.')">
-										기업정보 관리
-									</a>
-									</c:if>
-									<c:if test="${sessionScope.author_code==3 }" >
-									<a href="<c:url value='/login/c_update.do'/>" class="dis-block f1-s-10 text-uppercase cl2 hov-cl10 trans-03 p-tb-13">
+									<c:if test="${sessionScope.author_code==2|| sessionScope.author_code==3 }" >
+									<a href="#" class="dis-block f1-s-10 text-uppercase cl2 hov-cl10 trans-03 p-tb-13" onclick="company()">
 										기업정보 관리
 									</a>
 									</c:if>
@@ -215,7 +204,7 @@ $(function(){
 						
 							<div class="dashboard">
             <ul class="activity_list"> 
-                   <%-- <li class="img">
+                   <li class="img">
                    <c:if test="${sessionScope.author_code==1 }">
                         <a href="<c:url value='/apply/apply_list.do'/>" onclick="" onmousedown="try{n_trackEvent('myhome', 'dashboard' , 'resume-manage', '');}catch(e){};">
                      </c:if>
@@ -292,11 +281,8 @@ $(function(){
                             </c:if>
                            </div>
                         </a>
-                    </li>  --%>
-                                  
-                        <li> <div style="width: 25%;height:150px; border:1px solig lightgray;">
-                        	<img src="<c:url value='/resources/main/images/start1.png'/>">
-                        <a>이력서</a></div> </li>
+                    </li> 
+                                   
                                    
                             
                             </ul>

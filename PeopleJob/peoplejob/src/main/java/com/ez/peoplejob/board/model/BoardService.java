@@ -12,6 +12,4 @@ public interface BoardService {
 	int boardEdit(BoardVO boardVo);
 	public List<BoardVO> getBoardList();
 	public BoardVO selectByBoardCode(int boardCode);
-	
-	List<BoardVO> selectByUsage();
 }

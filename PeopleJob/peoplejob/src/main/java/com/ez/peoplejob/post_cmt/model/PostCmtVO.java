@@ -7,14 +7,10 @@ public class PostCmtVO {
 	private Timestamp boardDate;
 	private int arrayno;
 	private int stepno;
-	private String deletecheck;
+	private String deletechekc;
 	private int memberCode;
-	private int boardCode2;
+	private int tboardCode2;
 	private int groupno;
-	
-	
-	//내용 추가
-	private String content;
 	public int getCommentCode() {
 		return commentCode;
 	}
@@ -39,44 +35,36 @@ public class PostCmtVO {
 	public void setStepno(int stepno) {
 		this.stepno = stepno;
 	}
-	
+	public String getDeletechekc() {
+		return deletechekc;
+	}
+	public void setDeletechekc(String deletechekc) {
+		this.deletechekc = deletechekc;
+	}
 	public int getMemberCode() {
 		return memberCode;
 	}
 	public void setMemberCode(int memberCode) {
 		this.memberCode = memberCode;
 	}
-	
+	public int getTboardCode2() {
+		return tboardCode2;
+	}
+	public void setTboardCode2(int tboardCode2) {
+		this.tboardCode2 = tboardCode2;
+	}
 	public int getGroupno() {
 		return groupno;
 	}
 	public void setGroupno(int groupno) {
 		this.groupno = groupno;
 	}
-	
-	
-	public int getBoardCode2() {
-		return boardCode2;
-	}
-	public void setBoardCode2(int boardCode2) {
-		this.boardCode2 = boardCode2;
-	}
-	public String getContent() {
-		return content;
-	}
-	public void setContent(String content) {
-		this.content = content;
-	}
-	public void setDeletecheck(String deletecheck) {
-		this.deletecheck = deletecheck;
-	}
 	@Override
 	public String toString() {
-		return "PostCmtVO [commentCode=" + commentCode + ", boardDate=" + boardDate + ", arrayno=" + arrayno
-				+ ", stepno=" + stepno + ", deletecheck=" + deletecheck + ", memberCode=" + memberCode + ", boardCode2="
-				+ boardCode2 + ", groupno=" + groupno + ", content=" + content + "]";
+		return "Post_cmtVO [commentCode=" + commentCode + ", boardDate=" + boardDate + ", arrayno=" + arrayno
+				+ ", stepno=" + stepno + ", deletechekc=" + deletechekc + ", memberCode=" + memberCode
+				+ ", tboardCode2=" + tboardCode2 + ", groupno=" + groupno + "]";
 	}
-	
 	
 	
 }

@@ -141,8 +141,23 @@ button {
 <script type="text/javascript" src="<c:url value='/resources/main/js/jquery-3.4.1.min.js'/>"></script>
 <script type="text/javascript">
 
+var author_code="${sessionScope.author_code}";
+function jobopening(){
+	if(author_code==2){
+		alert('기업회원은 관리자의 승인을 받은 후 채용공고를 등록할 수 있습니다.');
+	}else if(author_code==3){
+		
+		location.href="<c:url value='/company/my_jobopening_list.do?companycode1=${session.companyCode}'/>";  
+	}
+}  
 
-
+function company(){
+	if(author_code==2){
+		alert('기업회원은 관리자의 승인을 받은 후 기업정보를 등록할 수 있습니다.');
+	}else if(author_code==3){
+		location.href="<c:url value='/login/c_update.do'/>";
+	}
+} 
 </script>
 </head>
 <body class="animsition">
@@ -163,25 +178,11 @@ button {
 					<a href="<c:url value='/main/mainindex.do'/>"><img src="<c:url value='/resources/main/images/peoplejob_logo.JPG'/>" alt="LOGO"></a>
 				</div>	
 			<div class="pos-relative size-a-2 bo-1-rad-22 of-hidden bocl11 m-tb-6" style="width: 500px">
-				<input class="f1-s-1 cl6 plh9 s-full p-l-25 p-r-45" type="text" name="search" placeholder="Search" value="${param.keyword }">
-				<button class="flex-c-c size-a-1 ab-t-r fs-20 cl2 hov-cl10 trans-03" id="submitbut" name="submitbut">
+				<input class="f1-s-1 cl6 plh9 s-full p-l-25 p-r-45" type="text" name="search" placeholder="Search">
+				<button class="flex-c-c size-a-1 ab-t-r fs-20 cl2 hov-cl10 trans-03">
 					<i class="zmdi zmdi-search"></i>
 				</button>
 			</div>
-				<script type="text/javascript">
-					$("#submitbut").click(function(){//검색버튼 누를 시 이벤트
-						var a=$("input[name=search]").val();
-						location.href="<c:url value='/search/search_list.do?keyword="+a+"'/>";
-						$("input[name=search]").val(a);
-					});
-					$("input[name=search]").keydown(function (key) { //엔터버튼 누를 시 이벤트
-						if (key.keyCode == 13) { // 엔터키면
-							var a=$("input[name=search]").val();
-							location.href="<c:url value='/search/search_list.do?keyword="+a+"'/>";
-							$("input[name=search]").val(a);
-						}
-			        });
-				</script>
 				<!-- Banner -->
 				<div class="banner-header">
 					<a href="https://themewagon.com/themes/free-bootstrap-4-html5-news-website-template-magnews2/">
@@ -217,7 +218,7 @@ button {
 								<a href="">자료실</a>
 								<ul class="sub-menu">
 									<li><a href="">이력서 양식</a></li>
-									<li><a href="<c:url value='/references/news.do'/>">취업 뉴스</a></li>
+									<li><a href="">취업 뉴스</a></li>
 									<li><a href="<c:url value='/references/FreeLecture.do'/>">무료 강좌</a></li>
 									
 								</ul>
@@ -260,9 +261,10 @@ button {
 							</li>
 
 							<li>
-								<a href="<c:url value='/notice/list.do'/>">게시판</a>
+								<a href="">게시판</a>
 								<ul class="sub-menu">
-									<c:import url="/board/boardList.do"></c:import>
+									<li><a href="">자유게시판</a></li>
+									<li><a href="">QnA</a></li>
 									<li><a href="<c:url value='/notice/list.do'/>">공지사항</a></li>
 								</ul>
 							</li>
@@ -309,7 +311,6 @@ button {
                            <li><a href="">스크랩현황</a></li>
                         </c:if>
                         
-								<li><a href="<c:url value='/custext/mycustext.do'/>">문의내역</a></li>
 								<c:if test="${sessionScope.author_code==2 || sessionScope.author_code==3 }"> 
 									<li><a href="<c:url value='/mypage/corp/paymentDetail.do'/>">결제/이용 내역</a></li>
 								</c:if>

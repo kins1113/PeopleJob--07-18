@@ -80,15 +80,6 @@ textarea {
 	margin-left: 14px;
 	border: 1px solid lightgray;
 }
-.title {
-	margin-top: 22px;
-	text-align: center;
-	display: block;
-	font-size: 30px;
-	color: green;
-	font-weight: bold;
-	margin-left: 0px;
-}
 </style>
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 <script>
@@ -221,10 +212,10 @@ textarea {
 							success : function(res) {
 								var str = "";
 								if (res) {
-									str = "사용가능한 아이디입니다.";
+									str = "사용가능한 아이디";
 									$('#chkmemberid').val('Y');
 								} else {
-									str = "이미 등록된 아이디입니다.";
+									str = "이미 등록된 아이디";
 									$('#chkmemberid').val('N');
 								}
 								$('.error').html(str);
@@ -294,9 +285,62 @@ textarea {
 						$('#chkpwd').val('N');
 					}
 
+					/* else if(!validate_pwd($('#pwd').val()) || !validate_pwd($('#pwd2').val()) || $('#pwd').val().length<4 || $('#pwd2').val().length<4){
+						$('.pwderror').html("비밀번호 규칙에 맞지 않습니다.");
+						$('.pwderror').show();
+						$('#chkpwd').val('N');
+					} */
 				});
 
-		
+		$('#pwd').keyup(function() {
+					if (validate_pwd($('#pwd').val())
+							&& validate_pwd($('#pwd2').val())
+							&& $('#pwd').val().length >= 4
+							&& $('#pwd2').val().length >= 4) {
+						// pwd와 pwd2 모두 규칙에 만족할 때
+
+						var pwd = $('#pwd').val();
+						var pwd2 = $('#pwd2').val();
+
+						$.ajax({
+
+							url : "<c:url value='/login/ajaxchkPwd.do'/>",
+							type : "get",
+							data : {
+								"pwd" : pwd,
+								"pwd2" : pwd2
+							},
+							success : function(res) {
+								var str = "";
+								if (res) { //bool=true
+									str = "비밀번호 일치";
+									$('#chkpwd').val('Y');
+								} else { //bool=false
+									str = "비밀번호 불일치";
+									$('#chkpwd').val('N');
+								}
+								$('.pwderror').html(str);
+								$('.pwderror').show();
+
+							},
+							error : function(xhr, status, error) {
+								alert(status + ":" + error);
+							}
+						});
+
+					} else if($('#pwd').val().length<1){
+						$('.pwderror').hide();
+						$('.pwd1error').hide(); 
+						$('#chkpwd').val('N');
+						 
+					}else {
+						$('.pwderror').html("비밀번호 규칙에 맞지 않습니다.");
+						$('.pwderror').show();
+						$('#chkpwd').val('N');
+					}
+
+				});
+
 		//이메일 인증용
 		$('#emailcertificate')
 				.click(
@@ -323,10 +367,7 @@ textarea {
 <div class="container">
 	<div class="row">
 		<div class="col-md-6 col-md-offset-3">
-		<span class="title"><img alt="기업회원가입"
-					src="<c:url value='/resources/main/images/icons/enterprise.png'/>"
-					width="65px;" style="margin-right: 10px;">기업 회원가입</span>
-			<div class="panel panel-login" style="width: 550px;">
+			<div class="panel panel-login">
 				<div class="panel-heading">
 					<div class="row">
 						<div class="col-xs-6">
@@ -374,8 +415,8 @@ textarea {
 								</div>
 								
 								<div class="form-group" style="float: left; margin-right:30px;" >
-										<input type="text" name="memberid" id="memberid" tabindex="1" placeholder="아이디 " 
-										class="form-control infobox" style="width:300px" title="아이디" maxlength="10">2~10자의 영문자, 숫자와 특수기호(_)만 사용 가능합니다.
+										<input type="text" name="memberid" id="memberid" tabindex="1" placeholder="아이디 *" 
+										class="form-control infobox" style="width:250px" title="아이디" maxlength="10">2~10자의 영문자, 숫자와 특수기호(_)만 사용 가능합니다.
 										
 									</div>
 
@@ -387,30 +428,33 @@ textarea {
 
 								<div class="form-group" style="float: left; margin-right: 30px;">
 									<input type="password" name="pwd" id="pwd" tabindex="1"
-										placeholder="비밀번호 " class="form-control" style="width: 300px"
+										placeholder="비밀번호 *" class="form-control" style="width: 250px"
 										title="비밀번호">비밀번호는 4글자 이상, 영문자와 숫자로 만들어주세요.
 								</div>
-								
-							<div class="form-group">
-									<div class="row">
-										<span id="pwderror" class="pwderror" style="margin-top: 38px; margin-left: -72px;"></span>
-									</div>
-								</div>
-								
+
 								<div class="form-group" style="float: left; margin-right: 30px;">
 									<input type="password" name="pwd2" id="pwd2" tabindex="1"
 										placeholder="비밀번호 확인" class="form-control"
-										style="width: 300px" title="비밀번호 확인">
+										style="width: 250px" title="비밀번호 확인">
 								</div>
 								
 								
+									<div class="form-group">
+									<div class="row">
+										<span id="pwd1error" class="pwd1error" style="margin-top: 28px;margin-left:-20px;"></span>
+									</div>
+								</div>
 								<div class="form-group">
 									<div class="row">
 										<input type="hidden" id="chkpwd" class="chkpwd"
 											placeholder="비밀번호일치 확인용">
 									</div>
 								</div>
-								
+								<div class="form-group">
+									<div class="row">
+										<span id="pwderror" class="pwderror"></span>
+									</div>
+								</div>
 								<div class="form-group">
 									<input type="text" name="membername" id="membername"
 										tabindex="1" class="form-control" placeholder="담당자명"
@@ -454,9 +498,7 @@ textarea {
 								<div class="form-group">
 									<h4 style="float: left;">
 										이용약관 동의<input type="checkbox" name="chk" id="chk"
-											style="float: right; margin-right: 300px; margin-left: 10px;    width: 22px;
-    height: 22px;
-    margin-top: -1px;">
+											style="float: right; margin-right: 300px; margin-left: 10px;">
 									</h4>
 
 									<ul id="faq-list" class="wow fadeInUp"
@@ -464,7 +506,7 @@ textarea {
 										<li>
 											<!-- <a data-toggle="collapse" class="collapsed" href="#faq1">이용약관 보기▽ <i class="ion-android-remove"></i></a> -->
 											<div id="faq1">
-												<textarea rows="10" cols="70">
+												<textarea rows="10" cols="65">
 개인 회원 약관 (개정 및 적용 2019. 08. 01)
 제1조 (목적)
 본 약관은 ㈜PEOPLEJOB(이하 "회사")이 운영하는 웹사이트(이하 “사이트”)를 통해 인터넷 관련 서비스를 제공함에 있어, 회사가 제공하는 서비스와 관련하여, 이를 이용하는 가입자(이하 “회원” 또는 “개인회원”)의 이용조건 및 제반 절차, 기타 필요한 사항을 규정함을 목적으로 한다.
@@ -542,16 +584,14 @@ textarea {
 										<input type="submit" name="registerCompanysubmit"
 											id="registerCompanysubmit" tabindex="4"
 											class="form-control btn btn-register" value="가입하기"
-											style=" width: 400px;
-    background-color: #50a954;
-    margin-left: -90px;">
+											style="background-color: #50a954">
 									</div>
 								</div>
 								<div class="form-group">
 									<div class="col-sm-6 col-sm-offset-3">
-										<div class="text-center" style="margin-top: 10px;">
+										<div class="text-center">
 											<a href="<c:url value='/login/login.do'/>" tabindex="5"
-												class="forgot-password" style="font-size: 1.1em;">로그인하기</a>
+												class="forgot-password">로그인하기</a>
 										</div>
 									</div>
 								</div>

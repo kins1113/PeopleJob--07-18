@@ -8,8 +8,7 @@
     padding: 10px;
     background: #cccccc;
     
-}
-select {
+}select {
     height: 30px;
 }
 </style>

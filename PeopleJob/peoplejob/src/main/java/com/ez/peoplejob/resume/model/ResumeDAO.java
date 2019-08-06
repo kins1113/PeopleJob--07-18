@@ -37,10 +37,10 @@ public interface ResumeDAO {
 	public List<ResumeVO>selectAll(SearchVO searscVo);
 	
 	public ResumeVO selectBylanglicenceCode(int langlicenceCode);
-	public ResumeVO selectBylicenceCode(int lNo);
+	public ResumeVO selectBylicenceCode(int licenceCode);
 	public ResumeVO selectBydvCode(int dvCode);
 	public ResumeVO selectByacademicCode(int academicCode);
-	public ResumeVO selectBydesiredWorkCode(int hopeworkCode);
+	public ResumeVO selectBydesiredWorkCode(int desiredWorkCode);
 	public ResumeVO selectBymemberCode(int memberCode);
 	public ResumeVO selectBybtype1(int btypeCode1);
 	public ResumeVO selectBybtype2(int btypeCode2);
@@ -55,13 +55,5 @@ public interface ResumeDAO {
 	public int insertBtype2(ResumeVO vo);
 	public int insertBtype3(ResumeVO vo);
 	public int insertLocation2(ResumeVO vo);
-	
-	int updatelang(ResumeVO vo);
-	int updatecer(ResumeVO vo);
-	int updatecareer(ResumeVO vo);
-	int updateedu(ResumeVO vo);
-	int updatehope(ResumeVO vo);
-	int updatemember(ResumeVO vo);
-	
 	
 }

@@ -90,10 +90,11 @@
 				<h2>게시글 추가</h2>
 			</div>
 			<!-- 해더 부분 버튼 그룹 끝 -->
-			<form name="postfrm" enctype="multipart/form-data" 
-					method="post" action="<c:url value='/board/boardWrite.do'/>">
+			<form name="postWriteForm" id="postWriteForm" enctype="multipart/form-data" 
+					method="post" action="<c:url value='/manager/post/postWrite.do'/>">
 			<!-- 게시판 정보를 넘기기위한 hidden -->
 			<input type="hidden" name="boardCode" >
+			<input type="hidden" name="adminCode" value='${sessionScope.adminCode }'>
 					
 			<div class="card-body" id="cardBoduPostList">
 				<div class="form-group" id="comboPost">
@@ -102,7 +103,7 @@
 				<div class="form-group" id="divTitle">
 					<label for="boardtitle">게시글 제목</label> 
 					<input type="text" name="boardtitle" id="boardtitle" class="form-control"  placeholder="게시글 제목"> 
-					
+					<span class="mt-2 d-block">입력하세요.</span>
 				</div>
 					<div class="form-group" >
 					<label>게시글 내용</label>
@@ -116,7 +117,7 @@
 				<div>
 					<input type="submit" class="btn btn-primary btn-default" value="등록">
 					<input type="reset" class="btn btn-secondary btn-default" value="취소">
-					<a id="btpopupList" href="<c:url value='/board/boardByCategory.do?boardCode'/>"
+					<a id="btpopupList" href="<c:url value='/manager/popup/popupList.do'/>"
 						class="mb-1 btn btn-outline-success">목록으로</a>
 				</div>
 

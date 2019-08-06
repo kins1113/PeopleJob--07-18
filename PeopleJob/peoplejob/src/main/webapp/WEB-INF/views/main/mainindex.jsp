@@ -2,9 +2,6 @@
 
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-	<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@include file="inc/top.jsp"%>
 
 <link
@@ -150,21 +147,6 @@ $(function() {
 
 });
 </script>
-
-
-<c:forEach var="popupVo" items="${popupList}">
-	<script type="text/javascript">
-		$(function(){
-			var count = ${fn:length(popupList)}
-			for(var i=0;i<count;i++){
-				window.open("<c:url value='/manager/popup/popupOpen.do?popupImg=${popupVo.popupImg }'/>",
-					"${popupVo.popupName }","width=${popupVo.width },height=${popupVo.height},left=${popupVo.left},top=${popupVo.top}")
-					/* window.open("<c:url value='/manager/popup/popupOpen.do'/>",
-					"popupNam","width=500,height=600,left=100,top=20") */
-			}
-	})
-	</script>
-</c:forEach>
 
 <!------ Include the above in your HEAD tag ---------->
 <style type="text/css">
@@ -1084,7 +1066,7 @@ span[name=publicname]{
 								<div class="m-b-45">   
 								<div class="imgclass">
 									<div style="width: 294px; text-align: center;"> 
-										<img src ="<c:url value='/logo_upload/${map["IMAGE"] }'/>" alt="IMG" class="imgsize">
+										<img src ="<c:url value='/peoplejob_upload/${map["IMAGE"] }'/>" alt="IMG" class="imgsize">
 									</div>
 									<div class="p-t-16"> 
 										<span class="p-b-5" style="font-size: 1.1em; display: block; margin-right: 10px;"> ${map['COMPANYNAME'] } </span>
@@ -1140,7 +1122,7 @@ span[name=publicname]{
 								<div class="m-b-45">   
 								<div class="imgclass">
 									<div style="width: 294px; text-align: center;"> 
-										<img src ="<c:url value='/logo_upload/${map["IMAGE"] }'/>" alt="IMG" class="imgsize">
+										<img src ="<c:url value='/peoplejob_upload/${map["IMAGE"] }'/>" alt="IMG" class="imgsize">
 									</div>
 									<div class="p-t-16"> 
 										<span class="p-b-5" style="font-size: 1.1em; display: block; margin-right: 10px;"> ${map['COMPANYNAME'] } </span>

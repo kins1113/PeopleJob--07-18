@@ -92,7 +92,6 @@ public class JobopeningController {
 			@RequestParam(required=false) String[] payway1,
 			@RequestParam(required=false) String[] academicCondition1,
 			@RequestParam(required = false) String[] career1,
-			@RequestParam(required=false,defaultValue = "10") int recordCountPerPage,
 			HttpSession session,
 			@ModelAttribute SearchVO searchVo,Model model) {
 		String id=(String)session.getAttribute("memberid");
@@ -106,14 +105,11 @@ public class JobopeningController {
 		//1]PaginationInfo 객체 생성
 		PaginationInfo pagingInfo=new PaginationInfo();
 		pagingInfo.setBlockSize(WebUtility.BLOCK_SIZE);
-		pagingInfo.setRecordCountPerPage(recordCountPerPage);
-		//pagingInfo.setRecordCountPerPage(WebUtility.RECORD_COUNT_PER_PAGE);
-		//pagingInfo.setRecordCountPerPage(searchVo.getRecordCountPerPage());
+		pagingInfo.setRecordCountPerPage(WebUtility.RECORD_COUNT_PER_PAGE);
 		pagingInfo.setCurrentPage(searchVo.getCurrentPage());
 		
 		//2]SearchVo에 페이징 관련 변수 세팅
-		searchVo.setRecordCountPerPage(recordCountPerPage);
-		//searchVo.setRecordCountPerPage(WebUtility.RECORD_COUNT_PER_PAGE);
+		searchVo.setRecordCountPerPage(WebUtility.RECORD_COUNT_PER_PAGE);
 		searchVo.setFirstRecordIndex(pagingInfo.getFirstRecordIndex());
 		logger.info("셋팅 후 serchVo={}",searchVo);
 		
@@ -372,7 +368,7 @@ public class JobopeningController {
 			logger.info("vo={}",vo);
 			if(cnt>0) {
 				msg="삭제완료";
-				url="/company/my_jobopening_list.do?companycode1="+vo.getCompanyCode();
+				url="/company/jobopening_list.do";
 				if(vo.getCompanyimage()!=null 
 						&& !vo.getCompanyimage().isEmpty()) {
 					String path=fileUploadUtil.getUploadPath(request,FileUploadUtility.JOBOPENING_UPLOAD);

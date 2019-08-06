@@ -49,10 +49,6 @@ public class BoardServiceImpl implements BoardService{
 	public BoardVO selectByBoardCode(int boardCode) {
 		return boardDao.selectByBoardCode(boardCode);
 	}
-	@Override
-	public List<BoardVO> selectByUsage() {
-		return boardDao.selectByUsage();
-	}
 
 
 }

@@ -5,13 +5,10 @@ import java.sql.Timestamp;
 public class CustextVO {
 	private int custextCode;
 	private String custextcategory;
-	private String custitle;
+	private String custitleCUSTITLE;
 	private String cuscontent;
 	private Timestamp cusRegdate;
 	private int memberCode;
-	private String answercontent;
-	private Timestamp answerRegdate;
-	private int adminCode;
 	public int getCustextCode() {
 		return custextCode;
 	}
@@ -24,11 +21,11 @@ public class CustextVO {
 	public void setCustextcategory(String custextcategory) {
 		this.custextcategory = custextcategory;
 	}
-	public String getCustitle() {
-		return custitle;
+	public String getCustitleCUSTITLE() {
+		return custitleCUSTITLE;
 	}
-	public void setCustitle(String custitle) {
-		this.custitle = custitle;
+	public void setCustitleCUSTITLE(String custitleCUSTITLE) {
+		this.custitleCUSTITLE = custitleCUSTITLE;
 	}
 	public String getCuscontent() {
 		return cuscontent;
@@ -48,30 +45,13 @@ public class CustextVO {
 	public void setMemberCode(int memberCode) {
 		this.memberCode = memberCode;
 	}
-	public String getAnswercontent() {
-		return answercontent;
-	}
-	public void setAnswercontent(String answercontent) {
-		this.answercontent = answercontent;
-	}
-	public Timestamp getAnswerRegdate() {
-		return answerRegdate;
-	}
-	public void setAnswerRegdate(Timestamp answerRegdate) {
-		this.answerRegdate = answerRegdate;
-	}
-	public int getAdminCode() {
-		return adminCode;
-	}
-	public void setAdminCode(int adminCode) {
-		this.adminCode = adminCode;
-	}
 	@Override
 	public String toString() {
-		return "CustextVO [custextCode=" + custextCode + ", custextcategory=" + custextcategory + ", custitle="
-				+ custitle + ", cuscontent=" + cuscontent + ", cusRegdate=" + cusRegdate + ", memberCode=" + memberCode
-				+ ", answercontent=" + answercontent + ", answerRegdate=" + answerRegdate + ", adminCode=" + adminCode
-				+ "]";
+		return "CustextVO [custextCode=" + custextCode + ", custextcategory=" + custextcategory + ", custitleCUSTITLE="
+				+ custitleCUSTITLE + ", cuscontent=" + cuscontent + ", cusRegdate=" + cusRegdate + ", memberCode="
+				+ memberCode + "]";
 	}
+	
+	
 	
 }

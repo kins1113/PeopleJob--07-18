@@ -15,12 +15,14 @@ public class ResumeServiceImpl implements ResumeService{
 	@Override
 	@Transactional
 	public int insertResume(ResumeVO vo) {
-		int cnt=resumeDao.insertEducation(vo);
-		cnt=resumeDao.insertCareer(vo);
+		
+		int cnt=resumeDao.insertLangcertification(vo);
 		cnt=resumeDao.insertCertificate(vo);
-		cnt=resumeDao.insertLangcertification(vo);
+		cnt=resumeDao.insertCareer(vo);
+		cnt=resumeDao.insertEducation(vo);
 		cnt=resumeDao.insertHopeWorking(vo);
 		cnt=resumeDao.insertResume(vo);
+		
 		return cnt;
 	}
 	@Override
@@ -32,16 +34,8 @@ public class ResumeServiceImpl implements ResumeService{
 		return resumeDao.deleteResumeByNo(resumeCode);
 	}
 	@Override
-	@Transactional
 	public int updateResume(ResumeVO vo) {
-		int cnt=resumeDao.updatemember(vo);
-		cnt=resumeDao.updateedu(vo);
-		cnt=resumeDao.updatecareer(vo);
-		cnt=resumeDao.updatecer(vo);
-		cnt=resumeDao.updatelang(vo);
-		cnt=resumeDao.updatehope(vo);
-		cnt=resumeDao.insertResume(vo);
-		return cnt;
+		return resumeDao.updateResume(vo);
 	}
 	@Override
 	public int insertLangcertification(ResumeVO vo) {
@@ -96,8 +90,8 @@ public class ResumeServiceImpl implements ResumeService{
 		return resumeDao.selectBylanglicenceCode(langlicenceCode);
 	}
 	@Override
-	public ResumeVO selectBylicenceCode(int lNo) {
-		return resumeDao.selectBylicenceCode(lNo);
+	public ResumeVO selectBylicenceCode(int licenceCode) {
+		return resumeDao.selectBylicenceCode(licenceCode);
 	}
 	@Override
 	public ResumeVO selectBydvCode(int dvCode) {
@@ -108,8 +102,8 @@ public class ResumeServiceImpl implements ResumeService{
 		return resumeDao.selectByacademicCode(academicCode);
 	}
 	@Override
-	public ResumeVO selectBydesiredWorkCode(int hopeworkCode) {
-		return resumeDao.selectBydesiredWorkCode(hopeworkCode);
+	public ResumeVO selectBydesiredWorkCode(int desiredWorkCode) {
+		return resumeDao.selectBydesiredWorkCode(desiredWorkCode);
 	}
 	@Override
 	public ResumeVO selectBymemberCode(int memberCode) {
@@ -168,30 +162,6 @@ public class ResumeServiceImpl implements ResumeService{
 	@Override
 	public ResumeVO selectBythird(int thirdCode) {
 		return resumeDao.selectBythird(thirdCode);
-	}
-	@Override
-	public int updatelang(ResumeVO vo) {
-		return resumeDao.updatelang(vo);
-	}
-	@Override
-	public int updatecer(ResumeVO vo) {
-		return resumeDao.updatecer(vo);
-	}
-	@Override
-	public int updatecareer(ResumeVO vo) {
-		return resumeDao.updatecareer(vo);
-	}
-	@Override
-	public int updateedu(ResumeVO vo) {
-		return resumeDao.updateedu(vo);
-	}
-	@Override
-	public int updatehope(ResumeVO vo) {
-		return resumeDao.updatehope(vo);
-	}
-	@Override
-	public int updatemember(ResumeVO vo) {
-		return resumeDao.updatemember(vo);
 	}
 	
 

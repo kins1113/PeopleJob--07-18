@@ -76,10 +76,11 @@ padding: 5px;
 			 $("#servicePrice").html("0원"); */
 	  });
 	  
-	  
 	 
-	  	var sum=0;
-		var eachprice=0;	  
+	  
+	  
+	
+	  
 	  $('button[name=pay]').click(function(){
 		  
 		 
@@ -90,9 +91,9 @@ padding: 5px;
 		  
 		  var scode=$(this).parents("div[name=divcolor]").find("input[name=serviceCode1]").val();
 		  
-		  eachprice=$(this).parents("div[name=divcolor]").find("input[name=sprice]").val();
+		  var eachprice=$(this).parents("div[name=divcolor]").find("input[name=sprice]").val();
 		  $('#serviceName').text($(this).parents("div[name=divcolor]").find("input[name=name]").val());
-		  $('input[name=serviceCode]').val(scode);
+		  $('input[name=serviceCode]').attr('value',scode);
 		 // $('#servicePrice').text(eachprice+"원");
 		 
 		  
@@ -106,49 +107,47 @@ padding: 5px;
 			  check();
 			  $('.check').click(check);
 			  
-			  $('.check').click(function(){
-					 var selectval= $(this).parents('tr').find('#selectPeriod option:selected').val();
-					// $('#totalPrice').text(eachprice*(length+1)*selectval+"원");
-					
-						  
-						 if($(this).is(':checked')){
-						  	$(this).parents('tr').find('input[title=price]').val(eachprice*selectval);
-						  	//$(this).parents('tr').find('.priceclass').attr('value',(eachprice*selectval));
-						  	 
-							sum += Number($(this).parents("tr").find("input[title=price]").val());
-							  /* checkbox 개수 * 날짜* 1일당 가격  */
-						 }else{
-							 var p=0;
-							sum -= Number($(this).parents("tr").find("input[title=price]").val());
-							 $(this).parents('tr').find('input[title=price]').val(p);
-						 }
-							$('#totalPrice').val(sum);
-						 
-				  });
-			  
+			 
+			  var sum=0; //totalprice에 보여줄 모든 price들의 합
 			  var length=  $('.check:checked').length;
 			  
 			  /* select 값 변경 시 check된 것만 각각의금액 보여주기 */
 			  $('.selectclass').change(function(){
-					sum-=Number($(this).parents('tr').find('input[title=price]').val());
 					var selectval= $(this).parents('tr').find('#selectPeriod option:selected').val();
 					  
 					  if($(this).parents('tr').find('.check').is(':checked')){
-						 // $(this).parents('tr').find('input[title=price]').attr('value',(eachprice*selectval));
-						  $(this).parents('tr').find('input[title=price]').val(eachprice*selectval);
+						  $(this).parents('tr').find('input[title=price]').attr('value',(eachprice*selectval));
 						  sum+=Number($(this).parents('tr').find('input[title=price]').val());
 						  
-						  $('#totalPrice').val(sum);
+						  $('#totalPrice').attr('value',sum);
 					  }else{
 						  sum-=Number($(this).parents('tr').find('input[title=price]').val());
-						  $('#totalPrice').val(sum);
+						  $('#totalPrice').attr('value',sum);
 						  
 					  }
 				  });
 			
+			  $('.check').click(function(){
+				 var selectval= $(this).parents('tr').find('#selectPeriod option:selected').val();
+				// $('#totalPrice').text(eachprice*(length+1)*selectval+"원");
+				
+					  
+					 if($(this).is(':checked')){
+					  	$(this).parents('tr').find('input[title=price]').attr('value',(eachprice*selectval));
+					  	 
+						sum += Number($(this).parents("tr").find("input[title=price]").val());
+						  /* checkbox 개수 * 날짜* 1일당 가격  */
+					 }else{
+						sum -= Number($(this).parents("tr").find("input[title=price]").val());
+						 $(this).parents('tr').find('input[title=price]').attr('value',sum);
+					 }
+						$('#totalPrice').attr('value',sum);
+					 
+			  });
+			  
 			
 			  
-			//전부 체크
+			  //전부 체크
 			  $("#chkAll").click(function(){
 
 					if($(this).is(":checked")){
@@ -156,51 +155,19 @@ padding: 5px;
 						$('#chklength').text(${fn:length(list)}+"개");
 						//sum=모든 price들의 합
 						
-						$('.check').each(function(){
-						var selectval= $(this).parents('table').find('#selectPeriod option:selected').val();
-						$(this).parents('tr').find('input[title=price]').val(eachprice*selectval);
-							
-						});
+						var size=$('input[name=price]').length;
+						for(var i=0;i<size;i++){
+							sum+=$('input[name=price]').eq(i).val();
+						}
 						
-						
-						$(this).parents('table').find('input[title=price]').each(function(){
-							sum += Number($(this).val());
-						});
-						
-						$('#totalPrice').val(sum);
-						
-						/* select 값 변경 시 check된 것만 각각의금액 보여주기 */
-						  $('.selectclass').change(function(){
-								sum-=Number($(this).parents('tr').find('input[title=price]').val());
-								var selectval= $(this).parents('tr').find('#selectPeriod option:selected').val();
-								  
-								  if($(this).parents('tr').find('.check').is(':checked')){
-									  $(this).parents('tr').find('input[title=price]').val(eachprice*selectval);
-									  //$(this).parents('tr').find('input[title=price]').attr('value',(eachprice*selectval));
-									  sum+=Number($(this).parents('tr').find('input[title=price]').val());
-									  
-									  $('#totalPrice').val(sum);
-								  }else{
-									  
-									  sum-=Number($(this).parents('tr').find('input[title=price]').val());
-									  $('#totalPrice').val(sum);
-									  
-								  }
-							  });
-						
-						
-						
+						$('#totalPrice').attr('value',sum);
 					}else{
-						sum=0;
 						$(".check").prop("checked",false);  
-						$(this).parents('table').find('input[title=price]').val('0');
 						$('#chklength').text("0개");
-						$('#totalPrice').val(sum);
-						$(".selectclass").val("2").prop("selected", true);
-						//$('input[title=price]').attr('value','0');
+						$('#totalPrice').attr('value','0');
+						$('input[title=price]').attr('value','0');
 					}
 			});
-			 
 			  
 		  $('input[type=checkbox]:checked').each(function(){
 				  $(this).prop("checked",false);
@@ -209,7 +176,7 @@ padding: 5px;
 		  $('#cardBoduPostList').hide();
 		  $("#selectPeriod").val("2").prop("selected", true);
 		  $("#serviceTerm").html("0일");
-		  $('#totalPrice').val('0');
+		  $('#totalPrice').attr('value','0');
 		  
 		  if(${sessionScope.memberid==null}){     
 			  alert('로그인을 해주세요');
@@ -228,7 +195,7 @@ padding: 5px;
 			  	$("#selectPeriod").val("2").prop("selected", true);
 			  	$("#chklength").html("0개");
 			  	//$('#servicePrice').text(eachprice+"원");
-			  	$('#totalPrice').val('0');
+			  	$('#totalPrice').attr('value','0');
 			  	
 			  }else if(${sessionScope.author_code==3 && fn:length(list)<1}){   
 				  alert('등록된 채용공고가 없습니다. 채용공고를 먼저 등록해주세요');
@@ -240,8 +207,6 @@ padding: 5px;
 	  });//pay 클릭시
   
  
-	  
-	  
 	  $("#frmList").submit(function(){ 
 		  if($('.check:checked').length<1){
 				alert('결제할 채용공고를 먼저 선택하세요');
@@ -254,104 +219,90 @@ padding: 5px;
 				return false;
 				
 			} else{ 
-				 var count =0;
-				 $('.check:checked').each(function(idx,item){
-					// alert(idx+", "+$(this).attr("name"))
-					//alert("if전 "+$(this).parents('tr').find('.form-control').val());
-					
-					if($(this).parents('tr').find('.form-control').val()==''){
-						//alert("count가 증가 된다..."+count);
-						count=count+1;
-						 //alert(count);
+				$('.check:checked').each(function(){
+					if($(this).parents('tr').find('#paystartDate').length<1){
+						alert('선택한 상품의 이용기간 시작날짜를 선택해주세요.');
+						event.preventDefault();
+						return false;
 						
-					} //체크한 상품의 파라미터 다 입력되었을때
-				 });
-				 
-				 //alert("if밖"+count);
-				 if(count >0){
-					 alert('선택한 상품의 이용기간 시작날짜를 선택해주세요.');
-							event.preventDefault();
-							return false;
-					 
-				 }else{
-						/*
-						$('form[name=frmList]').prop('action','<c:url value="/service/payList.do"/>');
-						$('form[name=frmList]').submit();
-						
-					        var jobno = new Array(); // 배열 선언
-					 
-					        $('.check:checked').each(function() { // 체크된 체크박스의 value 값을 가지고 온다.
-					            jobno.push(this.value);
-					        });
-						*/
-						
-						var param=$("#frmList").serialize();
-						var length=  $('.check:checked').length;
-						var totalprice=$('#totalPrice').val();
-						
-						$.ajax({
-							url : "<c:url value='/service/ajaxpayList.do'/>",
-							type : "POST",
-							//cache: false,
-							traditional : true,
-							data : param,
-							dataType:"json",
-							//async: false,
-							success : function(res) {
-								 if(res){
-									if(confirm(length+'개 채용광고를 결제하시겠습니까?')){
-									
-										var IMP = window.IMP; // 생략가능
-										  IMP.init("imp49241177"); 
-										  
-										  IMP.request_pay({
-											  	pg : 'inicis', // version 1.1.0부터 지원.
-											    pay_method : 'card',
-											    merchant_uid : 'peoplejob_' + new Date().getTime(),
-											    name : 'PEOPLEJOB 채용공고 vvip관',
-											    amount : totalprice,
-											    buyer_email : '${memberVo.email}',
-											    buyer_name : '${sessionScope.memberName}',
-											    buyer_tel : '${memberVo.tel}',
-											    buyer_addr : '${companyVo.companyAddress}',
-											    buyer_postcode : '${companyVo.companyZipcode}',
-											    m_redirect_url : '<c:url value="/service/payment.do"/>' //모바일 결제 후 이동될 주소
-											}, function(rsp) {
-											    if ( rsp.success ) {
-											        var msg = '결제가 완료되었습니다.\n';
-											        msg+='결제일로부터 30일간 이용가능합니다.\n';
-											        msg += '고유ID : ' + rsp.imp_uid+"\n";
-											        msg += '상점 거래ID : ' + rsp.merchant_uid+"\n";
-											        msg += '결제 금액 : ' + rsp.paid_amount+'원\n';
-											        msg += '카드 승인번호 : ' + rsp.apply_num;
-											        
-											        $('#frmList').prop('action','<c:url value="/service/paysuccess.do"/>');
-													$('#frmList').submit();
-											        //location.href="<c:url value='/service/success.do?jobno="+jobno+"'/>";
-											    } else {
-											        var msg = '결제에 실패하였습니다.';
-											        msg += ' : ' + rsp.error_msg;
-											    }
-											    alert(msg);
-											    
-											}); 
-									}
-								 }else{
-									alert('이미 결제완료한 채용공고 상품입니다.');
-									event.preventDefault();
-								} 
-
-							},
-							error : function(xhr, status, error) {
-								alert(status + ":" + error);
+					}
+				});
+				
+				
+				//$('form[name=frmList]').prop('action','<c:url value="/service/payList.do"/>');
+				//$('form[name=frmList]').submit();
+				
+			        var jobno = new Array(); // 배열 선언
+			 
+			        $('.check:checked').each(function() { // 체크된 체크박스의 value 값을 가지고 온다.
+			            jobno.push(this.value);
+			        });
+				
+				var param=$("#frmList").serialize();
+				var length=  $('.check:checked').length;
+				var totalprice=$('#totalPrice').val();
+				
+				$.ajax({
+					url : "<c:url value='/service/ajaxpayList.do'/>",
+					type : "POST",
+					//cache: false,
+					traditional : true,
+					data : param,
+					dataType:"json",
+					//async: false,
+					success : function(res) {
+						 if(res){
+							if(confirm(length+'개 채용광고를 결제하시겠습니까?')){
+							
+								var IMP = window.IMP; // 생략가능
+								  IMP.init("imp49241177"); 
+								  
+								  IMP.request_pay({
+									  	pg : 'inicis', // version 1.1.0부터 지원.
+									    pay_method : 'card',
+									    merchant_uid : 'peoplejob_' + new Date().getTime(),
+									    name : 'PEOPLEJOB 채용공고 vvip관',
+									    amount : totalprice,
+									    buyer_email : '${memberVo.email}',
+									    buyer_name : '${sessionScope.memberName}',
+									    buyer_tel : '${memberVo.tel}',
+									    buyer_addr : '${companyVo.companyAddress}',
+									    buyer_postcode : '${companyVo.companyZipcode}',
+									    m_redirect_url : '<c:url value="/service/payment.do"/>' //모바일 결제 후 이동될 주소
+									}, function(rsp) {
+									    if ( rsp.success ) {
+									        var msg = '결제가 완료되었습니다.\n';
+									        msg+='결제일로부터 30일간 이용가능합니다.\n';
+									        msg += '고유ID : ' + rsp.imp_uid;
+									        msg += '상점 거래ID : ' + rsp.merchant_uid;
+									        msg += '결제 금액 : ' + rsp.paid_amount+'원';
+									        msg += '카드 승인번호 : ' + rsp.apply_num;
+									        
+									        $('#frmList').prop('action','<c:url value="/service/paysuccess.do"/>');
+											$('#frmList').submit();
+									        //location.href="<c:url value='/service/success.do?jobno="+jobno+"'/>";
+									    } else {
+									        var msg = '결제에 실패하였습니다.';
+									        msg += ' : ' + rsp.error_msg;
+									    }
+									    alert(msg);
+									    
+									}); 
 							}
-						});//ajax
-				 }
-						
-					
-			} //바깥 else
+						 }else{
+							alert('이미 결제완료한 채용공고 상품입니다.');
+							event.preventDefault();
+						} 
+
+					},
+					error : function(xhr, status, error) {
+						alert(status + ":" + error);
+					}
+				});
+				
+			}//else(정상)
 		  event.preventDefault();
-	});//submit
+	  }); //submit 
 
 	  
 	 
@@ -365,7 +316,6 @@ padding: 5px;
 		});
 
   });
-
   
 </script> 
 <div class="container" style="margin-top: 30px; margin-bottom: 30px;min-height: 629px; ">
@@ -479,7 +429,7 @@ padding: 5px;
 							style="    cursor: default;
     text-align: right;
     display: inline;
-    width: 43px;" value="0" class="priceclass">원
+    width: 36px;" value="0">원
 						</td>
  					</tr> 
 				  <c:set var="idx" value="${idx+1 }"/> 
@@ -512,7 +462,7 @@ padding: 5px;
 				<input type="text" name="totalPrice" id="totalPrice" style="    color: orangered;
     cursor: default;
     text-align: right;
-    width: 45px; display: inline;" readonly value="0">원 
+    width: 36px; display: inline;" readonly value="0">원 
 				</td>
 			</tr>
 		</tbody> 

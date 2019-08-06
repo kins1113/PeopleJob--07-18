@@ -21,59 +21,6 @@
 		});
 		
 	}); */
-	$(document).ready(function(){
-		//$("#submit2").click(function(){
-		$("form[name=boardForm]").submit(function(){ 
-			//if(confirm("등록하시겠습니까?")){
-				$("form[name=boardForm]").find("input[type=text]").each(function(){
-					if ($(this).val().length < 1) {
-						var msg = $(this).attr('name'); 
-						alert(msg + '칸을 입력해주세요	.');
-						$(this).focus();
-						event.preventDefault(); 
-						return false;
-					}else if (!validate_worktime($('#worktime').val())) {
-						alert('근무시간을 다시 입력해주세요(입력양식 예 : 52)');
-						$('#worktime').focus();
-						event.preventDefault();
-						return false;
-					}else if (!validate_pay($('#pay').val())) {
-						alert('급여를 다시 입력해주세요(입력양식 예 : 3000000)');
-						$('#pay').focus();
-						event.preventDefault();
-						return false;
-					}else if (!validate_worktime($('#recruit').val())) {
-						alert('모집인원을 다시 입력해주세요(입력양식 예 : 9명이면 0명 10~99명이면 00명 100명이상이면 000명 )');
-						$('#recruit').focus();
-						event.preventDefault();
-						return false;
-					}
-				});
-			//}else{
-			//	event.preventDefault();
-			//	return false;
-			//}
-		});
-		
-	});
-		
-	function validate_worktime(time) {
-		var pattern = new RegExp(/^[0-9]*$/g);
-		return pattern.test(time);
-	}
-
-	//아이디 정규식
-	function validate_pay(pay) {
-		var pattern = new RegExp(/^[0-9]*$/g);
-		return pattern.test(pay);
-	}
-
-	//비밀번호 정규식
-	function validate_recruit(recruit) {
-		var pattern = new RegExp(/^[a-zA-Z0-9]+$/g);
-		return pattern.test(recruit);
-	}
-		
 	function s_it()
 	{
 	  var total_str = "";
@@ -115,7 +62,7 @@ select {
         <div class="page-header">
             <h3>구인</h3>
         </div>
-        <form id="boardForm" name="boardForm" class="form-horizontal" role="form" method="post" action="<c:url value='/company/jobopening_register.do'/>"
+        <form id="boardForm" class="form-horizontal" role="form" method="post" action="<c:url value='/company/jobopening_register.do'/>"
         enctype="multipart/form-data">
         <!-- ${company_code} -->
         <input type="hidden" name="companyCode" value="${mvo.companyCode }"> 
@@ -339,12 +286,12 @@ select {
                     <input id="applicationhandbook" name="applicationhandbook" class="form-control" type="text" />
                 </div>
             </div>
-            <!-- <div class="form-group">
+            <div class="form-group">
                 <div  >
                     <label  >카테고리</label> 
                     <input id="category" name="category" class="form-control" type="text" />
                 </div>
-            </div> -->
+            </div>
             <div class="form-group">
                 <div  >
                     <label  >공고 이미지</label> 
@@ -360,7 +307,7 @@ select {
             </div>
             <div class="form-group">
                 <div class="text-center">
-                    <input type="submit" class="btn btn-success btn-mg" id="submit2" value="등록" role="button" />
+                    <input type="submit" class="btn btn-success btn-mg" value="저장" role="button" />
                     <a href="jobopening_list.do" id="cancelBtn" class="btn btn-default btn-mg" role="button">취소</a>
                 </div>
             </div>

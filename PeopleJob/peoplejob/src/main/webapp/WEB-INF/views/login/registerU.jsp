@@ -97,15 +97,6 @@ textarea {
     margin-left: 16px;
     color:gray;
 }
-.title {
-	margin-top: 22px;
-	text-align: center;
-	display: block;
-	font-size: 30px;
-	color: green;
-	font-weight: bold;
-}
-
 </style>
 
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
@@ -222,10 +213,10 @@ textarea {
 							success : function(res) {
 								var str = "";
 								if (res) {
-									str = "사용가능한 아이디입니다";
+									str = "사용가능한 아이디";
 									$('#chkmemberid').val('Y');
 								} else {
-									str = "이미 등록된 아이디입니다";
+									str = "이미 등록된 아이디";
 									$('#chkmemberid').val('N');
 								}
 								$('.error').html(str);
@@ -296,6 +287,55 @@ textarea {
 					} */
 				});
 		
+		$('#pwd').keyup(function() {
+			if (validate_pwd($('#pwd').val()) && validate_pwd($('#pwd2').val()) && $('#pwd').val().length>=4 && $('#pwd2').val().length>=4) {
+				// pwd와 pwd2 모두 규칙에 만족할 때
+
+				var pwd=$('#pwd').val();
+				var pwd2=$('#pwd2').val(); 
+				
+				$.ajax({
+					
+					url : "<c:url value='/login/ajaxchkPwd.do'/>",
+					type : "get",
+					data : {"pwd":pwd, "pwd2":pwd2},
+					success : function(res) {
+						var str = "";
+						if (res) { //bool=true
+							str = "비밀번호 일치";
+							$('#chkpwd').val('Y');
+						} else { //bool=false
+								str = "비밀번호 불일치";
+								$('#chkpwd').val('N');
+						}
+						$('.pwderror').html(str);
+						$('.pwderror').show();
+
+					},
+					error : function(xhr, status, error) {
+						alert(status + ":" + error);
+					}
+				});
+
+			}else if($('#pwd').val().length<1){
+				$('.pwderror').hide();
+				$('.pwd1error').hide(); 
+				$('#chkpwd').val('N');
+				 
+			}else if($('#pwd').val()>=4 && validate_pwd($('#pwd').val())){
+				$('.pwderror').html("비밀번호 규칙에 맞지 않습니다.");
+				$('.pwderror').show();
+				$('#chkpwd').val('N');
+			}
+			
+			
+			/* else if(!validate_pwd($('#pwd').val()) || !validate_pwd($('#pwd2').val()) || $('#pwd').val().length<4 || $('#pwd2').val().length<4){
+				$('.pwderror').html("비밀번호 규칙에 맞지 않습니다.");
+				$('.pwderror').show();
+				$('#chkpwd').val('N');
+			} */
+		});
+		
 
 		//핸드폰 정규식
 		function validate_phoneno(ph) {
@@ -336,26 +376,22 @@ textarea {
 <div class="container">
 	<div class="row">
 		<div class="col-md-6 col-md-offset-3">
-		<span class="title" style="margin-left: -10px;"><img alt="개인회원가입"
-					src="<c:url value='/resources/main/images/icons/account.png'/>"
-					width="65px;" style="margin-right: 10px;">개인 회원가입</span>
-			<div class="panel panel-login" style="width: 550px;">
+			<div class="panel panel-login">
 				<div class="panel-heading">
 					<div class="row">
 						<div class="col-xs-6">
 							<a href="<c:url value='/login/registerU.do'/>"
-								style="color: green; font-size: 1.3em;">
-								개인회원</a>
+								style="color: green; font-size: 1.2em;">개인회원</a>
 						</div>
 						<div class="col-xs-6">
-							<a href="<c:url value='/login/registerC.do'/>" >기업회원</a>
+							<a href="<c:url value='/login/registerC.do'/>" id="">기업회원</a>
 						</div>
 					</div>
 					<hr>
 				</div>
 			
 
-				<div class="form-group">
+								<div class="form-group">
 					<div class="panel-body">
 						<div class="row">
 							<div class="col-lg-12">
@@ -366,15 +402,13 @@ textarea {
 									
 									<div class="form-group" style="float: left; margin-right:30px;" >
 										<input type="text" name="memberid" id="memberid" tabindex="1" placeholder="아이디 " 
-										class="form-control infobox" style="width:300px" title="아이디" maxlength="10">2~10자의 영문자, 숫자와 특수기호(_)만 사용 가능합니다.
+										class="form-control infobox" style="width:250px" title="아이디" maxlength="10">2~10자의 영문자, 숫자와 특수기호(_)만 사용 가능합니다.
 										
 									</div>
 									
 									<div class="form-group">
 									<div class="row">
-										<span class="error" style=" color: red;
-    margin-top: 12px;
-    margin-left: -60px;"></span>
+										<span class="error"></span>
 									</div>
 								</div>
 
@@ -382,23 +416,22 @@ textarea {
 
 								<div class="form-group" style="float: left; margin-right: 30px;">
 									<input type="password" name="pwd" id="pwd" tabindex="1"
-										placeholder="비밀번호 " class="form-control" style="width: 300px"
+										placeholder="비밀번호 " class="form-control" style="width: 250px"
 										title="비밀번호">비밀번호는 4글자 이상, 영문자와 숫자로 만들어주세요.
 								</div>
-								
-							<div class="form-group">
-									<div class="row">
-										<span id="pwderror" class="pwderror" style="margin-top: 38px; margin-left: -72px;"></span>
-									</div>
-								</div>
+
 								
 								<div class="form-group" style="float: left; margin-right: 30px;">
 									<input type="password" name="pwd2" id="pwd2" tabindex="1"
 										placeholder="비밀번호 확인 *" class="form-control infobox"
-										style="width: 300px" title="비밀번호 확인">
+										style="width: 250px" title="비밀번호 확인">
 								</div>
-								
 
+								<div class="form-group">
+									<div class="row">
+										<span id="pwd1error" class="pwd1error" style="margin-top: 28px;margin-left:-20px;"></span>
+									</div>
+								</div>
 								
 								<div class="form-group">
 									<div class="row">
@@ -406,11 +439,15 @@ textarea {
 									</div>
 								</div>
 								
-								
+								<div class="form-group">
+									<div class="row">
+										<span id="pwderror" class="pwderror" style="margin-top: 22px;"></span>
+									</div>
+								</div>
 								<div class="form-group">
 									<input type="text" name="membername" id="membername"
 										tabindex="1" class="form-control infobox" placeholder="이름*"
-										title="이름" style="width: 300px">
+										title="이름" style="width: 250px">
 								</div>
 
 								<div class="form-group">
@@ -418,18 +455,17 @@ textarea {
 										<tr style="font-size: 1.3em">
 											<td>성별</td>
 											<td>&nbsp;&nbsp;</td>
-											<td rowspan="3" class="checks">
-											<input type="radio" name="membergender" id="ex_rd2" value="남" checked>남&nbsp;</td>
+											<td rowspan="3"><input type="radio" name="membergender"
+												id="selectgender" value="남" checked>남</td>
 											<td>&nbsp;&nbsp;</td>
 											<td rowspan="3"><input type="radio" name="membergender"
-												id="ex_rd2" value="여">여</td>
+												id="selectgender" value="여">여</td>
 										</tr>
 									</table>
-									
 								</div>
 								<div class="form-group">
 									<input type="text" name="birth" id="birth" tabindex="1"
-										class="form-control" placeholder="생년월일" style="width: 300px" maxlength="8">
+										class="form-control" placeholder="생년월일" style="width: 300px">
 								</div>
 								<div class="form-group">
 									<div class="row">
@@ -439,7 +475,7 @@ textarea {
 								<div class="form-group">
 									<input type="text" name="tel" id="tel" tabindex="1"
 										class="form-control infobox" placeholder="전화번호 (숫자만 입력해주세요)" title="전화번호"
-										style="width: 300px" maxlength="11">
+										style="width: 300px">
 
 								</div>
 								<div class="form-group" style="float: left; margin-right: 30px;">
@@ -482,30 +518,28 @@ textarea {
 								</div>
 
 
-									<div class="form-group">
-									<h4 style="float: left;">
-										이용약관 동의<input type="checkbox" name="chk" id="chk"
-											style="float: right; margin-right: 300px; margin-left: 10px;    width: 22px;
-    height: 22px;
-    margin-top: -1px;">
-									</h4>
+								<div class="form-group">
+									<h3>
+										이용약관 동의<input type="checkbox" name="chk" id="chk">
+									</h3>
+
 									<ul id="faq-list" class="wow fadeInUp"
 										style="visibility: visible; animation-name: fadeInUp;">
 										<li>
 											<!-- <a data-toggle="collapse" class="collapsed" href="#faq1">이용약관 보기▽ <i class="ion-android-remove"></i></a> -->
 											<div id="faq1">
-												<textarea rows="10" cols="70">
+												<textarea rows="10" cols="65">
 개인 회원 약관 (개정 및 적용 2019. 08. 01)
 제1조 (목적)
-본 약관은 ㈜PEOPLEJOB(이하 "회사")이 운영하는 웹사이트(이하 “사이트”)를 통해 인터넷 관련 서비스를 제공함에 있어, 회사가 제공하는 서비스와 관련하여, 이를 이용하는 가입자(이하 “회원” 또는 “기업회원”)의 이용조건 및 제반 절차, 기타 필요한 사항을 규정함을 목적으로 한다.
+본 약관은 ㈜PEOPLEJOB(이하 "회사")이 운영하는 웹사이트(이하 “사이트”)를 통해 인터넷 관련 서비스를 제공함에 있어, 회사가 제공하는 서비스와 관련하여, 이를 이용하는 가입자(이하 “회원” 또는 “개인회원”)의 이용조건 및 제반 절차, 기타 필요한 사항을 규정함을 목적으로 한다.
 
 제2조 (용어의 정의)
 이 약관에서 사용하는 용어의 정의는 아래와 같다.
 
-① “사이트”라 함은 “회사”가 서비스를 “기업회원” 에게 제공하기 위하여 단말기(PC, TV, 휴대형단말기 등의 각종 유무선 장치를 포함) 등 정보통신설비를 이용하여 설정한 가상의 영업장 또는 회사가 각각 운영하는 웹사이트를 말하며, 통합된 하나의 아이디 및 비밀번호(이하 “통합 계정”)를 이용하여 서비스를 제공받을 수 있는 아래의 사이트로 정의한다.
+① “사이트”라 함은 “회사”가 서비스를 “개인회원” 에게 제공하기 위하여 단말기(PC, TV, 휴대형단말기 등의 각종 유무선 장치를 포함) 등 정보통신설비를 이용하여 설정한 가상의 영업장 또는 회사가 각각 운영하는 웹사이트를 말하며, 통합된 하나의 아이디 및 비밀번호(이하 “통합 계정”)를 이용하여 서비스를 제공받을 수 있는 아래의 사이트로 정의한다.
 1. 사람인 : www.peoplejob.co.kr
 ② "서비스"라 함은 “회사”가 기업(단체, 사업자, 교육기관) 또는 개인이 구인, 구직과 교육을 목적으로 등록하는 자료를 DB화하여 각각의 목적에 맞게 분류 가공, 집계하여 정보를 제공하는 서비스와 해당 인터넷 주소에서 제공하는 모든 부대 서비스를 말한다.
-③ "기업회원"이라 함은 서비스를 이용하기 위하여 동 약관에 동의하고 회사와 이용계약을 체결하여 이용자ID를 부여 받은 개인을 말한다.
+③ "개인회원"이라 함은 서비스를 이용하기 위하여 동 약관에 동의하고 회사와 이용계약을 체결하여 이용자ID를 부여 받은 개인을 말한다.
 ④ "이용자ID" 또는 "회원ID"라 함은 회원의 식별과 회원의 서비스 이용을 위하여 회원이 선정하고 회사가 부여하는 문자와 숫자의 조합을 말한다.
 ⑤ "비밀번호"라 함은 회사의 서비스를 이용하려는 사람이 이용자ID를 부여 받은 자와 동일인임을 확인하고 회원의 권익을 보호하기 위하여 회원이 선정한 문자와 숫자의 조합을 말한다.
 제3조 (약관의 명시와 개정)
@@ -571,16 +605,14 @@ textarea {
 									<div class="col-sm-6 col-sm-offset-3">
 										<input type="submit" name="registersubmit" id="registersubmit"
 											tabindex="4" class="form-control btn btn-register"
-											value="가입하기" style="    width: 400px;
-    background-color: #50a954;
-    margin-left: -90px;">
+											value="가입하기" style="background-color: #50a954">
 									</div>
 								</div>
 								<div class="form-group">
 									<div class="col-sm-6 col-sm-offset-3">
-										<div class="text-center" style="margin-top: 10px;">
+										<div class="text-center">
 											<a href="<c:url value='/login/login.do'/>" tabindex="5"
-												class="forgot-password" style="font-size: 1.1em;">로그인하기</a>
+												class="forgot-password">로그인하기</a>
 										</div>
 									</div>
 								</div>

@@ -9,9 +9,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.ez.peoplejob.common.SearchVO;
-import com.ez.peoplejob.post_cmt.model.PostCmtVO;
-
 @Repository
 public class PostDAOMybatis implements PostDAO{
 	@Autowired
@@ -39,42 +36,6 @@ public class PostDAOMybatis implements PostDAO{
 	@Override
 	public int insertPosToManager(PostVO postVo) {
 		return sqlsession.insert(namespace+"insertPosToManager",postVo);
-	}
-	@Override
-	public List<Map<String, Object>> selectByboardCode(int boardCode) {
-		return sqlsession.selectList(namespace+"selectByboardCode",boardCode);
-	}
-	@Override
-	public int postcountUpdate(int boardCode2) {
-		return sqlsession.update(namespace+"postcountUpdate",boardCode2);
-	}
-	@Override
-	public List<Map<String, Object>> selectByboardCode2(int boardCode2) {
-		return sqlsession.selectList(namespace+"selectByboardCode2",boardCode2);
-	}
-	@Override
-	public int insertPost(PostVO postVo) {
-		return sqlsession.insert(namespace+"insertPost",postVo);
-	}
-	@Override
-	public int insertcmt(PostCmtVO postcmtVo) {
-		return sqlsession.insert(namespace+"insertcmt",postcmtVo);
-	}
-	@Override
-	public List<Map<String, Object>> selectCmt(int boardCode2) {
-		return sqlsession.selectList(namespace+"selectCmt",boardCode2);
-	}
-	@Override
-	public int selectTotalCount(SearchVO searchVo) {
-		return sqlsession.selectOne(namespace+"selectTotalCount",searchVo);
-	}
-	@Override
-	public List<Map<String, Object>> selectAll(SearchVO searchVo) {
-		return sqlsession.selectList(namespace+"selectAll",searchVo);
-	}
-	@Override
-	public int updatereport(PostVO postVo) {
-		return sqlsession.update(namespace+"updatereport",postVo);
 	}
 
 }

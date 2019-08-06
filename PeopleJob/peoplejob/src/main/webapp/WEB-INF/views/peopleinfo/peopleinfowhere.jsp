@@ -1,63 +1,36 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>    
+    
   
-<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>		
-<script type="text/javascript">
+		
+<script>
 $(document).ready(function (){
-		//지역정보를 가져오기 - 시도
-		getLocation();
-
-		//지역정보를 가져오는 
-		$("#locationSiDo").change(function(){
-			var sidoCode=$(this).find("option:checked").val();
-			//값을 가져오는 메서드
-			getLocation2(sidoCode);
-		});
-		
-		  
-		//1차 직종 가져오기 /manager/occupantion/firstList.do
-		selectFirst();
-		//1차 직종 클릭하면 2차직종 가져오기 
-		$("#selectFirst").change(function(){
-			var firstCode=$(this).find("option:selected").val();
-			if(firstCode!=0){
-				selectSecond(firstCode);
-			}
-		});
-		
-		//2차 직종 클릭하면 3차직종 가져오기
-		$("#selectSecond").change(function(){
-			var secondCode=$(this).find("option:selected").val();
-			if(secondCode!=0){
-				selectThird(secondCode);
-			}
-		});
-		//1차 업종 가져오기
-		getBtype1();
-		//1차업종 change 2차 업종 가져오기
-		$("#selectBtype1").change(function(){
-			var bytpeCode1=$(this).find("option:checked").val();
-			getBtype2(bytpeCode1);
-		});
-		//2차업종 change 3차 업종 가져오기
-		$("#selectBtype2").change(function(){
-			var bytpeCode3=$(this).find("option:checked").val();
-			getBtype3(bytpeCode3);
-		});
+$("div").data("name")==="서울";
+$("div").data("name")==="부산";
+$("div").data("name")==="경기";
+$("div").data("name")==="광주";
+$("div").data("name")==="대구";
+$("div").data("name")==="대전";
+$("div").data("name")==="울산";
+$("div").data("name")==="인천";
+$("div").data("name")==="강원";
+$("div").data("name")==="경남";
+$("div").data("name")==="경북";
+$("div").data("name")==="전남";
+$("div").data("name")==="전북";
+$("div").data("name")==="충북";
+$("div").data("name")==="충남";
+$("div").data("name")==="제주";
+$("div").data("name")==="세종";
+$("div").data("name")==="전국";
 
 $("#career-years").prop("checked", false);
 
 $("#graduatecheck").prop("checked", false);
 $("#basic-search-location").prop("checked", false);
 
-     
-     
-});
  // 사용자 ID를 갖고 온다.
-    var careeryears = $("#career-years").val();
+    var career-years = $("#career-years").val();
     var age = $("#age").val();
     var male01 = $("#male01").val();
     var female01 = $("#female01").val();
@@ -69,8 +42,10 @@ $("#basic-search-location").prop("checked", false);
     $("input[name='term']:checked").each(function(i) {
         checkboxValues.push($(this).val());
     });
+     
     // 사용자 ID(문자열)와 체크박스 값들(배열)을 name/value 형태로 담는다.
-    var allData = { "career-years": careeryears,"age":age,"male01":male01,"female01":female01,"graduatecheck":graduatecheck,"sido":sido, "checkArray": checkboxValues };
+    var allData = { "career-years": career-years,"age":age,"male01":male01,"female01":female01,"graduatecheck":graduatecheck,"sido":sido, "checkArray": checkboxValues };
+     
     $.ajax({
         url:"<c:url value='/peopleinfo/peopleinfolist.do'/>",
         type:'GET',
@@ -81,334 +56,27 @@ $("#basic-search-location").prop("checked", false);
         error:function(jqXHR, textStatus, errorThrown){
             alert("에러 발생~~");
         }
-    });  
-//지역정보를 가져오는 메서드 
-function getLocation(){
-	$.ajax({
-		url:"<c:url value='/peopleinfo/where/selectLocation.do'/>",
-		type:"post",
-		success:function(res){
-			settingLocation(res);
-		},
-		error:function(xht,status,error){
-			alert(status+":"+error);
-		}
-	});//ajax
-}
-//지역정보를 뿌려주는 메서드
-function settingLocation(res){
-	$.each(res, function(idx,item){
-		if(idx==0){
-			var chEl=$("<option value='0'>시/도</option>");
-			var opEl=$("<option value='"+item.localCode2+"'></option>")
-			opEl.html(item.sido);
-			$("#locationSiDo").html(chEl);
-			$("#locationSiDo").append(opEl);
-		}else{
-			var opEl=$("<option value='"+item.localCode2+"'></option>")
-			opEl.html(item.sido);
-			$("#locationSiDo").append(opEl);
-		}
-	});
-}
-
-
-//지역정보를 가져오는 메서드 - 구군
-function getLocation2(sidoCode){
-	$.ajax({
-		url:"<c:url value='/peopleinfo/where/selectLocation2.do'/>",
-		type:"post",
-	    dataType: "json",
-		data:"sidoCode="+sidoCode,
-		success:function(res){
-			settingLocation2(res);
-		},
-		error:function(xht,status,error){
-			alert(status+":"+error);
-		}
-	});//ajax
-}
-//지역정보를 뿌려주는 메서드 - 구군
-function settingLocation2(res){
-	$.each(res, function(idx,item){
-		if(idx==0){
-			var chEl=$("<option value='0'>구/군</option>");
-			var opEl=$("<option value='"+item["LOCAL_CODE2"]+"'></option>")
-			opEl.html(item["GUGUN"]);
-			$("#locationGugun").html(chEl);
-			$("#locationGugun").append(opEl);
-		}else{
-			//alert("세팅 item[LOCAL_CODE2]="+item["LOCAL_CODE2"]+", item[GUGUN]"+item["GUGUN"])
-			var opEl=$("<option value='"+item["LOCAL_CODE2"]+"'></option>")
-			opEl.html(item["GUGUN"]);
-			$("#locationGugun").append(opEl);
-		}
-		
-	});
-}
-
-//1차 직종 가져오기
-function selectFirst(){
-	$.ajax({
-		url:"<c:url value='/peopleinfo/where/firstList.do'/>",
-		type:"post",
-		success:function(res){
-				settingFirst(res);
-		},
-		error:function(xhr, status, error){
-			alert(status+":"+error);
-		}
-	})
-}
-
-//1차 직종 뿌리기
-//[{"firstCode":1,"firstname":"경영·사무"},{"firstCode":2,"firstname":"영업·고객상담"},{"firstCode":3,"firstname":"생산·제조"},
-//{"firstCode":4,"firstname":"IT·인터넷"},{"firstCode":5,"firstname":"전문직"},{"firstCode":6,"firstname":"교육"}
-function settingFirst(res){
-	alert("res="+res);
-		$.each(res,function(idx,item){
-			if(idx==0){
-				var chEl=$("<option value='0'>1차 직종</option>")
-				var opEl=$("<option value='"+item.firstCode+"'></option>");
-				opEl.append(item.firstname);
-				$("#selectFirst").html(chEl);
-				$("#selectFirst").append(opEl); //최종으로 여기에 넣음
-			}else{
-				var opEl=$("<option value='"+item.firstCode+"'></option>");
-				opEl.append(item.firstname);
-				$("#selectFirst").append(opEl); //최종으로 여기에 넣음
-			}
-		})
-}
-
-//2차 직종가져오기 
-function selectSecond(firstCode){
-	$.ajax({
-		url:"<c:url value='/peopleinfo/where/selectSecond.do'/>",
-		type:"post",
-		data:"firstCode="+firstCode,
-		success:function(res){
-			settingSecond(res);
-		},
-		error:function(xhr,status,error){
-			alert(status+":"+error);
-		}
-	});
-}
-//[{"secondCode":101,"secondname":"기획·전략·경영","firstCode":1},
-	//{"secondCode":102,"secondname":"총무·법무·사무","firstCode":1},.....	]
-//2차 직종 세팅하기 함수
-function settingSecond(res){
-	$.each(res,function(idx,item){
-		if(idx==0){
-			//option태그 만들어서 
-			var opEl=$("<option value='"+item.secondCode+"'></option>")
-			//값을 넣고 
-			opEl.html(item.secondname);
-			//append
-			$("#selectSecond").html("<option value='0'>2차 직종</option>");
-			$("#selectSecond").append(opEl);
-		}else{
-			//option태그 만들어서 
-			var opEl=$("<option value='"+item.secondCode+"'></option>")
-			//값을 넣고 
-			opEl.append(item.secondname);
-			//append
-			$("#selectSecond").append(opEl);
-		}
-	});
-	var thirdEl=$("<option>3차 직종</option><option>먼저 2차 직종을 선택하세요</option>");
-	$("#selectThird").html(thirdEl);
-};
-
- //3차직종 가져오기 
-function selectThird(secondCode){
-	$.ajax({
-		url:"<c:url value='/peopleinfo/where/selectThird.do'/>",
-		type:"post",
-		data:"secondCode="+secondCode,
-		success:function(res){
-			settingThird(res);
-		},
-		error:function(xhr,status,error){
-			alert(status+":"+error);
-		}
-	});
-	
-} 
-//3차 직종 뿌려주기 
-function settingThird(res){
-	$.each(res,function(idx,item){
-		if(idx==0){
-			//option태그 만들어서 
-			var opEl=$("<option value='"+item.thirdCode+"'></option>")
-			//값을 넣고 
-			opEl.html(item.thirdname);
-			//append
-			$("#selectThird").html("<option value='0'>3차 직종</option>");
-			$("#selectThird").append(opEl);
-		}else{
-			//option태그 만들어서 
-			var opEl=$("<option value='"+item.thirdCode+"'></option>")
-			//값을 넣고 
-			opEl.append(item.thirdname);
-			//append
-			$("#selectThird").append(opEl);
-		}
-	});
-}
-//1차 업종가져오기
-function getBtype1(){
-	$.ajax({
-		url:"<c:url value='/peopleinfo/where/selectBtype1.do'/>",
-		type:"post",
-		success:function(res){
-				settingBtype1(res);
-		},
-		error:function(xhr, status, error){
-			alert(status+":"+error);
-		}
-	})
-}
-
-//1차 업종 뿌리기
-function settingBtype1(res){
-	$.each(res,function(idx,item){
-		if(idx==0){
-			var chEl=$("<option value='0'>1차 업종</option>")
-			var opEl=$("<option value='"+item["BTYPE_CODE1"]+"'></option>");
-			opEl.append(item['BTYPENAME1']);
-			$("#selectBtype1").html(chEl);
-			$("#selectBtype1").append(opEl);
-		}else{
-			var opEl=$("<option value='"+item["BTYPE_CODE1"]+"'></option>");
-			opEl.append(item['BTYPENAME1']);
-			$("#selectBtype1").append(opEl); //최종으로 여기에 넣음
-		}
-	})
-}
-//2차 업종 가져오기
-function getBtype2(btypeCode1){
-	$.ajax({
-		url:"<c:url value='/peopleinfo/where/selectBtype2.do'/>",
-		type:"post",
-		data:"btypeCode1="+btypeCode1,
-		success:function(res){
-				settingBtype2(res);
-		},
-		error:function(xhr, status, error){
-			alert(status+":"+error);
-		}
-	})
-}
-//2차 업종 뿌리기
-function settingBtype2(res){
-	$.each(res,function(idx,item){
-		if(idx==0){
-			var chEl=$("<option value='0'>2차 업종</option>")
-			var opEl=$("<option value='"+item["BTYPE_CODE2"]+"'></option>");
-			opEl.append(item['BTYPENAME2']);
-			$("#selectBtype2").html(chEl);
-			$("#selectBtype2").append(opEl); 
-		}else{
-			var opEl=$("<option value='"+item["BTYPE_CODE2"]+"'></option>");
-			opEl.append(item['BTYPENAME2']);
-			$("#selectBtype2").append(opEl); 
-		}
-	})
-	var chEl=$("<option value='0'>3차 업종</option><option>먼저 2차 업종을 선택하세요</option>")
-	$("#selectBtype3").html(chEl);
-}
-//2차 업종 가져오기
-function getBtype3(btypeCode2){
-	$.ajax({
-		url:"<c:url value='/peopleinfo/where/selectBtype3.do'/>",
-		type:"post",
-		data:"btypeCode2="+btypeCode2,
-		success:function(res){
-				settingBtype3(res);
-		},
-		error:function(xhr, status, error){
-			alert(status+":"+error);
-		}
-	})
-}
-//3차 업종 뿌리기
-function settingBtype3(res){
-	$.each(res,function(idx,item){
-		if(idx==0){
-			var chEl=$("<option value='0'>3차 업종</option>")
-			var opEl=$("<option value='"+item["BTYPE_CODE3"]+"'></option>");
-			opEl.append(item['BTYPENAME3']);
-			$("#selectBtype3").html(chEl);
-			$("#selectBtype3").append(opEl); 
-		}else{
-			var opEl=$("<option value='"+item["BTYPE_CODE3"]+"'></option>");
-			opEl.append(item['BTYPENAME3']);
-			$("#selectBtype3").append(opEl); 
-		}
-	})
-}
-
-function f_generationJob(){
-    var keyList = jobData.getHeader();
-    var keyList2 = searchJobData.getHeader();
-    var targetId = document.getElementById("selectedId");
-    var regionString = "";
-
-    //선택직종 초기화
-    $(targetId).html("");
-
-    //기본
-    var regionString = "<strong>선택직종 :</strong> ";
-    var jobsCdArr = '';
-    var jobsNmArr = '';
-
-    for(var i = 0; i < keyList.length; i++){
-      regionString += jobData.get(keyList[i]) + "<button type=\"button\" onclick=\"f_deleteJob('" + keyList[i] + "');\">삭제</button>";
-
-      if(jobsCdArr == ''){
-        jobsCdArr = keyList[i];
-        jobsNmArr = jobData.get(keyList[i]);
-      }else{
-        jobsCdArr += "," + keyList[i];
-        jobsNmArr += "," + jobData.get(keyList[i]);
-      }
-    }
-
-    for(var i = 0; i < keyList2.length; i++){
-      regionString += searchJobData.get(keyList2[i]) + "<button type=\"button\" onclick=\"f_deleteJob('" + keyList2[i] + "');\">삭제</button>";
-
-      if(jobsCdArr == ''){
-        jobsCdArr = keyList2[i];
-        jobsNmArr = searchJobData.get(keyList2[i]);
-      }else{
-        jobsCdArr += "," + keyList2[i];
-        jobsNmArr += "," + searchJobData.get(keyList2[i]);
-      }
-    }
-
-    $(targetId).html(regionString);
-  }
+    });
+});
 </script>
 <style type="text/css">
 .divSearch {
-  width: 1080px;
+    width: 700px;
     margin: 0 auto;
-    
 }	
 input.btn.btn-primary {
     position: absolute;
-    bottom: 482px;
-    right: 779px;
-}
+    bottom: 307px;
+    right: 265px;
+} 
+
 </style>
 	<!-- 페이징 처리에도 사용 -->
-   <h2>인재정보 찾기</h2>
+   
 <div class="divSearch"> 
 		<div style="border: 1px solid gold;
     float: left;
-    width: 9%;
+    width: 20%;
     margin: 10px;
     height: 414px;">
 		 <label>경력</label><br>
@@ -425,7 +93,7 @@ input.btn.btn-primary {
             </div>
         <div class="box_detail_panel" style="border: 1px solid gold;
     float: left;
-    width:  9%;
+    width: 20%;
     margin: 10px;
     height: 414px;">
         <strong>성별</strong>
@@ -445,7 +113,7 @@ input.btn.btn-primary {
                 <li><label class="frm_chkbox01" for="age-interval06"><input type="checkbox" id="age" name="age" value="51,"><span>51세 <em class="ico_over">이상</em></span></label></li>
             </ul>
             </div>
-        <div class="box_detail_panel" style="border: 1px solid gold; float: left; width:  11%; margin: 10px; height:414px;">
+        <div class="box_detail_panel" style="border: 1px solid gold; float: left; width: 20%; margin: 10px; height:414px;">
         
         <strong>최종학력</strong>
             <ul class="wrap_list_value">
@@ -460,71 +128,127 @@ input.btn.btn-primary {
                             </ul>
             
         </div>
-    <div id="hopelocal" style="border: 1px solid gold; float: left; width: 19%; margin: 10px; height:414px;">
-       <table>
-      <tr>
-				<th>희망 근무 지역</th>
-								<td>
-									<select class="custom-select my-1 mr-sm-2 FST" name="localCode" id="locationSiDo">
-										<option>시/도</option>
-									</select>
-									<select class="custom-select my-1 mr-sm-2 FST" name="localCode2" id="locationGugun">
-										<option>구/군</option>
-										<option>먼저 시/도를 선택하세요</option>
-									</select>
-								</td>
-								</tr>
-					</table>
-        </div>
-       
-     
-        <div id="jobtype" style="border: 1px solid gold;
+    <div class="wrap_detail_panel area_domestic" style="border: 1px solid gold;
     float: left;
-    width: 42%;
     margin: 10px;
+    overflow: auto;
+    width: 20%;
     height: 414px;">
-         <table>
-       <tr>
-		<th>직종</th>
-				<td colspan="1">
-				<select class="custom-select my-1 FST" name="firstCode" id="selectFirst">
-				<option>1차 직종</option>
-									</select>
-									<select class="custom-select my-1 mr-sm-2 FST" name="secondCode" id="selectSecond">
-										<option>2차 직종</option>
-										<option>먼저 1차 직종을 선택하세요</option>
-									</select>
-									<select class="custom-select my-1 mr-sm-2 FST" name="thirdCode" id="selectThird">
-										<option>3차 직종</option>
-										<option>먼저 2차 직종을 선택하세요</option>
-									</select>
-								</td>
-								
-								<th>업종</th>
-								<td colspan="2">
-									<select class="custom-select my-1 FST" name="btypeCode1" id="selectBtype1">
-										<option>1차 업종</option>
-									</select>
-									<select class="custom-select my-1 mr-sm-2 FST" name="btypeCode2" id="selectBtype2">
-										<option>2차 업종</option>
-										<option>먼저 1차 업종을 선택하세요</option>
-									</select>
-									<select class="custom-select my-1 mr-sm-2 FST" name="btypeCode3" id="selectBtype3">
-										<option>3차 업종</option>
-										<option>먼저 2차 업종을 선택하세요</option>
-									</select>
-								</td>
-							</tr>
-							</table>
-						</div>	
+        <strong>희망 근무지역</strong>
+            <ul class="wrap_list_value" id="basic-search-location">
+                                    <li>
+                        <label class="frm_chkbox01" for="area-domestic-101000">
+                            <input type="checkbox" id="area-domestic-101000" data-name="서울" name="sido" value="101000" >
+                            <span>서울 <em>(216,042)</em></span>
+                        </label>
+                    </li>
+                                    <li>
+                        <label class="frm_chkbox01" for="area-domestic-102000">
+                            <input type="checkbox" id="area-domestic-102000" data-name="경기" name="sido" value="102000" >
+                            <span>경기 <em>(182,643)</em></span>
+                        </label>
+                    </li>
+                                    <li>
+                        <label class="frm_chkbox01" for="area-domestic-103000">
+                            <input type="checkbox" id="area-domestic-103000" data-name="광주" name="sido" value="103000" >
+                            <span>광주 <em>(13,391)</em></span>
+                        </label>
+                    </li>
+                                    <li>
+                        <label class="frm_chkbox01" for="area-domestic-104000">
+                            <input type="checkbox" id="area-domestic-104000" data-name="대구" name="sido" value="104000" >
+                            <span>대구 <em>(35,883)</em></span>
+                        </label>
+                    </li>
+                                    <li>
+                        <label class="frm_chkbox01" for="area-domestic-105000">
+                            <input type="checkbox" id="area-domestic-105000" data-name="대전" name="sido" value="105000" >
+                            <span>대전 <em>(26,640)</em></span>
+                        </label>
+                    </li>
+                                    <li>
+                        <label class="frm_chkbox01" for="area-domestic-106000">
+                            <input type="checkbox" id="area-domestic-106000" data-name="부산" name="sido" value="106000" >
+                            <span>부산 <em>(59,684)</em></span>
+                        </label>
+                    </li>
+                                    <li>
+                        <label class="frm_chkbox01" for="area-domestic-107000">
+                            <input type="checkbox" id="area-domestic-107000" data-name="울산" name="sido" value="107000" >
+                            <span>울산 <em>(22,242)</em></span>
+                        </label>
+                    </li>
+                                    <li>
+                        <label class="frm_chkbox01" for="area-domestic-108000">
+                            <input type="checkbox" id="area-domestic-108000" data-name="인천" name="sido" value="108000" >
+                            <span>인천 <em>(50,877)</em></span>
+                        </label>
+                    </li>
+                                    <li>
+                        <label class="frm_chkbox01" for="area-domestic-109000">
+                            <input type="checkbox" id="area-domestic-109000" data-name="강원" name="sido" value="109000" >
+                            <span>강원 <em>(9,087)</em></span>
+                        </label>
+                    </li>
+                                    <li>
+                        <label class="frm_chkbox01" for="area-domestic-110000">
+                            <input type="checkbox" id="area-domestic-110000" data-name="경남" name="sido" value="110000" >
+                            <span>경남 <em>(41,949)</em></span>
+                        </label>
+                    </li>
+                                    <li>
+                        <label class="frm_chkbox01" for="area-domestic-111000">
+                            <input type="checkbox" id="area-domestic-111000" data-name="경북" name="sido" value="111000" >
+                            <span>경북 <em>(27,918)</em></span>
+                        </label>
+                    </li>
+                                    <li>
+                        <label class="frm_chkbox01" for="area-domestic-112000">
+                            <input type="checkbox" id="area-domestic-112000" data-name="전남" name="sido" value="112000" >
+                            <span>전남 <em>(9,195)</em></span>
+                        </label>
+                    </li>
+                                    <li>
+                        <label class="frm_chkbox01" for="area-domestic-113000">
+                            <input type="checkbox" id="area-domestic-113000" data-name="전북" name="sido" value="113000" >
+                            <span>전북 <em>(12,541)</em></span>
+                        </label>
+                    </li>
+                                    <li>
+                        <label class="frm_chkbox01" for="area-domestic-114000">
+                            <input type="checkbox" id="area-domestic-114000" data-name="충북" name="sido" value="114000" >
+                            <span>충북 <em>(24,155)</em></span>
+                        </label>
+                    </li>
+                                    <li>
+                        <label class="frm_chkbox01" for="area-domestic-115000">
+                            <input type="checkbox" id="area-domestic-115000" data-name="충남" name="sido" value="115000" >
+                            <span>충남 <em>(30,343)</em></span>
+                        </label>
+                    </li>
+                                    <li>
+                        <label class="frm_chkbox01" for="area-domestic-116000">
+                            <input type="checkbox" id="area-domestic-116000" data-name="제주" name="sido" value="116000" >
+                            <span>제주 <em>(5,417)</em></span>
+                        </label>
+                    </li>
+                                    <li>
+                        <label class="frm_chkbox01" for="area-domestic-118000">
+                            <input type="checkbox" id="area-domestic-118000" data-name="세종" name="sido" value="118000" >
+                            <span>세종 <em>(6,503)</em></span>
+                        </label>
+                    </li>
+                                    <li>
+                        <label class="frm_chkbox01" for="area-domestic-117000">
+                            <input type="checkbox" id="area-domestic-117000" data-name="전국" name="sido" value="117000" >
+                            <span>전국 <em>(30,092)</em></span>
+                        </label>
+                    </li>
+                           
+                            </ul>
+        </div>
     </div>
-     <!--  <div class="choice_wrap new mt20 mb10"> -->
-  <div class="choice_inner">
-    <p class="selected" id="selectedId">
-      <strong>선택직종 :</strong> 선택하신 직종이 없습니다.
-    </p> 
-  </div><!-- end choice_inner -->
-<!-- </div> -->
+ 
 	<div>
 		<input type="submit" class="btn btn-primary" value="검색">	
     </div>

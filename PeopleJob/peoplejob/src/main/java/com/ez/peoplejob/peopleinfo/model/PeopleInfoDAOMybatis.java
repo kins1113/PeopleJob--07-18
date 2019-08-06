@@ -7,10 +7,6 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.ez.peoplejob.hopecompany.model.FirstOccupationVO;
-import com.ez.peoplejob.hopecompany.model.LocationVO;
-import com.ez.peoplejob.hopecompany.model.SecondOccupationVO;
-import com.ez.peoplejob.hopecompany.model.ThirdOccupationVO;
 import com.ez.peoplejob.resume.model.ResumeVO;
 
 @Repository
@@ -76,45 +72,6 @@ public class PeopleInfoDAOMybatis implements PeopleInfoDAO {
 	public int selectTotalCountPeople(Map<String, Object> map) {
 		return sqlSession.selectOne(namespace+"selectTotalCountPeople",map);
 	}
-	@Override
-	public List<FirstOccupationVO> selectFirst() {
-		return sqlSession.selectList(namespace+"selectFirst");
-	}
-
-	@Override
-	public List<SecondOccupationVO> selectSecond(int firstCode) {
-		return sqlSession.selectList(namespace+"selectSecond",firstCode);
-	}
-
-	@Override
-	public List<ThirdOccupationVO> selectThird(int secondCode) {
-		return sqlSession.selectList(namespace+"selectThird",secondCode);
-	}
-
-	@Override
-	public List<LocationVO> selectLocation() {
-		return sqlSession.selectList(namespace+"selectLocation");
-	}
-
-	@Override
-	public List<Map<String, Object>> selectLocation2(int sidoCode) {
-		return sqlSession.selectList(namespace+"selectLocation2",sidoCode);
-	}
-
-	@Override
-	public List<Map<String, Object>> selectBtype1() {
-		return sqlSession.selectList(namespace+"selectBtype1");
-		}
-
-	@Override
-	public List<Map<String, Object>> selectBtype2(int btypeCode1) {
-		return sqlSession.selectList(namespace+"selectBtype2",btypeCode1);
-	}
-
-	@Override
-	public List<Map<String, Object>> selectBtype3(int btypeCode2) {
-		return sqlSession.selectList(namespace+"selectBtype3",btypeCode2);
-	}
-
+	
 	
 }
