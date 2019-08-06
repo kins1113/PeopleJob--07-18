@@ -66,10 +66,30 @@ $("#basic-search-location").prop("checked", false);
 }	
 input.btn.btn-primary {
     position: absolute;
+<<<<<<< HEAD
     bottom: 307px;
     right: 265px;
 } 
 
+=======
+        bottom: 166px;
+    right: 534px;
+}
+
+strong.title_basic_sub {
+    float: right;
+}
+
+div#woman {
+    float: right;
+    margin-top: -17px;
+    margin-right: 49px;
+}
+
+#title{
+ color:green;
+}
+>>>>>>> branch 'master' of https://github.com/kins1113/PeopleJob--07-18.git
 </style>
 	<!-- 페이징 처리에도 사용 -->
    
@@ -78,8 +98,8 @@ input.btn.btn-primary {
     float: left;
     width: 20%;
     margin: 10px;
-    height: 414px;">
-		 <label>경력</label><br>
+    height: 450px;">
+		 <label id="title">경력</label><br>
 <label><input type="checkbox" id="workcheck" name="workcheck" value="경력">경력</label>
 <label><input type="checkbox" id="workcheck" name="workcheck" value="신입">신입</label><br>
  <ul class="wrap_list_value column_two">
@@ -95,15 +115,19 @@ input.btn.btn-primary {
     float: left;
     width: 20%;
     margin: 10px;
-    height: 414px;">
-        <strong>성별</strong>
-            <strong class="title_basic_sub">나이</strong><br>
+    height: 450px;
+    padding-top: 10px;
+    padding: 4px;">
+        <strong id="title">성별</strong>
+            <strong class="title_basic_sub" id="title">나이</strong><br>
+            <input type="checkbox" id="male01" value="남">
             <label class="form_sp frm_chk02" for="male01">
             <span>남</span></label>
-            <input type="checkbox" id="male01" value="male">
+            <div id="woman">
+            <input type="checkbox" id="female01" value="여">
             <label class="form_sp frm_chk02" for="female01">
             <span>여</span></label>
-            <input type="checkbox" id="female01" value="female">
+            </div>
             <ul class="wrap_list_value column_two">
                 <li><label class="frm_chkbox01" for="age-interval01"><input type="checkbox" id="age" name="age" value=",20"><span>20세 <em class="ico_under">이하</em></span></label></li>
                 <li><label class="frm_chkbox01" for="age-interval02"><input type="checkbox" id="age" name="age" value="21,30"><span>21~30세</span></label></li>
@@ -113,9 +137,9 @@ input.btn.btn-primary {
                 <li><label class="frm_chkbox01" for="age-interval06"><input type="checkbox" id="age" name="age" value="51,"><span>51세 <em class="ico_over">이상</em></span></label></li>
             </ul>
             </div>
-        <div class="box_detail_panel" style="border: 1px solid gold; float: left; width: 20%; margin: 10px; height:414px;">
+        <div class="box_detail_panel" style="border: 1px solid #63b752; float: left; width:  11%; margin: 10px; height: 450px; padding-top: 10px;">
         
-        <strong>최종학력</strong>
+        <strong id="title">최종학력</strong>
             <ul class="wrap_list_value">
                                     <li><label class="frm_chkbox01" for="basic-search-final-edu0"><input type="checkbox" id="graduatecheck" value="대학교졸업(4년)" ><span>대학교 4년 </span></label></li>
                                     <li><label class="frm_chkbox01" for="basic-search-final-edu1"><input type="checkbox" id="graduatecheck" value="대학졸업(2,3년)" ><span>대학교 2,3년 </span></label></li>
@@ -128,9 +152,32 @@ input.btn.btn-primary {
                             </ul>
             
         </div>
+<<<<<<< HEAD
     <div class="wrap_detail_panel area_domestic" style="border: 1px solid gold;
+=======
+    <div id="hopelocal" style="border: 1px solid #63b752; float: left; width: 19%; margin: 10px; height: 450px; padding-top: 10px;">
+       <table>
+      <tr>
+				<th id="title">희망 근무 지역</th>
+								<td>
+									<select class="custom-select my-1 mr-sm-2 FST" name="localCode" id="locationSiDo">
+										<option>시/도</option>
+									</select>
+									<select class="custom-select my-1 mr-sm-2 FST" name="localCode2" id="locationGugun">
+										<option>구/군</option>
+										<option>먼저 시/도를 선택하세요</option>
+									</select>
+								</td>
+								</tr>
+					</table>
+        </div>
+       
+     
+        <div id="jobtype" style="border: 1px solid #63b752;
+>>>>>>> branch 'master' of https://github.com/kins1113/PeopleJob--07-18.git
     float: left;
     margin: 10px;
+<<<<<<< HEAD
     overflow: auto;
     width: 20%;
     height: 414px;">
@@ -247,6 +294,44 @@ input.btn.btn-primary {
                            
                             </ul>
         </div>
+=======
+    height: 450px;
+    padding-top: 10px;">
+         <table>
+       <tr>
+		<th id="title">직종</th>
+				<td colspan="1">
+				<select class="custom-select my-1 FST" name="firstCode" id="selectFirst">
+				<option>1차 직종</option>
+									</select>
+									<select class="custom-select my-1 mr-sm-2 FST" name="secondCode" id="selectSecond">
+										<option>2차 직종</option>
+										<option>먼저 1차 직종을 선택하세요</option>
+									</select>
+									<select class="custom-select my-1 mr-sm-2 FST" name="thirdCode" id="selectThird">
+										<option>3차 직종</option>
+										<option>먼저 2차 직종을 선택하세요</option>
+									</select>
+								</td>
+								
+								<th id="title">업종</th>
+								<td colspan="2">
+									<select class="custom-select my-1 FST" name="btypeCode1" id="selectBtype1">
+										<option>1차 업종</option>
+									</select>
+									<select class="custom-select my-1 mr-sm-2 FST" name="btypeCode2" id="selectBtype2">
+										<option>2차 업종</option>
+										<option>먼저 1차 업종을 선택하세요</option>
+									</select>
+									<select class="custom-select my-1 mr-sm-2 FST" name="btypeCode3" id="selectBtype3">
+										<option>3차 업종</option>
+										<option>먼저 2차 업종을 선택하세요</option>
+									</select>
+								</td>
+							</tr>
+							</table>
+						</div>	
+>>>>>>> branch 'master' of https://github.com/kins1113/PeopleJob--07-18.git
     </div>
  
 	<div>
