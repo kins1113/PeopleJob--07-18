@@ -231,27 +231,38 @@ logger.info("boardByCategory 목록 파라미터, boardCode={}, postVo={}",board
 	}
 	
 	@RequestMapping(value="/board/boardEdit.do", method=RequestMethod.GET)
-	public String postCmt(@RequestParam int no, Model model) {
+	public String postedit(@RequestParam int no, Model model) {
 		logger.info("게시판 글 수정 화면");
 		PostVO postVo=postService.selectOneByBoardCode2(no);
-		logger.info("게시판 글 수정, postVo={}",postVo);
+		logger.info("게시판 글 수정화면, postVo={}",postVo);
 		BoardVO boardVo=postService.selectBoardByboardCode2(no);
-		logger.info("게시판 글 수정, boardVo={}",boardVo);
+		logger.info("게시판 글 수정화면, boardVo={}",boardVo);
+		List<UploadInfoVO> uploadList=uploadInfoService.uploadInfoSelectByBoardCode2(no);
+		logger.info("게시판 글 수정화면, uploadList={}",uploadList);
 		
-		
+		model.addAttribute("uploadList",uploadList);
 		model.addAttribute("boardVo",boardVo);
 		model.addAttribute("postVo",postVo);
 		return "board/boardEdit";
 	}
 	
 	@RequestMapping(value="/board/boardEdit.do", method=RequestMethod.POST)
-	public String postCmt_post(@ModelAttribute PostVO postVo, Model model, HttpServletRequest request) {
+	public String postedit_post(@ModelAttribute PostVO postVo, Model model, HttpServletRequest request,
+			@RequestParam(defaultValue = "0",required = false) String[] oldFileCode) {
 		logger.info("게시판 글 수정 화면 파라미터, postVo={}",postVo);
+		logger.info("게시판 글 수정 화면 파라미터2, oldFileCode.length={}", oldFileCode.length);
+		
+		//check된 oldFileCode 확인
+		for(int i=0;i<oldFileCode.length;i++) {
+			logger.info("i={}, oldFileCode={}",i,oldFileCode[i]);
+		}
+		
 		int cnt=postService.updatePost(postVo);
 		logger.info("게시글 update 결과 cnt={}",cnt);
 		
 		List<Map<String,Object>> list=fileUploadUtil.fileMultiUpload("file", request,  FileUploadUtility.POST_UPLOAD);
 		logger.info("list.size={}",list.size());
+		
 		
 		//업로드를 insert하기 위한 객체 생성
 				UploadInfoVO uploadInfoVo=new UploadInfoVO();
@@ -266,11 +277,31 @@ logger.info("boardByCategory 목록 파라미터, boardCode={}, postVo={}",board
 					uploadInfoService.fileUpload(uploadInfoVo);
 				}
 				
+	
 		String msg="", url="/board/detail.do?no="+postVo.getBoardCode2();
 		if(cnt>0) {
 			msg="글이 정상적으로 수정되었습니다.";
+			
+			//기존파일 삭제
+			int delcnt=0;
+				for(int i=0;i<oldFileCode.length;i++) {
+					if(oldFileCode[i]!=null) {
+						delcnt+=uploadInfoService.deletePostByName(oldFileCode[i]);
+						logger.info("각각 deletecnt={}",delcnt);
+						
+						String path=fileUploadUtil.getUploadPath(request,FileUploadUtility.POST_UPLOAD);
+						File oldFile=new File(path, oldFileCode[i]);
+						if(oldFile.exists()) {
+							boolean bool=oldFile.delete();
+							logger.info("기존 파일 삭제 여부={}", bool);
+						}
+					}
+				}
+				
+			logger.info("delcnt={}",delcnt);
+			
 		}else {
-			msg="글이 수정 실패";
+			msg="글 수정 실패";
 		}
 		
 		model.addAttribute("msg",msg);
@@ -279,7 +310,7 @@ logger.info("boardByCategory 목록 파라미터, boardCode={}, postVo={}",board
 	}
 	
 	@RequestMapping("/board/postDel.do")
-	public String postDel(@RequestParam int no, Model model) {
+	public String postDel(@RequestParam int no, Model model, HttpServletRequest request) {
 		BoardVO boardVo=postService.selectBoardByboardCode2(no);
 		logger.info("게시판 글 삭제 화면 파라미터, no={}",no);
 		logger.info("boardVo={}",boardVo);
@@ -291,6 +322,28 @@ logger.info("boardByCategory 목록 파라미터, boardCode={}, postVo={}",board
 		String msg="", url="/board/boardByCategory.do?boardCode="+boardVo.getBoardCode1();
 		if(cnt>0) {
 			msg="글이 정상적으로 삭제되었습니다.";
+			
+			String path=fileUploadUtil.getUploadPath(request,FileUploadUtility.POST_UPLOAD);
+			List<UploadInfoVO> uploadList=uploadInfoService.uploadInfoSelectByBoardCode2(no);
+			logger.info("no={}번호에 해당하는 업로드 파일 개수 uploadList.size={}",no,uploadList.size());
+			
+			if(uploadList.size()>0) {
+				for(int i=0;i<uploadList.size();i++) {
+					UploadInfoVO uploadVo=uploadList.get(i);
+					
+					int delcnt=uploadInfoService.deleteupload(uploadVo.getUploadCode());
+					logger.info("삭제할 글 업로드 파일 삭제 결과 delcnt={}",delcnt);
+					
+					File oldFile=new File(path, uploadVo.getFileName());
+					if(oldFile.exists()) {
+						boolean bool=oldFile.delete();
+						logger.info("기존 파일 삭제 여부={}", bool);
+					}
+					
+				}
+				
+			}
+			
 		}else {
 			msg="글 삭제 실패";
 			url="/board/detail.do?no="+no;
@@ -341,7 +394,8 @@ logger.info("boardByCategory 목록 파라미터, boardCode={}, postVo={}",board
 			HttpServletRequest request,HttpServletResponse response) {
 		logger.info("파일 다운로드 파라미터, no={}, fileName={}",no, fileName);
 		
-		
+		int cnt=uploadInfoService.updatedowncount(fileName);
+		logger.info("upload_info downcount 증가 결과 cnt={}",cnt);
 		
 		@SuppressWarnings("deprecation")
 		String dirPath= request.getRealPath("post_upload");
@@ -380,11 +434,11 @@ logger.info("boardByCategory 목록 파라미터, boardCode={}, postVo={}",board
 
 		bos.write(data);
 
-		}
+	}
 		if(bis !=null) bis.close();
 		if(bos != null) bos.close();
 		}catch(Exception e){
-		e.printStackTrace();
+			e.printStackTrace();
 		}
 	}
 	

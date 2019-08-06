@@ -19,6 +19,21 @@ public class UploadInfoServiceImpl implements UploadInfoService{
 	public List<UploadInfoVO> uploadInfoSelectByBoardCode2(int boardCode2) {
 		return upInfoDao.uploadInfoSelectByBoardCode2(boardCode2);
 	}
+
+	@Override
+	public int updatedowncount(String fileName) {
+		return upInfoDao.updatedowncount(fileName);
+	}
+
+	@Override
+	public int deleteupload(int uploadCode) {
+		return upInfoDao.deleteupload(uploadCode);
+	}
+
+	@Override
+	public int deletePostByName(String fileName) {
+		return upInfoDao.deletePostByName(fileName);
+	}
 	
 	
 }

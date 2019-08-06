@@ -35,7 +35,21 @@ span{
 	div#cardBoduPostList { padding-top: 0;}
 	div#comboPost {background: #f2f4f7; height: 60px;margin-top: 3px;}
 </style>
+<script type="text/javascript" src=<c:url value='/resources/js/jquery-3.4.1.min.js'/>></script>
+<script type="text/javascript">
 
+$(function(){
+	$("form[name=postEditForm]").submit(function(){
+		$('input[name=file]').each(function(){
+			if($(this).val()!=''){
+				$(this).parents(".oneclass").find("input[type=checkbox]").prop("checked",true);
+			}
+			
+		});
+		
+	});
+});
+</script>
 <div class="container" style="min-height: 629px;">
 	
 	
@@ -65,18 +79,36 @@ span{
 						</c:import> 
 					<div id="postInfo">
 				
-					
-				<c:if test="${boardVo.upage=='Y' }">
+				<!-- 첨부파일 있을 경우 -->
+					  <div class="form-group">
+					  <c:if test="${fn:length(uploadList)>0 }">
+					  <c:forEach var="uploadVo" items="${uploadList }">
+                <div class="oneclass">
+                    <label >업로드할 파일 :</label> 
+                    <input id="file" name="file" class="" type="file" value=""/>
+	            <input type="checkbox" name="oldFileCode" value="${uploadVo.fileName}" readonly />
+                </div>
+	            <br>
+	            <span class="sp1"></span>
+		            <span style="color:green;font-weight: bold">
+		            	※ 첨부파일을 새로 지정할 경우 기존 파일 ${uploadVo.originalFileName } (${uploadVo.fileSize/1000.0 }KB)은 삭제됩니다.
+		            </span> 
+	            </c:forEach>
+            </c:if>
+            </div>
+            
+            <c:if test="${boardVo.upage=='Y' }">
 				<c:set var="i" value="1"/>
-				<c:forEach begin="1" end="${boardVo.upnumage }">
+				<c:forEach begin="${fn:length(uploadList)-1 }" end="${boardVo.upnumage }">
 					<div class="form-group" id="divTitle">
-						<label for="boardtitle">업로드할 파일 ${i }</label> 
-						<input type="file" name="boardimage" id="boardimage" class="form-control"> 
+						<label for="boardtitle">업로드할 파일 :</label> 
+						<input type="file" name="file" id="file" class="form-control"> 
 						
 					</div>
 					<c:set var="i" value="${i+1 }" />
 				</c:forEach>
-				</c:if>
+			</c:if>
+				
 					</div>
 					</div>
 				<div>

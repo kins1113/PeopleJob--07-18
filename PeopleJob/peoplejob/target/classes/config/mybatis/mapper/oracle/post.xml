@@ -159,9 +159,10 @@
 	
 	 <select id="selectTotalCount" parameterType="postVo" resultType="int">
 	 select count(*) from post
+	 	where board_code=#{boardCode}
+	 
 	 <if test="searchKeyword != null and searchKeyword !=''">
-	 	where ${searchCondition} like '%' || #{searchKeyword} || '%'
-	 	and board_code=#{boardCode}
+	 	and ${searchCondition} like '%' || #{searchKeyword} || '%'
 	 </if>
 	 </select>
 	 
@@ -188,6 +189,7 @@
 	 <delete id="deletePost" parameterType="int">
 	 delete from post where board_code2=#{boardCode2}
 	 </delete>
+	 
 	 
 </mapper>
 

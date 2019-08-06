@@ -16,6 +16,20 @@
 		select * from upload_info
 		where board_code2=#{boardCode2}
 	</select>
+	
+	<update id="updatedowncount" parameterType="string">
+		update upload_info
+		set downcount=downcount+1
+		where filename=#{fileName}
+	</update>
+	
+	<delete id="deleteupload" parameterType="int">
+	delete upload_info where upload_code=#{uploadCode}
+	</delete>
+	
+	<delete id="deletePostByName" parameterType="string">
+	 delete from upload_info where filename=#{fileName}
+	 </delete>
 </mapper>
 
 

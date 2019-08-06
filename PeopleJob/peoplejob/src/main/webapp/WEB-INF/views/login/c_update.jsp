@@ -318,27 +318,32 @@ option{
 										value="${companyVo.introduction }" name="introduction" style="border: 1px solid lightgray;">${companyVo.introduction }</textarea>
 									</div>
 
-									<div class="form-group">
+									<div class="">
 										<label for="image" class="labeltitle">기업 로고 이미지</label>
 										<c:if test="${!empty companyVo.image }">
-											<span style="color: orangered; display: block;"> ※ 첨부파일을 새로 지정할 경우 <br>기존 파일 ${fileInfo }은 삭제됩니다. </span>
+											<span style="color: orangered; display: block;"> ※ 첨부파일을 새로 지정할 경우 <br>기존 파일 ${companyVo.image }은 삭제됩니다. </span>
 										</c:if>
-										<input id="companyimageurl" name="imageurl"
-											class="form-control" type="file" value="${companyVo.image}"
-											style="width: 350px; height: 45px; margin-top: 10px;" />
+										
 
 									</div>
 									<c:if test="${!empty companyVo.image }">
-										<div class="form-group">
+										<div class="">
 										
-											<label for="oldimage" class="labeltitle" style="float: left;">현재 로고 이미지</label><br>
+											<label for="oldimage" class="labeltitle" style="float: left; display: contents;">현재 로고 이미지</label><br>
 											<img alt="현재 로고 이미지" src="<c:url value='/logo_upload/${companyVo.image}'/>"
-												style=" margin-bottom: 10px; float: left; width: 200px; margin-top: -30px;">
+												style=" margin-bottom: 10px;  width: 280px;">
+												
+												
 										</div>
 									</c:if>
+									<br>
+										<div class="form-group">
+									<input id="imageurl" name="imageurl"
+											class="form-control" type="file" value="${companyVo.image }" style="width: 350px; height: 45px; margin-top: 10px;" />
 								<input type="hidden" name="oldFileName" value="${companyVo.image}" />
+								</div>
 
-
+<br><br>
 									<div class="form-group">
 										<div class="col-sm-6 col-sm-offset-3">
 											<input type="submit" name="registersubmit"
@@ -347,10 +352,12 @@ option{
 												style="    background-color: #50a954;
     font-size: 1.2em;
     color: white;
-    height: 50px;">
+    height: 50px; margin-left: -30px;">
 										</div>
 									</div>
 
+<img alt="기본이미지" src="<c:url value='/logo_upload/noimage.gif'/>">
+<input type="hidden" name="noimage" value="">
 								</form>
 
 							</div>

@@ -6,4 +6,8 @@ public interface UploadInfoDAO {
 	
 	public int fileUpload(UploadInfoVO uploadInfoVo);
 	public List<UploadInfoVO> uploadInfoSelectByBoardCode2(int boardCode2);
+	
+	int updatedowncount(String fileName);
+	int deleteupload(int uploadCode);
+	int deletePostByName(String fileName);
 }
