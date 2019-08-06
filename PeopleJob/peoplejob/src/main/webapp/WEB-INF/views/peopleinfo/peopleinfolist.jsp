@@ -31,11 +31,10 @@ h2 {
 				검색결과 : ${pagingInfo.totalRecord}건 검색되었습니다.
 			</p>
 		</c:if>
-	<form name="frmSearch" method="post" 
+	<form name="frmSearch" method="post" style="border: 1px solid green;"
    		action='<c:url value="/peopleinfo/peopleinfolist.do"/>'>
    		<!-- 현재 페이지 hidden에 넣기 -->  
    		<input type="hidden" name='currentPage' value="1" >
-   		<input type="hidden" name='resumeCode' value="${vo.resumeCode}" >
    		<div id="whereall" style="margin-left: -209px;
     padding: 23px;">
    		<div id="where" class="where">

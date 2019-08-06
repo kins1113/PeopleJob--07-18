@@ -265,11 +265,7 @@
 	
 	
 	<select id="selectTotalCountPeople" parameterType="map" resultType="int">
-	select count(*),trunc(months_between(c.workterm2,c.workterm)/12,0) as "term",NVL(TRUNC(MONTHS_BETWEEN(SYSDATE, TO_DATE(SUBSTR(m.birth, 1, 4), 'YYYY'))/12), 0) AS "age",b1.btypename1,b2.btypename2,b3.btypename3,f.firstname,s.secondname,t.thirdname,l.sido,e.graduatetype,m.membergender,c.workcheck  from resume r,career c,member m,education e,hope_working h,location l,btype1 b1, btype2 b2, btype3 b3,first f, second s, third t 
-	
-		        
-             where  r.DV_CODE = c.DV_CODE and r.academic_code=e.ACADEMIC_CODE and r.member_code=m.member_code and h.HOPEWORK_CODE = r.HOPEWORK_CODE and h.LOCAL_CODE=l.LOCAL_CODE and b1.BTYPE_CODE1=b2.btype_code1 and b2.BTYPE_CODE2 = b3.BTYPE_CODE2 and
-                f.first_code=s.first_code and s.second_code = t.second_code and resume_code =#{resumeCode}
+		select count(*) from resume_viewMain where resume_code =#{resumeCode}
 		    
 		      <if test="term != null">
 				and term IN 
@@ -294,6 +290,12 @@
 	and l.sido in
 	<foreach collection="sido" item="sido" index="index" open="(" close=")" separator=",">
 	#{sido}
+	</foreach>
+	</if>
+	<if test="gugun != null">
+	and l2.gugun in
+	<foreach collection="gugun" item="gugun" index="index" open="(" close=")" separator=",">
+	#{gugun}
 	</foreach>
 	</if>
 	<if test="btypename1 != null">
@@ -332,7 +334,7 @@
 	#{thirdname}
 	</foreach>
 	</if>
-		    group by trunc(months_between(c.workterm2,c.workterm)/12,0), NVL(TRUNC(MONTHS_BETWEEN(SYSDATE, TO_DATE(SUBSTR(m.birth, 1, 4), 'YYYY'))/12), 0),b1.btypename1,b2.btypename2,b3.btypename3,f.firstname,s.secondname,t.thirdname,l.sido,e.graduatetype,m.membergender,c.workcheck
+		    
 		    order by resumeregdate desc
 	
 	
