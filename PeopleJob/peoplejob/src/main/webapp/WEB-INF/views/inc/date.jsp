@@ -34,11 +34,11 @@
     </script>
 </head>
 <body>
-<<<<<<< HEAD
+
         <input id="${param.id }" name="${param.name}" class="form-control workdate1" type="text" readonly    title="${param.title }"/>
-=======
-        <input id="${param.id }" name="${param.name}" class="form-control workdate1" type="text" readonly style="font-size: 1.1em;"/>
->>>>>>> branch 'master' of https://github.com/kins1113/PeopleJob--07-18.git
+
+       
+
 </body>
 </html>
     
