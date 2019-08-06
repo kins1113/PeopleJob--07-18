@@ -12,7 +12,7 @@
 			select * from post_all
 			<if test="searchKeyword!=null and searchKeyword!='' 
 						and searchCondition!=null and searchCondition!=''">
-				<if test='searchCondition=="boardTitle,boardcontent"'>
+				<if test='searchCondition=="boardtitle,boardcontent"'>
 					where boardtitle like '%' || #{searchKeyword} || '%'
 					or boardcontent like '%' || #{searchKeyword} || '%'
 				</if>
@@ -87,6 +87,110 @@
 		values(#{boardCode2}, #{boardtitle},#{boardcontent},#{adminCode},#{boardCode})
 	</insert>
 	
+	
+	
+	<select id="selectByboardCode" resultType="map" parameterType="int">
+	 	select p.*, m.membername, 
+	 	(select count(*) as cnt from post_cmt where post_cmt.board_code2=p.board_code2) as commentcnt 
+		from post p left join member m
+		on p.member_Code=m.member_code
+		where p.board_code=#{boardCode}
+	</select>
+	
+	<select id="selectByboardCode2" resultType="map" parameterType="int">
+	 	select p.*, m.membername
+	 from post p join member m
+	 on p.MEMBER_CODE = m.MEMBER_CODE 
+	 where p.board_code2=#{boardCode2}
+	</select>
+	
+	<update id="postcountUpdate" parameterType="int">
+	update post
+	set boardhits=boardhits+1
+	where board_code2=#{boardCode2}
+	</update>
+	
+	<insert id="insertPost" parameterType="postVo">
+		<selectKey keyProperty="boardCode2" resultType="int" order="BEFORE">
+			select post_seq.nextval from dual
+		</selectKey>
+		insert into post(board_code2, boardtitle, boardcontent, member_code, board_code)
+		values(#{boardCode2},#{boardtitle},#{boardcontent},#{memberCode}, #{boardCode})
+	</insert>
+	
+	<insert id="insertcmt" parameterType="postCmtVo">
+		<selectKey keyProperty="commentCode" resultType="int" order="BEFORE">
+			select NOTICE_CMT_SEQ.nextval from dual
+		</selectKey>
+		insert into post_cmt (comment_code,content, member_code, board_code2)
+		values(#{commentCode},#{content}, #{memberCode},#{boardCode2})
+	</insert>
+	
+	<select id="selectCmt" resultType="map" parameterType="int">
+		select p.CONTENT, p.BOARD_DATE, m.membername 
+		from post_cmt p join member m 
+		on p.member_Code=m.member_Code 
+		where board_code2=#{boardCode2}
+	</select>
+	
+		<select id="selectAll" parameterType="postVo" resultType="map">
+		select *
+		from
+		(
+		    select A.*, rownum as RNUM 
+		    from
+		    (
+		         select p.* ,(sysdate-p.boardregdate2)*24 as new_Img_Term , m.membername, 
+                (select count(*) as cnt from post_cmt where post_cmt.board_code2=p.board_code2) as commentcnt 
+		        from post p left join member m 
+		        on p.member_Code=m.member_Code	
+		        where board_code=#{boardCode}
+				<if test="searchKeyword != null and searchKeyword != ''">
+					and ${searchCondition} like '%' || #{searchKeyword} || '%'
+					and report_ck='N' 
+					and deletecheck='N'
+				</if>		
+				order by p.board_Code2 desc
+		    ) A
+		)
+		<![CDATA[ where RNUM>#{firstRecordIndex}  
+		and RNUM<=#{firstRecordIndex} + #{recordCountPerPage}]]>
+	</select>
+	
+	 <select id="selectTotalCount" parameterType="postVo" resultType="int">
+	 select count(*) from post
+	 	where board_code=#{boardCode}
+	 
+	 <if test="searchKeyword != null and searchKeyword !=''">
+	 	and ${searchCondition} like '%' || #{searchKeyword} || '%'
+	 </if>
+	 </select>
+	 
+	 <update id="updatereport" parameterType="postVo">
+	 update post
+	set report_ck='Y', report_user=#{reportUser}, report_day=sysdate, report_coment=#{reportComent}
+	where board_Code2=#{boardCode2}
+	 </update>
+	 
+	 <select id="selectOneByBoardCode2" parameterType="int" resultType="postVo">
+	 	select * from post where board_code2=#{boardCode2}
+	 </select>
+	 
+	 <update id="updatePost" parameterType="postVo">
+	 	update post
+		set boardtitle=#{boardtitle}, boardcontent=#{boardcontent}, boardregdate2=sysdate
+		where board_code2=#{boardCode2}
+	 </update>
+	 
+	 <select id="selectBoardByboardCode2" resultType="boardVo" parameterType="int">
+	 select * from board where board_code1=(select board_code from post where board_Code2=#{boardCode2})
+	 </select>
+	 
+	 <delete id="deletePost" parameterType="int">
+	 delete from post where board_code2=#{boardCode2}
+	 </delete>
+	 
+	 
 </mapper>
 
 

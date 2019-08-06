@@ -7,7 +7,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class BoardServiceImpl implements BoardService{
@@ -48,6 +47,10 @@ public class BoardServiceImpl implements BoardService{
 	@Override
 	public BoardVO selectByBoardCode(int boardCode) {
 		return boardDao.selectByBoardCode(boardCode);
+	}
+	@Override
+	public List<BoardVO> selectByUsage() {
+		return boardDao.selectByUsage();
 	}
 
 

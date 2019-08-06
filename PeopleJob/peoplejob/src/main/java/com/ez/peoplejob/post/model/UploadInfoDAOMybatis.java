@@ -22,5 +22,20 @@ public class UploadInfoDAOMybatis implements UploadInfoDAO{
 		return sqlSession.selectList(namespace+"uploadInfoSelectByBoardCode2", boardCode2);
 	}
 
+	@Override
+	public int updatedowncount(String fileName) {
+		return sqlSession.update(namespace+"updatedowncount",fileName);
+	}
+
+	@Override
+	public int deleteupload(int uploadCode) {
+		return sqlSession.delete(namespace+"deleteupload",uploadCode);
+	}
+
+	@Override
+	public int deletePostByName(String fileName) {
+		return sqlSession.delete(namespace+"deletePostByName",fileName);
+	}
+
 	
 }

@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.ez.peoplejob.common.PaginationInfo;
 import com.ez.peoplejob.common.SearchVO;
 import com.ez.peoplejob.common.WebUtility;
-import com.ez.peoplejob.jobopening.model.JobopeningListVO;
 import com.ez.peoplejob.jobopening.model.JobopeningService;
 import com.ez.peoplejob.jobopening.model.JobopeningVO;
 import com.ez.peoplejob.login.controller.LoginController;
@@ -84,12 +83,12 @@ public class PaymentController {
 			
 			List<JobopeningVO> list=jobService.selectJobopeningBycomcode(memberVo.getCompanyCode());
 			logger.info("company_code로 조회한 채용공고 list.size={}",list.size());
-			ServiceVO serviceVo1=serviceService.selectServiceByCode(1);
-			logger.info("serviceCode로 service={}",serviceVo1);
+			//ServiceVO serviceVo1=serviceService.selectServiceByCode(1);
+			//logger.info("serviceCode로 service={}",serviceVo1);
 			
 			
 			
-			model.addAttribute("serviceVo1",serviceVo1);
+		//	model.addAttribute("serviceVo1",serviceVo1);
 			
 			
 			model.addAttribute("memberVo",memberVo);
@@ -169,9 +168,9 @@ public class PaymentController {
 	}
 	
 	@RequestMapping(value="/service/paysuccess.do", method = RequestMethod.POST)
-	public String paysuccess(@ModelAttribute PaymentListVO vo) {
+	public String paysuccess(@ModelAttribute PaymentListVO vo, @RequestParam String merchantId) {
 		List<PaymentVO> list=vo.getPayItems();
-		logger.info("파라미터 vo={}",vo);
+		logger.info("파라미터 vo={} , 상점거래 id merchantId={}",vo,merchantId);
 		
 		int cnt=0;
 		for(int i=0;i<list.size();i++) {

@@ -76,18 +76,43 @@ padding: 5px;
 			 $("#servicePrice").html("0원"); */
 	  });
 	  
-	 
 	  
+	  $('.check').click(function(){
+			 var selectval= $(this).parents('tr').find('#selectPeriod option:selected').val();
+			// $('#totalPrice').text(eachprice*(length+1)*selectval+"원");
+			
+				  
+				 if($(this).is(':checked')){
+				  	$(this).parents('tr').find('input[title=price]').val(eachprice*selectval);
+				  	//$(this).parents('tr').find('.priceclass').attr('value',(eachprice*selectval));
+				  	 alert(sum);
+					sum += Number($(this).parents("tr").find("input[title=price]").val());
+					  /* checkbox 개수 * 날짜* 1일당 가격  */
+					  alert(sum);
+				 }else{
+					 var p=0;
+					sum -= Number($(this).parents("tr").find("input[title=price]").val());
+					 $(this).parents('tr').find('input[title=price]').val(p);
+				 }
+					$('#totalPrice').val(sum);
+				 
+		  });
 	  
-	
 	  
 	  $('button[name=pay]').click(function(){
 		  
-		 
+		  sum=0;
+		  
+		  //location.reload();
+		  $('#cardBoduPostList').show();
 		  
 		  $('#Info').hide();
 		  $("#selectPeriod").val("2").prop("selected", true);
-		  $('.selectclass').find('option:first').attr('selected', 'selected');
+		  $('.selectclass').find("option:eq(0)").prop("selected", true);
+		  $('input[title=price]').val('0');
+		  $('input[name=totalPrice]').val(sum);
+		  $('.workdate1').val('');
+		  
 		  
 		  var scode=$(this).parents("div[name=divcolor]").find("input[name=serviceCode1]").val();
 		  
@@ -107,6 +132,12 @@ padding: 5px;
 			  check();
 			  $('.check').click(check);
 			  
+<<<<<<< HEAD
+			  /*   $('.check').click(function(){ */
+			
+			  
+=======
+>>>>>>> branch 'master' of https://github.com/kins1113/PeopleJob--07-18.git
 			 
 			  var sum=0; //totalprice에 보여줄 모든 price들의 합
 			  var length=  $('.check:checked').length;
@@ -225,6 +256,93 @@ padding: 5px;
 						event.preventDefault();
 						return false;
 						
+<<<<<<< HEAD
+					} //체크한 상품의 파라미터 다 입력되었을때
+				 });
+				 
+				 //alert("if밖"+count);
+				 if(count >0){
+					 alert('선택한 상품의 이용기간 시작날짜를 선택해주세요.');
+							event.preventDefault();
+							return false;
+					 
+				 }else{
+						/*
+						$('form[name=frmList]').prop('action','<c:url value="/service/payList.do"/>');
+						$('form[name=frmList]').submit();
+						
+					        var jobno = new Array(); // 배열 선언
+					 
+					        $('.check:checked').each(function() { // 체크된 체크박스의 value 값을 가지고 온다.
+					            jobno.push(this.value);
+					        });
+						*/
+						
+						var param=$("#frmList").serialize();
+						var length=  $('.check:checked').length;
+						var totalprice=$('#totalPrice').val();
+						//var merchantId=$('#merchantId').val();
+						
+						$.ajax({
+							url : "<c:url value='/service/ajaxpayList.do'/>",
+							type : "POST",
+							//cache: false,
+							traditional : true,
+							data : param,
+							dataType:"json",
+							//async: false,
+							success : function(res) {
+								 if(res){
+									if(confirm(length+'개 채용광고를 결제하시겠습니까?')){
+									
+										var IMP = window.IMP; // 생략가능
+										  IMP.init("imp49241177"); 
+										  
+										  IMP.request_pay({
+											  	pg : 'inicis', // version 1.1.0부터 지원.
+											    pay_method : 'card',
+											    merchant_uid : 'peoplejob_' + new Date().getTime(),
+											    name : 'PEOPLEJOB 채용공고 vvip관',
+											    amount : totalprice,
+											    buyer_email : '${memberVo.email}',
+											    buyer_name : '${sessionScope.memberName}',
+											    buyer_tel : '${memberVo.tel}',
+											    buyer_addr : '${companyVo.companyAddress}',
+											    buyer_postcode : '${companyVo.companyZipcode}',
+											    m_redirect_url : '<c:url value="/service/pay.do"/>' //모바일 결제 후 이동될 주소
+											}, function(rsp) {
+											    if ( rsp.success ) {
+											        var msg = '결제가 완료되었습니다.\n';
+											        msg += '고유ID : ' + rsp.imp_uid+"\n";
+											        msg += '상점 거래ID : ' + rsp.merchant_uid+"\n";
+											        msg += '결제 금액 : ' + rsp.paid_amount+'원\n';
+											        msg += '카드 승인번호 : ' + rsp.apply_num;
+											        
+											        $('input[name=marchantId]').val(rsp.merchant_uid);
+											        var merchantId=$('#merchantId').val();
+											        
+											        $('#frmList').prop('action','<c:url value="/service/paysuccess.do?merchantId='+merchantId+'" />');
+													$('#frmList').submit();
+											        //location.href="<c:url value='/service/success.do?jobno="+jobno+"'/>";
+											    } else {
+											        var msg = '결제에 실패하였습니다.';
+											        msg += ' : ' + rsp.error_msg;
+											    }
+											    alert(msg);
+											    alert(merchantId);
+											    
+											}); 
+									}
+								 }else{
+									alert('이미 결제완료한 채용공고 상품입니다.');
+									event.preventDefault();
+								} 
+
+							},
+							error : function(xhr, status, error) {
+								alert(status + ":" + error);
+=======
+>>>>>>> branch 'master' of https://github.com/kins1113/PeopleJob--07-18.git
 					}
 				});
 				
@@ -396,6 +514,8 @@ padding: 5px;
 				
 				<c:forEach var="jobopeningVo" items="${list }">
 				<form id="frmList" method="post" name="frmList"> 
+				
+						<input type="hidden" name="merchantId" id="merchantId">
 						<%-- <input type="hidden" name="payItems[${idx }].paymentway">
 						<input type="hidden" name="payItems[${idx }].progress"> --%>
 						<input type="hidden" value="${memberVo.memberCode }" name="payItems[${idx }].memberCode">

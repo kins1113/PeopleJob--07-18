@@ -1,6 +1,7 @@
 package com.ez.peoplejob.resume.model;
 
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -223,5 +224,15 @@ public class ResumeDAOMybatis implements ResumeDAO {
 	public ResumeVO selectBythird(int thirdCode) {
 		ResumeVO vo=sqlsession.selectOne(namespace+"selectBythird",thirdCode);
 		return vo;
+	}
+
+	@Override
+	public List<Map<String, Object>> selectResumeByid(String memberid) {
+		return sqlsession.selectList(namespace+"selectResumeByid",memberid);
+	}
+
+	@Override
+	public int insertCopy(int resumeCode) {
+		return sqlsession.insert(namespace+"insertCopy",resumeCode);
 	}
 }

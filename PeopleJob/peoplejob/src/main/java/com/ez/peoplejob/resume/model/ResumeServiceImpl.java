@@ -1,6 +1,7 @@
 package com.ez.peoplejob.resume.model;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -162,6 +163,14 @@ public class ResumeServiceImpl implements ResumeService{
 	@Override
 	public ResumeVO selectBythird(int thirdCode) {
 		return resumeDao.selectBythird(thirdCode);
+	}
+	@Override
+	public List<Map<String, Object>> selectResumeByid(String memberid) {
+		return resumeDao.selectResumeByid(memberid);
+	}
+	@Override
+	public int insertCopy(int resumeCode) {
+		return resumeDao.insertCopy(resumeCode);
 	}
 	
 

@@ -10,47 +10,47 @@ $(document).ready(function (){
 
 
 
-	
-		//지역정보를 가져오기 - 시도
-		getLocation();
+   
+      //지역정보를 가져오기 - 시도
+      getLocation();
 
-		//지역정보를 가져오는 
-		$("#locationSiDo").change(function(){
-			var sidoCode=$(this).find("option:checked").val();
-			//값을 가져오는 메서드
-			getLocation2(sidoCode);
-		});
-		
-		  
-		//1차 직종 가져오기 /manager/occupantion/firstList.do
-		selectFirst();
-		//1차 직종 클릭하면 2차직종 가져오기 
-		$("#selectFirst").change(function(){
-			var firstCode=$(this).find("option:selected").val();
-			if(firstCode!=0){
-				selectSecond(firstCode);
-			}
-		});
-		
-		//2차 직종 클릭하면 3차직종 가져오기
-		$("#selectSecond").change(function(){
-			var secondCode=$(this).find("option:selected").val();
-			if(secondCode!=0){
-				selectThird(secondCode);
-			}
-		});
-		//1차 업종 가져오기
-		getBtype1();
-		//1차업종 change 2차 업종 가져오기
-		$("#selectBtype1").change(function(){
-			var bytpeCode1=$(this).find("option:checked").val();
-			getBtype2(bytpeCode1);
-		});
-		//2차업종 change 3차 업종 가져오기
-		$("#selectBtype2").change(function(){
-			var bytpeCode3=$(this).find("option:checked").val();
-			getBtype3(bytpeCode3);
-		});
+      //지역정보를 가져오는 
+      $("#locationSiDo").change(function(){
+         var sidoCode=$(this).find("option:checked").val();
+         //값을 가져오는 메서드
+         getLocation2(sidoCode);
+      });
+      
+        
+      //1차 직종 가져오기 /manager/occupantion/firstList.do
+      selectFirst();
+      //1차 직종 클릭하면 2차직종 가져오기 
+      $("#selectFirst").change(function(){
+         var firstCode=$(this).find("option:selected").val();
+         if(firstCode!=0){
+            selectSecond(firstCode);
+         }
+      });
+      
+      //2차 직종 클릭하면 3차직종 가져오기
+      $("#selectSecond").change(function(){
+         var secondCode=$(this).find("option:selected").val();
+         if(secondCode!=0){
+            selectThird(secondCode);
+         }
+      });
+      //1차 업종 가져오기
+      getBtype1();
+      //1차업종 change 2차 업종 가져오기
+      $("#selectBtype1").change(function(){
+         var bytpeCode1=$(this).find("option:checked").val();
+         getBtype2(bytpeCode1);
+      });
+      //2차업종 change 3차 업종 가져오기
+      $("#selectBtype2").change(function(){
+         var bytpeCode3=$(this).find("option:checked").val();
+         getBtype3(bytpeCode3);
+      });
 
 
 
@@ -60,37 +60,51 @@ $(document).ready(function (){
 
 //지역정보를 가져오는 메서드 
 function getLocation(){
-	$.ajax({
-		url:"<c:url value='/peopleinfo/where/selectLocation.do'/>",
-		type:"post",
-		success:function(res){
-			settingLocation(res);
-		},
-		error:function(xht,status,error){
-			alert(status+":"+error);
-		}
-	});//ajax
+   $.ajax({
+      url:"<c:url value='/peopleinfo/where/selectLocation.do'/>",
+      type:"post",
+      success:function(res){
+         settingLocation(res);
+      },
+      error:function(xht,status,error){
+         alert(status+":"+error);
+      }
+   });//ajax
 }
 //지역정보를 뿌려주는 메서드
 function settingLocation(res){
-	$.each(res, function(idx,item){
-		if(idx==0){
-			var chEl=$("<option value='0'>시/도</option>");
-			var opEl=$("<option value='"+item.localCode2+"'></option>")
-			opEl.html(item.sido);
-			$("#locationSiDo").html(chEl);
-			$("#locationSiDo").append(opEl);
-		}else{
-			var opEl=$("<option value='"+item.localCode2+"'></option>")
-			opEl.html(item.sido);
-			$("#locationSiDo").append(opEl);
-		}
-	});
+   $.each(res, function(idx,item){
+      if(idx==0){
+         var chEl=$("<option value='0'>시/도</option>");
+         var opEl=$("<option value='"+item.localCode2+"'></option>")
+         opEl.html(item.sido);
+         $("#locationSiDo").html(chEl);
+         $("#locationSiDo").append(opEl);
+      }else{
+         var opEl=$("<option value='"+item.localCode2+"'></option>")
+         opEl.html(item.sido);
+         $("#locationSiDo").append(opEl);
+      }
+   });
 }
 
 
 //지역정보를 가져오는 메서드 - 구군
 function getLocation2(sidoCode){
+<<<<<<< HEAD
+   $.ajax({
+      url:"<c:url value='/peopleinfo/where/selectLocation2.do'/>",
+      type:"post",
+       dataType: "json",
+      data:"sidoCode="+sidoCode,
+      success:function(res){
+         settingLocation2(res);
+      },
+      error:function(xht,status,error){
+         alert(status+":"+error);
+      }
+   });//ajax
+=======
 	$.ajax({
 		url:"<c:url value='/peopleinfo/where/selectLocation2.do'/>",
 		type:"post",
@@ -103,227 +117,228 @@ function getLocation2(sidoCode){
 			alert(status+":"+error);
 		}
 	});//ajax 
+>>>>>>> branch 'master' of https://github.com/kins1113/PeopleJob--07-18.git
 }
 //지역정보를 뿌려주는 메서드 - 구군
 function settingLocation2(res){
-	$.each(res, function(idx,item){
-		if(idx==0){
-			var chEl=$("<option value='0'>구/군</option>");
-			var opEl=$("<option value='"+item["LOCAL_CODE2"]+"'></option>")
-			opEl.html(item["GUGUN"]);
-			$("#locationGugun").html(chEl);
-			$("#locationGugun").append(opEl);
-		}else{
-			//alert("세팅 item[LOCAL_CODE2]="+item["LOCAL_CODE2"]+", item[GUGUN]"+item["GUGUN"])
-			var opEl=$("<option value='"+item["LOCAL_CODE2"]+"'></option>")
-			opEl.html(item["GUGUN"]);
-			$("#locationGugun").append(opEl);
-		}
-		
-	});
+   $.each(res, function(idx,item){
+      if(idx==0){
+         var chEl=$("<option value='0'>구/군</option>");
+         var opEl=$("<option value='"+item["LOCAL_CODE2"]+"'></option>")
+         opEl.html(item["GUGUN"]);
+         $("#locationGugun").html(chEl);
+         $("#locationGugun").append(opEl);
+      }else{
+         //alert("세팅 item[LOCAL_CODE2]="+item["LOCAL_CODE2"]+", item[GUGUN]"+item["GUGUN"])
+         var opEl=$("<option value='"+item["LOCAL_CODE2"]+"'></option>")
+         opEl.html(item["GUGUN"]);
+         $("#locationGugun").append(opEl);
+      }
+      
+   });
 }
 
 //1차 직종 가져오기
 function selectFirst(){
-	$.ajax({
-		url:"<c:url value='/peopleinfo/where/firstList.do'/>",
-		type:"post",
-		success:function(res){
-				settingFirst(res);
-		},
-		error:function(xhr, status, error){
-			alert(status+":"+error);
-		}
-	})
+   $.ajax({
+      url:"<c:url value='/peopleinfo/where/firstList.do'/>",
+      type:"post",
+      success:function(res){
+            settingFirst(res);
+      },
+      error:function(xhr, status, error){
+         alert(status+":"+error);
+      }
+   })
 }
 
 //1차 직종 뿌리기
 //[{"firstCode":1,"firstname":"경영·사무"},{"firstCode":2,"firstname":"영업·고객상담"},{"firstCode":3,"firstname":"생산·제조"},
 //{"firstCode":4,"firstname":"IT·인터넷"},{"firstCode":5,"firstname":"전문직"},{"firstCode":6,"firstname":"교육"}
 function settingFirst(res){
-	alert("res="+res);
-		$.each(res,function(idx,item){
-			if(idx==0){
-				var chEl=$("<option value='0'>1차 직종</option>")
-				var opEl=$("<option value='"+item.firstCode+"'></option>");
-				opEl.append(item.firstname);
-				$("#selectFirst").html(chEl);
-				$("#selectFirst").append(opEl); //최종으로 여기에 넣음
-			}else{
-				var opEl=$("<option value='"+item.firstCode+"'></option>");
-				opEl.append(item.firstname);
-				$("#selectFirst").append(opEl); //최종으로 여기에 넣음
-			}
-		})
+   alert("res="+res);
+      $.each(res,function(idx,item){
+         if(idx==0){
+            var chEl=$("<option value='0'>1차 직종</option>")
+            var opEl=$("<option value='"+item.firstCode+"'></option>");
+            opEl.append(item.firstname);
+            $("#selectFirst").html(chEl);
+            $("#selectFirst").append(opEl); //최종으로 여기에 넣음
+         }else{
+            var opEl=$("<option value='"+item.firstCode+"'></option>");
+            opEl.append(item.firstname);
+            $("#selectFirst").append(opEl); //최종으로 여기에 넣음
+         }
+      })
 }
 
 //2차 직종가져오기 
 function selectSecond(firstCode){
-	$.ajax({
-		url:"<c:url value='/peopleinfo/where/selectSecond.do'/>",
-		type:"post",
-		data:"firstCode="+firstCode,
-		success:function(res){
-			settingSecond(res);
-		},
-		error:function(xhr,status,error){
-			alert(status+":"+error);
-		}
-	});
+   $.ajax({
+      url:"<c:url value='/peopleinfo/where/selectSecond.do'/>",
+      type:"post",
+      data:"firstCode="+firstCode,
+      success:function(res){
+         settingSecond(res);
+      },
+      error:function(xhr,status,error){
+         alert(status+":"+error);
+      }
+   });
 }
 //[{"secondCode":101,"secondname":"기획·전략·경영","firstCode":1},
-	//{"secondCode":102,"secondname":"총무·법무·사무","firstCode":1},.....	]
+   //{"secondCode":102,"secondname":"총무·법무·사무","firstCode":1},.....   ]
 //2차 직종 세팅하기 함수
 function settingSecond(res){
-	$.each(res,function(idx,item){
-		if(idx==0){
-			//option태그 만들어서 
-			var opEl=$("<option value='"+item.secondCode+"'></option>")
-			//값을 넣고 
-			opEl.html(item.secondname);
-			//append
-			$("#selectSecond").html("<option value='0'>2차 직종</option>");
-			$("#selectSecond").append(opEl);
-		}else{
-			//option태그 만들어서 
-			var opEl=$("<option value='"+item.secondCode+"'></option>")
-			//값을 넣고 
-			opEl.append(item.secondname);
-			//append
-			$("#selectSecond").append(opEl);
-		}
-	});
-	var thirdEl=$("<option>3차 직종</option><option>먼저 2차 직종을 선택하세요</option>");
-	$("#selectThird").html(thirdEl);
+   $.each(res,function(idx,item){
+      if(idx==0){
+         //option태그 만들어서 
+         var opEl=$("<option value='"+item.secondCode+"'></option>")
+         //값을 넣고 
+         opEl.html(item.secondname);
+         //append
+         $("#selectSecond").html("<option value='0'>2차 직종</option>");
+         $("#selectSecond").append(opEl);
+      }else{
+         //option태그 만들어서 
+         var opEl=$("<option value='"+item.secondCode+"'></option>")
+         //값을 넣고 
+         opEl.append(item.secondname);
+         //append
+         $("#selectSecond").append(opEl);
+      }
+   });
+   var thirdEl=$("<option>3차 직종</option><option>먼저 2차 직종을 선택하세요</option>");
+   $("#selectThird").html(thirdEl);
 };
 
  //3차직종 가져오기 
 function selectThird(secondCode){
-	$.ajax({
-		url:"<c:url value='/peopleinfo/where/selectThird.do'/>",
-		type:"post",
-		data:"secondCode="+secondCode,
-		success:function(res){
-			settingThird(res);
-		},
-		error:function(xhr,status,error){
-			alert(status+":"+error);
-		}
-	});
-	
+   $.ajax({
+      url:"<c:url value='/peopleinfo/where/selectThird.do'/>",
+      type:"post",
+      data:"secondCode="+secondCode,
+      success:function(res){
+         settingThird(res);
+      },
+      error:function(xhr,status,error){
+         alert(status+":"+error);
+      }
+   });
+   
 } 
 //3차 직종 뿌려주기 
 function settingThird(res){
-	$.each(res,function(idx,item){
-		if(idx==0){
-			//option태그 만들어서 
-			var opEl=$("<option value='"+item.thirdCode+"'></option>")
-			//값을 넣고 
-			opEl.html(item.thirdname);
-			//append
-			$("#selectThird").html("<option value='0'>3차 직종</option>");
-			$("#selectThird").append(opEl);
-		}else{
-			//option태그 만들어서 
-			var opEl=$("<option value='"+item.thirdCode+"'></option>")
-			//값을 넣고 
-			opEl.append(item.thirdname);
-			//append
-			$("#selectThird").append(opEl);
-		}
-	});
+   $.each(res,function(idx,item){
+      if(idx==0){
+         //option태그 만들어서 
+         var opEl=$("<option value='"+item.thirdCode+"'></option>")
+         //값을 넣고 
+         opEl.html(item.thirdname);
+         //append
+         $("#selectThird").html("<option value='0'>3차 직종</option>");
+         $("#selectThird").append(opEl);
+      }else{
+         //option태그 만들어서 
+         var opEl=$("<option value='"+item.thirdCode+"'></option>")
+         //값을 넣고 
+         opEl.append(item.thirdname);
+         //append
+         $("#selectThird").append(opEl);
+      }
+   });
 }
 //1차 업종가져오기
 function getBtype1(){
-	$.ajax({
-		url:"<c:url value='/peopleinfo/where/selectBtype1.do'/>",
-		type:"post",
-		success:function(res){
-				settingBtype1(res);
-		},
-		error:function(xhr, status, error){
-			alert(status+":"+error);
-		}
-	})
+   $.ajax({
+      url:"<c:url value='/peopleinfo/where/selectBtype1.do'/>",
+      type:"post",
+      success:function(res){
+            settingBtype1(res);
+      },
+      error:function(xhr, status, error){
+         alert(status+":"+error);
+      }
+   })
 }
 
 //1차 업종 뿌리기
 function settingBtype1(res){
-	$.each(res,function(idx,item){
-		if(idx==0){
-			var chEl=$("<option value='0'>1차 업종</option>")
-			var opEl=$("<option value='"+item["BTYPE_CODE1"]+"'></option>");
-			opEl.append(item['BTYPENAME1']);
-			$("#selectBtype1").html(chEl);
-			$("#selectBtype1").append(opEl);
-		}else{
-			var opEl=$("<option value='"+item["BTYPE_CODE1"]+"'></option>");
-			opEl.append(item['BTYPENAME1']);
-			$("#selectBtype1").append(opEl); //최종으로 여기에 넣음
-		}
-	})
+   $.each(res,function(idx,item){
+      if(idx==0){
+         var chEl=$("<option value='0'>1차 업종</option>")
+         var opEl=$("<option value='"+item["BTYPE_CODE1"]+"'></option>");
+         opEl.append(item['BTYPENAME1']);
+         $("#selectBtype1").html(chEl);
+         $("#selectBtype1").append(opEl);
+      }else{
+         var opEl=$("<option value='"+item["BTYPE_CODE1"]+"'></option>");
+         opEl.append(item['BTYPENAME1']);
+         $("#selectBtype1").append(opEl); //최종으로 여기에 넣음
+      }
+   })
 }
 //2차 업종 가져오기
 function getBtype2(btypeCode1){
-	$.ajax({
-		url:"<c:url value='/peopleinfo/where/selectBtype2.do'/>",
-		type:"post",
-		data:"btypeCode1="+btypeCode1,
-		success:function(res){
-				settingBtype2(res);
-		},
-		error:function(xhr, status, error){
-			alert(status+":"+error);
-		}
-	})
+   $.ajax({
+      url:"<c:url value='/peopleinfo/where/selectBtype2.do'/>",
+      type:"post",
+      data:"btypeCode1="+btypeCode1,
+      success:function(res){
+            settingBtype2(res);
+      },
+      error:function(xhr, status, error){
+         alert(status+":"+error);
+      }
+   })
 }
 //2차 업종 뿌리기
 function settingBtype2(res){
-	$.each(res,function(idx,item){
-		if(idx==0){
-			var chEl=$("<option value='0'>2차 업종</option>")
-			var opEl=$("<option value='"+item["BTYPE_CODE2"]+"'></option>");
-			opEl.append(item['BTYPENAME2']);
-			$("#selectBtype2").html(chEl);
-			$("#selectBtype2").append(opEl); 
-		}else{
-			var opEl=$("<option value='"+item["BTYPE_CODE2"]+"'></option>");
-			opEl.append(item['BTYPENAME2']);
-			$("#selectBtype2").append(opEl); 
-		}
-	})
-	var chEl=$("<option value='0'>3차 업종</option><option>먼저 2차 업종을 선택하세요</option>")
-	$("#selectBtype3").html(chEl);
+   $.each(res,function(idx,item){
+      if(idx==0){
+         var chEl=$("<option value='0'>2차 업종</option>")
+         var opEl=$("<option value='"+item["BTYPE_CODE2"]+"'></option>");
+         opEl.append(item['BTYPENAME2']);
+         $("#selectBtype2").html(chEl);
+         $("#selectBtype2").append(opEl); 
+      }else{
+         var opEl=$("<option value='"+item["BTYPE_CODE2"]+"'></option>");
+         opEl.append(item['BTYPENAME2']);
+         $("#selectBtype2").append(opEl); 
+      }
+   })
+   var chEl=$("<option value='0'>3차 업종</option><option>먼저 2차 업종을 선택하세요</option>")
+   $("#selectBtype3").html(chEl);
 }
 //2차 업종 가져오기
 function getBtype3(btypeCode2){
-	$.ajax({
-		url:"<c:url value='/peopleinfo/where/selectBtype3.do'/>",
-		type:"post",
-		data:"btypeCode2="+btypeCode2,
-		success:function(res){
-				settingBtype3(res);
-		},
-		error:function(xhr, status, error){
-			alert(status+":"+error);
-		}
-	})
+   $.ajax({
+      url:"<c:url value='/peopleinfo/where/selectBtype3.do'/>",
+      type:"post",
+      data:"btypeCode2="+btypeCode2,
+      success:function(res){
+            settingBtype3(res);
+      },
+      error:function(xhr, status, error){
+         alert(status+":"+error);
+      }
+   })
 }
 //3차 업종 뿌리기
 function settingBtype3(res){
-	$.each(res,function(idx,item){
-		if(idx==0){
-			var chEl=$("<option value='0'>3차 업종</option>")
-			var opEl=$("<option value='"+item["BTYPE_CODE3"]+"'></option>");
-			opEl.append(item['BTYPENAME3']);
-			$("#selectBtype3").html(chEl);
-			$("#selectBtype3").append(opEl); 
-		}else{
-			var opEl=$("<option value='"+item["BTYPE_CODE3"]+"'></option>");
-			opEl.append(item['BTYPENAME3']);
-			$("#selectBtype3").append(opEl); 
-		}
-	})
+   $.each(res,function(idx,item){
+      if(idx==0){
+         var chEl=$("<option value='0'>3차 업종</option>")
+         var opEl=$("<option value='"+item["BTYPE_CODE3"]+"'></option>");
+         opEl.append(item['BTYPENAME3']);
+         $("#selectBtype3").html(chEl);
+         $("#selectBtype3").append(opEl); 
+      }else{
+         var opEl=$("<option value='"+item["BTYPE_CODE3"]+"'></option>");
+         opEl.append(item['BTYPENAME3']);
+         $("#selectBtype3").append(opEl); 
+      }
+   })
 }
 
 </script>
@@ -332,7 +347,7 @@ function settingBtype3(res){
   width: 1080px;
     margin: 0 auto;
     
-}	
+}   
 input.btn.btn-primary {
     position: absolute;
         bottom: 166px;
@@ -353,16 +368,20 @@ div#woman {
  color:green;
 }
 </style>
-	<!-- 페이징 처리에도 사용 -->
+   <!-- 페이징 처리에도 사용 -->
    <h2>인재정보 찾기</h2>
 <div class="divSearch"> 
-		<div style="border: 1px solid #63b752;
+      <div style="border: 1px solid #63b752;
     float: left;
     width: 9%;
-   	padding: 8px;
+      padding: 8px;
     margin: 10px;
     height: 450px;">
+<<<<<<< HEAD
+       <label id="title">경력</label><br>
+=======
 		 <label id="title">경력</label><br>
+>>>>>>> branch 'master' of https://github.com/kins1113/PeopleJob--07-18.git
 <label><input type="checkbox" id="workcheck" name="workcheck" value="경력">경력</label>
 <label><input type="checkbox" id="workcheck" name="workcheck" value="신입">신입</label><br>
  <ul class="wrap_list_value column_two">
@@ -391,11 +410,20 @@ div#woman {
     padding: 4px;">
         <strong id="title">성별</strong>
             <strong class="title_basic_sub" id="title">나이</strong><br>
+<<<<<<< HEAD
+            <input type="checkbox" id="male01" value="남">
+            <label class="form_sp frm_chk02" for="male01">
+=======
             <input type="checkbox" id="male01" name="membergender" value="남">
             <label class="form_sp frm_chk02"  for="male01">
+>>>>>>> branch 'master' of https://github.com/kins1113/PeopleJob--07-18.git
             <span>남</span></label>
             <div id="woman">
+<<<<<<< HEAD
+            <input type="checkbox" id="female01" value="여">
+=======
             <input type="checkbox" id="female01" name="membergender" value="여">
+>>>>>>> branch 'master' of https://github.com/kins1113/PeopleJob--07-18.git
             <label class="form_sp frm_chk02" for="female01">
             <span>여</span></label>
             </div>
@@ -428,6 +456,20 @@ div#woman {
     <div id="hopelocal" style="border: 1px solid #63b752; float: left; width: 19%; margin: 10px; height: 450px; padding-top: 10px;">
        <table>
       <tr>
+<<<<<<< HEAD
+            <th id="title">희망 근무 지역</th>
+                        <td>
+                           <select class="custom-select my-1 mr-sm-2 FST" name="localCode" id="locationSiDo">
+                              <option>시/도</option>
+                           </select>
+                           <select class="custom-select my-1 mr-sm-2 FST" name="localCode2" id="locationGugun">
+                              <option>구/군</option>
+                              <option>먼저 시/도를 선택하세요</option>
+                           </select>
+                        </td>
+                        </tr>
+               </table>
+=======
 				<th id="title">희망 근무 지역</th>
 								<td>
 									<select class="custom-select my-1 mr-sm-2 FST" name="localCode" id="locationSiDo">
@@ -440,6 +482,7 @@ div#woman {
 								</td>
 								</tr>
 					</table>
+>>>>>>> branch 'master' of https://github.com/kins1113/PeopleJob--07-18.git
         </div>
        
      
@@ -451,6 +494,40 @@ div#woman {
     padding-top: 10px;">
          <table>
        <tr>
+<<<<<<< HEAD
+      <th id="title">직종</th>
+            <td colspan="1">
+            <select class="custom-select my-1 FST" name="firstCode" id="selectFirst">
+            <option>1차 직종</option>
+                           </select>
+                           <select class="custom-select my-1 mr-sm-2 FST" name="secondCode" id="selectSecond">
+                              <option>2차 직종</option>
+                              <option>먼저 1차 직종을 선택하세요</option>
+                           </select>
+                           <select class="custom-select my-1 mr-sm-2 FST" name="thirdCode" id="selectThird">
+                              <option>3차 직종</option>
+                              <option>먼저 2차 직종을 선택하세요</option>
+                           </select>
+                        </td>
+                        
+                        <th id="title">업종</th>
+                        <td colspan="2">
+                           <select class="custom-select my-1 FST" name="btypeCode1" id="selectBtype1">
+                              <option>1차 업종</option>
+                           </select>
+                           <select class="custom-select my-1 mr-sm-2 FST" name="btypeCode2" id="selectBtype2">
+                              <option>2차 업종</option>
+                              <option>먼저 1차 업종을 선택하세요</option>
+                           </select>
+                           <select class="custom-select my-1 mr-sm-2 FST" name="btypeCode3" id="selectBtype3">
+                              <option>3차 업종</option>
+                              <option>먼저 2차 업종을 선택하세요</option>
+                           </select>
+                        </td>
+                     </tr>
+                     </table>
+                  </div>   
+=======
 		<th id="title">직종</th>
 				<td colspan="1">
 				<select class="custom-select my-1 FST" name="firstCode" id="selectFirst">
@@ -483,13 +560,14 @@ div#woman {
 							</tr>
 							</table>
 						</div>	
+>>>>>>> branch 'master' of https://github.com/kins1113/PeopleJob--07-18.git
     </div>
      <!--  <div class="choice_wrap new mt20 mb10"> -->
   <div class="choice_inner">
   인재정보 조건 : <span id="selected"></span><br/>
   </div><!-- end choice_inner -->
 <!-- </div> -->
-	<div>
-		<input type="submit" class="btn btn-primary" value="검색">	
+   <div>
+      <input type="submit" class="btn btn-primary" value="검색">   
     </div>
-		
+      

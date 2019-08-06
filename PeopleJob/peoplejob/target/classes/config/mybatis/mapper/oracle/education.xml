@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="config.mybatis.mapper.oracle.education">
+	<select id="selectMajor"  resultType="educationVo">
+		select * from education
+	</select>	
+	<select id="selectMajor2"  resultType="educationVo" parameterType="int">
+		select * from education where academic_code=#{academicCode}
+	</select>	
+</mapper>
+
+
+
+
+
+
+
+
+

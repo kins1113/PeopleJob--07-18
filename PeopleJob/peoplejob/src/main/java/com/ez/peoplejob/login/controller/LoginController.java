@@ -26,6 +26,7 @@ import com.ez.peoplejob.member.model.CompanyVO;
 import com.ez.peoplejob.member.model.MemberService;
 import com.ez.peoplejob.member.model.MemberVO;
 import com.ez.peoplejob.payment.model.PaymentService;
+import com.ez.peoplejob.resume.model.ResumeService;
 import com.ez.peoplejob.scrap.model.ScrapService;
 import com.ez.peoplejob.scrap.model.ScrapVO;
 import com.ez.peoplejob.tableaply.model.TableaplyService;
@@ -41,6 +42,7 @@ private Logger logger=LoggerFactory.getLogger(LoginController.class);
 	@Autowired private ScrapService scrapService;
 	@Autowired private JobopeningService jobService;
 	@Autowired private TableaplyService applyService;
+	@Autowired ResumeService resumeService;
 	
 	private kakao_restapi kakao_restapi = new kakao_restapi();
 	
@@ -53,12 +55,14 @@ private Logger logger=LoggerFactory.getLogger(LoginController.class);
 		logger.info("마이페이지 화면 보!!여!!주!!기!! memberVo={}",memberVo);
 		
 		//
-		List<Map<String , Object>> list=paymentService.selectPaymentById(memberid);
-		logger.info("결제 내역 list.size={}",list.size());
+		List<Map<String , Object>> paylist=paymentService.selectPaymentById(memberid);
+		logger.info("결제 내역 paylist.size={}",paylist.size());
 		List<ScrapVO> scraplist=scrapService.selectScrap(memberVo.getMemberCode());
 		logger.info("스크랩 리스트 scraplist.size={}",scraplist.size());
 		List<JobopeningVO> joblist=jobService.selectJobopeningBycomcode(memberVo.getCompanyCode());
 		logger.info("채용공고 리스트 joblist.size={}",joblist.size());
+		List<Map<String , Object>> resumelist=resumeService.selectResumeByid(memberid);
+		logger.info("이력서 리스트 resumelist.size={}",resumelist.size());
 		
 		//개인회원 지원현황
 		/*
@@ -104,12 +108,31 @@ private Logger logger=LoggerFactory.getLogger(LoginController.class);
 				
 		*/
 		model.addAttribute("memberVo",memberVo);
-		model.addAttribute("list",list);
+		model.addAttribute("resumelist",resumelist);
+		model.addAttribute("paylist",paylist);
 		model.addAttribute("scraplist",scraplist);
 		model.addAttribute("joblist",joblist);
 		
 		return "mypage/user/userpage";
 		
+	}
+	
+	@RequestMapping("/user/copyresume.do")
+	public String copyresume(HttpSession session, Model model,@RequestParam(defaultValue = "0") int resumeCode) {
+		String memberid=(String)session.getAttribute("memberid");
+		MemberVO memberVo=memberService.selectByUserid(memberid);
+		
+		int cnt=resumeService.insertCopy(resumeCode);
+		logger.info("이력서 복사 결과 cnt={}",cnt);
+		
+		String msg="", url="/mypage/user/userpage.do";
+		if(cnt>0) {
+			msg="복사가 완료되었습니다";
+		}else {
+			msg="이력서 복사 실패";
+		}
+		
+		return "mypage/user/userpage";
 	}
 	
 	@RequestMapping("/mypage/corp/paymentDetail.do")

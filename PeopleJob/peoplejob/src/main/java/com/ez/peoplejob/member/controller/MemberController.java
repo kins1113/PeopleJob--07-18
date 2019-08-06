@@ -134,6 +134,7 @@ public class MemberController {
 	public String login_post(@RequestParam String memberId, @RequestParam String pwd, Model model, HttpServletRequest request
 			,HttpServletResponse response, @RequestParam(required = false) String saveId) {
 		logger.info("로그인 화면 처리, 파라미터, memberId={}, pwd={}",memberId, pwd);
+		logger.info("아이디 저장 saveId={}",saveId);
 		
 		//비밀번호 일치하는지 확인
 		int result=memberService.loginCheck(memberId, pwd);
@@ -427,9 +428,8 @@ public class MemberController {
 		CompanyVO companyVo=memberService.selectCompanyById(memberId);
 		logger.info("아이디로 company select 결과 companyVo={}",companyVo);
 		
-		String fileInfo
-		=fileUploadUtil.getFileInfo(companyVo.getImage(), 1, request);
-		model.addAttribute("fileInfo", fileInfo);
+		//String fileInfo=fileUploadUtil.getFileInfo(companyVo.getImage(), 1, request);
+		//model.addAttribute("fileInfo", fileInfo);
 		
 		model.addAttribute("memberVo",memberVo);
 		model.addAttribute("companyVo",companyVo);
@@ -444,14 +444,19 @@ public class MemberController {
 		logger.info("가져온 memVo={}", memVo);
 		String memberId=(String)session.getAttribute("memberid");
 		
+		//이미지 등록을 하지 않은 경우 기본 이미지로
+		
 		//아이디로 memberVo가져오기 (비밀번호 가져오기)
 		MemberVO memberVo=memberService.selectByUserid(memberId);
 		logger.info("아이디로 memberVo 가져오기 결과 memberVo={}",memberVo);
 		
 		//파일이 있을 경우 파일 업로드
-		List<Map<String,Object>>list=fileUploadUtil.fileUpload(request,FileUploadUtility.PEOPLEJOB_UPLOAD);
+		List<Map<String,Object>> list=fileUploadUtil.fileUpload(request,FileUploadUtility.LOGO_UPLOAD);
+		
+		
+		List<Map<String,Object>> filelist=fileUploadUtil.fileUpload(request,FileUploadUtility.PEOPLEJOB_UPLOAD);
 		String imageURL="";
-		for(Map<String,Object>map:list) {
+		for(Map<String,Object>map:filelist) {
 			imageURL=(String)map.get("fileName");
 		}
 		
@@ -463,6 +468,7 @@ public class MemberController {
 		
 		String msg="", url="/login/c_update.do";
 		if(result==MemberService.LOGIN_OK) {
+			
 			int cnt=memberService.updateCompany(companyVo);
 			logger.info("기업정보 수정 처리 결과 cnt={}",cnt);
 			
@@ -471,7 +477,8 @@ public class MemberController {
 			url="/mypage/user/userpage.do";
 			if(imageURL!=null && !imageURL.isEmpty()) {
 				if(oldFileName!=null && !oldFileName.isEmpty()) {
-					String path=fileUploadUtil.getUploadPath(request,FileUploadUtility.PEOPLEJOB_UPLOAD);
+					String path=fileUploadUtil.getUploadPath(request,FileUploadUtility.LOGO_UPLOAD);
+					companyVo.setImage(oldFileName);
 					File oldFile=new File(path, oldFileName);
 					if(oldFile.exists()) {
 						boolean bool=oldFile.delete();

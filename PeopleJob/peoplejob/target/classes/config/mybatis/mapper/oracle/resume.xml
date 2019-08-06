@@ -13,6 +13,9 @@
 	<select id="selectBydvCode" parameterType="int" resultType="resumeVo">
 		select * from career where dv_code=#{dvCode}
 	</select>
+	<select id="selectBydvCode2" parameterType="int" resultType="resumeVo">
+		select * from career where dv_code=#{dvCode}
+	</select>
 	<select id="selectByacademicCode" parameterType="int" resultType="resumeVo">
 		select * from education where academic_code=#{academicCode}
 	</select>
@@ -58,47 +61,95 @@
 			select resume_seq.nextval from dual
 		</selectKey>
 		insert into resume
-		values(#{resumeCode},#{resumeTitle},sysdate,#{introduce},#{award},#{langlicenceCode},#{licenceCode},#{dvCode},#{academicCode},#{desiredWorkCode},#{opencheck},#{memberCode},#{picture})
+		values(#{resumeCode},#{resumeTitle},sysdate,#{introduce},#{award},#{langlicenceCode},#{lNo},#{dvCode},#{academicCode},#{hopeworkCode},#{opencheck},#{memberCode},#{picture})
 	</insert>
 	
+	<update id="updatelang" parameterType="resumeVo">
+	update langcertification
+	set institute=#{institute},certificationtype=#{certificationtype},language=#{language},langpoint=#{langpoint},lang_grade=#{langGrade},lang_getdate=#{langGetdate}
+	
+	where langlicence_code=#{langlicenceCode}
+	</update>
+	<update id="updatecer" parameterType="resumeVo">
+	update certificate
+	set l_institution=#{lInstitution},l_getdate=#{lGetdate}
+	
+	where l_no=#{lNo}
+	</update>
+	<update id="updatecareer" parameterType="resumeVo">
+	update career
+	set companyname=#{companyname},workcheck=#{workcheck},workcondition=#{workcondition},workterm=#{workterm},
+	workterm2=#{workterm2}
+	
+	where dv_code=#{dvCode}
+	</update>
+	<update id="updateedu" parameterType="resumeVo">
+	update education
+	set schoolname=#{schoolname},degree=#{degree},graduatecheck=#{graduatecheck},schoollocal=#{schoollocal},
+	graduatetype=#{graduatetype},graduate=#{graduate},graduate2=#{graduate2}
+	
+	where academic_code=#{academicCode}
+	</update>
+	<update id="updatehope" parameterType="resumeVo">
+	update hope_working
+	set hopeworkdate=#{hopeworkdate},hopepay=#{hopepay},local_code=#{localCode},btype_code3=#{btypeCode3},
+	third_code=#{thirdCode}
+	
+	where hopework_code=#{hopeworkCode}
+	</update>
+	<update id="updatemember" parameterType="resumeVo">
+	update member
+	set zipcode=#{zipcode},address=#{address},addressdetail=#{addressdetail},email=#{email},tel=#{tel}
+	
+	
+	where member_code=#{memberCode}
+	</update>
 	<insert id="insertLangcertification" parameterType="resumeVo">
-		<selectKey order="BEFORE" keyProperty="langlicenceCode" resultType="int">
-		select langcertification_seq.nextval from dual
+		<selectKey resultType="int" keyProperty="langlicenceCode" order="BEFORE">
+			select LANGCERTIFICATION_seq.nextval from dual
 		</selectKey>
-		insert into langcertification(langlicence_code,langlicencename,lang_getdate,institute,certificationtype,language,langpoint,lang_grade)
-		values(#{langlicenceCode},#{langlicencename},#{langGetdate},#{institute},#{certificationtype},#{language},#{langpoint},#{langGrade})
+		insert into LANGCERTIFICATION (langlicence_code,langlicencename, institute,
+		        certificationtype, language, langpoint, lang_grade, lang_getdate)
+		values (#{langlicenceCode},#{langlicencename,jdbcType=VARCHAR}, #{institute}, #{certificationtype}, #{language},
+					 #{langpoint}, #{langGrade}, #{langGetdate})
 	</insert>    
 	
 	<insert id="insertCertificate" parameterType="resumeVo">
-		<selectKey order="BEFORE" keyProperty="lNo" resultType="int">
-		select certificate_seq.nextval from dual
+				<selectKey resultType="int" keyProperty="lNo" order="BEFORE">
+			select certificate_seq.nextval from dual
 		</selectKey>
-		insert into certificate(l_no,l_name,l_getdate,l_institution)
-		values(#{lNo},#{lName},#{lGetdate},#{lInstitution})
+		insert into certificate (l_no,l_name, l_getdate, l_institution)
+		values (#{lNo},#{lName,jdbcType=VARCHAR}, #{lGetdate}, #{lInstitution})
 	</insert>
 	
 	<insert id="insertCareer" parameterType="resumeVo">
-		<selectKey order="BEFORE" keyProperty="dvCode" resultType="int">
-		select career_seq.nextval from dual
+
+		<selectKey resultType="int" keyProperty="dvCode" order="BEFORE">
+			select career_seq.nextval from dual
 		</selectKey>
-		insert into career
-		values(#{dvCode},#{companyname},#{chargework},#{workcheck},#{jobgrade},#{workcondition},#{workterm},#{workterm2})
+		insert into CAREER(dv_code, companyname,chargework,jobgrade, workcheck 
+		            ,workcondition, workterm2,workterm)
+		values(#{dvCode}, #{companyname},#{chargework,jdbcType=VARCHAR},#{jobgrade,jdbcType=VARCHAR}, #{workcheck}, 
+					 #{workcondition}, #{workterm2}, #{workterm})
 	</insert>
 	
 	<insert id="insertEducation" parameterType="resumeVo">
-		<selectKey order="BEFORE" keyProperty="academicCode" resultType="int">
-		select education_seq.nextval from dual
+		<selectKey resultType="int" keyProperty="academicCode" order="BEFORE">
+			select education_seq.nextval from dual
 		</selectKey>
-		insert into education
-		values( #{academicCode},#{schoolname},#{major},#{degree},#{graduatecheck},#{schoollocal},#{graduatetype},#{graduate2},#{graduate}) 
+		insert into education (academic_code, schoolName, major, degree, graduatecheck,
+		                        schoolLocal, graduatetype, graduate2, graduate)
+		values (#{academicCode},#{schoolname},#{major,jdbcType=VARCHAR},#{degree},#{graduatecheck},#{schoollocal},
+					#{graduatetype},#{graduate2},#{graduate})
 	</insert>
 	
 	<insert id="insertHopeWorking" parameterType="resumeVo">
-		<selectKey order="BEFORE" keyProperty="hopeworkCode" resultType="int">
-		select hope_working_seq.nextval from dual
+		<selectKey resultType="int" keyProperty="hopeworkCode" order="BEFORE">
+			select hope_working_seq.nextval from dual
 		</selectKey>
-		insert into hope_working
-		values (#{hopeworkCode},#{hopeworkdate},#{hopepay},#{hopeworkform},#{localCode},#{btypeCode3},#{thirdCode})
+		insert into hope_working (hopework_code, hopeWorkDate, hopePay,hopeworkform,  
+                            local_code, btype_code3, third_code)
+		values(#{hopeworkCode},#{hopeworkdate},#{hopepay},#{hopeworkform,jdbcType=VARCHAR},#{localCode},#{btypeCode3},#{thirdCode})
 		
 	</insert>
 	
@@ -215,7 +266,7 @@
 	
 	<update id="updateResume" parameterType="resumeVo">
 	update resume
-	set resume_code=#{resumeCode},resumetitle=#{resumeTitle},introduce=#{introduce},award=#{award},langlicence_code=#{langlicenceCode},licence_code=#{licenceCode},dv_code=#{dvCode},academic_code=#{academicCode},desiredwork_code=#{desiredWorkCode},opencheck=#{opencheck},picture=#{picture}
+	set resume_code=#{resumeCode},resumetitle=#{resumeTitle},introduce=#{introduce},award=#{award},langlicence_code=#{langlicenceCode},l_no=#{lNo},dv_code=#{dvCode},academic_code=#{academicCode},hopework_code=#{hopeworkCode},opencheck=#{opencheck},picture=#{picture}
 	
 	where resume_code=#{resumeCode}
 	</update>

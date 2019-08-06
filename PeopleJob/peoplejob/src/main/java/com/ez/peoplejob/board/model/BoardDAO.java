@@ -13,4 +13,6 @@ public interface BoardDAO {
 	public List<BoardVO> getBoardList();
 	public BoardVO selectByBoardCode(int boardCode);
 	
+	List<BoardVO> selectByUsage();
+	
 }

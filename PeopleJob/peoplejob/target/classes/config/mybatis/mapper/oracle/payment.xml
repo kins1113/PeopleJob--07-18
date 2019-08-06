@@ -53,51 +53,15 @@
 
 
 	 <select id="selectTotalCount" parameterType="searchVo" resultType="int">
-	select count(*) from payment p join service s
-				on p.service_code = s.service_code
-				join member m
-				on p.member_code = m.member_code
-						
-	<!-- 			<if test="searchCondition=='결제완료'">
-				where progress='결제완료'
-				</if>
-				<if test="searchCondition=='결제취소'">
-				where progress='결제취소'
-				</if>
-				<if test="searchCondition=='결제취소요청'">
-				where progress='결제취소요청'
-				</if> -->
-		<where>
-	<if test='type 	!= null and type !=""'>	
-				<if test="type=='결제완료'">
-				progress='결제완료'
-				</if>
-				<if test="type=='결제취소'">
-				progress='결제취소'
-				</if>
-				<if test="type=='결제취소요청'">
-				progress='결제취소요청'
-				</if>
-		</if>		
-	<if test='type == null or type ==""'>
+	 select count(*) from payment a join service b
+				on a.service_code = b.service_code
+				join member c
+				on a.member_code = c.member_code
+	 
+	
 	 <if test="searchKeyword != null and searchKeyword !=''">
- 		<if test='searchCondition=="all"'>
- 			
-			 m.memberid like  '%' || #{searchKeyword} || '%' or
-			 
-			 s.servicename like  '%' || #{searchKeyword} || '%'
-		</if>
-		
-			<if test='searchCondition=="memberid"'>
-			 m.memberid like  '%' || #{searchKeyword} || '%'
-				</if>
-			<if test='searchCondition=="servicename"'>
-				 s.servicename like  '%' || #{searchKeyword} || '%'
-						</if>
-<!-- 	 	 ${searchCondition} like '%' || #{searchKeyword} || '%' -->
+	 	where ${searchCondition} like '%' || #{searchKeyword} || '%'
 	 </if>
-	 </if>
-	 </where>	
 	 </select>
 
 
@@ -106,7 +70,7 @@
 	(
 		select A.*, rownum as RNUM from 
 		(
-			select payment_code,paymentway,progress,period,price,paydate, s.servicename, m.memberid
+			select payment_code,paymentway,progress,period,paydate, s.servicename, m.memberid
 				from payment p join service s
 				on p.service_code = s.service_code
 				join member m
@@ -114,37 +78,33 @@
 				<where>
 							<if test="searchVo.searchCondition!= null and searchVo.searchCondition!=''
 								and searchVo.searchKeyword!= null and searchVo.searchKeyword!=''">
-								
-								<if test='searchVo.searchCondition=="all"'>
-								 m.memberid like  '%' || #{searchVo.searchKeyword} || '%' or
-								 
-								 s.servicename like  '%' || #{searchVo.searchKeyword} || '%'
-								</if>
+							
+							
 							<if test='searchVo.searchCondition=="memberid"'>
 									 m.memberid like  '%' || #{searchVo.searchKeyword} || '%'
 							</if>
+
+
 							
-							<if test='searchVo.searchCondition=="servicename"'>
-									  s.servicename like  '%' || #{searchVo.searchKeyword} || '%'
-							</if>
 							<if test="startDay!=null and startDay !='' and endDay!=null and endDay != ''">
 								 <![CDATA[ or paydate >= #{startDay} and paydate <to_date(#{endDay})+1]]>
 							</if>
 					</if>				
-			<!-- 		<if test=" searchVo.searchKeyword== null or searchVo.searchKeyword==''">
+					
+					<if test=" searchVo.searchKeyword== null or searchVo.searchKeyword==''">
+						
 						<if test='searchVo.searchCondition=="progress"'>
-									 progress ='결제완료'
+									 progress ='a'
 						</if>
 						<if test='searchVo.searchCondition=="progress1"'>
-									 progress ='결제취소'
+									 progress ='b'
 						</if>
-						<if test='searchVo.searchCondition=="progress2"'>
-									 progress ='결제취소요청'
-						</if>
+						
+						
 						<if test="startDay!=null and startDay !='' and endDay!=null and endDay != ''">
 							 <![CDATA[paydate >= #{startDay} and paydate <to_date(#{endDay})+1]]>
 						</if>	
-					</if> -->
+					</if>
 				</where>
 
 			) A
@@ -177,41 +137,6 @@
 	from payment p where member_Code=#{memberCode} and to_char(paydate, 'yyyy-MM-dd HH:mm:ss')=#{paydate}
 	</select>
 
-	<update id="updateProgress" parameterType="map" >
-		update payment set progress=#{progressSel}
-	where payment_code in
-		<foreach collection="paymentChk" 
-		open="(" close=")" separator="," item="code">
-			#{code}
-		</foreach>
-	</update>
-	
-	<select id="selectProgress" parameterType="map" resultType="map">
-		select* from
-	(
-		select A.*, rownum as RNUM from 
-		(
-			select payment_code,paymentway,progress,period,price,paydate, s.servicename, m.memberid
-				from payment p join service s
-				on p.service_code = s.service_code
-				join member m
-				on p.member_code = m.member_code
-				<where>
-				<if test="type=='결제완료'">
-				progress='결제완료'
-				</if>
-				<if test="type=='결제취소'">
-				progress='결제취소'
-				</if>
-				<if test="type=='결제취소요청'">
-				progress='결제취소요청'
-				</if>
-				</where>
-				) A
-		)
-	<![CDATA[where RNUM>#{searchVo.firstRecordIndex}  
-		and RNUM<=#{searchVo.firstRecordIndex} + #{searchVo.recordCountPerPage}]]> 
-	</select>
 	
 </mapper>
 

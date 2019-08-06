@@ -1,6 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@include file="../../main/inc/top.jsp" %>
+
+ <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,200" rel="stylesheet" />
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
+  <!-- CSS Files -->
+  <link href="<c:url value='/resources/main/assets/css/bootstrap.min.css'/>" rel="stylesheet" />
+  <link href="<c:url value='/resources/main/assets/css/paper-dashboard.css?v=2.0.0'/>" rel="stylesheet" />
+  <!-- CSS Just for demo purpose, don't include it in your project -->
+  <link href="<c:url value='/resources/main/assets/demo/demo.css'/>" rel="stylesheet" />
 <style type="text/css">
 /* .square{
 	width: 700px;
@@ -9,12 +17,7 @@
     margin-top: 30px;
 }
  */
- .dashboard{
- 	    border: 1px solid lightgray;
- 	    margin-top: 30px;
- 	    height: 160px;
- }
- 
+
 .summary_wrap .dashboard .activity_list li {
     display: inline-block;
     margin: 0 10px;
@@ -78,6 +81,40 @@ li.how-bor3.p-rl-4 {
     border-color: #fb787a;
 }
 
+
+
+.card .card-footer .stats i {
+    margin-right: 5px;
+    position: relative;
+    top: 0;
+    color: #66615b;
+}
+.fa {
+    display: inline-block;
+    font: normal normal normal 14px/1 FontAwesome;
+    font-size: inherit;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.one{
+    width: 45%;
+    float: left;
+    height: 50%;
+    margin: 10px;
+}
+
+ .dashboard{
+ 	   /*  border: 1px solid lightgray; */
+ 	    margin-top: 30px;
+ 	    height: 320px;
+ 	    width: 107%;
+ }
+ 
+.card-stats:hover{
+	box-shadow: 5px 5px 5px grey;
+}
 </style>
 <script type="text/javascript" src="<c:url value='/resources/main/js/jquery-3.4.1.min.js'/>"></script>
 <script type="text/javascript">
@@ -106,13 +143,25 @@ $(function(){
 		<div class="container" style="max-width: 1285px;width: 1270px; margin: 0 auto;">
 			<div class="row justify-content-center" style="width: 1250px;">
 			
-			<div style="border: 1px solid lightgray; width:200px;float: left;margin-top:29px;">
-			<div name="photo" style="height: 300px; border:1px solid lightgray;">
-				<img alt="회원이미지" src="<c:url value='/resources/main/images/people.PNG'/>" width="100%">
-				${sessionScope.memberName }<span>님</span>
+			<div style="border: 1px solid lightgray; width:260px;float: left;margin-top:29px;">
+			<div name="photo" style="border-bottom: 1px solid lightgray;width:260px;
+    height: 285px;">
+				<img alt="회원이미지" src="<c:url value='/resources/main/images/people.PNG'/>" width="100%"
+				style="    max-width: 69%;
+    border-radius: 3px;
+    margin-left: 42px;
+    display: block;">
+				<span style="margin:0 auto; font-size: 1.1em; display: table;">${sessionScope.memberName }님</span>
+				<br><br>
+				<input type="button" value="사진 등록" style="    margin: 0 auto;
+    width: 100px;
+    height: 30px;
+    background: #808080;
+    color: white;">
 			</div>
 				<div class="p-l-10 p-rl-0-sr991 p-t-70" style="padding-top: 29px;float:left;">						
 						<!-- Category -->
+						<%-- <div class="p-b-60">
 						<div class="p-b-60">
 							<div class="how2 how2-cl4 flex-s-c">
 								<h3 class="f1-m-2 cl3 tab01-title">
@@ -190,6 +239,63 @@ $(function(){
 									
 								</li>
 							</ul>
+						</div> --%>
+						 <ul class="nav">
+          <li class="active" style="    width: 100%;">
+            <a href="./dashboard.html" style="height: 100%;">
+              <i class="nc-icon nc-zoom-split" style="margin-right:10px; float:left;margin-top: 3px;"></i>
+              <p style="float:left; font-size: 1.1em;">이력서 관리</p>
+            </a>
+          </li>
+          <li class="active" style="    width: 100%;">
+            <a href="./dashboard.html" style="height: 100%;">
+              <i class="nc-icon nc-email-85" style="margin-right:10px; float:left;margin-top: 3px;"></i>
+              <p style="float:left; font-size: 1.1em;">지원 현황</p>
+            </a>
+          </li>
+           <li class="active" style="    width: 100%;">
+            <a href="./dashboard.html" style="height: 100%;">
+              <i class="nc-icon nc-tag-content" style="margin-right:10px; float:left;margin-top: 3px;"></i>
+              <p style="float:left; font-size: 1.1em;">스크랩 정보</p>
+            </a>
+          </li>
+           <li class="active" style="    width: 100%;">
+            <a href="./dashboard.html" style="height: 100%;">
+              <i class="nc-icon nc-tap-01" style="margin-right:10px; float:left;margin-top: 3px;"></i>
+              <p style="float:left; font-size: 1.1em;">맞춤 채용 정보</p>
+            </a>
+          </li>
+           <li class="active" style="    width: 100%;">
+            <a href="./dashboard.html" style="height: 100%;">
+              <i class="nc-icon nc-chat-33" style="margin-right:10px; float:left;margin-top: 3px;"></i>
+              <p style="float:left; font-size: 1.1em;">문의 내역</p>
+            </a>
+          </li>
+          <li class="active" style="    width: 100%;">
+            <a href="./dashboard.html" style="height: 100%;">
+              <i class="nc-icon nc-bullet-list-67" style="margin-right:10px; float:left;margin-top: 3px;"></i>
+              <p style="float:left; font-size: 1.1em;">내가 쓴 글</p>
+            </a>
+          </li>
+            <li class="active" style="    width: 100%;">
+            <a href="./dashboard.html" style="height: 100%;">
+              <i class="nc-icon nc-circle-10" style="margin-right:10px; float:left;margin-top: 3px;"></i>
+              <p style="float:left; font-size: 1.1em;">회원 정보 수정</p>
+            </a>
+          </li>
+          <li class="active" style="    width: 100%;">
+            <a href="./dashboard.html" style="height: 100%;">
+              <i class="nc-icon nc-key-25" style="margin-right:10px; float:left;margin-top: 3px;"></i>
+              <p style="float:left; font-size: 1.1em;">비밀번호 변경</p>
+            </a>
+          </li>
+          <li class="active" style="    width: 100%;">
+            <a href="./dashboard.html" style="height: 100%;">
+              <i class="nc-icon nc-lock-circle-open" style="margin-right:10px; float:left;margin-top: 3px;"></i>
+              <p style="float:left; font-size: 1.1em;">회원 탈퇴</p>
+            </a>
+          </li>
+        </ul>
 						</div>
 
 					</div>
@@ -203,6 +309,114 @@ $(function(){
 						<div class="p-b-70">  
 						
 							<div class="dashboard">
+							<div class="one" style="">
+							
+							 <div class="card card-stats" style="box-shadow: 3px 3px 3px grey;">
+              <div class="card-body ">
+                <div class="row">
+                  <div class="col-5 col-md-4">
+                    <div class="icon-big text-center icon-warning">
+                      <i class="nc-icon nc-email-85 text-warning"></i>
+                    </div>
+                  </div>
+                  <div class="col-7 col-md-8">
+                    <div class="numbers">
+                      <p class="card-category">지원현황</p>
+                      <p class="card-title">0
+                        <p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="card-footer ">
+                <hr>
+                <div class="stats">
+                  <i class="fa fa-refresh"></i> 자세히보기
+                </div>
+              </div>
+            </div>
+            
+							</div>
+							<div class="one">
+							 <div class="card card-stats" style="box-shadow: 3px 3px 3px grey;">
+              <div class="card-body ">
+                <div class="row">
+                  <div class="col-5 col-md-4">
+                    <div class="icon-big text-center icon-warning">
+                      <i class="nc-icon nc-tag-content text-success"></i>
+                    </div>
+                  </div>
+                  <div class="col-7 col-md-8">
+                    <div class="numbers">
+                      <p class="card-category">스크랩</p>
+                      <p class="card-title">${fn:length(scraplist) }
+                        <p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="card-footer ">
+                <hr>
+                <div class="stats">
+                  <i class="fa fa-calendar-o"></i> 상세보기
+                </div>
+              </div>
+            </div>
+							</div>
+							<div class="one">
+							<div class="card card-stats" style="box-shadow: 3px 3px 3px grey;">
+              <div class="card-body ">
+                <div class="row">
+                  <div class="col-5 col-md-4">
+                    <div class="icon-big text-center icon-warning">
+                      <i class="nc-icon nc-single-02 text-danger"></i>
+                    </div>
+                  </div>
+                  <div class="col-7 col-md-8">
+                    <div class="numbers">
+                      <p class="card-category">내 정보 관리</p>
+                      <p class="card-title"> 
+                        <p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="card-footer ">
+                <hr>
+                <div class="stats">
+                  <i class="fa fa-clock-o"></i> 수정하기
+                </div>
+              </div>
+            </div>
+							</div>
+							<div class="one">
+							 <div class="card card-stats" style="box-shadow: 3px 3px 3px grey;">
+              <div class="card-body ">
+                <div class="row">
+                  <div class="col-5 col-md-4">
+                    <div class="icon-big text-center icon-warning">
+                      <i class="nc-icon nc-ruler-pencil text-primary"></i>
+                    </div>
+                  </div>
+                  <div class="col-7 col-md-8">
+                    <div class="numbers">
+                      <p class="card-category">이력서 관리</p>
+                      <p class="card-title">${fn:length(resumelist) }
+                        <p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="card-footer ">
+                <hr>
+                <div class="stats">
+                  <i class="fa fa-refresh"></i> 자세히 보기
+                </div>
+              </div>
+            </div>
+							</div>
+							
+          <%--   <ul class="activity_list"> 
             <ul class="activity_list"> 
                    <li class="img">
                    <c:if test="${sessionScope.author_code==1 }">
@@ -285,51 +499,68 @@ $(function(){
                                    
                                    
                             
-                            </ul>
+                            </ul> --%>
         </div>
-
-							<div class="wrap-pic-max-w p-b-30">
-							이력서 리스트 띄우기
+        
+<br><br>
+							<div class="wrap-pic-max-w p-b-30" style="margin-top:30px; padding-bottom: 0px;">
+							<h3 style="display: inline-block; margin-right:10px;">내 이력서 목록</h3> <span style="font-size: 2em;">${fn:length(resumelist) }</span><span style="margin-left: 5px; color: gray;">/ 10</span>
+							<a href="<c:url value='/resume/register.do'/>" class="dis-block f1-s-13 cl0 bg-twitter borad-3 p-tb-4 p-rl-18 hov-btn1 m-r-3"
+							style="display:inline-block;float: right; height: 40px; padding-top: 8px;">
+										 <i class="nc-icon nc-single-02" style="color:white;">
+										이력서 등록
+										</i>
+									</a>
 							</div>
 
-							<table class="table table-bordered" style="margin-top: 15px; " id="priceList">
-		<thead>
-			<tr> 
-				<th scope="col" colspan="4">이력서 리스트 완성 시 띄우기</th>
-				
-			</tr>
-		</thead>
-		<tbody>
-		
-			<tr>
-				<td id="servicName" colspan="4">이력서 리스트 완성 시 띄우기</td>
-				
-			</tr>
-		</tbody>
-		</table>
-							
-							<!-- share -->	
-								<div class="flex-wr-s-s size-w-0">
-									<a href="#" class="dis-block f1-s-13 cl0 bg-facebook borad-3 p-tb-4 p-rl-18 hov-btn1 m-r-3 m-b-3 trans-03">
-										<i class="fab fa-facebook-f m-r-7"></i>
-										Facebook
-									</a>
-
-									<a href="#" class="dis-block f1-s-13 cl0 bg-twitter borad-3 p-tb-4 p-rl-18 hov-btn1 m-r-3 m-b-3 trans-03">
-										<i class="fab fa-twitter m-r-7"></i>
-										Twitter
-									</a>
-
-									<a href="#" class="dis-block f1-s-13 cl0 bg-google borad-3 p-tb-4 p-rl-18 hov-btn1 m-r-3 m-b-3 trans-03">
-										<i class="fab fa-google-plus-g m-r-7"></i>
-										Google+
-									</a>
-
-									<a href="#" class="dis-block f1-s-13 cl0 bg-pinterest borad-3 p-tb-4 p-rl-18 hov-btn1 m-r-3 m-b-3 trans-03">
-										<i class="fab fa-pinterest-p m-r-7"></i>
-										Pinterest
-									</a>
-								</div>
+							<table class="table table-striped" style="text-align: center; border:1px solid #dddddd">
+              <thead>
+                <tr>
+                  <th style="background-color:#f8f8f8; text-align: center;">번호</th>
+                  <th style="background-color:#f8f8f8; text-align: center;">이력서 제목</th>
+                  <th style="background-color:#f8f8f8; text-align: center; width: 50%;">이력서 관리</th>
+                  <th style="background-color:#f8f8f8; text-align: center;">공개 설정</th>
+                
+                </tr>
+              </thead>
+              <tbody>
+              <c:if test="${empty resumelist }">
+              	<tr>
+              		<td colspan="4">등록된 이력서가 없습니다</td>
+              	</tr>
+              </c:if>
+              <c:if test="${!empty resumelist }">
+              <c:set var="i" value="1"/>
+              	<c:forEach var="map" items="${resumelist}">
+                <tr style="background: white;">
+				   	<td>${i }</td>
+				   	<td><a href="<c:url value='/resume/resumedetail.do?resumeCode=${map["resumeCode"] }'/>" style="color:black;">
+						${map['RESUMETITLE'] }
+						</a>
+						</td>
+				   	<td>
+				   		<input type="button" value="복사" style="background:  white; border: 1px solid lightgray;
+	    font-weight: bold; margin: 0 auto; cursor: pointer; width: 50px; height: 30px; display: inline-block;" class="btnmore" 
+	    onclick="location.href='<c:url value="/user/copyresume.do?resumeCode=${map['resumeCode'] }"/>'">
+	    
+				   		<input type="button" value="수정" style="background: white; border: 1px solid lightgray; display: inline-block;
+	    font-weight: bold; cursor: pointer; width: 50px; height: 30px;" class="btnmore">
+				   		<input type="button" value="삭제" style="background: white; border: 1px solid lightgray; display: inline-block;
+	    font-weight: bold; cursor: pointer; width: 50px; height: 30px;" class="btnmore">
+	    </td>
+	    			<td>
+				   		<span>
+				   		<c:if test="${map['OPENCHECK']=='Y' }">공개</c:if>
+				   		<c:if test="${map['OPENCHECK']=='N' }"> 미공개</c:if>
+				   		</span>
+				   	</td>
+				</tr>
+				<c:set var="i" value="${i+1 }"/>
+				</c:forEach>
+				</c:if>
+              </tbody>
+            </table>
+								
 							</div>
 						</div>
 
