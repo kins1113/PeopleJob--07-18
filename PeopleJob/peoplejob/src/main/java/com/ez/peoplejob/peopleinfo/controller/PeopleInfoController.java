@@ -40,7 +40,7 @@ public class PeopleInfoController {
 			@ModelAttribute SearchVO searchVo,Model model,@RequestParam(required = false) String[] term,@RequestParam(required = false) String[] age,
 			@RequestParam(required = false) String[] graduatetype,@RequestParam(required = false) String[] sido,@RequestParam(required = false) String[] btypename1 ,
 			@RequestParam(required = false) String[] btypename2,@RequestParam(required = false) String[] btypename3,@RequestParam(required = false) String[] firstname,
-			@RequestParam(required = false) String[] secondname,@RequestParam(required = false) String[] thirdname,@RequestParam(value="resumeCode", defaultValue="0") int resumeCode) {
+			@RequestParam(required = false) String[] secondname,@RequestParam(required = false) String[] thirdname,@RequestParam(value="resumeCode", defaultValue = "0") int resumeCode) {
 		String id=(String)session.getAttribute("memberid");
 		if(id==null) {
 			id="비회원";
@@ -60,7 +60,7 @@ public class PeopleInfoController {
 		logger.info("셋팅 후 serchVo={}",searchVo);
 		
 		List<ResumeVO> list=new ArrayList<ResumeVO>();
-		Map<String, Object> map = new HashMap<String, Object>();
+		Map<String, Object> map= new HashMap<String, Object>();
 		logger.info("term={}",term);
 		logger.info("age={}",age);
 		logger.info("graduatetype={}",graduatetype);
