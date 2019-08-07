@@ -998,13 +998,15 @@ $(function () {
             		checked="checked"
             	</c:if>>비공개
 	</label>
-    </div>
     <br>
+    </div>
 </fieldset> 
-</form>
-</div> 
     <input class="btn btn-success" type="submit" value="이력서 수정">
-</div>      
+    </form>
+    
+</div>  
+</div> 
+     
 </article>
 <%@include file="../main/inc/bottom.jsp" %>
 

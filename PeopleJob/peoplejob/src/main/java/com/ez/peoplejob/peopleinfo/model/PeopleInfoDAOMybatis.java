@@ -111,15 +111,16 @@ public class PeopleInfoDAOMybatis implements PeopleInfoDAO {
       return sqlSession.selectList(namespace+"selectBtype2",btypeCode1);
    }
 
-   @Override
-   public List<Map<String, Object>> selectBtype3(int btypeCode2) {
-      return sqlSession.selectList(namespace+"selectBtype3",btypeCode2);
-   }
-   @Override
-   public List<ResumeVO> selectResumeView(int resumeCode) {
-      
-      return sqlSession.selectList(namespace+"selectResumeView",resumeCode);
-   }
+	@Override
+	public List<Map<String, Object>> selectBtype3(int btypeCode2) {
+		return sqlSession.selectList(namespace+"selectBtype3",btypeCode2);
+	}
+	@Override
+	public List<ResumeVO> selectResumeView(int resumeCode) {
+		
+		return sqlSession.selectOne(namespace+"selectResumeView",resumeCode);
+	}
+
 
    
 }

@@ -63,12 +63,25 @@ h3, .h3 {
 						${vo.resumeTitle}
 					</c:if>
 					</a></td>
-		
-	    <td>${vo.opencheck}</td>
-	   	
-	    <td>${vo.opencheck}</td><!--일단 멤버 네임으로  -->
-	    
-	    
+
+	    <td>
+	    <c:if test="${vo.opencheck}=='Y'">
+	    	<h5>동의</h5>
+	    </c:if>
+	    <c:if test="${vo.opencheck}=='N'">
+	    	<h5>동의안함</h5>
+	    </c:if>
+	    </td>
+
+	    <td>
+	    <c:if test="${vo.opencheck}=='Y'">
+	    	<h5>동의</h5>
+	    </c:if>
+	    <c:if test="${vo.opencheck}=='N'">
+	    	<h5>동의안함</h5>
+	    </c:if>
+	    </td><!--일단 멤버 네임으로  -->
+
 	    <td><fmt:formatDate value="${vo.resumeRegdate}" pattern="yyyy-MM-dd"/>
 				</td>
 				</tr>
