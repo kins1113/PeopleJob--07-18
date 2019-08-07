@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="config.mybatis.mapper.oracle.adminIndex">
+
+	<select id="checkConnet" parameterType="connetVo" resultType="int">
+		SELECT count(*) FROM CONNET
+		WHERE MEMBER_CODE=#{memberCode} AND CONNET_DAY=#{connetDay}
+	</select>
+	
+	<insert id="insertConnet" parameterType="connetVo">
+		<selectKey resultType="int" keyProperty="connetCode" order="BEFORE">
+			select connet_seq.nextval from dual
+		</selectKey>
+		insert into connet (connet_code,member_code,CONNET_DAY)
+		values(#{connetCode}, #{memberCode},#{connetDay})
+	</insert>
+	
+	<select id="selectConnet" parameterType="String" resultType="connetVo" >
+		select count(*) as count,connet_day from
+		(
+			select to_date(connet_day) as connet_day from connet
+			<![CDATA[where connet_day>=to_date(#{today}) and connet_day<to_date(#{today})+1]]>
+		)
+		group by connet_day		
+
+	</select>
+	
+	<select id="selectMemberCount" parameterType="map" resultType="int">
+		select count(*) as count from member
+		<if test="type!=0"> 
+			<where>
+				<if test="type==1">withdrawaldate is not null</if>
+				<if test="type==2">authority_code=1</if>
+				<if test="type==3">authority_code=1 and withdrawaldate>=#{today}</if>
+				<if test="type==4">authority_code in (2,3)</if>
+				<if test="type==5">authority_code in (2,3) and withdrawaldate>=#{today}</if>	
+				<if test="type==6">authority_code=1 and regdate>=#{today}</if>
+				<if test="type==7">authority_code in (2,3) and regdate>=#{today}</if>	
+				<if test="type==8">withdrawaldate >= #{today} and authority_code=1</if>	
+				<if test="type==9">withdrawaldate >= #{today} and authority_code in(2,3)</if>	
+			</where>
+		</if>
+	</select>
+
+	<select id="selectResumeManagerIndex" parameterType="map" resultType="int">
+		select count(*) as count from resume
+		<where>
+  		<if test="type==0"> resumeregdate >=#{today} and resumeregdate <![CDATA[<]]> to_date(#{today})+1</if>
+			<if test="type==1"> resumeregdate >=to_date(#{today})-1 and resumeregdate <![CDATA[<]]> #{today}</if>
+			<if test="type==2"> resumeregdate >=to_date(#{today}) and resumeregdate <![CDATA[<]]> to_date(#{today})+8</if>
+			<if test="type==3"> resumeregdate >=to_date(#{today})-7 and resumeregdate <![CDATA[<]]> to_date(#{today})</if>
+		</where> 
+	</select>
+
+	<select id="selectJobopeningManagerIndex" parameterType="map" resultType="int">
+		select count(*) as count from jobopening 
+		<where>
+			<if test="type==0">jobregdate >=#{today} and jobregdate <![CDATA[<]]> to_date(#{today})+1</if>
+			<if test="type==1">jobregdate >=to_date(#{today})-1 and jobregdate <![CDATA[<]]> #{today}</if>
+			<if test="type==2">jobregdate >=to_date(#{today}) and jobregdate <![CDATA[<]]> to_date(#{today})+8</if>
+			<if test="type==3">jobregdate >=to_date(#{today})-7 and jobregdate <![CDATA[<]]> to_date(#{today})</if>
+		</where>
+	</select>
+	
+	<select id="selectCustextManagerIndex" resultType="custextVo">
+		select * from (
+			SELECT * FROM CUSTEXT
+			order by cus_regdate desc
+		)where rownum <![CDATA[ <= ]]>5
+	</select>
+	
+	<select id="selectPaymentManagerIndex" parameterType="map" resultType="int">
+		select count(*) from payment 
+			<where>
+				<if test="type==0">progress='결제완료' and paydate>= #{day} and paydate <![CDATA[ < ]]> to_date(#{day})+1</if>
+				<if test="type==1">progress='결제완료' and paydate>= to_date(#{day})-1 and paydate <![CDATA[ < ]]> to_date(#{day})</if>
+				<if test="type==2">progress='결제완료' and paydate>= to_date(#{day}) and paydate <![CDATA[ < ]]> to_date(#{day})+8</if>
+				<if test="type==3">progress='결제완료' and paydate>= to_date(#{day})-7 and paydate <![CDATA[ < ]]> to_date(#{day})</if>
+			</where>	
+	</select>
+
+	<select id="selectPopupManagerIndex" parameterType="map" resultType="int">
+		select count(*) from popup
+		<where>
+			<if test="type==0">usage='Y' and end_day>=to_date(sysdate)</if>
+			<if test="type==1">usage='Y' and end_day>=to_date(sysdate) and end_day <![CDATA[ < ]]> to_date(sysdate)+7</if>
+			<if test="type==2">usage='N'</if>
+		</where> 
+	</select>
+
+
+</mapper>
+
+
+
+
+
+
+
+
+

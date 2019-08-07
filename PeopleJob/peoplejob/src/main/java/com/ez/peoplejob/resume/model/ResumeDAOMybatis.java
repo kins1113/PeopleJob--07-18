@@ -1,7 +1,6 @@
 package com.ez.peoplejob.resume.model;
 
 import java.util.List;
-import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -119,8 +118,8 @@ public class ResumeDAOMybatis implements ResumeDAO {
 	}
 
 	@Override
-	public ResumeVO selectBylicenceCode(int licenceCode) {
-		ResumeVO vo=sqlsession.selectOne(namespace+"selectBylicenceCode", licenceCode );
+	public ResumeVO selectBylicenceCode(int lNo) {
+		ResumeVO vo=sqlsession.selectOne(namespace+"selectBylicenceCode", lNo );
 		return vo;
 	}
 
@@ -137,8 +136,8 @@ public class ResumeDAOMybatis implements ResumeDAO {
 	}
 
 	@Override
-	public ResumeVO selectBydesiredWorkCode(int desiredWorkCode) {
-		ResumeVO vo=sqlsession.selectOne(namespace+"selectBydesiredWorkCode", desiredWorkCode );
+	public ResumeVO selectBydesiredWorkCode(int	hopeworkCode) {
+		ResumeVO vo=sqlsession.selectOne(namespace+"selectBydesiredWorkCode", hopeworkCode );
 		return vo;
 	}
 
@@ -227,12 +226,38 @@ public class ResumeDAOMybatis implements ResumeDAO {
 	}
 
 	@Override
-	public List<Map<String, Object>> selectResumeByid(String memberid) {
-		return sqlsession.selectList(namespace+"selectResumeByid",memberid);
+	public int updatelang(ResumeVO vo) {
+		int cnt=sqlsession.update(namespace+"updatelang",vo);
+		return cnt;
 	}
 
 	@Override
-	public int insertCopy(int resumeCode) {
-		return sqlsession.insert(namespace+"insertCopy",resumeCode);
+	public int updatecer(ResumeVO vo) {
+		int cnt=sqlsession.update(namespace+"updatecer",vo);
+		return cnt;
+	}
+
+	@Override
+	public int updatecareer(ResumeVO vo) {
+		int cnt=sqlsession.update(namespace+"updatecareer",vo);
+		return cnt;
+	}
+
+	@Override
+	public int updateedu(ResumeVO vo) {
+		int cnt=sqlsession.update(namespace+"updateedu",vo);
+		return cnt;
+	}
+
+	@Override
+	public int updatehope(ResumeVO vo) {
+		int cnt=sqlsession.update(namespace+"updatehope",vo);
+		return cnt;
+	}
+
+	@Override
+	public int updatemember(ResumeVO vo) {
+		int cnt=sqlsession.update(namespace+"updatemember",vo);
+		return cnt;
 	}
 }

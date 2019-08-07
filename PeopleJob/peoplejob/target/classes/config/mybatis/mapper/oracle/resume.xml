@@ -32,8 +32,7 @@
 		select * from btype2 where btype_code2=#{btypeCode2}
 	</select>
 	<select id="selectBybtype3" parameterType="int" resultType="resumeVo">
-		select * from btype3 b,hope_working h
-		where b.BTYPE_CODE3=h.BTYPE_CODE3 and h.hopework_code=#{hopeworkCode}
+		select * from btype3 where btype_code3=#{btypeCode3}
 	</select>
 	<select id="selectBylocation" parameterType="int" resultType="resumeVo">
 		select * from location where local_code=#{localCode}

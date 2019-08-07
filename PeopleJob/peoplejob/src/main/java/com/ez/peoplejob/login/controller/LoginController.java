@@ -1,7 +1,5 @@
 package com.ez.peoplejob.login.controller;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -17,22 +15,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.ez.peoplejob.common.PaginationInfo;
 import com.ez.peoplejob.common.SearchVO;
-import com.ez.peoplejob.common.WebUtility;
 import com.ez.peoplejob.jobopening.model.JobopeningService;
 import com.ez.peoplejob.jobopening.model.JobopeningVO;
-import com.ez.peoplejob.member.model.CompanyVO;
 import com.ez.peoplejob.member.model.MemberService;
 import com.ez.peoplejob.member.model.MemberVO;
 import com.ez.peoplejob.payment.model.PaymentService;
+
 import com.ez.peoplejob.post.model.PostService;
 import com.ez.peoplejob.post.model.PostVO;
 import com.ez.peoplejob.resume.model.ResumeService;
 import com.ez.peoplejob.scrap.model.ScrapService;
 import com.ez.peoplejob.scrap.model.ScrapVO;
 import com.ez.peoplejob.tableaply.model.TableaplyService;
-import com.ez.peoplejob.tableaply.model.TableaplyVO;
 import com.fasterxml.jackson.databind.JsonNode;
 
 @Controller
@@ -44,6 +39,7 @@ private Logger logger=LoggerFactory.getLogger(LoginController.class);
 	@Autowired private ScrapService scrapService;
 	@Autowired private JobopeningService jobService;
 	@Autowired private TableaplyService applyService;
+
 	@Autowired private ResumeService resumeService;
 	@Autowired private PostService postService;
 	
@@ -58,12 +54,13 @@ private Logger logger=LoggerFactory.getLogger(LoginController.class);
 		logger.info("마이페이지 화면 보!!여!!주!!기!! memberVo={}",memberVo);
 		
 		//
-		List<Map<String , Object>> paylist=paymentService.selectPaymentById(memberid);
-		logger.info("결제 내역 paylist.size={}",paylist.size());
+		List<Map<String , Object>> list=paymentService.selectPaymentById(memberid);
+		logger.info("결제 내역 list.size={}",list.size());
 		List<ScrapVO> scraplist=scrapService.selectScrap(memberVo.getMemberCode());
 		logger.info("스크랩 리스트 scraplist.size={}",scraplist.size());
 		List<JobopeningVO> joblist=jobService.selectJobopeningBycomcode(memberVo.getCompanyCode());
 		logger.info("채용공고 리스트 joblist.size={}",joblist.size());
+
 		List<Map<String , Object>> resumelist=resumeService.selectResumeByid(memberid);
 		logger.info("이력서 리스트 resumelist.size={}",resumelist.size());
 		Map<String, Object> map=new HashMap<String, Object>();
@@ -75,6 +72,7 @@ private Logger logger=LoggerFactory.getLogger(LoginController.class);
 		
 		model.addAttribute("applycount",applycount);
 		model.addAttribute("memberVo",memberVo);
+		model.addAttribute("list",list);
 		model.addAttribute("resumelist",resumelist);
 		model.addAttribute("postlist",postlist);
 		model.addAttribute("paylist",paylist);
@@ -85,6 +83,7 @@ private Logger logger=LoggerFactory.getLogger(LoginController.class);
 		
 	}
 	
+
 	@RequestMapping("/user/copyresume.do")
 	public String copyresume(HttpSession session, Model model,@RequestParam(defaultValue = "0") int resumeCode) {
 		logger.info("이력서 복사 파라미터, resumeCode={}",resumeCode);

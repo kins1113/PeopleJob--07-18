@@ -12,7 +12,7 @@
 			select * from post_all
 			<if test="searchKeyword!=null and searchKeyword!='' 
 						and searchCondition!=null and searchCondition!=''">
-				<if test='searchCondition=="boardtitle,boardcontent"'>
+				<if test='searchCondition=="boardTitle,boardcontent"'>
 					where boardtitle like '%' || #{searchKeyword} || '%'
 					or boardcontent like '%' || #{searchKeyword} || '%'
 				</if>
@@ -190,7 +190,9 @@
 	 delete from post where board_code2=#{boardCode2}
 	 </delete>
 	 
-	 
+	 <select id="selectPostBymemId" parameterType="string" resultType="map">
+	 	select * from post where member_code=(select member_code from member where memberid=#{memberid})
+	 </select>
 </mapper>
 
 

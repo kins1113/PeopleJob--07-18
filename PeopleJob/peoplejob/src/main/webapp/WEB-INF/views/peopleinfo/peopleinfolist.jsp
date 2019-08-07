@@ -31,15 +31,7 @@ h2 {
             검색결과 : ${pagingInfo.totalRecord}건 검색되었습니다.
          </p>
       </c:if>
-   <form name="frmSearch" method="post" style="border: 1px solid green;"
-         action='<c:url value="/peopleinfo/peopleinfolist.do"/>'>
-         <!-- 현재 페이지 hidden에 넣기 -->  
-         <input type="hidden" name='currentPage' value="1" >
-         <div id="whereall" style="margin-left: -209px;">
-			<p>
-				검색결과 : ${pagingInfo.totalRecord}건 검색되었습니다.
-			</p>
-		</c:if>
+ 
 	<form name="frmSearch" method="post" style="border: 1px solid green; height: 700px;"
    		action='<c:url value="/peopleinfo/peopleinfolist.do"/>'>
    		<!-- 현재 페이지 hidden에 넣기 -->  
@@ -88,13 +80,8 @@ h2 {
       </a>
    </c:if>
 </div>
-         </form>
-          <c:if test="${!empty list }">
-         <div class="talent_list" style="margin: 0 auto; min-height: 630px;position: relative;bottom: 0;width: 446px;">
-                
-   		</form>
+
    		 <c:if test="${!empty list }">
-   		<div class="talent_list" style="margin: 0 auto; min-height: 30px;position: relative;bottom: 81px;width: 446px;">
 				    
     <table class="table table-hover" style="position: relative;
     bottom: -59px;">
@@ -120,9 +107,10 @@ h2 {
         </thead>
         </table>
         
-        </div>
+      
        
         </c:if>
+        </form>
       </div> 
       </div> 
 <%@include file="../main/inc/bottom.jsp" %>

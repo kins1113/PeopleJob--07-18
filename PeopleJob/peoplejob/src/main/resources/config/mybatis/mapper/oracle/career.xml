@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="config.mybatis.mapper.oracle.career">
+	<select id="selectBydvCode"  resultType="careerVo">
+		select * from career
+	</select>	
+	
+	<select id="selectcareer" resultType="careerVo">
+		select * from career
+	</select>
+	
+	<select id="selectSecond" resultType="careerVo" parameterType="String">
+		select * from career
+		where chargework=#{chargework}	
+	</select>
+	
+	<select id="selectThird" resultType="careerVo" parameterType="String">
+		select * from career
+		where chargework2=#{chargework2}
+	</select>
+</mapper>
+
+
+
+
+
+
+
+
+

@@ -293,8 +293,8 @@ $(window).scroll(function( ){  //스크롤이 움직일때마다 이벤트 발�
         <span class="glyphicon glyphicon-credit-card" aria-hidden="true"></span> <span>${vo5.certificationtype}</span>
 				
  		 <ul class="list-inline dev-icons">
-		<c:if test="${vo5.certificationtype=='자격증/면허증'}">           	
-			
+			<c:if test="${vo5.certificationtype=='자격증/면허증,어학시험'}"> 
+				${fn:substring(vo5.certificationtype, 0,6)} 
           <li class="list-inline-item">
             <i class="fab fa-html5"> </i><label for="lName">자격증명</label>
  				<span class="glyphicon glyphicon-credit-card" aria-hidden="true"></span> <span>${vo6.lName}</span>
@@ -308,21 +308,21 @@ $(window).scroll(function( ){  //스크롤이 움직일때마다 이벤트 발�
  				<span class="glyphicon glyphicon-credit-card" aria-hidden="true"></span> <span>${vo6.lGetdate}</span>
           </li>
            
-           </c:if>
-          
+          </c:if>
         </ul>
-
+			
         <div class="subheading mb-3"><span class="glyphicon glyphicon-credit-card" aria-hidden="true"></span> <span>${vo5.certificationtype}</span></div>
         <ul class="fa-ul mb-0">
-        <c:if test="${vo5.certificationtype=='어학시험'}"> 
+        <c:if test="${vo5.certificationtype=='자격증/면허증,어학시험'}"> 
+				${fn:substring(vo5.certificationtype, 8,11)} 
           <li>
             <i class="fa-li fa fa-check"></i>
             <label for="language">언어</label>
  				<span class="glyphicon glyphicon-credit-card" aria-hidden="true"></span> <span>${vo5.language}</span></li>
           <li>
             <i class="fa-li fa fa-check"></i>
-            <label for="institution">발행처/기관</label>
- 				<span class="glyphicon glyphicon-credit-card" aria-hidden="true"></span> <span>${vo5.institution}</span></li>
+            <label for="institute">발행처/기관</label>
+ 				<span class="glyphicon glyphicon-credit-card" aria-hidden="true"></span> <span>${vo5.institute}</span></li>
           <li>
             <i class="fa-li fa fa-check"></i>
             <label for="langlicencename">시험종류</label>
@@ -407,7 +407,12 @@ $(window).scroll(function( ){  //스크롤이 움직일때마다 이벤트 발�
     
       <div>
 			<label>기업 인사담당자의 입사제의 및 면접제의를 받으시겠어요?</label>
-			<span class="glyphicon glyphicon-info-sign" aria-hidden="true">공개설정</span> <span>${vo.opencheck}</span>
+			 <c:if test="${vo.opencheck=='Y'}">
+			<span class="glyphicon glyphicon-info-sign" aria-hidden="true">공개설정</span> <span>공개</span>
+			</c:if>
+			 <c:if test="${vo.opencheck=='N'}">
+			<span class="glyphicon glyphicon-info-sign" aria-hidden="true">공개설정</span> <span>공개</span>
+			</c:if>
 		</div>
 		
 		</div>

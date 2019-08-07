@@ -93,8 +93,34 @@ select#locationGugun {
 <script type="text/javascript">
 $(document).ready(function (){
 	
+	//자격증을 가져오는
+	$("#certification").click(function(){
+		getCertificate();
+	})
+	
+	//1차 커리어 직종 가져오기 /resume/career/firstList.do
+	selectcareer();
+	  
 	//1차 직종 가져오기 /manager/occupantion/firstList.do
 	selectFirst();
+	
+	//어학을 가져오는
+	$("#langcertbt").click(function(){
+		getLangcertification();
+	})
+	
+	//전공을 가져오는
+
+	getMajor();
+	
+	//직급을 가져오는
+
+	getJobgrade();
+
+	//희망 근무 조건
+	$("#hopeworkbt").click(function(){
+	gethopeworkform();
+	})
 	//1차 직종 클릭하면 2차직종 가져오기 
 	$("#selectFirst").change(function(){
 		var firstCode=$(this).find("option:selected").val();
@@ -110,7 +136,9 @@ $(document).ready(function (){
 			selectThird(secondCode);
 		}
 	});
+
 	
+
 	
 	//지역정보를 가져오기 - 시도
 	getLocation();
@@ -276,6 +304,7 @@ function settingLocation(res){
 	});
 }
 
+
 //지역정보를 가져오는 메서드 - 구군
 function getLocation2(sidoCode){
 	$.ajax({
@@ -403,10 +432,245 @@ function settingBtype3(res){
 	})
 }
 
+/* $(function(){
+    $( "#jobgrade" ).autocomplete({
+        source : function( request, response ) {
+             $.ajax({
+                    type: 'post',
+                    url: "<c:url value='register.jsp'/>",
+                    dataType: "json",
+                    //request.term = $("#autocomplete").val()
+                    data: { value : request.term },
+                    success: function(data) {
+                        //서버에서 json 데이터 response 후 목록에 뿌려주기 위함
+                        response(
+                            $.map(data, function(item) {
+                                return {
+                                    label: item.data,
+                                    value: item.data
+                                }
+                            })
+                        );
+                    }
+               });
+            },
+        //조회를 위한 최소글자수
+        minLength: 2,
+        select: function( event, ui ) {
+            // 만약 검색리스트에서 선택하였을때 선택한 데이터에 의한 이벤트발생
+        }
+    });
+}) */
+
+
+//전공 가져오기
+function getMajor(){
+	$.ajax({
+		url:"<c:url value='/resume/education/selectMajor.do'/>",
+		type:"post",
+		success:function(res){
+				settingMajor(res);
+		},
+		error:function(xhr, status, error){
+			alert(status+":"+error);
+		}
+	})
+}
+
+
+//전공 뿌리기
+function settingMajor(res){
+	$.each(res,function(idx,item){
+		if(idx==0){
+			var chEl=$("<option value='0'>전공</option>")
+			var opEl=$("<option value='"+item.academicCode+"'></option>");
+			opEl.append(item.major);
+			$("#selectMajor").html(chEl);
+			$("#selectMajor").append(opEl); 
+		}else{
+			var opEl=$("<option value='"+item.academicCode+"'></option>");
+			opEl.append(item.major);
+			$("#selectMajor").append(opEl); 
+		}
+	})
+	
+}
 
 
 
-$(function () {
+//직급 가져오기
+function getJobgrade(){
+	$.ajax({
+		url:"<c:url value='/resume/career/selectCareer.do'/>",
+		type:"post",
+		success:function(res){
+				settingJobgrade(res);
+		},
+		error:function(xhr, status, error){
+			alert(status+":"+error);
+		}
+	})
+}
+
+
+//직급 뿌리기
+function settingJobgrade(res){
+	$.each(res,function(idx,item){
+		if(idx==0){
+			var chEl=$("<option value='0'>직급</option>")
+			var opEl=$("<option value='"+item.dvCode+"'></option>");
+			opEl.append(item.jobgrade);
+			$("#selectBydvCode").html(chEl);
+			$("#selectBydvCode").append(opEl); 
+		}else{
+			var opEl=$("<option value='"+item.dvCode+"'></option>");
+			opEl.append(item.jobgrade);
+			$("#selectBydvCode").append(opEl); 
+		}
+	})
+	
+}
+
+
+
+//1차 커리어 직종 가져오기
+function selectcareer(){
+	$.ajax({
+		url:"<c:url value='/resume/career/firstCareer.do'/>",
+		type:"post",
+		success:function(res){
+			settingcareer(res);
+		},
+		error:function(xhr, status, error){
+			alert(status+":"+error);
+		}
+	})
+}
+
+//1차 커리어 직종 뿌리기
+//[{"firstCode":1,"firstname":"경영·사무"},{"firstCode":2,"firstname":"영업·고객상담"},{"firstCode":3,"firstname":"생산·제조"},
+//{"firstCode":4,"firstname":"IT·인터넷"},{"firstCode":5,"firstname":"전문직"},{"firstCode":6,"firstname":"교육"}
+function settingcareer(res){
+		$.each(res,function(idx,item){
+			if(idx==0){
+				var chEl=$("<option value='0'>직종</option>")
+				var opEl=$("<option value='"+item.dvCode+"'></option>");
+				opEl.append(item.chargework);
+				$("#selectcareer").html(chEl);
+				$("#selectcareer").append(opEl); //최종으로 여기에 넣음
+			}else{
+				var opEl=$("<option value='"+item.dvCode+"'></option>");
+				opEl.append(item.chargework);
+				$("#selectcareer").append(opEl); //최종으로 여기에 넣음
+			}
+		})
+}
+
+
+//자격증 가져오기
+function getCertificate(){
+	$.ajax({
+		url:"<c:url value='/resume/certificate/selectLname.do'/>",
+		type:"post",
+		success:function(res){
+			settingCertificate(res);
+		},
+		error:function(xhr, status, error){
+			alert(status+":"+error);
+		}
+	})
+}
+
+
+//자격증 뿌리기
+function settingCertificate(res){
+	$.each(res,function(idx,item){
+		if(idx==0){
+			var chEl=$("<option value='0'>자격증명</option>")
+			var opEl=$("<option value='"+item.lNo+"'></option>");
+			opEl.append(item.lName);
+			$("#selectLname").html(chEl);
+			$("#selectLname").append(opEl); 
+		}else{
+			var opEl=$("<option value='"+item.lNo+"'></option>");
+			opEl.append(item.lName);
+			$("#selectLname").append(opEl); 
+		}
+	})
+	
+}
+
+
+//어학 가져오기
+function getLangcertification(){
+	$.ajax({
+		url:"<c:url value='/resume/langcertification/selectlangcertification.do'/>",
+		type:"post",
+		success:function(res){
+			settingLangcertification(res);
+		},
+		error:function(xhr, status, error){
+			alert(status+":"+error);
+		}
+	})
+}
+
+//어학 뿌리기
+function settingLangcertification(res){
+	$.each(res,function(idx,item){
+		if(idx==0){
+			var chEl=$("<option value='0'>어학</option>")
+			var opEl=$("<option value='"+item.langlicenceCode+"'></option>");
+			opEl.append(item.langlicencename);
+			$("#selectlanglicencename").html(chEl);
+			$("#selectlanglicencename").append(opEl); 
+		}else{
+			var opEl=$("<option value='"+item.langlicenceCode+"'></option>");
+			opEl.append(item.langlicencename);
+			$("#selectlanglicencename").append(opEl); 
+		}
+	})
+	
+}
+//희망 근무조건 가져오기
+function gethopeworkform(){
+	$.ajax({
+		url:"<c:url value='/resume/hopeWorking/selecthopework.do'/>",
+		type:"post",
+		success:function(res){
+			settinghopeworkform(res);
+		},
+		error:function(xhr, status, error){
+			alert(status+":"+error);
+		}
+	})
+}
+
+//희망 근무조건 뿌리기
+function settinghopeworkform(res){
+	$.each(res,function(idx,item){
+		if(idx==0){
+			var chEl=$("<option value='0'>희망근무조건</option>")
+			var opEl=$("<option value='"+item.hopeworkCode+"'></option>");
+			opEl.append(item.hopeworkform);
+			$("#hopeworkform").html(chEl);
+			$("#hopeworkform").append(opEl); 
+		}else{
+			var opEl=$("<option value='"+item.hopeworkCode+"'></option>");
+			opEl.append(item.hopeworkform);
+			$("#hopeworkform").append(opEl); 
+		}
+	})
+	
+}
+ 
+
+
+
+</script>
+<script type="text/javascript">
+
+$(document).ready(function (){
 	$("#certificationtype").hide();
 	$("#certification").click(function () {
 		$("#certificationtype").toggle(500);
@@ -426,8 +690,8 @@ $(function () {
 	$("#langcertbt").click(function () {
 		$("#langcert").toggle(500);
 	});
-
 });
+
 </script>
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 <script>
@@ -472,27 +736,50 @@ $(function () {
 <div id="editdiv">
 <div class="divForm">
 <form name="frm2" method="post" 
-	action="<c:url value='/resume/edit.do'/>">
+	action="<c:url value='/resume/edit.do'/>" enctype="multipart/form-data">
 <fieldset>
 	<legend style="font-weight: bold">이력서수정</legend>
 	<!-- hidden필드에 no 넣기 -->
 		<input type="hidden" name="resumeCode" value="${param.resumeCode}" />
 		<input type="hidden" name="memberCode" value="${vo1.memberCode}" />
 		<input type="hidden" name="langlicenceCode" value="${vo5.langlicenceCode}">
-		<input type="hidden" name="licenceCode" value="${vo6.licenceCode}">
+		<input type="hidden" name="lNo" value="${vo6.lNo}">
 		<input type="hidden" name="dvCode" value="${vo4.dvCode}">
 		<input type="hidden" name="academicCode" value="${vo3.academicCode}">
-		<input type="hidden" name="desiredWorkCode" value="${vo2.desiredWorkCode}">
+		<input type="hidden" name="hopeworkCode" value="${vo2.hopeworkCode}">
 		<div>
 		<!--이력서 사진 https://kuzuro.blogspot.com/2018/10/11.html  -->
 		 <div id="imgDiv">
-	        <img src="<c:url value='/peoplejob_upload/${vo.picture }'/>" 
-							alt="${vo1.membername }" width="50">
+		  <label for="picture">이력서 사진</label>
+ 		 <input type="file" id="gdsImg" name="file" />    
+ <script>
+  $("#picture").change(function(){
+   if(this.files && this.files[0]) {
+    var reader = new FileReader;
+    reader.onload = function(data) {
+     $(".select_img img").attr("src", data.target.result).width(200);        
+    }
+    reader.readAsDataURL(this.files[0]);
+   }
+  });
+  </script>
+		 <c:if test="${!empty vo.picture }">
+	            <br>
+	           <span class="sp1"></span>
+	            <span style="color:green;font-weight: bold">
+	            	※ 첨부파일을 새로 지정할 경우 기존 파일 ${fileInfo }은 삭제됩니다.
+	            	</span>
+	       </c:if>
+		  <div class="select_img"><img src="" /></div>
+	            
+            
+	            <input type="text" name="oldFileName" value="${vo.picture}" />
+            </div>
+	       
         </div>
-        <label for="picture">이력서 사진</label>
- <input type="file" id="gdsImg" name="file" />
- <div class="select_img"><img src="" /></div>
-		</div>
+       
+ 
+		
 		<section id="registerds">
 	<div>        
         <h3>이력서 제목</h3>
@@ -504,6 +791,7 @@ $(function () {
         <label for="membername">이름</label>
         <input type="text" class="form-control"  name="membername" id="infobox" value="${vo1.membername }" style="ime-mode:active">
     </div>
+    <input type="hidden" id="picture" name="picture" />
     <div>        
         <label for="birth">생년월일</label>
         <input type="text" class="form-control"  name="birth" id="infobox" value="${vo1.birth}" style="ime-mode:active">
@@ -642,9 +930,18 @@ $(function () {
         </select>   
        </div>
        <div>
-       <label>전공</label>
-  		<input type="text"  class="form-control"  name="major" id="major"value="${vo3.major }" >
-       
+       <table>
+       <tr>
+			<th>전공</th>
+		<td colspan="1">
+		<select class="custom-select my-1 FST" name="academicCode" data-name="major" id="selectMajor">
+		<option <c:if test="${vo3.major}">            	
+            		selected="selected"
+            	</c:if>>전공</option>
+		</select>
+		</td>
+		</tr>
+		</table>
        </div>
        <div>
        <label>학위</label>
@@ -704,12 +1001,33 @@ $(function () {
         </select>
 	</div>
 	<div>
-        <label for="chargework">직종</label>
-        <input type="text" class="form-control"  name="chargework" id="infobox" value="${vo4.chargework }" style="ime-mode:active">
+      	<table>
+       <tr>
+			<th>직종</th>
+		<td colspan="1">
+		<select class="custom-select my-1 FST" name="dvCode"  id="selectcareer">
+		<option <c:if test="${vo4.chargework}">            	
+            		selected="selected"
+            	</c:if>>직종</option>
+		</select>
+		</td>
+		</tr>
+		</table>
+        
     </div>	
     <div>
-        <label for="jobgrade">직급</label>
-        <input type="text" class="form-control"  name="jobgrade" id="infobox" value="${vo4.jobgrade }" style="ime-mode:active">
+      <table>
+       <tr>
+			<th>직급</th>
+		<td colspan="1">
+		<select class="custom-select my-1 FST" name="dvCode"  id="selectBydvCode">
+		<option <c:if test="${vo4.jobgrade}">            	
+            		selected="selected"
+            	</c:if>>직급</option>
+		</select>
+		</td>
+		</tr>
+		</table>
    </div>
   </section>
    
@@ -722,8 +1040,19 @@ $(function () {
      
    <h3>자격증/면허증</h3>
      <div>
-        <label for="lName">자격증명</label>
-        <input type="text" class="form-control"  name="lName" id="lName" value="${vo6.lName}" style="ime-mode:active">
+     <input class="form-control" name="certificationtype" id="certificationtype" value="자격증/면허증">
+         <table>
+       <tr>
+			<th>자격증명</th>
+		<td colspan="1">
+		<select class="custom-select my-1 FST" name="lNo"  id="selectLname">
+		<option <c:if test="${vo6.lName}">            	
+            		selected="selected"
+            	</c:if>>자격증명</option>
+		</select> 
+		</td>
+		</tr>
+		</table>
     </div>
     <div>    
         <label for="lInstitution">발행처/기관</label>
@@ -742,16 +1071,27 @@ $(function () {
     
     <h3>어학시험</h3>  
     <div>	
+    <input class="form-control" name="certificationtype" id="certificationtype" value="어학시험">
         <label for="language">언어</label>
         <input type="text" class="form-control"  name="language" id="language" value="${vo5.language }" style="ime-mode:active">
     </div>
      <div>
-        <label for="institution">발행처/기관</label>
-        <input type="text" class="form-control"  name="institution" id="institution" value="${vo5.institution }" style="ime-mode:active">
+        <label for="institute">발행처/기관</label>
+        <input type="text" class="form-control"  name="institute" id="institute" value="${vo5.institute }" style="ime-mode:active">
      </div>
      <div>
-        <label for="langlicencename">시험종류</label>
-        <input type="text" class="form-control"  name="langlicencename" id="langlicencename" value="${vo5.langlicencename }" style="ime-mode:active">
+      <table>
+       <tr>
+			<th>시험종류</th>
+		<td colspan="1">
+		<select class="custom-select my-1 FST" name="langlicenceCode"  id="selectlanglicencename">
+		<option <c:if test="${vo5.langlicencename}">            	
+            		selected="selected"
+            	</c:if>>시험종류</option>
+		</select> 
+		</td>
+		</tr>
+		</table>
      </div> 
      <div>
         <label for="langpoint">점수</label>
@@ -770,7 +1110,7 @@ $(function () {
 	</section>
 
      &nbsp;
-     
+     <button type="button" id="awardbt" class="btn btn-success" value="수상내역">수상내역</button>
   	 <section id="registerds">
     <div class="well" id="award">
      <c:if test="${!empty vo.award}">
@@ -788,11 +1128,17 @@ $(function () {
         <textarea class="form-control" rows="3"></textarea> -->
         
         <c:import url="/main/smarteditorTestjsp.do">
-			<c:param name="name" value="${vo.introduce }"></c:param>
+			<c:param name="name" value="introduce" ></c:param>
 		</c:import>
         
         
    </div>
+   <script>
+   var article = document.getElementById('intro');
+   
+   article.dataset.value // ${vo.introduce }
+
+   </script>
    </section>
       &nbsp;
 	 <button type="button" id="hopeworkbt" class="btn btn-success" value="희망근무">희망근무</button>
@@ -800,51 +1146,18 @@ $(function () {
 	 <div  id="hopework">
       <h3>희망근무 선택</h3>
       <div>	
-    	<label for="hopeworkform">근무형태</label>
-    	<select class="form-control" name="hopeworkform" id="hopeworkform" >
-        	<option value="근무형태 선택" <c:if test="${vo2.hopeworkform=='근무형태 선택'}">            	
+    	<table>
+       <tr>
+			<th>근무형태</th>
+		<td colspan="1">
+		<select class="custom-select my-1 FST" name="hopeworkCode" data-name="hopeworkform" id="hopeworkform">
+		<option <c:if test="${vo2.hopeworkform}">            	
             		selected="selected"
-            	</c:if>>근무형태 선택</option>
-        	<option value="정규직" <c:if test="${vo2.hopeworkform=='정규직'}">            	
-            		selected="selected"
-            	</c:if>>정규직</option>
-        	<option value="교육생 (정규직 전환가능)" <c:if test="${vo2.hopeworkform=='교육생 (정규직 전환가능)'}">            	
-            		selected="selected"
-            	</c:if>>교육생</option>
-        	<option value="별정직" <c:if test="${vo2.hopeworkform=='별정직'}">            	
-            		selected="selected"
-            	</c:if>>별정직</option>
-        	<option value="파트" <c:if test="${vo2.hopeworkform=='파트'}">            	
-            		selected="selected"
-            	</c:if>>파트</option>
-        	<option value="전임" <c:if test="${vo2.hopeworkform=='전임'}">            	
-            		selected="selected"
-            	</c:if>>전임</option>
-        	<option value="계약직 (정규직 전환가능)" <c:if test="${vo2.hopeworkform=='계약직 (정규직 전환가능)'}">            	
-            		selected="selected"
-            	</c:if>>계약직</option>
-        	<option value="병역특례" <c:if test="${vo2.hopeworkform=='병역특례'}">            	
-            		selected="selected"
-            	</c:if>>병역특례</option>
-        	<option value="인턴직 (정규직 전환가능)" <c:if test="${vo2.hopeworkform=='인턴직 (정규직 전환가능)'}">            	
-            		selected="selected"
-            	</c:if>>인턴직</option>
-        	<option value="아르바이트" <c:if test="${vo2.hopeworkform=='아르바이트'}">            	
-            		selected="selected"
-            	</c:if>>아르바이트</option>
-        	<option value="파견직" <c:if test="${vo2.hopeworkform=='파견직'}">            	
-            		selected="selected"
-            	</c:if>>파견직</option>
-        	<option value="해외취업" <c:if test="${vo2.hopeworkform=='해외취업'}">            	
-            		selected="selected"
-            	</c:if>>해외취업</option>
-        	<option value="위촉직" <c:if test="${vo2.hopeworkform=='위촉직'}">            	
-            		selected="selected"
-            	</c:if>>위촉직</option>
-        	<option value="프리랜서" <c:if test="${vo2.hopeworkform=='프리랜서'}">            	
-            		selected="selected"
-            	</c:if>>프리랜서</option>
-        </select>
+            	</c:if>>근무형태</option>
+		</select> 
+		</td>
+		</tr>
+		</table>
        </div>
        <div>
     	<label for="hopepay">희망연봉</label>
@@ -910,61 +1223,73 @@ $(function () {
        
        <h3>희망근무지역</h3>
         <div>
-       
-       <label for="시도">시도</label>
-       	<select class="form-control" name="sido" id="locationSiDo" style="ime-mode:active" >
-   			<option value="${vo7.sido }">시도</option>
-        	
-        </select>   
+       <table>
+      <tr>
+				<th>지역</th>
+								<td>
+									<select class="custom-select my-1 mr-sm-2 FST" name="localCode" id="locationSiDo">
+										<option <c:if test="${vo7.sido}">            	
+            		selected="selected"
+            	</c:if>>시/도</option>
+									</select>
+									<select class="custom-select my-1 mr-sm-2 FST" name="localCode2" id="locationGugun">
+										<option <c:if test="${vo8.gugun}">            	
+            		selected="selected"
+            	</c:if>>구/군</option>
+										<option>먼저 시/도를 선택하세요</option>
+									</select>
+								</td>
+								</tr>
+					</table>
         </div>
-       	<div>
-       
-       <label for="구군">구군</label>
-       <select class="form-control" name="gugun" id="locationGugun" style="ime-mode:active" >
-       	<option value="${vo8.gugun }">구군</option>
-       </select>
-
-        </div>
+        
        
         <div>
         <%-- <c:import url="btype.jsp"/> --%>
-        <label for="btypename1">업종1차</label>
-        <select name="btypename1" id="btypename1" >
-        <option value="${vo9.btypename1 }" >업종1차</option>
-        </select>
-        </div>
-        <div>
-        <label for="btypename2">업종2차</label>
-        
-        <select name="btypename2" id="btypename2" >
-        <option value="${vo10.btypename2 }" >업종2차</option>
-        </select>
-        </div>
-        <div>
-        <label for="btypename3">업종3차</label>
-         <select name="btypename3" id="btypename3">
-        <option value="${vo11.btypename3 }">업종3차</option>
-        </select>
-        </div>
-        <div>
-        <label for="firstname">직종1차</label>
-         <select name="firstname" id="selectFirst">
-        <option value="${vo12.firstname }">직종1차</option>
-        </select>
-     
-        </div>
-        <div>
-        <label for="secondname">직종2차</label>
-         <select name="secondname" id="selectSecond">
-        <option value="${vo13.secondname }">직종2차</option>
-        </select>
-     	
-        </div>
-        <div>
-        <label for="thirdname">직종3차</label>
-        <select name="thirdname" id="selectThird">
-        <option value="${vo14.thirdname }" >직종3차</option>
-        </select>
+        <table>
+       <tr>
+								<th>직종</th>
+								<td colspan="1">
+									<select class="custom-select my-1 FST" name="firstCode" id="selectFirst">
+										<option <c:if test="${vo12.firstname}">            	
+            		selected="selected"
+            	</c:if>>1차 직종</option>
+									</select>
+									<select class="custom-select my-1 mr-sm-2 FST" name="secondCode" id="selectSecond">
+										<option <c:if test="${vo13.secondname}">            	
+            		selected="selected"
+            	</c:if>>2차 직종</option>
+										<option>먼저 1차 직종을 선택하세요</option>
+									</select>
+									<select class="custom-select my-1 mr-sm-2 FST" name="thirdCode" id="selectThird">
+										<option <c:if test="${vo14.thirdname}">            	
+            		selected="selected"
+            	</c:if>>3차 직종</option>
+										<option>먼저 2차 직종을 선택하세요</option>
+									</select>
+								</td>
+								<th>업종</th>
+								<td colspan="2">
+									<select class="custom-select my-1 FST" name="btypeCode1" id="selectBtype1">
+										<option <c:if test="${vo9.btypename1}">            	
+            		selected="selected"
+            	</c:if>>1차 업종</option>
+									</select>
+									<select class="custom-select my-1 mr-sm-2 FST" name="btypeCode2" id="selectBtype2">
+										<option <c:if test="${vo10.btypename2}">            	
+            		selected="selected"
+            	</c:if>>2차 업종</option>
+										<option>먼저 1차 업종을 선택하세요</option>
+									</select>
+									<select class="custom-select my-1 mr-sm-2 FST" name="btypeCode3" id="selectBtype3">
+										<option <c:if test="${vo11.btypename3}">            	
+            		selected="selected"
+            	</c:if>>3차 업종</option>
+										<option>먼저 2차 업종을 선택하세요</option>
+									</select>
+								</td>
+							</tr>
+							</table>
         </div>
         
         <div>
@@ -983,7 +1308,6 @@ $(function () {
         </div>
         </div>
         </section>
- 
    &nbsp;
     <div id="companycheck">
     <label>기업 인사담당자의 입사제의 및 면접제의를 받으시겠어요?</label>
@@ -998,16 +1322,18 @@ $(function () {
             		checked="checked"
             	</c:if>>비공개
 	</label>
-    <br>
     </div>
-</fieldset> 
-</form>
+    </fieldset>
     <input class="btn btn-success" type="submit" value="이력서 수정">
-    </form>
-    
-</div>  
-    
-     
+	
+	</form>
+        </div>
+       </div>
+
 </article>
 <%@include file="../main/inc/bottom.jsp" %>
+ 
+
+ 
+  
 

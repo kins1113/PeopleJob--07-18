@@ -74,8 +74,8 @@
 			<label for="certificationtype">자격증/어학/수상 내역</label> &nbsp;
 			<table class="table">
 				<tr>
- 				<td><span class="glyphicon glyphicon-credit-card" aria-hidden="true"></span> <span>${vo5.certificationtype}</span></td>
-				<c:if test="${vo5.certificationtype=='자격증/면허증'}">            	
+				<c:if test="${vo5.certificationtype=='자격증/면허증,어학시험'}"> 
+				${fn:substring(vo5.certificationtype, 0,6)}           	
             		 <label for="lName">자격증명</label>
  				<td><span class="glyphicon glyphicon-credit-card" aria-hidden="true"></span> <span>${vo6.lName}</span></td>
  				<label for="lInstitution">발행처/기관</label>
@@ -83,7 +83,8 @@
  				 <label for="lGetdate">취득일</label>
  				<td><span class="glyphicon glyphicon-credit-card" aria-hidden="true"></span> <span>${vo6.lGetdate}</span></td>
             	</c:if>
-				<c:if test="${vo5.certificationtype=='어학시험'}">            	
+				<c:if test="${vo5.certificationtype=='자격증/면허증,어학시험'}"> 
+				${fn:substring(vo5.certificationtype, 8,11)}              	
             		 <label for="language">언어</label>
  				<td><span class="glyphicon glyphicon-credit-card" aria-hidden="true"></span> <span>${vo5.language}</span></td>
  				<label for="institution">발행처/기관</label>
@@ -106,6 +107,14 @@
  		<span class="glyphicon glyphicon-tower" aria-hidden="true"></span> <span>${vo.award}</span>
  		</c:if>		
 		<div>
+		<input type="text" name="location" value="${vo7.localCode }">
+<input type="hidden" name="location2" value="${vo8.localCode2 }">
+<input type="hidden" name="btype1" value="${vo9.btypeCode1 }">
+<input type="hidden" name="btype2" value="${vo10.btypeCode2 }">
+<input type="hidden" name="btype3" value="${vo11.btypeCode3 }">
+<input type="hidden" name="first" value="${vo12.firstCode }">
+<input type="hidden" name="second" value="${vo13.secondCode }">
+<input type="hidden" name="third" value="${vo14.thirdCode }">
 		<table class="table">
 			<tr>
  				<td><span class="glyphicon glyphicon-star" aria-hidden="true">근무형태</span> <span>${vo2.hopeworkform}</span></td>

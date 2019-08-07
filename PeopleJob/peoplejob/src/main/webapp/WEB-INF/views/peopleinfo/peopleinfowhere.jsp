@@ -91,7 +91,7 @@ function settingLocation(res){
 
 //지역정보를 가져오는 메서드 - 구군
 function getLocation2(sidoCode){
-<<<<<<< HEAD
+
    $.ajax({
       url:"<c:url value='/peopleinfo/where/selectLocation2.do'/>",
       type:"post",
@@ -104,20 +104,7 @@ function getLocation2(sidoCode){
          alert(status+":"+error);
       }
    });//ajax
-=======
-	$.ajax({
-		url:"<c:url value='/peopleinfo/where/selectLocation2.do'/>",
-		type:"post",
-	    dataType: "json",
-		data:"sidoCode="+sidoCode,
-		success:function(res){
-			settingLocation2(res);
-		},
-		error:function(xht,status,error){
-			alert(status+":"+error);
-		}
-	});//ajax 
->>>>>>> branch 'master' of https://github.com/kins1113/PeopleJob--07-18.git
+
 }
 //지역정보를 뿌려주는 메서드 - 구군
 function settingLocation2(res){
@@ -377,11 +364,8 @@ div#woman {
       padding: 8px;
     margin: 10px;
     height: 450px;">
-<<<<<<< HEAD
-       <label id="title">경력</label><br>
-=======
+
 		 <label id="title">경력</label><br>
->>>>>>> branch 'master' of https://github.com/kins1113/PeopleJob--07-18.git
 <label><input type="checkbox" id="workcheck" name="workcheck" value="경력">경력</label>
 <label><input type="checkbox" id="workcheck" name="workcheck" value="신입">신입</label><br>
  <ul class="wrap_list_value column_two">
@@ -410,20 +394,13 @@ div#woman {
     padding: 4px;">
         <strong id="title">성별</strong>
             <strong class="title_basic_sub" id="title">나이</strong><br>
-<<<<<<< HEAD
-            <input type="checkbox" id="male01" value="남">
-            <label class="form_sp frm_chk02" for="male01">
-=======
+
             <input type="checkbox" id="male01" name="membergender" value="남">
             <label class="form_sp frm_chk02"  for="male01">
->>>>>>> branch 'master' of https://github.com/kins1113/PeopleJob--07-18.git
             <span>남</span></label>
             <div id="woman">
-<<<<<<< HEAD
-            <input type="checkbox" id="female01" value="여">
-=======
+
             <input type="checkbox" id="female01" name="membergender" value="여">
->>>>>>> branch 'master' of https://github.com/kins1113/PeopleJob--07-18.git
             <label class="form_sp frm_chk02" for="female01">
             <span>여</span></label>
             </div>
@@ -456,20 +433,7 @@ div#woman {
     <div id="hopelocal" style="border: 1px solid #63b752; float: left; width: 19%; margin: 10px; height: 450px; padding-top: 10px;">
        <table>
       <tr>
-<<<<<<< HEAD
-            <th id="title">희망 근무 지역</th>
-                        <td>
-                           <select class="custom-select my-1 mr-sm-2 FST" name="localCode" id="locationSiDo">
-                              <option>시/도</option>
-                           </select>
-                           <select class="custom-select my-1 mr-sm-2 FST" name="localCode2" id="locationGugun">
-                              <option>구/군</option>
-                              <option>먼저 시/도를 선택하세요</option>
-                           </select>
-                        </td>
-                        </tr>
-               </table>
-=======
+
 				<th id="title">희망 근무 지역</th>
 								<td>
 									<select class="custom-select my-1 mr-sm-2 FST" name="localCode" id="locationSiDo">
@@ -482,7 +446,6 @@ div#woman {
 								</td>
 								</tr>
 					</table>
->>>>>>> branch 'master' of https://github.com/kins1113/PeopleJob--07-18.git
         </div>
        
      
@@ -494,40 +457,7 @@ div#woman {
     padding-top: 10px;">
          <table>
        <tr>
-<<<<<<< HEAD
-      <th id="title">직종</th>
-            <td colspan="1">
-            <select class="custom-select my-1 FST" name="firstCode" id="selectFirst">
-            <option>1차 직종</option>
-                           </select>
-                           <select class="custom-select my-1 mr-sm-2 FST" name="secondCode" id="selectSecond">
-                              <option>2차 직종</option>
-                              <option>먼저 1차 직종을 선택하세요</option>
-                           </select>
-                           <select class="custom-select my-1 mr-sm-2 FST" name="thirdCode" id="selectThird">
-                              <option>3차 직종</option>
-                              <option>먼저 2차 직종을 선택하세요</option>
-                           </select>
-                        </td>
-                        
-                        <th id="title">업종</th>
-                        <td colspan="2">
-                           <select class="custom-select my-1 FST" name="btypeCode1" id="selectBtype1">
-                              <option>1차 업종</option>
-                           </select>
-                           <select class="custom-select my-1 mr-sm-2 FST" name="btypeCode2" id="selectBtype2">
-                              <option>2차 업종</option>
-                              <option>먼저 1차 업종을 선택하세요</option>
-                           </select>
-                           <select class="custom-select my-1 mr-sm-2 FST" name="btypeCode3" id="selectBtype3">
-                              <option>3차 업종</option>
-                              <option>먼저 2차 업종을 선택하세요</option>
-                           </select>
-                        </td>
-                     </tr>
-                     </table>
-                  </div>   
-=======
+
 		<th id="title">직종</th>
 				<td colspan="1">
 				<select class="custom-select my-1 FST" name="firstCode" id="selectFirst">
@@ -560,7 +490,6 @@ div#woman {
 							</tr>
 							</table>
 						</div>	
->>>>>>> branch 'master' of https://github.com/kins1113/PeopleJob--07-18.git
     </div>
      <!--  <div class="choice_wrap new mt20 mb10"> -->
   <div class="choice_inner">

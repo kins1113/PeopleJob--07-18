@@ -23,6 +23,7 @@ import com.ez.peoplejob.common.FileUploadUtility;
 import com.ez.peoplejob.common.PaginationInfo;
 import com.ez.peoplejob.common.SearchVO;
 import com.ez.peoplejob.common.WebUtility;
+import com.ez.peoplejob.peopleinfo.model.PeopleInfoService;
 import com.ez.peoplejob.resume.model.ResumeService;
 import com.ez.peoplejob.resume.model.ResumeVO;
 
@@ -32,6 +33,8 @@ public class ResumeController {
 	
 	@Autowired
 	private ResumeService resumeService;
+	@Autowired
+	private PeopleInfoService peopleinfoService;
 	@Autowired private FileUploadUtility fileUploadUtil;
 	private Logger logger = LoggerFactory.getLogger(ResumeController.class);
 	
@@ -61,6 +64,7 @@ public class ResumeController {
 				
 			
 		logger.info("이력서 등록화면 보여주기 매개변수 vo={}",resumeVo);
+		
 		int cnt=resumeService.insertResume(resumeVo);
 		
 		logger.info("이력서 등록 결과 cnt ={}",cnt);
@@ -120,19 +124,19 @@ public class ResumeController {
 		}
 		ResumeVO vo=resumeService.selectResumeByNo(resumeCode);
 		ResumeVO vo1=resumeService.selectByMemverid(id);
-		ResumeVO vo2=resumeService.selectBydesiredWorkCode(vo.getDesiredWorkCode());
+		ResumeVO vo2=resumeService.selectBydesiredWorkCode(vo.getHopeworkCode());
 		ResumeVO vo3=resumeService.selectByacademicCode(vo.getAcademicCode());
 		ResumeVO vo4=resumeService.selectBydvCode(vo.getDvCode());
 		ResumeVO vo5=resumeService.selectBylanglicenceCode(vo.getLanglicenceCode());
-		ResumeVO vo6=resumeService.selectBylicenceCode(vo.getLicenceCode());
-		ResumeVO vo7=resumeService.selectBylocation(vo.getLocalCode());
-		ResumeVO vo8=resumeService.selectBylocation2(vo.getLocalCode2());
-		ResumeVO vo9=resumeService.selectBybtype1(vo.getBtypeCode1());
-		ResumeVO vo10=resumeService.selectBybtype2(vo.getBtypeCode2());
-		ResumeVO vo11=resumeService.selectBybtype3(vo.getBtypeCode3());
-		ResumeVO vo12=resumeService.selectByfirst(vo.getFirstCode());
-		ResumeVO vo13=resumeService.selectBysecond(vo.getSecondCode());
-		ResumeVO vo14=resumeService.selectBythird(vo.getThirdCode());
+		ResumeVO vo6=resumeService.selectBylicenceCode(vo.getlNo());
+		ResumeVO vo7=resumeService.selectBylocation(vo2.getLocalCode());
+		ResumeVO vo8=resumeService.selectBylocation2(vo7.getLocalCode2());
+		ResumeVO vo11=resumeService.selectBybtype3(vo2.getBtypeCode3());
+		ResumeVO vo10=resumeService.selectBybtype2(vo11.getBtypeCode2());
+		ResumeVO vo9=resumeService.selectBybtype1(vo10.getBtypeCode1());
+		ResumeVO vo14=resumeService.selectBythird(vo2.getThirdCode());
+		ResumeVO vo13=resumeService.selectBysecond(vo14.getSecondCode());
+		ResumeVO vo12=resumeService.selectByfirst(vo13.getFirstCode());
 		logger.info("상세보기 결과 vo={}", vo);
 		
 		model.addAttribute("vo", vo);
@@ -155,7 +159,7 @@ public class ResumeController {
 	
 	@RequestMapping(value="/edit.do", method=RequestMethod.GET)
 	public String edit_get(@RequestParam(defaultValue = "0") int resumeCode,HttpSession session,
-			ModelMap model) {
+			HttpServletRequest request,ModelMap model) {
 		logger.info("수정화면, 파라미터 resumeCode={}", resumeCode);
 		String id=(String)session.getAttribute("memberid");
 		if(resumeCode==0) {
@@ -163,13 +167,14 @@ public class ResumeController {
 			model.addAttribute("url", "/resume/list.do");
 			return "common/message";
 		}
+		
 		ResumeVO vo=resumeService.selectResumeByNo(resumeCode);
 		ResumeVO vo1=resumeService.selectByMemverid(id);
-		ResumeVO vo2=resumeService.selectBydesiredWorkCode(vo.getDesiredWorkCode());
+		ResumeVO vo2=resumeService.selectBydesiredWorkCode(vo.getHopeworkCode());
 		ResumeVO vo3=resumeService.selectByacademicCode(vo.getAcademicCode());
 		ResumeVO vo4=resumeService.selectBydvCode(vo.getDvCode());
 		ResumeVO vo5=resumeService.selectBylanglicenceCode(vo.getLanglicenceCode());
-		ResumeVO vo6=resumeService.selectBylicenceCode(vo.getLicenceCode());
+		ResumeVO vo6=resumeService.selectBylicenceCode(vo.getlNo());
 		ResumeVO vo7=resumeService.selectBylocation(vo.getLocalCode());
 		ResumeVO vo8=resumeService.selectBylocation2(vo.getLocalCode2());
 		ResumeVO vo9=resumeService.selectBybtype1(vo.getBtypeCode1());
@@ -179,7 +184,8 @@ public class ResumeController {
 		ResumeVO vo13=resumeService.selectBysecond(vo.getSecondCode());
 		ResumeVO vo14=resumeService.selectBythird(vo.getThirdCode());
 		logger.info("수정화면 조회 결과, vo={}", vo);
-		
+		String fileInfo
+		=fileUploadUtil.getFileInfo(vo.getPicture(), 1, request);
 		model.addAttribute("vo", vo);
 		model.addAttribute("vo1", vo1);
 		model.addAttribute("vo2", vo2);
@@ -195,6 +201,7 @@ public class ResumeController {
 		model.addAttribute("vo12", vo12);
 		model.addAttribute("vo13", vo13);
 		model.addAttribute("vo14", vo14);
+		model.addAttribute("fileInfo", fileInfo);
 		
 		return "resume/edit";
 	}

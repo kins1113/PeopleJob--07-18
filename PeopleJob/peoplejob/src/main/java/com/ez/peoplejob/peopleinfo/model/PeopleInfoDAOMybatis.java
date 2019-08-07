@@ -118,7 +118,7 @@ public class PeopleInfoDAOMybatis implements PeopleInfoDAO {
    @Override
    public List<ResumeVO> selectResumeView(int resumeCode) {
       
-      return sqlSession.selectList(namespace+"selectResumeView",resumeCode);
+      return sqlSession.selectOne(namespace+"selectResumeView",resumeCode);
    }
 	
    
