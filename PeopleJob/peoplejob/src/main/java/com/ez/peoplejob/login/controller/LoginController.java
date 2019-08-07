@@ -26,6 +26,8 @@ import com.ez.peoplejob.member.model.CompanyVO;
 import com.ez.peoplejob.member.model.MemberService;
 import com.ez.peoplejob.member.model.MemberVO;
 import com.ez.peoplejob.payment.model.PaymentService;
+import com.ez.peoplejob.post.model.PostService;
+import com.ez.peoplejob.post.model.PostVO;
 import com.ez.peoplejob.resume.model.ResumeService;
 import com.ez.peoplejob.scrap.model.ScrapService;
 import com.ez.peoplejob.scrap.model.ScrapVO;
@@ -42,7 +44,8 @@ private Logger logger=LoggerFactory.getLogger(LoginController.class);
 	@Autowired private ScrapService scrapService;
 	@Autowired private JobopeningService jobService;
 	@Autowired private TableaplyService applyService;
-	@Autowired ResumeService resumeService;
+	@Autowired private ResumeService resumeService;
+	@Autowired private PostService postService;
 	
 	private kakao_restapi kakao_restapi = new kakao_restapi();
 	
@@ -63,52 +66,17 @@ private Logger logger=LoggerFactory.getLogger(LoginController.class);
 		logger.info("채용공고 리스트 joblist.size={}",joblist.size());
 		List<Map<String , Object>> resumelist=resumeService.selectResumeByid(memberid);
 		logger.info("이력서 리스트 resumelist.size={}",resumelist.size());
+		Map<String, Object> map=new HashMap<String, Object>();
+		map.put("memberCode", memberVo.getMemberCode());
+		int applycount=applyService.selectapplyCount(map);
+		logger.info("개인회원입장 지원현황 applycount={}",applycount);
+		List<PostVO> postlist=postService.selectPostBymemId(memberid);
+		logger.info("내가 쓴 글 postlist.size={}",postlist.size());
 		
-		//개인회원 지원현황
-		/*
-		//1]PaginationInfo 객체 생성
-				PaginationInfo pagingInfo=new PaginationInfo();
-				pagingInfo.setBlockSize(WebUtility.BLOCK_SIZE);
-				pagingInfo.setRecordCountPerPage(WebUtility.RECORD_COUNT_PER_PAGE);
-				pagingInfo.setCurrentPage(searchVo.getCurrentPage());
-				
-				//2]SearchVo에 페이징 관련 변수 세팅
-				searchVo.setRecordCountPerPage(WebUtility.RECORD_COUNT_PER_PAGE);
-				searchVo.setFirstRecordIndex(pagingInfo.getFirstRecordIndex());
-				logger.info("셋팅 후 serchVo={}",searchVo);
-				
-				Map<String, Object> map = new HashMap<String, Object>();
-				logger.info("searchVo.getFirstRecordIndex()={},getRecordCountPerPage={}",searchVo.getFirstRecordIndex(),searchVo.getRecordCountPerPage());
-				map.put("firstRecordIndex", searchVo.getFirstRecordIndex());
-				map.put("recordCountPerPage", searchVo.getRecordCountPerPage());
-				map.put("memberCode",memberVo.getMemberCode());
-				logger.info("map={}",map);
-				List<TableaplyVO> userapplylist=applyService.selectapply(map);
-				logger.info("개인회원 지원현황 조회결과{}",list);
-				int totalRecord=0;
-				totalRecord=applyService.selectapplyCount(map);
-				logger.info("전체 레코드 개수 조회 결과, totalRecord={}",totalRecord);
-				
-				List<JobopeningVO> list4=new ArrayList<JobopeningVO>() ;
-				List<CompanyVO> list5=new ArrayList<CompanyVO>() ;
-				int jobopening[]=new int[list.size()];
-				int company[]=new int[list.size()];
-				for(int i=0;i<list.size();i++) {
-					jobopening[i]=list.get(i).getJobopening();
-					list4.add(jobService.selectJobOpenByNo(jobopening[i]));
-					company[i]=list4.get(i).getCompanyCode();
-					list5.add(jobService.selectcompany(company[i]));
-				}
-				
-				//5]PaginationInfo에 totalRecord값셋팅
-				pagingInfo.setTotalRecord(totalRecord);
-				//3
-				model.addAttribute("pagingInfo", pagingInfo);
-				model.addAttribute("userapplylist",userapplylist);
-				
-		*/
+		model.addAttribute("applycount",applycount);
 		model.addAttribute("memberVo",memberVo);
 		model.addAttribute("resumelist",resumelist);
+		model.addAttribute("postlist",postlist);
 		model.addAttribute("paylist",paylist);
 		model.addAttribute("scraplist",scraplist);
 		model.addAttribute("joblist",joblist);
@@ -119,6 +87,7 @@ private Logger logger=LoggerFactory.getLogger(LoginController.class);
 	
 	@RequestMapping("/user/copyresume.do")
 	public String copyresume(HttpSession session, Model model,@RequestParam(defaultValue = "0") int resumeCode) {
+		logger.info("이력서 복사 파라미터, resumeCode={}",resumeCode);
 		String memberid=(String)session.getAttribute("memberid");
 		MemberVO memberVo=memberService.selectByUserid(memberid);
 		
@@ -127,12 +96,14 @@ private Logger logger=LoggerFactory.getLogger(LoginController.class);
 		
 		String msg="", url="/mypage/user/userpage.do";
 		if(cnt>0) {
-			msg="복사가 완료되었습니다";
+			msg="이력서 복사가 완료되었습니다";
 		}else {
 			msg="이력서 복사 실패";
 		}
 		
-		return "mypage/user/userpage";
+		model.addAttribute("msg",msg);
+		model.addAttribute("url",url);
+		return "common/message";
 	}
 	
 	@RequestMapping("/mypage/corp/paymentDetail.do")

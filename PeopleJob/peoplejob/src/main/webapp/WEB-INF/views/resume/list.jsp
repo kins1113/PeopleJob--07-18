@@ -88,7 +88,6 @@ h3, .h3 {
 	    </c:if>
 	    </td><!--일단 멤버 네임으로  -->
 
->>>>>>> branch 'master' of https://github.com/kins1113/PeopleJob--07-18.git
 	    <td><fmt:formatDate value="${vo.resumeRegdate}" pattern="yyyy-MM-dd"/>
 				</td>
 				</tr>

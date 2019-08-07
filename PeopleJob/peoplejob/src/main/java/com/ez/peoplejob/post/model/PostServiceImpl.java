@@ -86,6 +86,10 @@ public class PostServiceImpl implements PostService{
 	public int deletePost(int boardCode2) {
 		return postDao.deletePost(boardCode2);
 	}
+	@Override
+	public List<PostVO> selectPostBymemId(String memberid) {
+		return postDao.selectPostBymemId(memberid);
+	}
 
 	
 	

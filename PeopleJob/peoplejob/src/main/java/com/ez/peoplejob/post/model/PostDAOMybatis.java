@@ -93,6 +93,10 @@ public class PostDAOMybatis implements PostDAO{
 	public int deletePost(int boardCode2) {
 		return sqlsession.delete(namespace+"deletePost",boardCode2);
 	}
+	@Override
+	public List<PostVO> selectPostBymemId(String memberid) {
+		return sqlsession.selectList(namespace+"selectPostBymemId",memberid);
+	}
 	
 
 }

@@ -3,7 +3,7 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="config.mybatis.mapper.oracle.peopleinfo">
-   <select id="selectPeoplew" parameterType="map" resultType="resumeVo">
+  <!--  <select id="selectPeoplew" parameterType="map" resultType="resumeVo">
    select *
       from
       (
@@ -764,7 +764,7 @@
       where btype_code2=#{code}
    </select>      
    
-   
+    -->
 </mapper>
 
 

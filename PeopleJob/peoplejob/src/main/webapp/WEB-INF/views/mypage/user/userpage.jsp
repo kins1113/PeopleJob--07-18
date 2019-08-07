@@ -162,7 +162,6 @@ $(function(){
 				<div class="p-l-10 p-rl-0-sr991 p-t-70" style="padding-top: 29px;float:left;">						
 						<!-- Category -->
 						<%-- <div class="p-b-60">
-						<div class="p-b-60">
 							<div class="how2 how2-cl4 flex-s-c">
 								<h3 class="f1-m-2 cl3 tab01-title">
 									마이페이지
@@ -242,10 +241,18 @@ $(function(){
 						</div> --%>
 						 <ul class="nav">
           <li class="active" style="    width: 100%;">
+          <c:if test="${sessionScope.author_code==1 }">
             <a href="./dashboard.html" style="height: 100%;">
               <i class="nc-icon nc-zoom-split" style="margin-right:10px; float:left;margin-top: 3px;"></i>
               <p style="float:left; font-size: 1.1em;">이력서 관리</p>
             </a>
+            </c:if>
+          <c:if test="${sessionScope.author_code==2 || sessionScope.author_code==3 }">
+            <a href="./dashboard.html" style="height: 100%;">
+              <i class="nc-icon nc-zoom-split" style="margin-right:10px; float:left;margin-top: 3px;"></i>
+              <p style="float:left; font-size: 1.1em;">채용공고 관리</p>
+            </a>
+            </c:if>
           </li>
           <li class="active" style="    width: 100%;">
             <a href="./dashboard.html" style="height: 100%;">
@@ -260,13 +267,21 @@ $(function(){
             </a>
           </li>
            <li class="active" style="    width: 100%;">
+            <c:if test="${sessionScope.author_code==1 }">
             <a href="./dashboard.html" style="height: 100%;">
               <i class="nc-icon nc-tap-01" style="margin-right:10px; float:left;margin-top: 3px;"></i>
               <p style="float:left; font-size: 1.1em;">맞춤 채용 정보</p>
             </a>
+            </c:if>
+            <c:if test="${sessionScope.author_code==2 || sessionScope.author_code==3 }">
+            <a href="./dashboard.html" style="height: 100%;">
+              <i class="nc-icon nc-money-coins" style="margin-right:10px; float:left;margin-top: 3px;"></i>
+              <p style="float:left; font-size: 1.1em;">결제 내역</p>
+            </a>
+            </c:if>
           </li>
            <li class="active" style="    width: 100%;">
-            <a href="./dashboard.html" style="height: 100%;">
+            <a href="<c:url value='/custext/mycustext.do'/>" style="height: 100%;">
               <i class="nc-icon nc-chat-33" style="margin-right:10px; float:left;margin-top: 3px;"></i>
               <p style="float:left; font-size: 1.1em;">문의 내역</p>
             </a>
@@ -278,10 +293,18 @@ $(function(){
             </a>
           </li>
             <li class="active" style="    width: 100%;">
+            <c:if test="${sessionScope.author_code==1 }">
             <a href="./dashboard.html" style="height: 100%;">
               <i class="nc-icon nc-circle-10" style="margin-right:10px; float:left;margin-top: 3px;"></i>
               <p style="float:left; font-size: 1.1em;">회원 정보 수정</p>
             </a>
+            </c:if>
+            <c:if test="${sessionScope.author_code==2 || sessionScope.author_code==3 }">
+            <a href="./dashboard.html" style="height: 100%;">
+              <i class="nc-icon nc-bank" style="margin-right:10px; float:left;margin-top: 3px;"></i>
+              <p style="float:left; font-size: 1.1em;">기업 정보 수정</p>
+            </a>
+            </c:if>
           </li>
           <li class="active" style="    width: 100%;">
             <a href="./dashboard.html" style="height: 100%;">
@@ -296,7 +319,6 @@ $(function(){
             </a>
           </li>
         </ul>
-						</div>
 
 					</div>
 				</div>
@@ -322,7 +344,12 @@ $(function(){
                   <div class="col-7 col-md-8">
                     <div class="numbers">
                       <p class="card-category">지원현황</p>
-                      <p class="card-title">0
+                      <c:if test="${sessionScope.author_code==1 }">
+                     	 <p class="card-title">${applycount }
+                      </c:if>
+                      <c:if test="${sessionScope.author_code==2 || sessionScope.author_code==3 }">
+                     	 <p class="card-title">0
+                      </c:if>
                         <p>
                     </div>
                   </div>
@@ -349,7 +376,13 @@ $(function(){
                   <div class="col-7 col-md-8">
                     <div class="numbers">
                       <p class="card-category">스크랩</p>
-                      <p class="card-title">${fn:length(scraplist) }
+                       <c:if test="${sessionScope.author_code==1 }">
+                     	 <p class="card-title"> ${fn:length(scraplist) }
+                      </c:if>
+                      <c:if test="${sessionScope.author_code==2 || sessionScope.author_code==3 }">
+                     	 <p class="card-title">0
+                      </c:if>
+                     
                         <p>
                     </div>
                   </div>
@@ -369,13 +402,24 @@ $(function(){
                 <div class="row">
                   <div class="col-5 col-md-4">
                     <div class="icon-big text-center icon-warning">
+                    <c:if test="${sessionScope.author_code==1 }">
                       <i class="nc-icon nc-single-02 text-danger"></i>
+					</c:if>
+                    <c:if test="${sessionScope.author_code==2 || sessionScope.author_code==3 }">
+                      <i class="nc-icon nc-money-coins text-danger"></i>
+					</c:if>
                     </div>
                   </div>
                   <div class="col-7 col-md-8">
                     <div class="numbers">
-                      <p class="card-category">내 정보 관리</p>
-                      <p class="card-title"> 
+                    <c:if test="${sessionScope.author_code==1 }">
+                      <p class="card-category">내가 쓴 글</p>
+                      <p class="card-title"> ${fn:length(postlist) }
+                      </c:if>
+                    <c:if test="${sessionScope.author_code==2 || sessionScope.author_code==3 }">
+                      <p class="card-category">결제 내역</p>
+                      <p class="card-title"> ${fn:length(paylist) }
+                      </c:if>
                         <p>
                     </div>
                   </div>
@@ -384,7 +428,7 @@ $(function(){
               <div class="card-footer ">
                 <hr>
                 <div class="stats">
-                  <i class="fa fa-clock-o"></i> 수정하기
+                  <i class="fa fa-clock-o"></i> 목록보기
                 </div>
               </div>
             </div>
@@ -400,8 +444,14 @@ $(function(){
                   </div>
                   <div class="col-7 col-md-8">
                     <div class="numbers">
+                    <c:if test="${sessionScope.author_code==1 }">
                       <p class="card-category">이력서 관리</p>
                       <p class="card-title">${fn:length(resumelist) }
+                      </c:if>
+                    <c:if test="${sessionScope.author_code==2 || sessionScope.author_code==3 }">
+                      <p class="card-category">채용공고 </p>
+                      <p class="card-title">${fn:length(joblist) }
+                      </c:if>
                         <p>
                     </div>
                   </div>
@@ -417,7 +467,6 @@ $(function(){
 							</div>
 							
           <%--   <ul class="activity_list"> 
-            <ul class="activity_list"> 
                    <li class="img">
                    <c:if test="${sessionScope.author_code==1 }">
                         <a href="<c:url value='/apply/apply_list.do'/>" onclick="" onmousedown="try{n_trackEvent('myhome', 'dashboard' , 'resume-manage', '');}catch(e){};">
@@ -504,54 +553,115 @@ $(function(){
         
 <br><br>
 							<div class="wrap-pic-max-w p-b-30" style="margin-top:30px; padding-bottom: 0px;">
+							<c:if test="${sessionScope.author_code==1 }">
 							<h3 style="display: inline-block; margin-right:10px;">내 이력서 목록</h3> <span style="font-size: 2em;">${fn:length(resumelist) }</span><span style="margin-left: 5px; color: gray;">/ 10</span>
+							
 							<a href="<c:url value='/resume/register.do'/>" class="dis-block f1-s-13 cl0 bg-twitter borad-3 p-tb-4 p-rl-18 hov-btn1 m-r-3"
 							style="display:inline-block;float: right; height: 40px; padding-top: 8px;">
 										 <i class="nc-icon nc-single-02" style="color:white;">
 										이력서 등록
 										</i>
 									</a>
+							</c:if>
+							<c:if test="${sessionScope.author_code==2 || sessionScope.author_code==3 }">
+							<h3 style="display: inline-block; margin-right:10px;">채용공고 목록</h3> <span style="font-size: 2em;color:orangered;">${fn:length(joblist) }</span>
+							
+							<a href="<c:url value='/company/jobopening_register.do'/>" class="dis-block f1-s-13 cl0 bg-twitter borad-3 p-tb-4 p-rl-18 hov-btn1 m-r-3"
+							style="display:inline-block;float: right; height: 40px; padding-top: 8px;">
+										 <i class="nc-icon nc-single-02" style="color:white;">
+										채용공고 등록
+										</i>
+									</a>
+							</c:if>
 							</div>
 
 							<table class="table table-striped" style="text-align: center; border:1px solid #dddddd">
               <thead>
                 <tr>
                   <th style="background-color:#f8f8f8; text-align: center;">번호</th>
-                  <th style="background-color:#f8f8f8; text-align: center;">이력서 제목</th>
-                  <th style="background-color:#f8f8f8; text-align: center; width: 50%;">이력서 관리</th>
+                  <th style="background-color:#f8f8f8; text-align: center;">
+         <c:if test="${sessionScope.author_code==1 }">         
+                  이력서 제목
+                  </c:if>
+         <c:if test="${sessionScope.author_code==2 || sessionScope.author_code==3 }">         
+                  채용공고 제목
+                  </c:if>
+                  </th>
+                  <th style="background-color:#f8f8f8; text-align: center; width: 50%;">
+                  
+                    <c:if test="${sessionScope.author_code==1 }">         
+                 	이력서 관리
+                  </c:if>
+         <c:if test="${sessionScope.author_code==2 || sessionScope.author_code==3 }">         
+                  모집 기간
+                  </c:if>
+                  
+                  </th>
                   <th style="background-color:#f8f8f8; text-align: center;">공개 설정</th>
-                
                 </tr>
               </thead>
               <tbody>
-              <c:if test="${empty resumelist }">
+              <c:if test="${(sessionScope.author_code==2 || sessionScope.author_code==3) && empty joblist }">
+              	<tr>
+              		<td colspan="4">등록된 채용공고가 없습니다</td>
+              	</tr>
+              </c:if>
+              <c:if test="${sessionScope.author_code==1 && empty resumelist }">
               	<tr>
               		<td colspan="4">등록된 이력서가 없습니다</td>
               	</tr>
               </c:if>
-              <c:if test="${!empty resumelist }">
+              
+              <!-- 개인회원 -->
+              <c:if test="${sessionScope.author_code==1 && !empty resumelist }">
               <c:set var="i" value="1"/>
               	<c:forEach var="map" items="${resumelist}">
                 <tr style="background: white;">
 				   	<td>${i }</td>
-				   	<td><a href="<c:url value='/resume/resumedetail.do?resumeCode=${map["resumeCode"] }'/>" style="color:black;">
+				   	<td><a href="<c:url value='/resume/resumedetail.do?resumeCode=${map["RESUME_CODE"] }'/>" style="color:black;">
 						${map['RESUMETITLE'] }
 						</a>
 						</td>
 				   	<td>
 				   		<input type="button" value="복사" style="background:  white; border: 1px solid lightgray;
 	    font-weight: bold; margin: 0 auto; cursor: pointer; width: 50px; height: 30px; display: inline-block;" class="btnmore" 
-	    onclick="location.href='<c:url value="/user/copyresume.do?resumeCode=${map['resumeCode'] }"/>'">
-	    
+	    onclick="location.href='<c:url value="/user/copyresume.do?resumeCode=${map['RESUME_CODE'] }"/>'">
+	   
 				   		<input type="button" value="수정" style="background: white; border: 1px solid lightgray; display: inline-block;
-	    font-weight: bold; cursor: pointer; width: 50px; height: 30px;" class="btnmore">
+	    font-weight: bold; cursor: pointer; width: 50px; height: 30px;" class="btnmore"
+	    onclick="location.href='<c:url value=" /resume/edit.do?resumeCode=${map['RESUME_CODE'] }"/>'">
 				   		<input type="button" value="삭제" style="background: white; border: 1px solid lightgray; display: inline-block;
-	    font-weight: bold; cursor: pointer; width: 50px; height: 30px;" class="btnmore">
+	    font-weight: bold; cursor: pointer; width: 50px; height: 30px;" class="btnmore"
+	     onclick="location.href='<c:url value=" /resume/delete.do?resumeCode=${map['RESUME_CODE'] }"/>'">
 	    </td>
 	    			<td>
 				   		<span>
 				   		<c:if test="${map['OPENCHECK']=='Y' }">공개</c:if>
 				   		<c:if test="${map['OPENCHECK']=='N' }"> 미공개</c:if>
+				   		</span>
+				   	</td>
+				</tr>
+				<c:set var="i" value="${i+1 }"/>
+				</c:forEach>
+				</c:if>
+				
+				<!-- 기업회원 -->
+              <c:if test="${(sessionScope.author_code==2 || sessionScope.author_code==3) && !empty joblist }">
+              <c:set var="i" value="1"/>
+              	<c:forEach var="jobVo" items="${joblist}">
+                <tr style="background: white;">
+				   	<td>${i }</td>
+				   	<td><a href="<c:url value='/company/jobopening_view.do?jobopening=${jobVo.jobopening }'/>" style="color:black;">
+						${jobVo.jobtitle }
+						</a>
+						</td>
+				   	<td>
+				   		${fn:substring(jobVo.workdate,0,10) } ~ ${fn:substring(jobVo.endDate,0,10) }
+	    </td>
+	    			<td>
+				   		<span>
+				   		<c:if test="${jobVo.adminagree=='Y' }">공개</c:if>
+				   		<c:if test="${jobVo.adminagree=='N' }"> 미공개</c:if>
 				   		</span>
 				   	</td>
 				</tr>

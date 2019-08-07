@@ -76,9 +76,6 @@ logger.info("boardByCategory 목록 파라미터, boardCode={}, postVo={}",board
 				//[5] PaginationInfo에 totalRecord 값 셋팅
 				pagingInfo.setTotalRecord(totalRecord);
 				
-				//3
-				model.addAttribute("list", list);
-				model.addAttribute("pagingInfo", pagingInfo);
 				
 			/*	
 		List<Map<String, Object>> list=postService.selectByboardCode(boardCode);

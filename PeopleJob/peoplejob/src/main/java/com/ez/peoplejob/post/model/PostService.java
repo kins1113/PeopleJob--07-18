@@ -26,7 +26,7 @@ public interface PostService {
 	int updatePost(PostVO postVo);
 	BoardVO selectBoardByboardCode2(int boardCode2);
 	int deletePost(int boardCode2);
-	
+	List<PostVO> selectPostBymemId(String memberid);
 	
 	//댓글
 	int insertcmt(PostCmtVO postcmtVo);

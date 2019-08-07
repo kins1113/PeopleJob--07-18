@@ -190,6 +190,9 @@
 	 delete from post where board_code2=#{boardCode2}
 	 </delete>
 	 
+	 <select id="selectPostBymemId" parameterType="string" resultType="map">
+	 	select * from post where member_code=(select member_code from member where memberid=#{memberid})
+	 </select>
 </mapper>
 
 

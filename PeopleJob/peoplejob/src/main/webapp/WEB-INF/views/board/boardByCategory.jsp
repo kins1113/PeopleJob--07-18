@@ -383,8 +383,8 @@
             </table>
           </div>
           
-          <input type="button" value="글쓰기" style="float:right;" class="write" name="boardWrite"
-          style=" float: right; width: 53px; height: 32px; border-radius: 10%;">
+          <input type="button" value="글쓰기" class="write" name="boardWrite"
+          style="float: right; border-radius: 10%; width: 60px; height: 30px;background-color: #17b978;color: white;">
           <!-- 페이지 처리 -->
           
           <div class="divPage">
