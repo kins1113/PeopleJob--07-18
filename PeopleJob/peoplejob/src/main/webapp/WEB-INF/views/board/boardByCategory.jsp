@@ -240,7 +240,7 @@
  
  
  <div class="wraper" style="min-height: 710px;">
-				<div class="sidebar" style="width:210px; border:1px solid lightgray; height: 200px;    margin-top: 8px;">
+				<div class="sidebar" style="width:210px; border:1px solid lightgray; height: 200px;">
 					<div id='cssmenu'>
 						<ul>
 						<c:forEach var="boardVo" items="${boardkindlist }">
@@ -278,9 +278,9 @@
 				</div>    --%>
 				
 				<form class="form-inline" method="post"
-								action='<c:url value="/board/boardByCategory.do?boardCode=${param.boardCode }"/>' style="    margin-left: -15px;">
+								action='<c:url value="/board/boardByCategory.do?boardCode=${param.boardCode }"/>'>
 
-							<select class="custom-select my-1 mr-sm-2" name="searchCondition" style="    width: 90px;height: 35px;">
+							<select class="custom-select my-1 mr-sm-2" name="searchCondition">
 
 								<option value="boardtitle"
 									<c:if test="${param.searchCondition=='boardtitle'}">
@@ -297,9 +297,9 @@
 
 
 								<input type="text" name="searchKeyword" class="form-control"
-									placeholder="검색어" value="${param.searchKeyword }" style="margin-top: 5px;">
+									placeholder="검색어" value="${param.searchKeyword }">
 							</div>
-							<button type="submit" class="btn btn-primary mb-2" style="    background-color: #17b978;  border-color: #17b978;    margin-top: 4px;">검색</button>
+							<button type="submit" class="btn btn-primary mb-2">검색</button>
 						</form>
 						
 						<div> 
@@ -383,32 +383,34 @@
             </table>
           </div>
           
-          <input type="button" value="글쓰기" class="write" name="boardWrite"
-          style="float: right; border-radius: 10%; width: 60px; height: 30px;background-color: #17b978;color: white;">
+          <input type="button" value="글쓰기" style="float:right;" class="write" name="boardWrite">
           <!-- 페이지 처리 -->
           
           <div class="divPage">
+								<nav aria-label="Page navigation example">
+									<ul class="pagination">
 										<!-- 이전블럭으로 이동하기 -->
-										<c:if test="${pagingInfo.firstPage>1 }">
-												<a class="page-link" href="#"
+										<li class="page-item"><c:if
+												test="${pagingInfo.firstPage>1 }">
+												<li class="page-item"><a class="page-link" href="#"
 													aria-label="Previous"
 													onclick="pageFunc1(${pagingInfo.firstPage-1})"> <span
 														aria-hidden="true" class="mdi mdi-chevron-left"></span> <span
 														class="sr-only">Previous</span>
-												</a>
-											</c:if>
+												</a></li>
+											</c:if></li>
 										<!-- 페이지 번호 추가 -->
 										<!-- [1][2][3][4][5][6][7][8][9][10] -->
 										<c:forEach var="i" begin="${pagingInfo.firstPage }"
 											end="${pagingInfo.lastPage }">
 											<c:if test="${i==pagingInfo.currentPage }">
-												<a href="#" class="flex-c-c pagi-item hov-btn1 trans-03 m-all-7 pagi-active" 
-												style="float: left;" onclick="pageFunc1(${i})">${i}</a>
+												<li class="page-item active"><a class="page-link"
+													href="#">${i}</a></li>
 											</c:if>
 
 											<c:if test="${i!=pagingInfo.currentPage }">
-												<a href="#" class="flex-c-c pagi-item hov-btn1 trans-03 m-all-7" 
-												style="float: left;" onclick="pageFunc1(${i})">${i}</a>
+												<li class="page-item"><a class="page-link" href="#"
+													onclick="pageFunc1(${i})">${i}</a></li>
 											</c:if>
 										</c:forEach>
 										<!--  페이지	 번호 끝 -->
@@ -423,6 +425,8 @@
 													class="sr-only">Next</span>
 											</a></li>
 										</c:if>
+									</ul>
+								</nav>
 							</div>
 				<div class="divSearch"></div>
 			</div>

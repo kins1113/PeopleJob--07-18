@@ -1,6 +1,7 @@
 package com.ez.peoplejob.resume.model;
 
 import java.util.List;
+import java.util.Map;
 
 import com.ez.peoplejob.common.SearchVO;
 
@@ -58,4 +59,7 @@ public interface ResumeService {
 	int updateedu(ResumeVO vo);
 	int updatehope(ResumeVO vo);
 	int updatemember(ResumeVO vo);
+	
+	List<Map<String, Object>> selectResumeByid(String memberid);
+	int insertCopy(int resumeCode);
 }

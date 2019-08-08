@@ -99,7 +99,7 @@ $(function(){
             
             <c:if test="${boardVo.upage=='Y' }">
 				<c:set var="i" value="1"/>
-				<c:forEach begin="1" end="${boardVo.upnumage-fn:length(uploadList) }">
+				<c:forEach begin="${fn:length(uploadList)-1 }" end="${boardVo.upnumage }">
 					<div class="form-group" id="divTitle">
 						<label for="boardtitle">업로드할 파일 :</label> 
 						<input type="file" name="file" id="file" class="form-control"> 

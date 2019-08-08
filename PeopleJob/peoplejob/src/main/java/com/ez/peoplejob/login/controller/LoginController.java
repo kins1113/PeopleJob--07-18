@@ -1,5 +1,6 @@
 package com.ez.peoplejob.login.controller;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -21,7 +22,6 @@ import com.ez.peoplejob.jobopening.model.JobopeningVO;
 import com.ez.peoplejob.member.model.MemberService;
 import com.ez.peoplejob.member.model.MemberVO;
 import com.ez.peoplejob.payment.model.PaymentService;
-
 import com.ez.peoplejob.post.model.PostService;
 import com.ez.peoplejob.post.model.PostVO;
 import com.ez.peoplejob.resume.model.ResumeService;
@@ -54,8 +54,8 @@ private Logger logger=LoggerFactory.getLogger(LoginController.class);
 		logger.info("마이페이지 화면 보!!여!!주!!기!! memberVo={}",memberVo);
 		
 		//
-		List<Map<String , Object>> list=paymentService.selectPaymentById(memberid);
-		logger.info("결제 내역 list.size={}",list.size());
+		List<Map<String , Object>> paylist=paymentService.selectPaymentById(memberid);
+		logger.info("결제 내역 paylist.size={}",paylist.size());
 		List<ScrapVO> scraplist=scrapService.selectScrap(memberVo.getMemberCode());
 		logger.info("스크랩 리스트 scraplist.size={}",scraplist.size());
 		List<JobopeningVO> joblist=jobService.selectJobopeningBycomcode(memberVo.getCompanyCode());
@@ -72,7 +72,6 @@ private Logger logger=LoggerFactory.getLogger(LoginController.class);
 		
 		model.addAttribute("applycount",applycount);
 		model.addAttribute("memberVo",memberVo);
-		model.addAttribute("list",list);
 		model.addAttribute("resumelist",resumelist);
 		model.addAttribute("postlist",postlist);
 		model.addAttribute("paylist",paylist);

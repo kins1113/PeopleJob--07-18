@@ -400,6 +400,17 @@
 
 		select * from dual
 	</insert>   -->
+	
+	<select id="selectResumeByid" resultType="map" parameterType="string">
+		select * from resume where member_Code=(select member_code from member where memberid=#{memberid})
+	</select>
+	
+	<insert id="insertCopy" parameterType="int">
+		iNSERT INTO resume (resume_code, resumetitle, introduce, award, langlicence_code, l_no, dv_code, academic_code, hopework_code, opencheck,
+		member_code, picture)
+		SELECT resume_seq.nextval,resumetitle, introduce, award, langlicence_code, l_no, dv_code, academic_code, hopework_code, opencheck,
+		member_code, picture FROM resume where resume_code=#{resumeCode}
+	</insert>
 </mapper>
 
 
